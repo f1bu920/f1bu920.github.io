@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="flbu blog">
 <meta property="og:description" content="执行查询创建数据模型后，Django自动提供了一套API来实现数据库的增删改查，模型代码如下 1234567891011121314151617181920212223242526272829from django.db import modelsclass Blog(models.Model):    name = models.CharField(max_length=100)    tagl">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-22T14:29:35.512Z">
+<meta property="og:updated_time" content="2019-11-22T14:50:36.142Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="flbu blog" type="application/atom+xml">
@@ -87,7 +87,7 @@
         <h2 id="执行查询"><a href="#执行查询" class="headerlink" title="执行查询"></a>执行查询</h2><p>创建数据模型后，Django自动提供了一套API来实现数据库的增删改查，模型代码如下</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Blog</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">100</span>)</span><br><span class="line">    tagline = models.TextField()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Author</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">200</span>)</span><br><span class="line">    email = models.EmailField()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Entry</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)</span><br><span class="line">    headline = models.CharField(max_length=<span class="number">255</span>)</span><br><span class="line">    body_text = models.TextField()</span><br><span class="line">    pub_date = models.DateField()</span><br><span class="line">    mod_date = models.DateField()</span><br><span class="line">    authors = models.ManyToManyField(Author)</span><br><span class="line">    n_comments = models.IntegerField()</span><br><span class="line">    n_pingbacks = models.IntegerField()</span><br><span class="line">    rating = models.IntegerField()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.headline</span><br></pre></td></tr></table></figure>
 
-
+<a id="more"></a> 
 
 <ul>
 <li><p>创建对象</p>
@@ -265,7 +265,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/22/My-New-Post/" data-id="ck3a8rbd800014kug9x80h4dx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/22/My-New-Post/" data-id="ck3a9ien600000suga2zy15m3" class="article-share-link">Share</a>
       
       
     </footer>
