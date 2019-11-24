@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="flbu blog">
 <meta property="og:description" content="lambda表达式格式：参数 -&amp;gt; (表达式)如果代码要完成的计算无法放在一个表达式中，可以把代码放在{}中。 1Arrays.sort(str, (String first,String second) -&amp;gt; (return (first.length()-second.length()))  即使lambda无参数，也要提供空括号. 1()-&amp;gt; &amp;#123;for(int i">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-24T13:32:16.227Z">
+<meta property="og:updated_time" content="2019-11-24T13:41:09.059Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -363,6 +363,8 @@
 
 <p>无需指定lambda的返回值类型，返回值类型会由上下文推导得到</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(String str1,String str2) -&gt; str1.length()-str2.length();</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a> 
 
 <h3 id="函数式接口"><a href="#函数式接口" class="headerlink" title="函数式接口"></a>函数式接口</h3><p>对于只有一个抽象方法的接口，需要这种接口的对象时，就可以提供一个lambda，这种接口叫做函数式接口。</p>
 <p><strong>lambda可以转换为函数式接口</strong>，举例：</p>
