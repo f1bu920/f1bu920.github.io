@@ -262,6 +262,174 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/27/Leecode66-%E5%8A%A0%E4%B8%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="flbu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flbu blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/11/27/Leecode66-%E5%8A%A0%E4%B8%80/" itemprop="url">Leecode66.加一</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-27T19:36:30+08:00">
+                2019-11-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leecode/" itemprop="url" rel="index">
+                    <span itemprop="name">Leecode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Leecode题解66-加一"><a href="#Leecode题解66-加一" class="headerlink" title="Leecode题解66.加一"></a>Leecode题解66.加一</h3><p><a href="https://leetcode-cn.com/problems/plus-one/" target="_blank" rel="noopener">Leecode 66.加一</a></p>
+<p>给定一个由整数组成的非空数组所表示的非负整数，在该数的基础上加一。</p>
+<p>最高位数字存放在数组的首位， 数组中每个元素只存储单个数字。</p>
+<p>你可以假设除了整数 0 之外，这个整数不会以零开头。</p>
+<p>示例 1:</p>
+<blockquote>
+<p>输入: [1,2,3]</p>
+<p>输出: [1,2,4]</p>
+<p>解释: 输入数组表示数字 123。</p>
+</blockquote>
+<p>示例 2:</p>
+<blockquote>
+<p>输入: [4,3,2,1]</p>
+<p>输出: [4,3,2,2]<br>解释: 输入数组表示数字 4321.</p>
+</blockquote>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] plusOne(<span class="keyword">int</span>[] digits) &#123;</span><br><span class="line">        <span class="keyword">int</span> len = digits.length;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=len-<span class="number">1</span>;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">            digits[i]++;</span><br><span class="line">            digits[i]%=<span class="number">10</span>;</span><br><span class="line">            <span class="keyword">if</span>(digits[i]!=<span class="number">0</span>) <span class="keyword">return</span> digits;</span><br><span class="line">        &#125;</span><br><span class="line">        digits = <span class="keyword">new</span> <span class="keyword">int</span>[len+<span class="number">1</span>];</span><br><span class="line">        digits[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> digits;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>思路:</p>
+<p><strong>加一的所以有可能的情况就只有两种：</strong></p>
+<p><strong>除 99 之外的数字加一；</strong><br><strong>数字 99。</strong><br><strong>加一得十进一位个位数为 00 加法运算如不出现进位就运算结束了且进位只会是一。</strong></p>
+<p><strong>所以只需要判断有没有进位并模拟出它的进位方式，如十位数加 11 个位数置为 00，如此循环直到判断没有再进位就退出循环返回结果。</strong></p>
+<p><strong>然后还有一些特殊情况就是当出现 9999、999999 之类的数字时，循环到最后也需要进位，出现这种情况时需要手动将它进一位。</strong></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+<div>
+  
+</div>
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/24/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -914,7 +1082,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -925,7 +1093,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -936,7 +1104,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
