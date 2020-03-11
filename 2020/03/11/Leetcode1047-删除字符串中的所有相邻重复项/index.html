@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Stack,Java," />
 
 
 
@@ -81,14 +81,15 @@
 
 
 
-<meta name="description" content="flbu的技术博客">
+<meta name="description" content="Leetcode1047.删除字符串中的所有相邻重复项给出由小写字母组成的字符串 S，重复项删除操作会选择两个相邻且相同的字母，并删除它们。 在 S 上反复执行重复项删除操作，直到无法继续删除。 在完成所有重复项删除操作后返回最终的字符串。答案保证唯一。  题目链接">
+<meta name="keywords" content="Stack,Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Leetcode1047.删除字符串中的所有相邻重复项">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;11&#x2F;Leetcode1047-%E5%88%A0%E9%99%A4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E7%9B%B8%E9%82%BB%E9%87%8D%E5%A4%8D%E9%A1%B9&#x2F;index.html">
 <meta property="og:site_name" content="flbu blog">
-<meta property="og:description" content="flbu的技术博客">
+<meta property="og:description" content="Leetcode1047.删除字符串中的所有相邻重复项给出由小写字母组成的字符串 S，重复项删除操作会选择两个相邻且相同的字母，并删除它们。 在 S 上反复执行重复项删除操作，直到无法继续删除。 在完成所有重复项删除操作后返回最终的字符串。答案保证唯一。  题目链接">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-11T08:58:54.408Z">
+<meta property="og:updated_time" content="2020-03-11T09:15:30.837Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -302,6 +303,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">Leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -329,7 +352,22 @@
       
 
       
-        
+        <h2 id="Leetcode1047-删除字符串中的所有相邻重复项"><a href="#Leetcode1047-删除字符串中的所有相邻重复项" class="headerlink" title="Leetcode1047.删除字符串中的所有相邻重复项"></a>Leetcode1047.删除字符串中的所有相邻重复项</h2><p>给出由小写字母组成的字符串 S，重复项删除操作会选择两个相邻且相同的字母，并删除它们。</p>
+<p>在 S 上反复执行重复项删除操作，直到无法继续删除。</p>
+<p>在完成所有重复项删除操作后返回最终的字符串。答案保证唯一。</p>
+<p> <a href="https://leetcode-cn.com/problems/remove-all-adjacent-duplicates-in-string" target="_blank" rel="noopener">题目链接</a></p>
+<a id="more"></a>
+
+<p>示例：</p>
+<p>输入：”abbaca”<br>输出：”ca”<br>解释：<br>例如，在 “abbaca” 中，我们可以删除 “bb” 由于两字母相邻且相同，这是此时唯一可以执行删除操作的重复项。之后我们得到字符串 “aaca”，其中又只有 “aa” 可以执行重复项删除操作，所以最后的字符串为 “ca”。</p>
+<p>提示：</p>
+<blockquote>
+<p>1 &lt;= S.length &lt;= 20000</p>
+<p>S 仅由小写英文字母组成。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Stack;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">removeDuplicates</span><span class="params">(String S)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//S为空时</span></span><br><span class="line">        <span class="keyword">if</span> (S.equals(<span class="string">""</span>)||S ==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> S;</span><br><span class="line">        &#125;</span><br><span class="line">        Stack&lt;Character&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">        <span class="comment">//将第一个元素入栈，防止出现StackEmpty错误</span></span><br><span class="line">        stack.push(S.charAt(<span class="number">0</span>));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;S.length();i++)&#123;</span><br><span class="line">            <span class="keyword">char</span> c = S.charAt(i);</span><br><span class="line">            <span class="comment">//逐个遍历，与栈顶元素相同则出栈，不同就入栈</span></span><br><span class="line">            <span class="keyword">if</span> (!stack.isEmpty() &amp;&amp;c==((<span class="keyword">char</span>)stack.peek()))&#123;</span><br><span class="line">                stack.pop();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                stack.push(c);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//转化为String格式</span></span><br><span class="line">        StringBuilder stringBuilder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c:stack)&#123;</span><br><span class="line">            stringBuilder.append(c);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> stringBuilder.toString();</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+
       
     </div>
     
@@ -354,6 +392,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Stack-Java/" rel="tag"><i class="fa fa-tag"></i>Stack,Java</a>
+          
+        </div>
       
 
       
@@ -424,8 +468,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -508,6 +561,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode1047-删除字符串中的所有相邻重复项"><span class="nav-text">Leetcode1047.删除字符串中的所有相邻重复项</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
