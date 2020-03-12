@@ -262,6 +262,179 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/12/Leetcode402-%E7%A7%BB%E6%8E%89K%E4%BD%8D%E6%95%B0%E5%AD%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="flbu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flbu blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/12/Leetcode402-%E7%A7%BB%E6%8E%89K%E4%BD%8D%E6%95%B0%E5%AD%97/" itemprop="url">Leetcode402.移掉K位数字</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-12T14:26:44+08:00">
+                2020-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">Leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Leetcode402-移掉K位数字"><a href="#Leetcode402-移掉K位数字" class="headerlink" title="Leetcode402.移掉K位数字"></a>Leetcode402.移掉K位数字</h2><p>给定一个以字符串表示的非负整数 num，移除这个数中的 k 位数字，使得剩下的数字最小。</p>
+<p>注意:</p>
+<p>num 的长度小于 10002 且 ≥ k。</p>
+<p>num 不会包含任何前导零。</p>
+<p><a href="https://leetcode-cn.com/problems/remove-k-digits" target="_blank" rel="noopener">题目链接</a></p>
+<p>示例 1 :</p>
+<blockquote>
+<p>输入: num = “1432219”, k = 3</p>
+<p>输出: “1219”<br>解释: 移除掉三个数字 4, 3, 和 2 形成一个新的最小的数字 1219。</p>
+</blockquote>
+<p>示例 2 :</p>
+<blockquote>
+<p>输入: num = “10200”, k = 1</p>
+<p>输出: “200”<br>解释: 移掉首位的 1 剩下的数字为 200. 注意输出不能有任何前导零。</p>
+</blockquote>
+<p>示例 3 :</p>
+<blockquote>
+<p>输入: num = “10”, k = 2</p>
+<p>输出: “0”<br>解释: 从原数字移除所有的数字，剩余为空就是0。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">removeKdigits</span><span class="params">(String num, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">         LinkedList&lt;Character&gt; stack = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c:num.toCharArray())&#123;</span><br><span class="line">            <span class="comment">//利用了&amp;&amp;的截断，避免了栈中首个元素peek时为空</span></span><br><span class="line">            <span class="keyword">while</span> (k&gt;<span class="number">0</span>  &amp;&amp; stack.size()&gt;<span class="number">0</span> &amp;&amp; stack.peekLast()&gt;c)&#123;</span><br><span class="line">                k--;</span><br><span class="line">                stack.removeLast();</span><br><span class="line">            &#125;</span><br><span class="line">            stack.addLast(c);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//防止递增数列情况，除去末尾的大数字</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ;i&lt;k;i++)&#123;</span><br><span class="line">            stack.removeLast();</span><br><span class="line">        &#125;</span><br><span class="line">        StringBuilder ret = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="comment">//除去前导零</span></span><br><span class="line">        <span class="keyword">boolean</span> leadingZero = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c : stack)&#123;</span><br><span class="line">            <span class="keyword">if</span> (leadingZero &amp;&amp; c==<span class="string">'0'</span>)&#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            leadingZero = <span class="keyword">false</span>;</span><br><span class="line">            ret.append(c);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//栈为空时返回0</span></span><br><span class="line">        <span class="keyword">if</span> (ret.length()==<span class="number">0</span>) <span class="keyword">return</span> <span class="string">"0"</span>;</span><br><span class="line">        <span class="keyword">return</span> ret.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>思路</p>
+<p><strong>1. 给定一个数字序列[D1 D2 D3…Dn]，如果数字D2小于其左邻居D1，则我们应该删除左邻居(D1)，以获得最小结果。对于每个数字，如果该数字小于栈顶元素，即该数字的左邻居，则弹出堆栈，即删除左邻居，否则推入堆栈。重复上述步骤，直至堆栈为空或者已经删除K位数字。</strong></p>
+<p><strong>2.但对于某些情况，规则对任意数字都不适用，即单调递增数列，对此我们只需要删除末尾数字即可。</strong></p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+<div>
+  
+</div>
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/11/Leetcode1047-%E5%88%A0%E9%99%A4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E7%9B%B8%E9%82%BB%E9%87%8D%E5%A4%8D%E9%A1%B9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1517,7 +1690,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
