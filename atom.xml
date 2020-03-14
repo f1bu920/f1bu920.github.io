@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-12T08:27:10.669Z</updated>
+  <updated>2020-03-14T05:10:31.781Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode面试题 10.01.合并排序的数组</title>
+    <link href="http://yoursite.com/2020/03/14/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%98-10-01-%E5%90%88%E5%B9%B6%E6%8E%92%E5%BA%8F%E7%9A%84%E6%95%B0%E7%BB%84/"/>
+    <id>http://yoursite.com/2020/03/14/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%98-10-01-%E5%90%88%E5%B9%B6%E6%8E%92%E5%BA%8F%E7%9A%84%E6%95%B0%E7%BB%84/</id>
+    <published>2020-03-14T05:00:04.000Z</published>
+    <updated>2020-03-14T05:10:31.781Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Leetcode面试题-10-01-合并排序的数组"><a href="#Leetcode面试题-10-01-合并排序的数组" class="headerlink" title="Leetcode面试题 10.01.合并排序的数组"></a>Leetcode面试题 10.01.合并排序的数组</h2><p>给定两个排序后的数组 A 和 B，其中 A 的末端有足够的缓冲空间容纳 B。 编写一个方法，将 B 合并入 A 并排序。</p><p>初始化 A 和 B 的元素数量分别为 m 和 n。</p><p><a href="https://leetcode-cn.com/problems/sorted-merge-lcci" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例:</p><blockquote><p>输入:</p><p>A = [1,2,3,0,0,0], m = 3<br>B = [2,5,6],       n = 3</p><p>输出: [1,2,2,3,5,6]</p></blockquote><p>说明:</p><blockquote><p>A.length == n + m</p></blockquote><p><strong>思路：双指针法，利用数组已经排序的性质，将两个数组看成队列，每次从两个数组头部取出较小的数字放入结果中。代码实现如下：</strong></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span>[] A, <span class="keyword">int</span> m, <span class="keyword">int</span>[] B, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//x,y为数组A，B的指针</span></span><br><span class="line">        <span class="keyword">int</span> x=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> y = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> i =<span class="number">0</span>;</span><br><span class="line">        <span class="comment">//将A复制到t中</span></span><br><span class="line">        <span class="keyword">int</span>[] t = <span class="keyword">new</span> <span class="keyword">int</span>[m];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>;j&lt;m;j++)&#123;</span><br><span class="line">            t[j]=A[j];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//每次从B和t头部取出较小的数字放入A中，直至有一个数组全部取出后将另一个数组接到A的尾部</span></span><br><span class="line">        <span class="keyword">while</span> (x&lt;m||y&lt;n)&#123;</span><br><span class="line">            <span class="keyword">if</span> (x==m)&#123;</span><br><span class="line">               A[i++] = B[y++];</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">               <span class="keyword">if</span> (y==n)&#123;</span><br><span class="line">                  A[i++] = t[x++];</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="keyword">else</span>&#123;</span><br><span class="line">                 <span class="keyword">if</span> (t[x]&lt;B[y])&#123;</span><br><span class="line">                    A[i++] = t[x++];</span><br><span class="line">                 &#125;</span><br><span class="line">                 <span class="keyword">else</span> &#123;</span><br><span class="line">                   A[i++] = B[y++];</span><br><span class="line">                 &#125;</span><br><span class="line">               &#125;</span><br><span class="line">            &#125;</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Leetcode面试题-10-01-合并排序的数组&quot;&gt;&lt;a href=&quot;#Leetcode面试题-10-01-合并排序的数组&quot; class=&quot;headerlink&quot; title=&quot;Leetcode面试题 10.01.合并排序的数组&quot;&gt;&lt;/a&gt;Leetcode面试题 10.01.合并排序的数组&lt;/h2&gt;&lt;p&gt;给定两个排序后的数组 A 和 B，其中 A 的末端有足够的缓冲空间容纳 B。 编写一个方法，将 B 合并入 A 并排序。&lt;/p&gt;
+&lt;p&gt;初始化 A 和 B 的元素数量分别为 m 和 n。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/sorted-merge-lcci&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
+    
+    
+      <category term="Array,Java" scheme="http://yoursite.com/tags/Array-Java/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode1071.字符串的最大公因子</title>
