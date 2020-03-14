@@ -120,9 +120,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
-    
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
     
   </entry>
   
@@ -148,9 +148,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
-    
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
     
   </entry>
   
@@ -199,9 +199,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
-    
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
     
   </entry>
   
@@ -263,7 +263,7 @@
     <link href="http://yoursite.com/2019/11/24/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
     <id>http://yoursite.com/2019/11/24/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</id>
     <published>2019-11-24T12:18:48.000Z</published>
-    <updated>2020-03-11T07:49:59.444Z</updated>
+    <updated>2020-03-14T08:00:06.405Z</updated>
     
     <content type="html"><![CDATA[<h2 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a>lambda表达式</h2><h3 id="格式：参数-gt-表达式"><a href="#格式：参数-gt-表达式" class="headerlink" title="格式：参数 -&gt; (表达式)"></a>格式：参数 -&gt; (表达式)</h3><p>如果代码要完成的计算无法放在一个表达式中，可以把代码放在{}中。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(str, (String first,String second) -&gt; (<span class="keyword">return</span> (first.length()-second.length()))</span><br></pre></td></tr></table></figure><p>即使<code>lambda</code>无参数，也要提供空括号.</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">()-&gt; &#123;<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++) System.out.println(i);&#125;</span><br></pre></td></tr></table></figure><p>如果可以推导出一个<code>lambda</code>的参数类型，则可以忽略参数类型</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(friends,(first,second) -&gt; (first.length()-second.length()));<span class="comment">//friends是一个字符串数组</span></span><br></pre></td></tr></table></figure><p>无需指定lambda的返回值类型，返回值类型会由上下文推导得到</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(String str1,String str2) -&gt; str1.length()-str2.length();</span><br></pre></td></tr></table></figure><a id="more"></a> <h3 id="函数式接口"><a href="#函数式接口" class="headerlink" title="函数式接口"></a>函数式接口</h3><p>对于只有一个抽象方法的接口，需要这种接口的对象时，就可以提供一个<code>lambda</code>，这种接口叫做函数式接口。</p><p><strong>lambda可以转换为函数式接口</strong>，举例：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(words, (first,second)-&gt;first.length()-second.length());</span><br><span class="line">people.removeIf(person -&gt; (person.getName().length()&gt;<span class="number">3</span>)); <span class="comment">//removeIf接受一个Predicate参数，这个接口专门用来传递lambda表达式</span></span><br></pre></td></tr></table></figure><h3 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h3><p>可以<code>::</code>分隔方法名与对象或类名。主要有3种情况。</p><ol><li><code>object::instanceMethod</code></li><li><code>Class::staticMethod</code></li><li><code>Class:;instanceMethod</code></li></ol><p>前2种情况下，方法引用等价于提供方法参数的lambda表达式。</p><blockquote><p>System.out::println等价于x -&gt; System.out.println(x);</p><p>Math::power等价于(x,y) -&gt; (Math.power(x,y));</p></blockquote><p>  第三种情况下，第一个参数会成为方法的目标。</p><blockquote><p>String::compareToIgnoreCase等价于(x,y) -&gt; x.compareToIgnoreCase(y);</p></blockquote><p>方法引用中也可以使用<code>this</code>和<code>super</code>，如``super::instanceMethod`.</p><h3 id="构造器引用"><a href="#构造器引用" class="headerlink" title="构造器引用"></a>构造器引用</h3><p>构造器引用用法与方法引用类似，只不过方法名为new。举例：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> []::<span class="keyword">new</span>  <span class="comment">//等价于 x -&gt; new int[x],x是数组的长度</span></span><br><span class="line">Perosn [] people = stream.toArray(Person::<span class="keyword">new</span>);</span><br></pre></td></tr></table></figure><h3 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h3><p>通常会使用<code>lambda</code>访问外围方法或类中的变量</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">repeatMessage</span><span class="params">(String str)</span></span>&#123;</span><br><span class="line">    ActionListener listener = event -&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">repeatMessage(<span class="string">"hello"</span>);</span><br></pre></td></tr></table></figure><p>这里str就是一个自由变量。我们说它被lambda捕获。</p><p><code>lambda</code>表达式有3个部分：</p><ol><li>一个代码块</li><li>参数</li><li>自由变量的值，这里指非参数而且不在代码中定义的变量。</li></ol><p><strong>在Java中，<code>lambda</code>就是闭包</strong>。</p><p><strong><code>lambda</code>只能捕获值不变的变量</strong>，指变量初始化后就不会再为它赋新值。</p><h3 id="处理lambda表达式"><a href="#处理lambda表达式" class="headerlink" title="处理lambda表达式"></a>处理lambda表达式</h3><p>使用<code>lambda</code>的重点是延迟执行，例如</p><ol><li>在一个单独的线程中运行代码</li><li>多次运行代码</li><li>在算法的合适位置运行代码(例如，排序中的比较操作)</li><li>发生某种情况时执行代码(如，点击了某个按钮，数据到达等)</li><li>只在必要时运行代码</li></ol><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">IntConsumer</span></span>&#123;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">accept</span><span class="params">(<span class="keyword">int</span> value)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">repeat</span><span class="params">(<span class="keyword">int</span> n, IntConsumer action)</span></span>&#123;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i =<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">action.accept(i);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">Student.repeat(<span class="number">10</span>,i-&gt; System.out.println(<span class="string">"CountDown:"</span>+(<span class="number">9</span>-i)));<span class="comment">//调用</span></span><br></pre></td></tr></table></figure><h3 id="再谈Comparator"><a href="#再谈Comparator" class="headerlink" title="再谈Comparator"></a>再谈Comparator</h3><p><code>Comparator</code>接口包含很多的静态方法来创建构造器，这些方法可用于lambda表达式或方法引用。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(people,Comparator.comparing(Person::getName));<span class="comment">//按名字对people进行排序</span></span><br><span class="line">Arrays.sort(people,Comparator.comparing(Person::getLastName).thencomparing(Person::getFirstName));<span class="comment">//如果两人的姓一致则比较名；</span></span><br></pre></td></tr></table></figure>]]></content>
     
@@ -287,7 +287,9 @@
       <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
     
     
-      <category term="Java Notes" scheme="http://yoursite.com/tags/Java-Notes/"/>
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="lambda" scheme="http://yoursite.com/tags/lambda/"/>
     
   </entry>
   
@@ -296,7 +298,7 @@
     <link href="http://yoursite.com/2019/11/23/Git%E7%AC%94%E8%AE%B0/"/>
     <id>http://yoursite.com/2019/11/23/Git%E7%AC%94%E8%AE%B0/</id>
     <published>2019-11-23T09:47:42.000Z</published>
-    <updated>2019-11-24T13:52:15.643Z</updated>
+    <updated>2020-03-14T07:59:19.583Z</updated>
     
     <content type="html"><![CDATA[<h3 id="下载与安装Git"><a href="#下载与安装Git" class="headerlink" title="下载与安装Git"></a>下载与安装Git</h3><p><a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git" target="_blank" rel="noopener">Git下载</a>，在git Bash下执行<code>git --version</code>，返回Git版本。</p><a id="more"></a> <h3 id="最小配置"><a href="#最小配置" class="headerlink" title="最小配置"></a>最小配置</h3><h4 id="配置user信息"><a href="#配置user信息" class="headerlink" title="配置user信息"></a>配置user信息</h4><ul><li><p>配置user.name和user.email：</p><blockquote><p>git conﬁg –global  user.name ‘your_name’</p><p>git conﬁg –global  user.email ‘<a href="mailto:your_email@domain.com" target="_blank" rel="noopener">your_email@domain.com</a>‘</p></blockquote></li></ul><h4 id="config的三个作用域"><a href="#config的三个作用域" class="headerlink" title="config的三个作用域"></a>config的三个作用域</h4><ul><li>缺省默认为local</li></ul><blockquote><p>git config –local：只对本地仓库生效</p><p>git config –global：对登录用户所有仓库生效</p><p>git config –system：对系统所有用户生效</p></blockquote><ul><li><p>显示config的配置，加上<code>--list</code></p><blockquote><p> git conﬁg –list –local  </p><p> git conﬁg –list –global </p><p> git conﬁg –list –system</p></blockquote></li><li><p>清除，加上 <code>--unset</code></p><blockquote><p>​git conﬁg –unset –local user.name  </p><p>git conﬁg –unset –global user.name </p><p>git conﬁg –unset –system user.name</p></blockquote></li><li><p>优先级：local&gt;global&gt;system</p></li></ul><h3 id="创建Git仓库"><a href="#创建Git仓库" class="headerlink" title="创建Git仓库"></a>创建Git仓库</h3><p>两种方式创建</p><ol><li><p>Git之前已有代码</p><blockquote><p>cd 文件夹</p><p>git init</p></blockquote></li><li><p>Git之前没有项目代码</p><blockquote><p>cd 文件夹</p><p>git init your_project_name</p><p>cd your_project_name</p></blockquote></li></ol>]]></content>
     
@@ -310,7 +312,7 @@
       <category term="Git" scheme="http://yoursite.com/categories/Git/"/>
     
     
-      <category term="git Notes" scheme="http://yoursite.com/tags/git-Notes/"/>
+      <category term="Git" scheme="http://yoursite.com/tags/Git/"/>
     
   </entry>
   
