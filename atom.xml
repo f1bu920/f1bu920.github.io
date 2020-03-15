@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-15T08:04:48.536Z</updated>
+  <updated>2020-03-15T10:36:46.103Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,13 +17,40 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>LeetCode169.多数元素</title>
+    <link href="http://yoursite.com/2020/03/15/Leetcode169-%E5%A4%9A%E6%95%B0%E5%85%83%E7%B4%A0/"/>
+    <id>http://yoursite.com/2020/03/15/Leetcode169-%E5%A4%9A%E6%95%B0%E5%85%83%E7%B4%A0/</id>
+    <published>2020-03-15T10:09:55.000Z</published>
+    <updated>2020-03-15T10:36:46.103Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="LeetCode169-多数元素"><a href="#LeetCode169-多数元素" class="headerlink" title="LeetCode169.多数元素"></a>LeetCode169.多数元素</h2><p>给定一个大小为 n 的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于 ⌊ n/2 ⌋ 的元素。</p><p>你可以假设数组是非空的，并且给定的数组总是存在多数元素。</p><p><a href="https://leetcode-cn.com/problems/majority-element" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例 1:</p><blockquote><p>输入: [3,2,3]</p><p>输出: 3</p></blockquote><p>示例 2:</p><blockquote><p>输入: [2,2,1,1,1,2,2]</p><p>输出: 2</p></blockquote><h4 id="解法一：哈希表"><a href="#解法一：哈希表" class="headerlink" title="解法一：哈希表"></a>解法一：哈希表</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">majorityElement</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">       HashMap&lt;Integer,Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> num:nums)&#123;</span><br><span class="line">           <span class="keyword">if</span> (!map.containsKey(num))&#123;</span><br><span class="line">               map.put(num,<span class="number">1</span>);</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">else</span> &#123;</span><br><span class="line">               map.put(num,map.get(num)+<span class="number">1</span>);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       Map.Entry&lt;Integer,Integer&gt; majorityEntry = <span class="keyword">null</span>;</span><br><span class="line">       <span class="keyword">for</span> (Map.Entry&lt;Integer,Integer&gt; entry : map.entrySet())&#123;</span><br><span class="line">           <span class="keyword">if</span> (majorityEntry == <span class="keyword">null</span>||entry.getValue()&gt;majorityEntry.getValue())&#123;</span><br><span class="line">               majorityEntry = entry;</span><br><span class="line">           &#125;</span><br><span class="line">      &#125;</span><br><span class="line">       <span class="keyword">return</span> majorityEntry.getKey();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="解法二：排序"><a href="#解法二：排序" class="headerlink" title="解法二：排序"></a>解法二：排序</h4><p>因为题中说明了众数数目多余n/2，所以排序后n/2处一定为众数。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(nums);</span><br><span class="line"><span class="keyword">return</span> nums[nums.length/<span class="number">2</span>];</span><br></pre></td></tr></table></figure><h3 id="解法三：投票算法"><a href="#解法三：投票算法" class="headerlink" title="解法三：投票算法"></a>解法三：投票算法</h3><ul><li><p>思路</p><p>如果我们把众数记为1，其他数记为-1，全部加起来后，显然和大于0.</p></li><li><p>算法</p><ul><li>我们先维护一个候选众数<code>candidate</code>和它出现的次数<code>count</code>，初始时<code>candidate</code>为任意值，<code>count</code>为0.</li><li>遍历数组元素，对于每个出现的元素<code>num</code>，如果判断<code>num</code>之前，<code>count</code>为0，将<code>num</code>的值赋给<code>candidate</code>。然后进行如下判断：<ul><li>若<code>num</code>与<code>candidate</code>相等，则<code>count++</code></li><li>如果<code>num</code>与<code>candidate</code>不等，则<code>count--</code></li></ul></li><li>遍历完成后，<code>candidate</code>即为众数</li></ul></li><li><p>代码实现：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">majorityElement</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//投票算法</span></span><br><span class="line">        <span class="keyword">int</span> candidate = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num:nums)&#123;</span><br><span class="line">            <span class="keyword">if</span> (count == <span class="number">0</span> )&#123;</span><br><span class="line">                candidate = num;</span><br><span class="line">            &#125;</span><br><span class="line">            count+=num==candidate? <span class="number">1</span>:-<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> candidate;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;LeetCode169-多数元素&quot;&gt;&lt;a href=&quot;#LeetCode169-多数元素&quot; class=&quot;headerlink&quot; title=&quot;LeetCode169.多数元素&quot;&gt;&lt;/a&gt;LeetCode169.多数元素&lt;/h2&gt;&lt;p&gt;给定一个大小为 n 的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于 ⌊ n/2 ⌋ 的元素。&lt;/p&gt;
+&lt;p&gt;你可以假设数组是非空的，并且给定的数组总是存在多数元素。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/majority-element&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Leetcode121.买卖股票的最佳时机</title>
     <link href="http://yoursite.com/2020/03/15/Leetcode121-%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA/"/>
     <id>http://yoursite.com/2020/03/15/Leetcode121-%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA/</id>
     <published>2020-03-15T08:00:47.000Z</published>
-    <updated>2020-03-15T08:04:48.536Z</updated>
+    <updated>2020-03-15T08:31:34.734Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="Leetcode121-买卖股票的最佳时机"><a href="#Leetcode121-买卖股票的最佳时机" class="headerlink" title="Leetcode121.买卖股票的最佳时机"></a>Leetcode121.买卖股票的最佳时机</h2><p>给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。</p><p>如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。</p><p>注意你不能在买入股票前卖出股票。</p><p><a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例 1:</p><blockquote><p>输入: [7,1,5,3,6,4]</p><p>输出: 5<br>解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。<br>注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。</p></blockquote><p>示例 2:</p><blockquote><p>输入: [7,6,4,3,1]</p><p>输出: 0<br>解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。</p></blockquote><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span>[] prices)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//记录最大利润</span></span><br><span class="line">        <span class="keyword">int</span> maxProfit = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> minPrice = Integer.MAX_VALUE;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;prices.length;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span> (prices[i]&lt;minPrice)&#123;</span><br><span class="line">                minPrice = prices[i];</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (prices[i]-minPrice&gt;maxProfit)&#123;</span><br><span class="line">                    maxProfit = prices[i] - minPrice;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maxProfit;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<h2 id="Leetcode121-买卖股票的最佳时机"><a href="#Leetcode121-买卖股票的最佳时机" class="headerlink" title="Leetcode121.买卖股票的最佳时机"></a>Leetcode121.买卖股票的最佳时机</h2><p>给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。</p><p>如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。</p><p>注意你不能在买入股票前卖出股票。</p><p><a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock" target="_blank" rel="noopener">题目链接</a></p><p><a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/solution/yi-ge-fang-fa-tuan-mie-6-dao-gu-piao-wen-ti-by-l-3/" target="_blank" rel="noopener">一个非常牛逼的大佬的解法</a></p><a id="more"></a><p>示例 1:</p><blockquote><p>输入: [7,1,5,3,6,4]</p><p>输出: 5<br>解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。<br>注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。</p></blockquote><p>示例 2:</p><blockquote><p>输入: [7,6,4,3,1]</p><p>输出: 0<br>解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。</p></blockquote><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span>[] prices)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//记录最大利润</span></span><br><span class="line">        <span class="keyword">int</span> maxProfit = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> minPrice = Integer.MAX_VALUE;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;prices.length;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span> (prices[i]&lt;minPrice)&#123;</span><br><span class="line">                minPrice = prices[i];</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (prices[i]-minPrice&gt;maxProfit)&#123;</span><br><span class="line">                    maxProfit = prices[i] - minPrice;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maxProfit;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
@@ -31,6 +58,7 @@
 &lt;p&gt;如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。&lt;/p&gt;
 &lt;p&gt;注意你不能在买入股票前卖出股票。&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/solution/yi-ge-fang-fa-tuan-mie-6-dao-gu-piao-wen-ti-by-l-3/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;一个非常牛逼的大佬的解法&lt;/a&gt;&lt;/p&gt;
     
     </summary>
     
@@ -148,9 +176,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
-    
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
     
   </entry>
   
@@ -176,9 +204,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
-    
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
     
   </entry>
   
@@ -227,9 +255,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
-    
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
     
   </entry>
   
