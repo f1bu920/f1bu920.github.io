@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Java,String," />
+  <meta name="keywords" content="Queue,广度优先搜索," />
 
 
 
@@ -81,15 +81,15 @@
 
 
 
-<meta name="description" content="Leetcode1071.字符串的最大公因子对于字符串 S 和 T，只有在 S = T + … + T（T 与自身连接 1 次或多次）时，我们才认定 “T 能除尽 S”。 返回最长字符串 X，要求满足 X 能除尽 str1 且 X 能除尽 str2。 题目链接">
-<meta name="keywords" content="Java,String">
+<meta name="description" content="Leetcode994.腐烂的橘子在给定的网格中，每个单元格可以有以下三个值之一： 值 0 代表空单元格；值 1 代表新鲜橘子；值 2 代表腐烂的橘子。每分钟，任何与腐烂的橘子（在 4 个正方向上）相邻的新鲜橘子都会腐烂。 返回直到单元格中没有新鲜橘子为止所必须经过的最小分钟数。如果不可能，返回 -1。  题目链接">
+<meta name="keywords" content="Queue,广度优先搜索">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode1071.字符串的最大公因子">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;12&#x2F;Leetcode1071-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%9C%80%E5%A4%A7%E5%85%AC%E5%9B%A0%E5%AD%90&#x2F;index.html">
+<meta property="og:title" content="Leetcode994.腐烂的橘子">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;16&#x2F;Leetcode994-%E8%85%90%E7%83%82%E7%9A%84%E6%A9%98%E5%AD%90&#x2F;index.html">
 <meta property="og:site_name" content="flbu blog">
-<meta property="og:description" content="Leetcode1071.字符串的最大公因子对于字符串 S 和 T，只有在 S = T + … + T（T 与自身连接 1 次或多次）时，我们才认定 “T 能除尽 S”。 返回最长字符串 X，要求满足 X 能除尽 str1 且 X 能除尽 str2。 题目链接">
+<meta property="og:description" content="Leetcode994.腐烂的橘子在给定的网格中，每个单元格可以有以下三个值之一： 值 0 代表空单元格；值 1 代表新鲜橘子；值 2 代表腐烂的橘子。每分钟，任何与腐烂的橘子（在 4 个正方向上）相邻的新鲜橘子都会腐烂。 返回直到单元格中没有新鲜橘子为止所必须经过的最小分钟数。如果不可能，返回 -1。  题目链接">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-14T07:51:34.304Z">
+<meta property="og:updated_time" content="2020-03-16T08:10:49.911Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/03/12/Leetcode1071-字符串的最大公因子/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/03/16/Leetcode994-腐烂的橘子/"/>
 
 
 
 
 
-  <title>Leetcode1071.字符串的最大公因子 | flbu blog</title>
+  <title>Leetcode994.腐烂的橘子 | flbu blog</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/12/Leetcode1071-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%9C%80%E5%A4%A7%E5%85%AC%E5%9B%A0%E5%AD%90/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/16/Leetcode994-%E8%85%90%E7%83%82%E7%9A%84%E6%A9%98%E5%AD%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="flbu">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Leetcode1071.字符串的最大公因子</h1>
+          <h1 class="post-title" itemprop="name headline">Leetcode994.腐烂的橘子</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-12T16:16:25+08:00">
-                2020-03-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-16T15:57:37+08:00">
+                2020-03-16
               </time>
             
 
@@ -352,33 +352,41 @@
       
 
       
-        <h2 id="Leetcode1071-字符串的最大公因子"><a href="#Leetcode1071-字符串的最大公因子" class="headerlink" title="Leetcode1071.字符串的最大公因子"></a>Leetcode1071.字符串的最大公因子</h2><p>对于字符串 S 和 T，只有在 S = T + … + T（T 与自身连接 1 次或多次）时，我们才认定 “T 能除尽 S”。</p>
-<p>返回最长字符串 X，要求满足 X 能除尽 str1 且 X 能除尽 str2。</p>
-<p><a href="https://leetcode-cn.com/problems/greatest-common-divisor-of-strings" target="_blank" rel="noopener">题目链接</a></p>
+        <h2 id="Leetcode994-腐烂的橘子"><a href="#Leetcode994-腐烂的橘子" class="headerlink" title="Leetcode994.腐烂的橘子"></a>Leetcode994.腐烂的橘子</h2><p>在给定的网格中，每个单元格可以有以下三个值之一：</p>
+<p>值 0 代表空单元格；<br>值 1 代表新鲜橘子；<br>值 2 代表腐烂的橘子。<br>每分钟，任何与腐烂的橘子（在 4 个正方向上）相邻的新鲜橘子都会腐烂。</p>
+<p>返回直到单元格中没有新鲜橘子为止所必须经过的最小分钟数。如果不可能，返回 -1。</p>
+<p> <a href="https://leetcode-cn.com/problems/rotting-oranges" target="_blank" rel="noopener">题目链接</a></p>
 <a id="more"></a>
 
 <p>示例 1：</p>
 <blockquote>
-<p>输入：str1 = “ABCABC”, str2 = “ABC”</p>
-<p>输出：”ABC”</p>
+<p>输入：[[2,1,1],[1,1,0],[0,1,1]]</p>
+<p>输出：4</p>
 </blockquote>
 <p>示例 2：</p>
 <blockquote>
-<p>输入：str1 = “ABABAB”, str2 = “ABAB”</p>
-<p>输出：”AB”</p>
+<p>输入：[[2,1,1],[0,1,1],[1,0,1]]</p>
+<p>输出：-1<br>解释：左下角的橘子（第 2 行， 第 0 列）永远不会腐烂，因为腐烂只会发生在 4 个正向上。</p>
 </blockquote>
 <p>示例 3：</p>
 <blockquote>
-<p>输入：str1 = “LEET”, str2 = “CODE”</p>
-<p>输出：””</p>
+<p>输入：[[0,2]]</p>
+<p>输出：0<br>解释：因为 0 分钟时已经没有新鲜橘子了，所以答案就是 0 。</p>
 </blockquote>
 <p>提示：</p>
 <blockquote>
-<p>1 &lt;= str1.length &lt;= 1000</p>
-<p>1 &lt;= str2.length &lt;= 1000<br>str1[i] 和 str2[i] 为大写英文字母</p>
+<p>1 &lt;= grid.length &lt;= 10</p>
+<p>1 &lt;= grid[0].length &lt;= 10<br>grid[i][j] 仅为 0、1 或 2</p>
 </blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">gcdOfStrings</span><span class="params">(String str1, String str2)</span> </span>&#123;</span><br><span class="line">         <span class="keyword">if</span> (!(str1+str2).equals(str2+str1)) <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">int</span> len1 = str1.length();</span><br><span class="line">        <span class="keyword">int</span> len2 = str2.length();</span><br><span class="line">        <span class="comment">//最大公约数</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = Math.min(len1,len2);i&gt;=<span class="number">1</span>;i--)&#123;</span><br><span class="line">            <span class="keyword">if</span> (len1%i==<span class="number">0</span> &amp;&amp; len2%i==<span class="number">0</span>)&#123;</span><br><span class="line">                <span class="comment">//最大公约数对应子串</span></span><br><span class="line">                String x = str1.substring(<span class="number">0</span>,i);</span><br><span class="line">                <span class="keyword">int</span> lenx = x.length();</span><br><span class="line">                <span class="comment">//判断相加len/lenx次后是否与str1和str2相等</span></span><br><span class="line">                <span class="keyword">int</span> x1 = len1 / lenx;</span><br><span class="line">                <span class="keyword">int</span> x2 = len2 / lenx;</span><br><span class="line">                String temp1 = <span class="string">""</span>;</span><br><span class="line">                String temp2 = <span class="string">""</span>;</span><br><span class="line">                <span class="keyword">while</span> (x1&gt;<span class="number">0</span>)&#123;</span><br><span class="line">                    temp1 = temp1+ x;</span><br><span class="line">                    x1--;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">while</span> (x2&gt;<span class="number">0</span>)&#123;</span><br><span class="line">                    temp2 +=x;</span><br><span class="line">                    x2--;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//最大公因子只可能是最大公约数时取得，若相等则返回，否则为空</span></span><br><span class="line">                <span class="keyword">if</span> (temp1.equals(str1) &amp;&amp;temp2.equals(str2))&#123;</span><br><span class="line">                    <span class="keyword">return</span> x;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>思路</p>
+<p>第一天将所有的烂橘子入队列，然后按天数依次腐烂，新腐烂的橘子入队列，记录天数。然后判断是否还有没腐烂的橘子。</p>
+</li>
+<li><p>代码实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">//按照上左下右的顺序腐烂</span></span><br><span class="line">    <span class="keyword">int</span>[] tr = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;-<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span>[] tc = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>, <span class="number">1</span>&#125;;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">orangesRotting</span><span class="params">(<span class="keyword">int</span>[][] grid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> R = grid.length;</span><br><span class="line">        <span class="comment">//队列</span></span><br><span class="line">        Queue&lt;Integer&gt; arrayDeque = <span class="keyword">new</span> ArrayDeque&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span> C = grid[<span class="number">0</span>].length;</span><br><span class="line">        <span class="comment">//存储天数</span></span><br><span class="line">        Map&lt;Integer, Integer&gt; depth = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="comment">//将第0天所有腐烂的橘子入队列</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r &lt; R; r++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> c = <span class="number">0</span>; c &lt; C; c++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (grid[r][c] == <span class="number">2</span>) &#123;</span><br><span class="line">                    <span class="comment">//转换为单数组</span></span><br><span class="line">                    <span class="keyword">int</span> code = r * C + c;</span><br><span class="line">                    arrayDeque.add(code);</span><br><span class="line">                    depth.put(code, <span class="number">0</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//存储结果</span></span><br><span class="line">        <span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (!arrayDeque.isEmpty()) &#123;</span><br><span class="line">            <span class="keyword">int</span> code = arrayDeque.remove();</span><br><span class="line">            <span class="keyword">int</span> r = code / C, c = code % C;</span><br><span class="line">            <span class="comment">//按上左下右顺序</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; <span class="number">4</span>; k++) &#123;</span><br><span class="line">                <span class="keyword">int</span> nr = r + tr[k];</span><br><span class="line">                <span class="keyword">int</span> nc = c + tc[k];</span><br><span class="line">                <span class="keyword">if</span> (<span class="number">0</span> &lt;= nr &amp;&amp; nr &lt; R &amp;&amp; <span class="number">0</span> &lt;= nc &amp;&amp; nc &lt; C &amp;&amp; grid[nr][nc] == <span class="number">1</span>) &#123;</span><br><span class="line">                    grid[nr][nc] = <span class="number">2</span>;</span><br><span class="line">                    <span class="keyword">int</span> ncode = nr * C + nc;</span><br><span class="line">                    arrayDeque.add(ncode);</span><br><span class="line">                    depth.put(ncode, depth.get(code) + <span class="number">1</span>);</span><br><span class="line">                    ret = depth.get(ncode);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//最后判断是否还有新鲜的橘子</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span>[] row : grid) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> col : row) &#123;</span><br><span class="line">                <span class="keyword">if</span> (col == <span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+</li>
+</ul>
 
       
     </div>
@@ -407,9 +415,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i>Java</a>
+            <a href="/tags/Queue/" rel="tag"><i class="fa fa-tag"></i>Queue</a>
           
-            <a href="/tags/String/" rel="tag"><i class="fa fa-tag"></i>String</a>
+            <a href="/tags/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" rel="tag"><i class="fa fa-tag"></i>广度优先搜索</a>
           
         </div>
       
@@ -422,8 +430,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/12/Leetcode402-%E7%A7%BB%E6%8E%89K%E4%BD%8D%E6%95%B0%E5%AD%97/" rel="next" title="Leetcode402.移掉K位数字">
-                <i class="fa fa-chevron-left"></i> Leetcode402.移掉K位数字
+              <a href="/2020/03/15/Leetcode169-%E5%A4%9A%E6%95%B0%E5%85%83%E7%B4%A0/" rel="next" title="LeetCode169.多数元素">
+                <i class="fa fa-chevron-left"></i> LeetCode169.多数元素
               </a>
             
           </div>
@@ -431,10 +439,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/03/14/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%98-10-01-%E5%90%88%E5%B9%B6%E6%8E%92%E5%BA%8F%E7%9A%84%E6%95%B0%E7%BB%84/" rel="prev" title="Leetcode面试题 10.01.合并排序的数组">
-                Leetcode面试题 10.01.合并排序的数组 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -589,7 +593,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode1071-字符串的最大公因子"><span class="nav-text">Leetcode1071.字符串的最大公因子</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode994-腐烂的橘子"><span class="nav-text">Leetcode994.腐烂的橘子</span></a></li></ol></div>
             
 
           </div>
