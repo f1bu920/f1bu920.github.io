@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-16T08:10:49.911Z</updated>
+  <updated>2020-03-16T09:10:30.788Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode1013.将数组分成相等的三个部分</title>
+    <link href="http://yoursite.com/2020/03/16/Leetcode1013-%E5%B0%86%E6%95%B0%E7%BB%84%E5%88%86%E6%88%90%E7%9B%B8%E7%AD%89%E7%9A%84%E4%B8%89%E4%B8%AA%E9%83%A8%E5%88%86/"/>
+    <id>http://yoursite.com/2020/03/16/Leetcode1013-%E5%B0%86%E6%95%B0%E7%BB%84%E5%88%86%E6%88%90%E7%9B%B8%E7%AD%89%E7%9A%84%E4%B8%89%E4%B8%AA%E9%83%A8%E5%88%86/</id>
+    <published>2020-03-16T09:05:38.000Z</published>
+    <updated>2020-03-16T09:10:30.788Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Leetcode1013-将数组分成相等的三个部分"><a href="#Leetcode1013-将数组分成相等的三个部分" class="headerlink" title="Leetcode1013.将数组分成相等的三个部分"></a>Leetcode1013.将数组分成相等的三个部分</h2><p>给你一个整数数组 A，只有可以将其划分为三个和相等的非空部分时才返回 true，否则返回 false。</p><p>形式上，如果可以找出索引 i+1 &lt; j 且满足 (A[0] + A[1] + … + A[i] == A[i+1] + A[i+2] + … + A[j-1] == A[j] + A[j-1] + … + A[A.length - 1]) 就可以将数组三等分。</p><p> <a href="https://leetcode-cn.com/problems/partition-array-into-three-parts-with-equal-sum" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例 1：</p><blockquote><p>输出：[0,2,1,-6,6,-7,9,1,2,0,1]</p><p>输出：true<br>解释：0 + 2 + 1 = -6 + 6 - 7 + 9 + 1 = 2 + 0 + 1</p></blockquote><p>示例 2：</p><blockquote><p>输入：[0,2,1,-6,6,7,9,-1,2,0,1]</p><p>输出：false</p></blockquote><p>示例 3：</p><blockquote><p>输入：[3,3,6,5,-2,2,5,1,-9,4]</p><p>输出：true<br>解释：3 + 3 = 6 = 5 - 2 + 2 + 5 + 1 - 9 + 4</p></blockquote><p>提示：</p><blockquote><p>3 &lt;= A.length &lt;= 50000</p><p>-10^4 &lt;= A[i] &lt;= 10^4</p></blockquote><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canThreePartsEqualSum</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> a : A) &#123;</span><br><span class="line">            sum += a;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> target = sum / <span class="number">3</span>;</span><br><span class="line">        <span class="keyword">if</span> (sum%<span class="number">3</span> != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> temp = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> time = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;A.length;i++) &#123;</span><br><span class="line">                temp += A[i];</span><br><span class="line">                <span class="keyword">if</span>(temp==target)&#123;</span><br><span class="line">                    temp = <span class="number">0</span>;</span><br><span class="line">                    time++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="comment">//防止[1,-1,1,-1,1,-1,1,-1]的情况下time&gt;3</span></span><br><span class="line">        <span class="keyword">return</span> time&gt;=<span class="number">3</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Leetcode1013-将数组分成相等的三个部分&quot;&gt;&lt;a href=&quot;#Leetcode1013-将数组分成相等的三个部分&quot; class=&quot;headerlink&quot; title=&quot;Leetcode1013.将数组分成相等的三个部分&quot;&gt;&lt;/a&gt;Leetcode1013.将数组分成相等的三个部分&lt;/h2&gt;&lt;p&gt;给你一个整数数组 A，只有可以将其划分为三个和相等的非空部分时才返回 true，否则返回 false。&lt;/p&gt;
+&lt;p&gt;形式上，如果可以找出索引 i+1 &amp;lt; j 且满足 (A[0] + A[1] + … + A[i] == A[i+1] + A[i+2] + … + A[j-1] == A[j] + A[j-1] + … + A[A.length - 1]) 就可以将数组三等分。&lt;/p&gt;
+&lt;p&gt; &lt;a href=&quot;https://leetcode-cn.com/problems/partition-array-into-three-parts-with-equal-sum&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
+    
+    
+      <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode994.腐烂的橘子</title>
