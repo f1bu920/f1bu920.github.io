@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Array,Java," />
+  <meta name="keywords" content="哈希表," />
 
 
 
@@ -81,15 +81,15 @@
 
 
 
-<meta name="description" content="Leetcode面试题 10.01.合并排序的数组给定两个排序后的数组 A 和 B，其中 A 的末端有足够的缓冲空间容纳 B。 编写一个方法，将 B 合并入 A 并排序。 初始化 A 和 B 的元素数量分别为 m 和 n。 题目链接">
-<meta name="keywords" content="Array,Java">
+<meta name="description" content="Leetcode1160.拼写单词给你一份『词汇表』（字符串数组） words 和一张『字母表』（字符串） chars。 假如你可以用 chars 中的『字母』（字符）拼写出 words 中的某个『单词』（字符串），那么我们就认为你掌握了这个单词。 注意：每次拼写时，chars 中的每个字母都只能用一次。 返回词汇表 words 中你掌握的所有单词的 长度之和。  题目链接">
+<meta name="keywords" content="哈希表">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode面试题 10.01.合并排序的数组">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;14&#x2F;Leetcode%E9%9D%A2%E8%AF%95%E9%A2%98-10-01-%E5%90%88%E5%B9%B6%E6%8E%92%E5%BA%8F%E7%9A%84%E6%95%B0%E7%BB%84&#x2F;index.html">
+<meta property="og:title" content="Leetcode1160.拼写单词">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;17&#x2F;Leetcode1160-%E6%8B%BC%E5%86%99%E5%8D%95%E8%AF%8D&#x2F;index.html">
 <meta property="og:site_name" content="flbu blog">
-<meta property="og:description" content="Leetcode面试题 10.01.合并排序的数组给定两个排序后的数组 A 和 B，其中 A 的末端有足够的缓冲空间容纳 B。 编写一个方法，将 B 合并入 A 并排序。 初始化 A 和 B 的元素数量分别为 m 和 n。 题目链接">
+<meta property="og:description" content="Leetcode1160.拼写单词给你一份『词汇表』（字符串数组） words 和一张『字母表』（字符串） chars。 假如你可以用 chars 中的『字母』（字符）拼写出 words 中的某个『单词』（字符串），那么我们就认为你掌握了这个单词。 注意：每次拼写时，chars 中的每个字母都只能用一次。 返回词汇表 words 中你掌握的所有单词的 长度之和。  题目链接">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-14T07:51:53.110Z">
+<meta property="og:updated_time" content="2020-03-17T07:19:08.058Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/03/14/Leetcode面试题-10-01-合并排序的数组/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/03/17/Leetcode1160-拼写单词/"/>
 
 
 
 
 
-  <title>Leetcode面试题 10.01.合并排序的数组 | flbu blog</title>
+  <title>Leetcode1160.拼写单词 | flbu blog</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/14/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%98-10-01-%E5%90%88%E5%B9%B6%E6%8E%92%E5%BA%8F%E7%9A%84%E6%95%B0%E7%BB%84/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/17/Leetcode1160-%E6%8B%BC%E5%86%99%E5%8D%95%E8%AF%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="flbu">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Leetcode面试题 10.01.合并排序的数组</h1>
+          <h1 class="post-title" itemprop="name headline">Leetcode1160.拼写单词</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-14T13:00:04+08:00">
-                2020-03-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-17T15:08:55+08:00">
+                2020-03-17
               </time>
             
 
@@ -352,24 +352,38 @@
       
 
       
-        <h2 id="Leetcode面试题-10-01-合并排序的数组"><a href="#Leetcode面试题-10-01-合并排序的数组" class="headerlink" title="Leetcode面试题 10.01.合并排序的数组"></a>Leetcode面试题 10.01.合并排序的数组</h2><p>给定两个排序后的数组 A 和 B，其中 A 的末端有足够的缓冲空间容纳 B。 编写一个方法，将 B 合并入 A 并排序。</p>
-<p>初始化 A 和 B 的元素数量分别为 m 和 n。</p>
-<p><a href="https://leetcode-cn.com/problems/sorted-merge-lcci" target="_blank" rel="noopener">题目链接</a></p>
+        <h2 id="Leetcode1160-拼写单词"><a href="#Leetcode1160-拼写单词" class="headerlink" title="Leetcode1160.拼写单词"></a>Leetcode1160.拼写单词</h2><p>给你一份『词汇表』（字符串数组） words 和一张『字母表』（字符串） chars。</p>
+<p>假如你可以用 chars 中的『字母』（字符）拼写出 words 中的某个『单词』（字符串），那么我们就认为你掌握了这个单词。</p>
+<p>注意：每次拼写时，chars 中的每个字母都只能用一次。</p>
+<p>返回词汇表 words 中你掌握的所有单词的 长度之和。</p>
+<p> <a href="https://leetcode-cn.com/problems/find-words-that-can-be-formed-by-characters" target="_blank" rel="noopener">题目链接</a></p>
 <a id="more"></a>
 
-<p>示例:</p>
+<p>示例 1：</p>
 <blockquote>
-<p>输入:</p>
-<p>A = [1,2,3,0,0,0], m = 3<br>B = [2,5,6],       n = 3</p>
-<p>输出: [1,2,2,3,5,6]</p>
+<p>输入：words = [“cat”,”bt”,”hat”,”tree”], chars = “atach”</p>
+<p>输出：6<br>解释：<br>可以形成字符串 “cat” 和 “hat”，所以答案是 3 + 3 = 6。</p>
 </blockquote>
-<p>说明:</p>
+<p>示例 2：</p>
 <blockquote>
-<p>A.length == n + m</p>
+<p>输入：words = [“hello”,”world”,”leetcode”], chars = “welldonehoneyr”</p>
+<p>输出：10<br>解释：<br>可以形成字符串 “hello” 和 “world”，所以答案是 5 + 5 = 10。</p>
 </blockquote>
-<p><strong>思路：双指针法，利用数组已经排序的性质，将两个数组看成队列，每次从两个数组头部取出较小的数字放入结果中。代码实现如下：</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span>[] A, <span class="keyword">int</span> m, <span class="keyword">int</span>[] B, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//x,y为数组A，B的指针</span></span><br><span class="line">        <span class="keyword">int</span> x=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> y = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> i =<span class="number">0</span>;</span><br><span class="line">        <span class="comment">//将A复制到t中</span></span><br><span class="line">        <span class="keyword">int</span>[] t = <span class="keyword">new</span> <span class="keyword">int</span>[m];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>;j&lt;m;j++)&#123;</span><br><span class="line">            t[j]=A[j];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//每次从B和t头部取出较小的数字放入A中，直至有一个数组全部取出后将另一个数组接到A的尾部</span></span><br><span class="line">        <span class="keyword">while</span> (x&lt;m||y&lt;n)&#123;</span><br><span class="line">            <span class="keyword">if</span> (x==m)&#123;</span><br><span class="line">               A[i++] = B[y++];</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">               <span class="keyword">if</span> (y==n)&#123;</span><br><span class="line">                  A[i++] = t[x++];</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="keyword">else</span>&#123;</span><br><span class="line">                 <span class="keyword">if</span> (t[x]&lt;B[y])&#123;</span><br><span class="line">                    A[i++] = t[x++];</span><br><span class="line">                 &#125;</span><br><span class="line">                 <span class="keyword">else</span> &#123;</span><br><span class="line">                   A[i++] = B[y++];</span><br><span class="line">                 &#125;</span><br><span class="line">               &#125;</span><br><span class="line">            &#125;</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>提示：</p>
+<blockquote>
+<p>1 &lt;= words.length &lt;= 1000</p>
+<p>1 &lt;= words[i].length, chars.length &lt;= 100<br>所有字符串中都仅包含小写英文字母</p>
+</blockquote>
+<ul>
+<li><p>思路</p>
+<p>很明显可以利用哈希表来做，统计mapChar是否覆盖mapWord。</p>
+<p>也可以统计26个字母出现次数来判断。</p>
+</li>
+<li><p>代码实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">countCharacters</span><span class="params">(String[] words, String chars)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//结果</span></span><br><span class="line">        <span class="keyword">int</span> lenSum = <span class="number">0</span>;</span><br><span class="line">        Map&lt;Character, Integer&gt; mapWord = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        Map&lt;Character, Integer&gt; mapChar = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; chars.length(); i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = chars.charAt(i);</span><br><span class="line">            <span class="keyword">if</span> (mapChar.containsKey(c)) &#123;</span><br><span class="line">                <span class="keyword">int</span> t = mapChar.get(c);</span><br><span class="line">                mapChar.put(c, t + <span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                mapChar.put(c, <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (String word : words) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word.length(); i++) &#123;</span><br><span class="line">                <span class="keyword">char</span> c = word.charAt(i);</span><br><span class="line">                <span class="keyword">if</span> (mapWord.containsKey(c)) &#123;</span><br><span class="line">                    <span class="keyword">int</span> t = mapWord.get(c);</span><br><span class="line">                    mapWord.put(c, t + <span class="number">1</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    mapWord.put(c, <span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">for</span> (Map.Entry&lt;Character, Integer&gt; entry : mapWord.entrySet()) &#123;</span><br><span class="line">                <span class="keyword">char</span> ck = entry.getKey();</span><br><span class="line">                <span class="keyword">if</span> (!(mapChar.containsKey(ck) &amp;&amp; entry.getValue() &lt;= mapChar.get(ck))) &#123;</span><br><span class="line">                    flag = <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            lenSum += (flag == <span class="keyword">true</span>) ? word.length() : <span class="number">0</span>;</span><br><span class="line">            <span class="comment">//记得每次遍历完一次word后要把mapWord清空</span></span><br><span class="line">            mapWord.clear();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> lenSum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+</li>
+</ul>
 
       
     </div>
@@ -398,9 +412,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Array/" rel="tag"><i class="fa fa-tag"></i>Array</a>
-          
-            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i>Java</a>
+            <a href="/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/" rel="tag"><i class="fa fa-tag"></i>哈希表</a>
           
         </div>
       
@@ -413,8 +425,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/12/Leetcode1071-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%9C%80%E5%A4%A7%E5%85%AC%E5%9B%A0%E5%AD%90/" rel="next" title="Leetcode1071.字符串的最大公因子">
-                <i class="fa fa-chevron-left"></i> Leetcode1071.字符串的最大公因子
+              <a href="/2020/03/16/Leetcode1013-%E5%B0%86%E6%95%B0%E7%BB%84%E5%88%86%E6%88%90%E7%9B%B8%E7%AD%89%E7%9A%84%E4%B8%89%E4%B8%AA%E9%83%A8%E5%88%86/" rel="next" title="Leetcode1013.将数组分成相等的三个部分">
+                <i class="fa fa-chevron-left"></i> Leetcode1013.将数组分成相等的三个部分
               </a>
             
           </div>
@@ -422,10 +434,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/03/14/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9857-II-%E5%92%8C%E4%B8%BAs%E7%9A%84%E8%BF%9E%E7%BB%AD%E6%AD%A3%E6%95%B0%E5%BA%8F%E5%88%97/" rel="prev" title="Leetcode面试题57-II.和为s的连续正数序列">
-                Leetcode面试题57-II.和为s的连续正数序列 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -580,7 +588,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode面试题-10-01-合并排序的数组"><span class="nav-text">Leetcode面试题 10.01.合并排序的数组</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode1160-拼写单词"><span class="nav-text">Leetcode1160.拼写单词</span></a></li></ol></div>
             
 
           </div>

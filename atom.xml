@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-16T09:10:30.788Z</updated>
+  <updated>2020-03-17T07:19:08.058Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode1160.拼写单词</title>
+    <link href="http://yoursite.com/2020/03/17/Leetcode1160-%E6%8B%BC%E5%86%99%E5%8D%95%E8%AF%8D/"/>
+    <id>http://yoursite.com/2020/03/17/Leetcode1160-%E6%8B%BC%E5%86%99%E5%8D%95%E8%AF%8D/</id>
+    <published>2020-03-17T07:08:55.000Z</published>
+    <updated>2020-03-17T07:19:08.058Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Leetcode1160-拼写单词"><a href="#Leetcode1160-拼写单词" class="headerlink" title="Leetcode1160.拼写单词"></a>Leetcode1160.拼写单词</h2><p>给你一份『词汇表』（字符串数组） words 和一张『字母表』（字符串） chars。</p><p>假如你可以用 chars 中的『字母』（字符）拼写出 words 中的某个『单词』（字符串），那么我们就认为你掌握了这个单词。</p><p>注意：每次拼写时，chars 中的每个字母都只能用一次。</p><p>返回词汇表 words 中你掌握的所有单词的 长度之和。</p><p> <a href="https://leetcode-cn.com/problems/find-words-that-can-be-formed-by-characters" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例 1：</p><blockquote><p>输入：words = [“cat”,”bt”,”hat”,”tree”], chars = “atach”</p><p>输出：6<br>解释：<br>可以形成字符串 “cat” 和 “hat”，所以答案是 3 + 3 = 6。</p></blockquote><p>示例 2：</p><blockquote><p>输入：words = [“hello”,”world”,”leetcode”], chars = “welldonehoneyr”</p><p>输出：10<br>解释：<br>可以形成字符串 “hello” 和 “world”，所以答案是 5 + 5 = 10。</p></blockquote><p>提示：</p><blockquote><p>1 &lt;= words.length &lt;= 1000</p><p>1 &lt;= words[i].length, chars.length &lt;= 100<br>所有字符串中都仅包含小写英文字母</p></blockquote><ul><li><p>思路</p><p>很明显可以利用哈希表来做，统计mapChar是否覆盖mapWord。</p><p>也可以统计26个字母出现次数来判断。</p></li><li><p>代码实现</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">countCharacters</span><span class="params">(String[] words, String chars)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//结果</span></span><br><span class="line">        <span class="keyword">int</span> lenSum = <span class="number">0</span>;</span><br><span class="line">        Map&lt;Character, Integer&gt; mapWord = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        Map&lt;Character, Integer&gt; mapChar = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; chars.length(); i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = chars.charAt(i);</span><br><span class="line">            <span class="keyword">if</span> (mapChar.containsKey(c)) &#123;</span><br><span class="line">                <span class="keyword">int</span> t = mapChar.get(c);</span><br><span class="line">                mapChar.put(c, t + <span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                mapChar.put(c, <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (String word : words) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word.length(); i++) &#123;</span><br><span class="line">                <span class="keyword">char</span> c = word.charAt(i);</span><br><span class="line">                <span class="keyword">if</span> (mapWord.containsKey(c)) &#123;</span><br><span class="line">                    <span class="keyword">int</span> t = mapWord.get(c);</span><br><span class="line">                    mapWord.put(c, t + <span class="number">1</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    mapWord.put(c, <span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">for</span> (Map.Entry&lt;Character, Integer&gt; entry : mapWord.entrySet()) &#123;</span><br><span class="line">                <span class="keyword">char</span> ck = entry.getKey();</span><br><span class="line">                <span class="keyword">if</span> (!(mapChar.containsKey(ck) &amp;&amp; entry.getValue() &lt;= mapChar.get(ck))) &#123;</span><br><span class="line">                    flag = <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            lenSum += (flag == <span class="keyword">true</span>) ? word.length() : <span class="number">0</span>;</span><br><span class="line">            <span class="comment">//记得每次遍历完一次word后要把mapWord清空</span></span><br><span class="line">            mapWord.clear();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> lenSum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Leetcode1160-拼写单词&quot;&gt;&lt;a href=&quot;#Leetcode1160-拼写单词&quot; class=&quot;headerlink&quot; title=&quot;Leetcode1160.拼写单词&quot;&gt;&lt;/a&gt;Leetcode1160.拼写单词&lt;/h2&gt;&lt;p&gt;给你一份『词汇表』（字符串数组） words 和一张『字母表』（字符串） chars。&lt;/p&gt;
+&lt;p&gt;假如你可以用 chars 中的『字母』（字符）拼写出 words 中的某个『单词』（字符串），那么我们就认为你掌握了这个单词。&lt;/p&gt;
+&lt;p&gt;注意：每次拼写时，chars 中的每个字母都只能用一次。&lt;/p&gt;
+&lt;p&gt;返回词汇表 words 中你掌握的所有单词的 长度之和。&lt;/p&gt;
+&lt;p&gt; &lt;a href=&quot;https://leetcode-cn.com/problems/find-words-that-can-be-formed-by-characters&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
+    
+    
+      <category term="哈希表" scheme="http://yoursite.com/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode1013.将数组分成相等的三个部分</title>
@@ -90,9 +117,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
       <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
   </entry>
   
@@ -119,9 +146,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
       <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
   </entry>
   
@@ -173,9 +200,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
       <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
   </entry>
   
@@ -229,9 +256,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
       <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
   </entry>
   
@@ -257,9 +284,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
       <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
   </entry>
   
@@ -308,9 +335,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
       <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
   </entry>
   
