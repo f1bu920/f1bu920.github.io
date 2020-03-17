@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-17T07:19:08.058Z</updated>
+  <updated>2020-03-17T07:59:44.166Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode面试题01.06.字符串压缩</title>
+    <link href="http://yoursite.com/2020/03/17/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9801-06-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8E%8B%E7%BC%A9/"/>
+    <id>http://yoursite.com/2020/03/17/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9801-06-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8E%8B%E7%BC%A9/</id>
+    <published>2020-03-17T07:27:00.000Z</published>
+    <updated>2020-03-17T07:59:44.166Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Leetcode面试题01-06-字符串压缩"><a href="#Leetcode面试题01-06-字符串压缩" class="headerlink" title="Leetcode面试题01.06.字符串压缩"></a>Leetcode面试题01.06.字符串压缩</h2><p>字符串压缩。利用字符重复出现的次数，编写一种方法，实现基本的字符串压缩功能。比如，字符串aabcccccaaa会变为a2b1c5a3。若“压缩”后的字符串没有变短，则返回原先的字符串。你可以假设字符串中只包含大小写英文字母（a至z）。</p><p><a href="https://leetcode-cn.com/problems/compress-string-lcci" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例1:</p><blockquote><p>输入：”aabcccccaaa”</p><p>输出：”a2b1c5a3”</p></blockquote><p>示例2:</p><blockquote><p>输入：”abbccd”</p><p>输出：”abbccd”<br>解释：”abbccd”压缩后为”a1b2c2d1”，比原字符串长度更长。</p></blockquote><p>提示：</p><blockquote><p>字符串长度在[0, 50000]范围内。</p></blockquote><ul><li><p>思路</p><p>利用双指针可以很快速的得到结果，不能用哈希表，因为会有前后出现一样字母的可能，例<code>aabcccccaaa</code></p><p>使用<code>StringBuilder</code>可以消耗少量内存构建字符串。</p></li><li><p>代码实现</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">compressString</span><span class="params">(String S)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> lenS = S.length();</span><br><span class="line">    StringBuilder stringBuilder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; lenS; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> j = i;</span><br><span class="line">        <span class="keyword">while</span> (j &lt; lenS &amp;&amp; S.charAt(i) == S.charAt(j)) &#123;</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">        stringBuilder.append(S.charAt(i));</span><br><span class="line">        stringBuilder.append(j - i);</span><br><span class="line">        i = j - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (lenS &lt;= stringBuilder.length()) ? S : stringBuilder.toString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Leetcode面试题01-06-字符串压缩&quot;&gt;&lt;a href=&quot;#Leetcode面试题01-06-字符串压缩&quot; class=&quot;headerlink&quot; title=&quot;Leetcode面试题01.06.字符串压缩&quot;&gt;&lt;/a&gt;Leetcode面试题01.06.字符串压缩&lt;/h2&gt;&lt;p&gt;字符串压缩。利用字符重复出现的次数，编写一种方法，实现基本的字符串压缩功能。比如，字符串aabcccccaaa会变为a2b1c5a3。若“压缩”后的字符串没有变短，则返回原先的字符串。你可以假设字符串中只包含大小写英文字母（a至z）。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/compress-string-lcci&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
+    
+    
+      <category term="String" scheme="http://yoursite.com/tags/String/"/>
+    
+      <category term="双指针" scheme="http://yoursite.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode1160.拼写单词</title>
@@ -117,9 +143,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
       <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
   </entry>
   
@@ -146,9 +172,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
       <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
   </entry>
   
@@ -200,9 +226,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
       <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
   </entry>
   
