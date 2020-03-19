@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-18T07:15:18.211Z</updated>
+  <updated>2020-03-19T03:17:27.130Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode409.最长回文串</title>
+    <link href="http://yoursite.com/2020/03/19/Leetcode409-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2/"/>
+    <id>http://yoursite.com/2020/03/19/Leetcode409-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2/</id>
+    <published>2020-03-19T03:06:39.000Z</published>
+    <updated>2020-03-19T03:17:27.130Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Leetcode409-最长回文串"><a href="#Leetcode409-最长回文串" class="headerlink" title="Leetcode409.最长回文串"></a>Leetcode409.最长回文串</h2><p>给定一个包含大写字母和小写字母的字符串，找到通过这些字母构造成的最长的回文串。</p><p>在构造过程中，请注意区分大小写。比如 <code>&quot;Aa&quot;</code> 不能当做一个回文字符串。</p><p><strong>注意:</strong><br>假设字符串的长度不会超过 1010。</p><p><a href="https://leetcode-cn.com/problems/longest-palindrome/" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p><strong>示例 1:</strong></p><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">输入:</span></span><br><span class="line"><span class="string">"abccccdd"</span></span><br><span class="line"></span><br><span class="line"><span class="section">输出:</span></span><br><span class="line">7</span><br><span class="line"></span><br><span class="line"><span class="section">解释:</span></span><br><span class="line">我们可以构造的最长的回文串是<span class="string">"dccaccd"</span>, 它的长度是 7。</span><br></pre></td></tr></table></figure><ul><li><p>思路</p><p>回文串正着和反着相同，所以有一个回文中心作为分界线，左右两边对称分布。从<code>abbcbba</code>可知一个回文串最多有一个字符出现奇数次，其他全为偶数次。所以我们构建最长回文串时，可以将每个字符使用偶数次，如果有奇数个字符，我们取出一个且只能取出一个作为回文中心。</p></li><li><p>代码实现</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestPalindrome</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        Map&lt;Character, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = s.charAt(i);</span><br><span class="line">            <span class="keyword">if</span> (map.containsKey(c)) &#123;</span><br><span class="line">                map.put(c, map.get(c) + <span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                map.put(c, <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (Map.Entry&lt;Character, Integer&gt; entry : map.entrySet()) &#123;</span><br><span class="line">            <span class="comment">//将每个字符使用偶数次，res为偶数</span></span><br><span class="line">            res += entry.getValue() / <span class="number">2</span> * <span class="number">2</span>;</span><br><span class="line">            <span class="comment">//遇到奇数个字符时res++，此时res变为奇数，不会再++了</span></span><br><span class="line">            <span class="keyword">if</span> (res % <span class="number">2</span> == <span class="number">0</span> &amp;&amp; entry.getValue() % <span class="number">2</span> == <span class="number">1</span>) &#123;</span><br><span class="line">                res++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Leetcode409-最长回文串&quot;&gt;&lt;a href=&quot;#Leetcode409-最长回文串&quot; class=&quot;headerlink&quot; title=&quot;Leetcode409.最长回文串&quot;&gt;&lt;/a&gt;Leetcode409.最长回文串&lt;/h2&gt;&lt;p&gt;给定一个包含大写字母和小写字母的字符串，找到通过这些字母构造成的最长的回文串。&lt;/p&gt;
+&lt;p&gt;在构造过程中，请注意区分大小写。比如 &lt;code&gt;&amp;quot;Aa&amp;quot;&lt;/code&gt; 不能当做一个回文字符串。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意:&lt;/strong&gt;&lt;br&gt;假设字符串的长度不会超过 1010。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/longest-palindrome/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
+    
+    
+      <category term="String" scheme="http://yoursite.com/tags/String/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode322.零钱兑换</title>
@@ -233,9 +259,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
       <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
   </entry>
   
@@ -262,9 +288,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
       <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
   </entry>
   
@@ -316,9 +342,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
       <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
   </entry>
   
@@ -542,29 +568,6 @@
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
       <category term="lambda" scheme="http://yoursite.com/tags/lambda/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Git笔记</title>
-    <link href="http://yoursite.com/2019/11/23/Git%E7%AC%94%E8%AE%B0/"/>
-    <id>http://yoursite.com/2019/11/23/Git%E7%AC%94%E8%AE%B0/</id>
-    <published>2019-11-23T09:47:42.000Z</published>
-    <updated>2020-03-14T07:59:19.583Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="下载与安装Git"><a href="#下载与安装Git" class="headerlink" title="下载与安装Git"></a>下载与安装Git</h3><p><a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git" target="_blank" rel="noopener">Git下载</a>，在git Bash下执行<code>git --version</code>，返回Git版本。</p><a id="more"></a> <h3 id="最小配置"><a href="#最小配置" class="headerlink" title="最小配置"></a>最小配置</h3><h4 id="配置user信息"><a href="#配置user信息" class="headerlink" title="配置user信息"></a>配置user信息</h4><ul><li><p>配置user.name和user.email：</p><blockquote><p>git conﬁg –global  user.name ‘your_name’</p><p>git conﬁg –global  user.email ‘<a href="mailto:your_email@domain.com" target="_blank" rel="noopener">your_email@domain.com</a>‘</p></blockquote></li></ul><h4 id="config的三个作用域"><a href="#config的三个作用域" class="headerlink" title="config的三个作用域"></a>config的三个作用域</h4><ul><li>缺省默认为local</li></ul><blockquote><p>git config –local：只对本地仓库生效</p><p>git config –global：对登录用户所有仓库生效</p><p>git config –system：对系统所有用户生效</p></blockquote><ul><li><p>显示config的配置，加上<code>--list</code></p><blockquote><p> git conﬁg –list –local  </p><p> git conﬁg –list –global </p><p> git conﬁg –list –system</p></blockquote></li><li><p>清除，加上 <code>--unset</code></p><blockquote><p>​git conﬁg –unset –local user.name  </p><p>git conﬁg –unset –global user.name </p><p>git conﬁg –unset –system user.name</p></blockquote></li><li><p>优先级：local&gt;global&gt;system</p></li></ul><h3 id="创建Git仓库"><a href="#创建Git仓库" class="headerlink" title="创建Git仓库"></a>创建Git仓库</h3><p>两种方式创建</p><ol><li><p>Git之前已有代码</p><blockquote><p>cd 文件夹</p><p>git init</p></blockquote></li><li><p>Git之前没有项目代码</p><blockquote><p>cd 文件夹</p><p>git init your_project_name</p><p>cd your_project_name</p></blockquote></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;下载与安装Git&quot;&gt;&lt;a href=&quot;#下载与安装Git&quot; class=&quot;headerlink&quot; title=&quot;下载与安装Git&quot;&gt;&lt;/a&gt;下载与安装Git&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;https://git-scm.com/book/en/v2/Getting-Started-Installing-Git&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Git下载&lt;/a&gt;，在git Bash下执行&lt;code&gt;git --version&lt;/code&gt;，返回Git版本。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Git" scheme="http://yoursite.com/categories/Git/"/>
-    
-    
-      <category term="Git" scheme="http://yoursite.com/tags/Git/"/>
     
   </entry>
   
