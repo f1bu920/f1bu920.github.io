@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-20T03:35:13.256Z</updated>
+  <updated>2020-03-20T08:38:14.931Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode面试题02.01.移除重复节点</title>
+    <link href="http://yoursite.com/2020/03/20/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9802-01-%E7%A7%BB%E9%99%A4%E9%87%8D%E5%A4%8D%E8%8A%82%E7%82%B9/"/>
+    <id>http://yoursite.com/2020/03/20/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9802-01-%E7%A7%BB%E9%99%A4%E9%87%8D%E5%A4%8D%E8%8A%82%E7%82%B9/</id>
+    <published>2020-03-20T08:30:37.000Z</published>
+    <updated>2020-03-20T08:38:14.931Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Leetcode面试题02-01-移除重复节点"><a href="#Leetcode面试题02-01-移除重复节点" class="headerlink" title="Leetcode面试题02.01.移除重复节点"></a>Leetcode面试题02.01.移除重复节点</h2><p>编写代码，移除未排序链表中的重复节点。保留最开始出现的节点。</p><p><a href="https://leetcode-cn.com/problems/remove-duplicate-node-lcci/" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p><strong>示例1:</strong></p><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>]</span><br><span class="line">输出：[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br></pre></td></tr></table></figure><p><strong>示例2:</strong></p><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">输出：[<span class="number">1</span>, <span class="number">2</span>]</span><br></pre></td></tr></table></figure><p><strong>提示：</strong></p><ol><li>链表长度在[0, 20000]范围内。</li><li>链表元素在[0, 20000]范围内。</li></ol><ul><li><p>思路</p><p>使用<code>HashMap</code>作为缓冲区存储出现过的值，若遇到的值已出现过，则删除。使用了虚拟头结点</p></li><li><p>代码实现</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">removeDuplicateNodes</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (head == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//使用HashSet更好</span></span><br><span class="line">        Map map = <span class="keyword">new</span> HashMap();</span><br><span class="line">        ListNode dummyHead = <span class="keyword">new</span> ListNode(-<span class="number">1</span>);</span><br><span class="line">        dummyHead.next=head;</span><br><span class="line">        ListNode prev = dummyHead;</span><br><span class="line">        <span class="keyword">while</span> (prev.next!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span> (!map.containsKey(prev.next.val))&#123;</span><br><span class="line">                map.put(prev.next.val,<span class="number">1</span>);</span><br><span class="line">                prev = prev.next;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                prev.next = prev.next.next;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dummyHead.next;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Leetcode面试题02-01-移除重复节点&quot;&gt;&lt;a href=&quot;#Leetcode面试题02-01-移除重复节点&quot; class=&quot;headerlink&quot; title=&quot;Leetcode面试题02.01.移除重复节点&quot;&gt;&lt;/a&gt;Leetcode面试题02.01.移除重复节点&lt;/h2&gt;&lt;p&gt;编写代码，移除未排序链表中的重复节点。保留最开始出现的节点。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/remove-duplicate-node-lcci/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
+    
+    
+      <category term="链表" scheme="http://yoursite.com/tags/%E9%93%BE%E8%A1%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode面试题40.最小的k个数</title>
@@ -311,9 +335,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
-    
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
     
   </entry>
   
@@ -340,9 +364,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
-    
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
     
   </entry>
   
@@ -394,9 +418,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
-    
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
     
   </entry>
   
@@ -450,9 +474,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
-    
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
     
   </entry>
   
@@ -478,9 +502,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
-    
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
     
   </entry>
   
@@ -529,34 +553,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
       <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
-    
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leecode118.杨辉三角</title>
-    <link href="http://yoursite.com/2020/03/10/Leetcode118-%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92/"/>
-    <id>http://yoursite.com/2020/03/10/Leetcode118-%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92/</id>
-    <published>2020-03-10T04:29:30.000Z</published>
-    <updated>2020-03-11T07:39:11.412Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="Leetcode118-杨辉三角"><a href="#Leetcode118-杨辉三角" class="headerlink" title="Leetcode118. 杨辉三角"></a>Leetcode118. 杨辉三角</h3><p>给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。</p><p>在杨辉三角中，每个数是它左上方和右上方的数的和。</p><p><a href="https://leetcode-cn.com/problems/pascals-triangle" target="_blank" rel="noopener">杨辉三角</a>.</p><a id="more"></a><p>示例:</p><p>输入:</p><blockquote><p>5</p></blockquote><p>输出:</p><blockquote><p>[</p><p>​      [1],<br>    [1,1],<br>   [1,2,1],<br>  [1,3,3,1],<br> [1,4,6,4,1]<br>]</p></blockquote><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; generate(<span class="keyword">int</span> numRows) &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> ArrayList&lt;List&lt;Integer&gt;&gt;();</span><br><span class="line">        <span class="comment">//numRows</span></span><br><span class="line">        <span class="keyword">if</span>(numRows&lt;=<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//第一行一定为1</span></span><br><span class="line">        result.add(<span class="keyword">new</span> ArrayList&lt;&gt;());</span><br><span class="line">        result.get(<span class="number">0</span>).add(<span class="number">1</span>);</span><br><span class="line">        <span class="comment">//rowNum=1，即从第二行开始</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> rowNum = <span class="number">1</span> ; rowNum &lt; numRows ; rowNum++)&#123;</span><br><span class="line">            <span class="comment">//本行</span></span><br><span class="line">            List&lt;Integer&gt; row = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">            <span class="comment">//上一行</span></span><br><span class="line">            List&lt;Integer&gt; preRow = result.get(rowNum-<span class="number">1</span>);</span><br><span class="line">            <span class="comment">//一行中第一个为1</span></span><br><span class="line">            row.add(<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>;j&lt;rowNum;j++)&#123;</span><br><span class="line">                row.add(preRow.get(j-<span class="number">1</span>)+preRow.get(j));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//一行中最后一个为1</span></span><br><span class="line">            row.add(<span class="number">1</span>);</span><br><span class="line">            result.add(row);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;Leetcode118-杨辉三角&quot;&gt;&lt;a href=&quot;#Leetcode118-杨辉三角&quot; class=&quot;headerlink&quot; title=&quot;Leetcode118. 杨辉三角&quot;&gt;&lt;/a&gt;Leetcode118. 杨辉三角&lt;/h3&gt;&lt;p&gt;给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。&lt;/p&gt;
-&lt;p&gt;在杨辉三角中，每个数是它左上方和右上方的数的和。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/pascals-triangle&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;杨辉三角&lt;/a&gt;.&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
-    
-    
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
   </entry>
   
