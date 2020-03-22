@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-22T07:49:29.960Z</updated>
+  <updated>2020-03-22T09:55:24.372Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode面试题02.05.链表求和</title>
+    <link href="http://yoursite.com/2020/03/22/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9802-05-%E9%93%BE%E8%A1%A8%E6%B1%82%E5%92%8C/"/>
+    <id>http://yoursite.com/2020/03/22/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9802-05-%E9%93%BE%E8%A1%A8%E6%B1%82%E5%92%8C/</id>
+    <published>2020-03-22T09:43:59.000Z</published>
+    <updated>2020-03-22T09:55:24.372Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Leetcode面试题02-05-链表求和"><a href="#Leetcode面试题02-05-链表求和" class="headerlink" title="Leetcode面试题02.05.链表求和"></a>Leetcode面试题02.05.链表求和</h2><p>给定两个用链表表示的整数，每个节点包含一个数位。</p><p>这些数位是反向存放的，也就是个位排在链表首部。</p><p>编写函数对这两个整数求和，并用链表形式返回结果。</p><p> <a href="https://leetcode-cn.com/problems/sum-lists-lcci/" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p><strong>示例：</strong></p><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：(<span class="number">7</span> -&gt; <span class="number">1</span> -&gt; <span class="number">6</span>) + (<span class="number">5</span> -&gt; <span class="number">9</span> -&gt; <span class="number">2</span>)，即<span class="number">617</span> + <span class="number">295</span></span><br><span class="line">输出：<span class="number">2</span> -&gt; <span class="number">1</span> -&gt; <span class="number">9</span>，即<span class="number">912</span></span><br></pre></td></tr></table></figure><p><strong>进阶：</strong>假设这些数位是正向存放的，请再做一遍。</p><p><strong>示例：</strong></p><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：(<span class="number">6</span> -&gt; <span class="number">1</span> -&gt; <span class="number">7</span>) + (<span class="number">2</span> -&gt; <span class="number">9</span> -&gt; <span class="number">5</span>)，即<span class="number">617</span> + <span class="number">295</span></span><br><span class="line">输出：<span class="number">9</span> -&gt; <span class="number">1</span> -&gt; <span class="number">2</span>，即<span class="number">912</span></span><br></pre></td></tr></table></figure><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><ul><li>将链表转化为整数，但会超出<code>int</code>类型范围，发生溢出。</li><li>因为两个链表中数位是反向存放的，可利用队列进行缓存。链表中先读的元素是低位，要先运算即先出，符合先进先出的特点，所以使用队列。</li><li>维护两个变量<code>num</code>和<code>carray</code>，分别表示当前的和与进位，若<code>num&gt;=10</code>，则进1位。</li><li>使用尾插法构造节点</li><li>判断最后是否还有进位，若有则构造一个<code>val=1</code>的节点。</li></ul><h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">addTwoNumbers</span><span class="params">(ListNode l1, ListNode l2)</span> </span>&#123;</span><br><span class="line">       Queue&lt;ListNode&gt; queue1 = <span class="keyword">new</span> ArrayDeque&lt;&gt;();</span><br><span class="line">       Queue&lt;ListNode&gt; queue2 = <span class="keyword">new</span> ArrayDeque&lt;&gt;();</span><br><span class="line">       ListNode head = <span class="keyword">new</span> ListNode(-<span class="number">1</span>);</span><br><span class="line">       head.next = <span class="keyword">null</span>;</span><br><span class="line">       ListNode cur = head;</span><br><span class="line">       <span class="keyword">while</span> (l1 != <span class="keyword">null</span>) &#123;</span><br><span class="line">           queue1.add(l1);</span><br><span class="line">           l1 = l1.next;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">while</span> (l2 != <span class="keyword">null</span>) &#123;</span><br><span class="line">           queue2.add(l2);</span><br><span class="line">           l2 = l2.next;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">int</span> carry = <span class="number">0</span>;</span><br><span class="line">       <span class="keyword">while</span> (!queue1.isEmpty() || !queue2.isEmpty()) &#123;</span><br><span class="line">           <span class="keyword">int</span> num = carry;</span><br><span class="line">           <span class="keyword">if</span> (!queue1.isEmpty()) &#123;</span><br><span class="line">               num += queue1.poll().val;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">if</span> (!queue2.isEmpty()) &#123;</span><br><span class="line">               num += queue2.poll().val;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">if</span> (num &gt;= <span class="number">10</span>) &#123;</span><br><span class="line">               carry = <span class="number">1</span>;</span><br><span class="line">               num %= <span class="number">10</span>;</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               carry = <span class="number">0</span>;</span><br><span class="line">           &#125;</span><br><span class="line">           ListNode temp = <span class="keyword">new</span> ListNode(num);</span><br><span class="line">           cur.next = temp;</span><br><span class="line">           cur = temp;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">if</span> (carry != <span class="number">0</span>) &#123;</span><br><span class="line">           ListNode temp = <span class="keyword">new</span> ListNode(<span class="number">1</span>);</span><br><span class="line">           cur.next = temp;</span><br><span class="line">           cur = temp;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> head.next;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Leetcode面试题02-05-链表求和&quot;&gt;&lt;a href=&quot;#Leetcode面试题02-05-链表求和&quot; class=&quot;headerlink&quot; title=&quot;Leetcode面试题02.05.链表求和&quot;&gt;&lt;/a&gt;Leetcode面试题02.05.链表求和&lt;/h2&gt;&lt;p&gt;给定两个用链表表示的整数，每个节点包含一个数位。&lt;/p&gt;
+&lt;p&gt;这些数位是反向存放的，也就是个位排在链表首部。&lt;/p&gt;
+&lt;p&gt;编写函数对这两个整数求和，并用链表形式返回结果。&lt;/p&gt;
+&lt;p&gt; &lt;a href=&quot;https://leetcode-cn.com/problems/sum-lists-lcci/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
+    
+    
+      <category term="链表" scheme="http://yoursite.com/tags/%E9%93%BE%E8%A1%A8/"/>
+    
+      <category term="队列" scheme="http://yoursite.com/tags/%E9%98%9F%E5%88%97/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode82.删除排序链表中的重复元素II</title>
@@ -463,9 +491,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
-    
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
     
   </entry>
   
@@ -492,9 +520,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
-    
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
     
   </entry>
   
@@ -522,33 +550,6 @@
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
       <category term="Sliding Window" scheme="http://yoursite.com/tags/Sliding-Window/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode面试题 10.01.合并排序的数组</title>
-    <link href="http://yoursite.com/2020/03/14/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%98-10-01-%E5%90%88%E5%B9%B6%E6%8E%92%E5%BA%8F%E7%9A%84%E6%95%B0%E7%BB%84/"/>
-    <id>http://yoursite.com/2020/03/14/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%98-10-01-%E5%90%88%E5%B9%B6%E6%8E%92%E5%BA%8F%E7%9A%84%E6%95%B0%E7%BB%84/</id>
-    <published>2020-03-14T05:00:04.000Z</published>
-    <updated>2020-03-14T07:51:53.110Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Leetcode面试题-10-01-合并排序的数组"><a href="#Leetcode面试题-10-01-合并排序的数组" class="headerlink" title="Leetcode面试题 10.01.合并排序的数组"></a>Leetcode面试题 10.01.合并排序的数组</h2><p>给定两个排序后的数组 A 和 B，其中 A 的末端有足够的缓冲空间容纳 B。 编写一个方法，将 B 合并入 A 并排序。</p><p>初始化 A 和 B 的元素数量分别为 m 和 n。</p><p><a href="https://leetcode-cn.com/problems/sorted-merge-lcci" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例:</p><blockquote><p>输入:</p><p>A = [1,2,3,0,0,0], m = 3<br>B = [2,5,6],       n = 3</p><p>输出: [1,2,2,3,5,6]</p></blockquote><p>说明:</p><blockquote><p>A.length == n + m</p></blockquote><p><strong>思路：双指针法，利用数组已经排序的性质，将两个数组看成队列，每次从两个数组头部取出较小的数字放入结果中。代码实现如下：</strong></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span>[] A, <span class="keyword">int</span> m, <span class="keyword">int</span>[] B, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//x,y为数组A，B的指针</span></span><br><span class="line">        <span class="keyword">int</span> x=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> y = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> i =<span class="number">0</span>;</span><br><span class="line">        <span class="comment">//将A复制到t中</span></span><br><span class="line">        <span class="keyword">int</span>[] t = <span class="keyword">new</span> <span class="keyword">int</span>[m];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>;j&lt;m;j++)&#123;</span><br><span class="line">            t[j]=A[j];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//每次从B和t头部取出较小的数字放入A中，直至有一个数组全部取出后将另一个数组接到A的尾部</span></span><br><span class="line">        <span class="keyword">while</span> (x&lt;m||y&lt;n)&#123;</span><br><span class="line">            <span class="keyword">if</span> (x==m)&#123;</span><br><span class="line">               A[i++] = B[y++];</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">               <span class="keyword">if</span> (y==n)&#123;</span><br><span class="line">                  A[i++] = t[x++];</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="keyword">else</span>&#123;</span><br><span class="line">                 <span class="keyword">if</span> (t[x]&lt;B[y])&#123;</span><br><span class="line">                    A[i++] = t[x++];</span><br><span class="line">                 &#125;</span><br><span class="line">                 <span class="keyword">else</span> &#123;</span><br><span class="line">                   A[i++] = B[y++];</span><br><span class="line">                 &#125;</span><br><span class="line">               &#125;</span><br><span class="line">            &#125;</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Leetcode面试题-10-01-合并排序的数组&quot;&gt;&lt;a href=&quot;#Leetcode面试题-10-01-合并排序的数组&quot; class=&quot;headerlink&quot; title=&quot;Leetcode面试题 10.01.合并排序的数组&quot;&gt;&lt;/a&gt;Leetcode面试题 10.01.合并排序的数组&lt;/h2&gt;&lt;p&gt;给定两个排序后的数组 A 和 B，其中 A 的末端有足够的缓冲空间容纳 B。 编写一个方法，将 B 合并入 A 并排序。&lt;/p&gt;
-&lt;p&gt;初始化 A 和 B 的元素数量分别为 m 和 n。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/sorted-merge-lcci&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
-    
-    
-      <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
-    
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
   </entry>
   
