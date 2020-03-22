@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="链表," />
+  <meta name="keywords" content="排序," />
 
 
 
@@ -81,15 +81,15 @@
 
 
 
-<meta name="description" content="Leetcode面试题02.06.回文链表编写一个函数，检查输入的链表是否是回文的。  题目链接">
-<meta name="keywords" content="链表">
+<meta name="description" content="Leetcode945.使数组唯一的最小增量给定整数数组 A，每次 move 操作将会选择任意 A[i]，并将其递增 1。 返回使 A 中的每个值都是唯一的最少操作次数。 题目链接">
+<meta name="keywords" content="排序">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode面试题02.06.回文链表">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;21&#x2F;Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9802-06-%E5%9B%9E%E6%96%87%E9%93%BE%E8%A1%A8&#x2F;index.html">
+<meta property="og:title" content="Leetcode945.使数组唯一的最小增量">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;22&#x2F;Leetcode945-%E4%BD%BF%E6%95%B0%E7%BB%84%E5%94%AF%E4%B8%80%E7%9A%84%E6%9C%80%E5%B0%8F%E5%A2%9E%E9%87%8F&#x2F;index.html">
 <meta property="og:site_name" content="flbu blog">
-<meta property="og:description" content="Leetcode面试题02.06.回文链表编写一个函数，检查输入的链表是否是回文的。  题目链接">
+<meta property="og:description" content="Leetcode945.使数组唯一的最小增量给定整数数组 A，每次 move 操作将会选择任意 A[i]，并将其递增 1。 返回使 A 中的每个值都是唯一的最少操作次数。 题目链接">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-21T05:12:07.478Z">
+<meta property="og:updated_time" content="2020-03-22T03:16:02.322Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/03/21/Leetcode面试题02-06-回文链表/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/03/22/Leetcode945-使数组唯一的最小增量/"/>
 
 
 
 
 
-  <title>Leetcode面试题02.06.回文链表 | flbu blog</title>
+  <title>Leetcode945.使数组唯一的最小增量 | flbu blog</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/21/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9802-06-%E5%9B%9E%E6%96%87%E9%93%BE%E8%A1%A8/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/22/Leetcode945-%E4%BD%BF%E6%95%B0%E7%BB%84%E5%94%AF%E4%B8%80%E7%9A%84%E6%9C%80%E5%B0%8F%E5%A2%9E%E9%87%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="flbu">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Leetcode面试题02.06.回文链表</h1>
+          <h1 class="post-title" itemprop="name headline">Leetcode945.使数组唯一的最小增量</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-21T12:59:25+08:00">
-                2020-03-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-22T10:43:07+08:00">
+                2020-03-22
               </time>
             
 
@@ -352,24 +352,43 @@
       
 
       
-        <h2 id="Leetcode面试题02-06-回文链表"><a href="#Leetcode面试题02-06-回文链表" class="headerlink" title="Leetcode面试题02.06.回文链表"></a>Leetcode面试题02.06.回文链表</h2><p>编写一个函数，检查输入的链表是否是回文的。</p>
-<p> <a href="https://leetcode-cn.com/problems/palindrome-linked-list-lcci/" target="_blank" rel="noopener">题目链接</a></p>
+        <h2 id="Leetcode945-使数组唯一的最小增量"><a href="#Leetcode945-使数组唯一的最小增量" class="headerlink" title="Leetcode945.使数组唯一的最小增量"></a>Leetcode945.使数组唯一的最小增量</h2><p>给定整数数组 A，每次 <em>move</em> 操作将会选择任意 <code>A[i]</code>，并将其递增 <code>1</code>。</p>
+<p>返回使 <code>A</code> 中的每个值都是唯一的最少操作次数。</p>
+<p><a href="https://leetcode-cn.com/problems/minimum-increment-to-make-array-unique/" target="_blank" rel="noopener">题目链接</a></p>
 <a id="more"></a>
 
-<p><strong>示例 1：</strong></p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入： <span class="number">1</span>-&gt;<span class="number">2</span></span><br><span class="line">输出： <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<p><strong>示例 1:</strong></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：[<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>]</span><br><span class="line">输出：<span class="number">1</span></span><br><span class="line">解释：经过一次 move 操作，数组将变为 [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]。</span><br></pre></td></tr></table></figure>
 
-<p><strong>示例 2：</strong></p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入： <span class="number">1</span>-&gt;<span class="number">2</span>-&gt;<span class="number">2</span>-&gt;<span class="number">1</span></span><br><span class="line">输出： <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p><strong>示例 2:</strong></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输入：[<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">7</span>]</span><br><span class="line">输出：<span class="number">6</span></span><br><span class="line">解释：经过 <span class="number">6</span> 次 move 操作，数组将变为 [<span class="number">3</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">7</span>]。</span><br><span class="line">可以看出 <span class="number">5</span> 次或 <span class="number">5</span> 次以下的 move 操作是不能让数组的每个值唯一的。</span><br></pre></td></tr></table></figure>
 
-<p><strong>进阶：</strong><br>你能否用 O(n) 时间复杂度和 O(1) 空间复杂度解决此题？</p>
+<p><strong>提示：</strong></p>
+<ol>
+<li><code>0 &lt;= A.length &lt;= 40000</code></li>
+<li><code>0 &lt;= A[i] &lt; 40000</code></li>
+</ol>
 <ul>
-<li><p>思路</p>
-<p>使用快慢指针找到链表的中间节点，将后半部分链表反转，再逐个比较，因为回文链表必定以中间节点为中心对称。此时时间复杂度为O(n)，空间复杂度为O(1)。</p>
+<li><p>思路及代码实现</p>
+<ol>
+<li><p>使用集合<code>HashSet</code>存储，若重复出现，则暴力+1。（超出时间限制</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minIncrementForUnique</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (A == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        Set&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; A.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!set.contains(A[i])) &#123;</span><br><span class="line">                set.add(A[i]);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                A[i]++;</span><br><span class="line">                i--;</span><br><span class="line">                count++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>代码实现</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//快慢指针</span></span><br><span class="line">        ListNode slow = head.next;</span><br><span class="line">        ListNode fast = slow.next;</span><br><span class="line">        ListNode pre;</span><br><span class="line">        <span class="keyword">while</span> (fast != <span class="keyword">null</span> &amp;&amp; fast.next != <span class="keyword">null</span> &amp;&amp; fast.next.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">            slow = slow.next;</span><br><span class="line">            fast = fast.next.next;</span><br><span class="line">        &#125;</span><br><span class="line">        pre = <span class="keyword">null</span>;</span><br><span class="line">        <span class="comment">//反转后半部分链表  </span></span><br><span class="line">        <span class="keyword">while</span> (slow != <span class="keyword">null</span>) &#123;</span><br><span class="line">            ListNode temp = slow.next;</span><br><span class="line">            slow.next = pre;</span><br><span class="line">            pre = slow;</span><br><span class="line">            slow = temp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//判断是否回文</span></span><br><span class="line">        <span class="keyword">while</span> (pre != <span class="keyword">null</span> &amp;&amp; head != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (pre.val != head.val) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            pre = pre.next;</span><br><span class="line">            head = head.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li><p>计数法</p>
+<p>由题意<code>0&lt;=A[i]&lt;=40000</code>，所以开辟空间大小为80000的数组<code>count</code>，(为了防止A中为40000个40000的特殊情况)，<code>count</code>记录A中每个数字出现次数，其下标为A中元素。维护两个变量，<code>res</code>代表增加次数，<code>token</code>记录重复数字出现次数。若<code>count[x]&gt;=2</code>，即A中<code>x</code>元素出现两次以上，<code>token</code>加上<code>count[x]-1</code>，<code>res</code>减去<code>x*(count[x]-1)</code>，否则如果还有重复元素即<code>token&gt;0</code>，则在没有元素处加上即<code>res+=x</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minIncrementForUnique</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (A == <span class="keyword">null</span> || A.length == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span>[] count = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">8000</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> a : A) &#123;</span><br><span class="line">        count[a]++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> res = <span class="number">0</span>, token = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">0</span>; x &lt; <span class="number">8000</span>; x++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (count[x] &gt;= <span class="number">2</span>) &#123;</span><br><span class="line">            token += count[x] - <span class="number">1</span>;</span><br><span class="line">            res -= x * (count[x] - <span class="number">1</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (count[x] == <span class="number">0</span> &amp;&amp; token &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                res += x;</span><br><span class="line">                token--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>排序</p>
+<p>先将数组排序。然后对数组进行扫描。</p>
+<ul>
+<li>如果<code>A[i-1]==A[i]</code>，将操作次数减去<code>A[i-1]</code>，并且重复数字+1；</li>
+<li>如果<code>A[i-1]&lt;A[i]</code>，那么两者之间有<code>A[i]-A[i-1]-1</code>个数，我们有<code>token</code>个重复的数可以变成这之间的数。所以我们最多可以改变<code>give = Math.min(token,A[i]-A[i-1]-1)</code>个数。这<code>give</code>个数对结果的影响为<code>A[i-1]*give+(give+1)*give/2</code>。</li>
+<li>最后遍历完成后，如果还有重复的数，例如<code>[2,2,3]</code>，上步<code>give</code>始终为0，就需要把这些数变成<code>A[A.length-1]</code>后面区间上的数了。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minIncrementForUnique</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>, token = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (A == <span class="keyword">null</span> || A.length == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        Arrays.sort(A);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; A.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (A[i] == A[i - <span class="number">1</span>]) &#123;</span><br><span class="line">                token++;</span><br><span class="line">                res -= A[i - <span class="number">1</span>];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">int</span> give = Math.min(token, A[i] - A[i - <span class="number">1</span>] - <span class="number">1</span>);</span><br><span class="line">                token -= give;</span><br><span class="line">                res += give * A[i - <span class="number">1</span>] + (give + <span class="number">1</span>) * give / <span class="number">2</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (token &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            res += token * A[A.length - <span class="number">1</span>] + (token + <span class="number">1</span>) * token / <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+</li>
+</ol>
 </li>
 </ul>
 
@@ -400,7 +419,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/%E9%93%BE%E8%A1%A8/" rel="tag"><i class="fa fa-tag"></i>链表</a>
+            <a href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag"><i class="fa fa-tag"></i>排序</a>
           
         </div>
       
@@ -413,8 +432,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/20/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9802-01-%E7%A7%BB%E9%99%A4%E9%87%8D%E5%A4%8D%E8%8A%82%E7%82%B9/" rel="next" title="Leetcode面试题02.01.移除重复节点">
-                <i class="fa fa-chevron-left"></i> Leetcode面试题02.01.移除重复节点
+              <a href="/2020/03/21/Leetcode365-%E6%B0%B4%E5%A3%B6%E9%97%AE%E9%A2%98/" rel="next" title="Leetcode365.水壶问题">
+                <i class="fa fa-chevron-left"></i> Leetcode365.水壶问题
               </a>
             
           </div>
@@ -422,10 +441,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/03/21/Leetcode365-%E6%B0%B4%E5%A3%B6%E9%97%AE%E9%A2%98/" rel="prev" title="Leetcode365.水壶问题">
-                Leetcode365.水壶问题 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -580,7 +595,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode面试题02-06-回文链表"><span class="nav-text">Leetcode面试题02.06.回文链表</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode945-使数组唯一的最小增量"><span class="nav-text">Leetcode945.使数组唯一的最小增量</span></a></li></ol></div>
             
 
           </div>
