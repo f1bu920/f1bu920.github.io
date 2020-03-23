@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-22T09:55:24.372Z</updated>
+  <updated>2020-03-23T03:38:44.245Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode876.链表的中间结点</title>
+    <link href="http://yoursite.com/2020/03/23/Leetcode876-%E9%93%BE%E8%A1%A8%E7%9A%84%E4%B8%AD%E9%97%B4%E7%BB%93%E7%82%B9/"/>
+    <id>http://yoursite.com/2020/03/23/Leetcode876-%E9%93%BE%E8%A1%A8%E7%9A%84%E4%B8%AD%E9%97%B4%E7%BB%93%E7%82%B9/</id>
+    <published>2020-03-23T03:30:52.000Z</published>
+    <updated>2020-03-23T03:38:44.245Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Leetcode876-链表的中间结点"><a href="#Leetcode876-链表的中间结点" class="headerlink" title="Leetcode876.链表的中间结点"></a>Leetcode876.链表的中间结点</h2><p>给定一个带有头结点 <code>head</code> 的非空单链表，返回链表的中间结点。</p><p>如果有两个中间结点，则返回第二个中间结点。</p><p> <a href="https://leetcode-cn.com/problems/middle-of-the-linked-list/" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p><strong>示例 1：</strong></p><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入：[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line">输出：此列表中的结点 <span class="number">3</span> (序列化形式：[<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>])</span><br><span class="line">返回的结点值为 <span class="number">3</span> 。 (测评系统对该结点序列化表述是 [<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>])。</span><br><span class="line">注意，我们返回了一个 ListNode 类型的对象 ans，这样：</span><br><span class="line">ans.val = <span class="number">3</span>, ans.next.val = <span class="number">4</span>, ans.next.next.val = <span class="number">5</span>, 以及 ans.next.next.next = NULL.</span><br></pre></td></tr></table></figure><p><strong>示例 2：</strong></p><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line">输出：此列表中的结点 <span class="number">4</span> (序列化形式：[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>])</span><br><span class="line">由于该列表有两个中间结点，值分别为 <span class="number">3</span> 和 <span class="number">4</span>，我们返回第二个结点。</span><br></pre></td></tr></table></figure><ul><li><p>思路</p><p>使用快慢指针，初始时快慢指针皆指向虚拟头结点，慢指针一次走一步，快指针一次走两步，当快指针走到链表尾时，慢指针正好走到中间结点或两个中间结点的前者。</p><p>最后，如果链表元素个数为偶数个时，中间结点有两个，题目要求指向后一个，所以需要加上判断：若快指针不为空时，此时为偶数个元素的链表，慢指针移动一位即可。</p></li><li><p>代码实现</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">middleNode</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode slow = <span class="keyword">new</span> ListNode(-<span class="number">1</span>);</span><br><span class="line">        slow.next = head;</span><br><span class="line">        ListNode fast = slow;</span><br><span class="line">        <span class="keyword">while</span> (fast != <span class="keyword">null</span> &amp;&amp; fast.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">            slow = slow.next;</span><br><span class="line">            fast = fast.next.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (fast != <span class="keyword">null</span>) &#123;</span><br><span class="line">            slow = slow.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> slow;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Leetcode876-链表的中间结点&quot;&gt;&lt;a href=&quot;#Leetcode876-链表的中间结点&quot; class=&quot;headerlink&quot; title=&quot;Leetcode876.链表的中间结点&quot;&gt;&lt;/a&gt;Leetcode876.链表的中间结点&lt;/h2&gt;&lt;p&gt;给定一个带有头结点 &lt;code&gt;head&lt;/code&gt; 的非空单链表，返回链表的中间结点。&lt;/p&gt;
+&lt;p&gt;如果有两个中间结点，则返回第二个中间结点。&lt;/p&gt;
+&lt;p&gt; &lt;a href=&quot;https://leetcode-cn.com/problems/middle-of-the-linked-list/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
+    
+    
+      <category term="链表" scheme="http://yoursite.com/tags/%E9%93%BE%E8%A1%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode面试题02.05.链表求和</title>
@@ -464,9 +489,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="广度优先搜索" scheme="http://yoursite.com/tags/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/"/>
-    
       <category term="Queue" scheme="http://yoursite.com/tags/Queue/"/>
+    
+      <category term="广度优先搜索" scheme="http://yoursite.com/tags/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/"/>
     
   </entry>
   
@@ -523,33 +548,6 @@
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
       <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode面试题57-II.和为s的连续正数序列</title>
-    <link href="http://yoursite.com/2020/03/14/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9857-II-%E5%92%8C%E4%B8%BAs%E7%9A%84%E8%BF%9E%E7%BB%AD%E6%AD%A3%E6%95%B0%E5%BA%8F%E5%88%97/"/>
-    <id>http://yoursite.com/2020/03/14/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9857-II-%E5%92%8C%E4%B8%BAs%E7%9A%84%E8%BF%9E%E7%BB%AD%E6%AD%A3%E6%95%B0%E5%BA%8F%E5%88%97/</id>
-    <published>2020-03-14T07:27:59.000Z</published>
-    <updated>2020-03-14T07:49:55.849Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Leetcode面试题57-II-和为s的连续正数序列"><a href="#Leetcode面试题57-II-和为s的连续正数序列" class="headerlink" title="Leetcode面试题57-II.和为s的连续正数序列"></a>Leetcode面试题57-II.和为s的连续正数序列</h2><p>输入一个正整数 <code>target</code>，输出所有和为 <code>target</code> 的连续正整数序列（至少含有两个数）。</p><p>序列内的数字由小到大排列，不同序列按照首个数字从小到大排列。</p><p><a href="https://leetcode-cn.com/problems/he-wei-sde-lian-xu-zheng-shu-xu-lie-lcof" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例 1：</p><blockquote><p>输入：target = 9</p><p>输出：[[2,3,4],[4,5]]</p></blockquote><p>示例 2：</p><blockquote><p>输入：target = 15</p><p>输出：[[1,2,3,4,5],[4,5,6],[7,8]]</p></blockquote><p>限制：</p><blockquote><p>1 &lt;= target &lt;= 10^5</p></blockquote><h3 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h3><p>滑动窗口可以看成数组中框起来的一部分，我们可以用滑动窗口来观察可能的结果，当滑动窗口从数组的左边滑倒了右边，就可以得到所有可能的结果。</p><p>设窗口左边界为i，右边界为j，则滑动窗口是<code>[i,j)</code>，设窗口的和为<code>sum</code>。</p><ul><li>当<code>sum&gt;target</code>时，窗口的和需要减小，所以要缩小窗口，左边界右移，即<code>i++</code></li><li>当<code>sum&lt;target</code>时，窗口的和需要增大，所以要增大窗口，右边界右移，即<code>j++</code></li><li>当<code>sum==target</code>时，记录结果，接下来找<code>i+1</code>开头的序列，所以·<code>sum-=i,i++</code></li></ul><p>代码实现：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[][] findContinuousSequence(<span class="keyword">int</span> target) &#123;</span><br><span class="line">         List&lt;<span class="keyword">int</span>[]&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">1</span>;<span class="comment">//左窗口</span></span><br><span class="line">        <span class="keyword">int</span> j = <span class="number">1</span>;<span class="comment">//右窗口</span></span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (i&lt;(target-<span class="number">1</span>)/<span class="number">2</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span> (sum&gt;target)&#123;</span><br><span class="line">                sum-=i;</span><br><span class="line">                i ++;</span><br><span class="line">            &#125;<span class="keyword">if</span> (sum&lt;target)&#123;</span><br><span class="line">                sum+=j;</span><br><span class="line">                j++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (sum==target)&#123;</span><br><span class="line">                <span class="keyword">int</span> arr[] = <span class="keyword">new</span> <span class="keyword">int</span>[j-i];</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k =i;k&lt;j;k++)&#123;</span><br><span class="line">                    arr[k-i] = k;</span><br><span class="line">                &#125;</span><br><span class="line">                res.add(arr);</span><br><span class="line">                sum-=i;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res.toArray(<span class="keyword">new</span> <span class="keyword">int</span>[res.size()][]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Leetcode面试题57-II-和为s的连续正数序列&quot;&gt;&lt;a href=&quot;#Leetcode面试题57-II-和为s的连续正数序列&quot; class=&quot;headerlink&quot; title=&quot;Leetcode面试题57-II.和为s的连续正数序列&quot;&gt;&lt;/a&gt;Leetcode面试题57-II.和为s的连续正数序列&lt;/h2&gt;&lt;p&gt;输入一个正整数 &lt;code&gt;target&lt;/code&gt;，输出所有和为 &lt;code&gt;target&lt;/code&gt; 的连续正整数序列（至少含有两个数）。&lt;/p&gt;
-&lt;p&gt;序列内的数字由小到大排列，不同序列按照首个数字从小到大排列。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/he-wei-sde-lian-xu-zheng-shu-xu-lie-lcof&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
-    
-    
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
-      <category term="Sliding Window" scheme="http://yoursite.com/tags/Sliding-Window/"/>
     
   </entry>
   
