@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="递归,深度优先搜索," />
+  <meta name="keywords" content="递归,树,深度优先搜索," />
 
 
 
@@ -81,15 +81,15 @@
 
 
 
-<meta name="description" content="Leetcode695.岛屿的最大面积给定一个包含了一些 0 和 1 的非空二维数组 grid 。 一个 岛屿 是由一些相邻的 1 (代表土地) 构成的组合，这里的「相邻」要求两个 1 必须在水平或者竖直方向上相邻。你可以假设 grid 的四个边缘都被 0（代表水）包围着。 找到给定的二维数组中最大的岛屿面积。(如果没有岛屿，则返回面积为 0 。)  题目链接">
-<meta name="keywords" content="递归,深度优先搜索">
+<meta name="description" content="Leetcode543.二叉树的直径给定一棵二叉树，你需要计算它的直径长度。一棵二叉树的直径长度是任意两个结点路径长度中的最大值。这条路径可能穿过也可能不穿过根结点。  题目链接">
+<meta name="keywords" content="递归,树,深度优先搜索">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode695.岛屿的最大面积">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;19&#x2F;Leetcode695-%E5%B2%9B%E5%B1%BF%E7%9A%84%E6%9C%80%E5%A4%A7%E9%9D%A2%E7%A7%AF&#x2F;index.html">
+<meta property="og:title" content="Leetcode543.二叉树的直径">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;26&#x2F;Leetcode543-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84&#x2F;index.html">
 <meta property="og:site_name" content="flbu blog">
-<meta property="og:description" content="Leetcode695.岛屿的最大面积给定一个包含了一些 0 和 1 的非空二维数组 grid 。 一个 岛屿 是由一些相邻的 1 (代表土地) 构成的组合，这里的「相邻」要求两个 1 必须在水平或者竖直方向上相邻。你可以假设 grid 的四个边缘都被 0（代表水）包围着。 找到给定的二维数组中最大的岛屿面积。(如果没有岛屿，则返回面积为 0 。)  题目链接">
+<meta property="og:description" content="Leetcode543.二叉树的直径给定一棵二叉树，你需要计算它的直径长度。一棵二叉树的直径长度是任意两个结点路径长度中的最大值。这条路径可能穿过也可能不穿过根结点。  题目链接">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-19T06:39:45.170Z">
+<meta property="og:updated_time" content="2020-03-26T02:52:01.694Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/03/19/Leetcode695-岛屿的最大面积/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/03/26/Leetcode543-二叉树的直径/"/>
 
 
 
 
 
-  <title>Leetcode695.岛屿的最大面积 | flbu blog</title>
+  <title>Leetcode543.二叉树的直径 | flbu blog</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/19/Leetcode695-%E5%B2%9B%E5%B1%BF%E7%9A%84%E6%9C%80%E5%A4%A7%E9%9D%A2%E7%A7%AF/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/26/Leetcode543-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="flbu">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Leetcode695.岛屿的最大面积</h1>
+          <h1 class="post-title" itemprop="name headline">Leetcode543.二叉树的直径</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-19T14:04:54+08:00">
-                2020-03-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-26T10:34:59+08:00">
+                2020-03-26
               </time>
             
 
@@ -352,36 +352,28 @@
       
 
       
-        <h2 id="Leetcode695-岛屿的最大面积"><a href="#Leetcode695-岛屿的最大面积" class="headerlink" title="Leetcode695.岛屿的最大面积"></a>Leetcode695.岛屿的最大面积</h2><p>给定一个包含了一些 <code>0</code> 和 <code>1</code> 的非空二维数组 <code>grid</code> 。</p>
-<p>一个 <strong>岛屿</strong> 是由一些相邻的 <code>1</code> (代表土地) 构成的组合，这里的「相邻」要求两个 <code>1</code> 必须在水平或者竖直方向上相邻。你可以假设 <code>grid</code> 的四个边缘都被 <code>0</code>（代表水）包围着。</p>
-<p>找到给定的二维数组中最大的岛屿面积。(如果没有岛屿，则返回面积为 <code>0</code> 。)</p>
-<p> <a href="https://leetcode-cn.com/problems/max-area-of-island/" target="_blank" rel="noopener">题目链接</a></p>
+        <h2 id="Leetcode543-二叉树的直径"><a href="#Leetcode543-二叉树的直径" class="headerlink" title="Leetcode543.二叉树的直径"></a>Leetcode543.二叉树的直径</h2><p>给定一棵二叉树，你需要计算它的直径长度。一棵二叉树的直径长度是任意两个结点路径长度中的最大值。这条路径可能穿过也可能不穿过根结点。</p>
+<p> <a href="https://leetcode-cn.com/problems/diameter-of-binary-tree" target="_blank" rel="noopener">题目链接</a></p>
 <a id="more"></a>
 
-<p><strong>示例 1:</strong></p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line"> [<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line"> [<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line"> [<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line"> [<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line"> [<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line"> [<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line"> [<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]]</span><br></pre></td></tr></table></figure>
-
+<p>示例 :</p>
 <blockquote>
-<p>对于上面这个给定矩阵应返回 <code>6</code>。注意答案不应该是 <code>11</code> ，因为岛屿只能包含水平或垂直的四个方向的 <code>1</code> </p>
+<p>给定二叉树</p>
+<p>返回 3, 它的长度是路径 [4,2,1,3] 或者 [5,2,1,3]。</p>
 </blockquote>
-<p><strong>示例 2:</strong></p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]]</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>对于上面这个给定的矩阵, 返回 <code>0</code>。</p>
-<p><strong>注意:</strong> 给定的矩阵<code>grid</code> 的长度和宽度都不超过 50。</p>
+<pre><code>    1
+   / \
+  2   3
+ / \     
+4   5    </code></pre><blockquote>
+<p>注意：两结点之间的路径长度是以它们之间边的数目表示。</p>
 </blockquote>
-<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><ul>
-<li><p>递归</p>
-<p>当登录某个岛屿时，以此岛屿为中心，向上下左右扩散。当步入新地点时，则继续以新地点为中心朝四周扩散。很明显这符合递归的特性。</p>
-</li>
-</ul>
-<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><ul>
-<li><p>递归</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxAreaOfIsland</span><span class="params">(<span class="keyword">int</span>[][] grid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> area = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> maxArea = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; grid.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; grid[<span class="number">0</span>].length; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (grid[i][j] == <span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="comment">//以此为中心朝四周扩散</span></span><br><span class="line">                    area = getArea(grid, i, j);</span><br><span class="line">                    maxArea = maxArea &gt; area ? maxArea : area;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maxArea;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getArea</span><span class="params">(<span class="keyword">int</span>[][] grid, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (i &lt; <span class="number">0</span> || i &gt;= grid.length || j &lt; <span class="number">0</span> || j &gt;= grid[<span class="number">0</span>].length || grid[i][j] == <span class="number">0</span>) &#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="comment">//保证每块土地最多被访问一次，将登陆后的土地置为0</span></span><br><span class="line">          grid[i][j] = <span class="number">0</span>;</span><br><span class="line">          <span class="keyword">return</span> <span class="number">1</span> + getArea(grid, i - <span class="number">1</span>, j) + getArea(grid, i + <span class="number">1</span>, j) + getArea(grid, i, j - <span class="number">1</span>) + getArea(grid, i, j + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>一条路径的长度是其经过的结点数减一，所以我们只需要求得最长路径即可。而任意一条路径都可看成由某个结点为起点，拼接其由左右儿子向下遍历的路径。</p>
+<p>令该结点的左儿子向下遍历经过的最多结点数为<code>L</code>，右儿子向下遍历经过的最多结点数位<code>R</code>，所以以该结点为起始的最多结点数为<code>L+R+1</code>，即最长路径为<code>L+R</code>。</p>
+<p>定义一个递归函数，计算以传入结点<code>node</code>为根的子树深度。先递归调用<code>node</code>的左儿子和右儿子，得到左右子树的最大深度<code>L、R</code>，则最大深度为<code>max(L,R)+1</code>。</p>
+<p>维护一个全局变量<code>res</code>代表最长路径。</p>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">//最长路径</span></span><br><span class="line">    <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">diameterOfBinaryTree</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        depth(root);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">depth</span><span class="params">(TreeNode node)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (node == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//左儿子为根的子树的深度</span></span><br><span class="line">        <span class="keyword">int</span> L = depth(node.left);</span><br><span class="line">        <span class="comment">//右儿子为根的子树的深度</span></span><br><span class="line">        <span class="keyword">int</span> R = depth(node.right);</span><br><span class="line">        <span class="comment">//最大节点数为L+R+1，所以最长路径为L+R</span></span><br><span class="line">        res = Math.max(res, L + R);</span><br><span class="line">        <span class="comment">//返回以该结点为根的子树深度</span></span><br><span class="line">        <span class="keyword">return</span> Math.max(L, R) + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-</li>
-</ul>
 
       
     </div>
@@ -412,6 +404,8 @@
           
             <a href="/tags/%E9%80%92%E5%BD%92/" rel="tag"><i class="fa fa-tag"></i>递归</a>
           
+            <a href="/tags/%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i>树</a>
+          
             <a href="/tags/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" rel="tag"><i class="fa fa-tag"></i>深度优先搜索</a>
           
         </div>
@@ -425,8 +419,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/19/Leetcode409-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2/" rel="next" title="Leetcode409.最长回文串">
-                <i class="fa fa-chevron-left"></i> Leetcode409.最长回文串
+              <a href="/2020/03/26/Leetcode999-%E8%BD%A6%E7%9A%84%E5%8F%AF%E7%94%A8%E6%8D%95%E8%8E%B7%E9%87%8F/" rel="next" title="Leetcode999.车的可用捕获量">
+                <i class="fa fa-chevron-left"></i> Leetcode999.车的可用捕获量
               </a>
             
           </div>
@@ -434,10 +428,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/03/20/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9840-%E6%9C%80%E5%B0%8F%E7%9A%84k%E4%B8%AA%E6%95%B0/" rel="prev" title="Leetcode面试题40.最小的k个数">
-                Leetcode面试题40.最小的k个数 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -592,7 +582,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode695-岛屿的最大面积"><span class="nav-text">Leetcode695.岛屿的最大面积</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-text">代码实现</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode543-二叉树的直径"><span class="nav-text">Leetcode543.二叉树的直径</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-text">代码实现</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
