@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="递归,Stack,树," />
+  <meta name="keywords" content="递归,最大公约数," />
 
 
 
@@ -81,15 +81,15 @@
 
 
 
-<meta name="description" content="Leetcode145.二叉树的后序遍历给定一个二叉树，返回它的 后序 遍历。 题目链接 类似题目：  前序遍历 中序遍历">
-<meta name="keywords" content="递归,Stack,树">
+<meta name="description" content="Leetcode914.卡牌分组给定一副牌，每张牌上都写着一个整数。 此时，你需要选定一个数字 X，使我们可以将整副牌按下述规则分成 1 组或更多组： 每组都有 X 张牌。组内所有的牌上都写着相同的整数。仅当你可选的 X &amp;gt;= 2 时返回 true。  题目链接">
+<meta name="keywords" content="递归,最大公约数">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode145.二叉树的后序遍历">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;25&#x2F;Leetcode145-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86&#x2F;index.html">
+<meta property="og:title" content="Leetcode914.卡牌分组">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;27&#x2F;Leetcode914-%E5%8D%A1%E7%89%8C%E5%88%86%E7%BB%84&#x2F;index.html">
 <meta property="og:site_name" content="flbu blog">
-<meta property="og:description" content="Leetcode145.二叉树的后序遍历给定一个二叉树，返回它的 后序 遍历。 题目链接 类似题目：  前序遍历 中序遍历">
+<meta property="og:description" content="Leetcode914.卡牌分组给定一副牌，每张牌上都写着一个整数。 此时，你需要选定一个数字 X，使我们可以将整副牌按下述规则分成 1 组或更多组： 每组都有 X 张牌。组内所有的牌上都写着相同的整数。仅当你可选的 X &amp;gt;= 2 时返回 true。  题目链接">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-25T07:30:41.645Z">
+<meta property="og:updated_time" content="2020-03-27T05:19:37.537Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/03/25/Leetcode145-二叉树的后序遍历/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/03/27/Leetcode914-卡牌分组/"/>
 
 
 
 
 
-  <title>Leetcode145.二叉树的后序遍历 | flbu blog</title>
+  <title>Leetcode914.卡牌分组 | flbu blog</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/25/Leetcode145-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/27/Leetcode914-%E5%8D%A1%E7%89%8C%E5%88%86%E7%BB%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="flbu">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Leetcode145.二叉树的后序遍历</h1>
+          <h1 class="post-title" itemprop="name headline">Leetcode914.卡牌分组</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-25T14:20:46+08:00">
-                2020-03-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-27T13:06:53+08:00">
+                2020-03-27
               </time>
             
 
@@ -352,37 +352,41 @@
       
 
       
-        <h2 id="Leetcode145-二叉树的后序遍历"><a href="#Leetcode145-二叉树的后序遍历" class="headerlink" title="Leetcode145.二叉树的后序遍历"></a>Leetcode145.二叉树的后序遍历</h2><p>给定一个二叉树，返回它的 后序 遍历。</p>
-<p><a href="https://leetcode-cn.com/problems/binary-tree-postorder-traversal" target="_blank" rel="noopener">题目链接</a></p>
-<p>类似题目：</p>
-<ol>
-<li><a href="https://leetcode-cn.com/problems/binary-tree-preorder-traversal" target="_blank" rel="noopener">前序遍历</a></li>
-<li><a href="https://leetcode-cn.com/problems/binary-tree-inorder-traversal" target="_blank" rel="noopener">中序遍历</a></li>
-</ol>
+        <h2 id="Leetcode914-卡牌分组"><a href="#Leetcode914-卡牌分组" class="headerlink" title="Leetcode914.卡牌分组"></a>Leetcode914.卡牌分组</h2><p>给定一副牌，每张牌上都写着一个整数。</p>
+<p>此时，你需要选定一个数字 X，使我们可以将整副牌按下述规则分成 1 组或更多组：</p>
+<p>每组都有 X 张牌。<br>组内所有的牌上都写着相同的整数。<br>仅当你可选的 X &gt;= 2 时返回 true。</p>
+<p> <a href="https://leetcode-cn.com/problems/x-of-a-kind-in-a-deck-of-cards" target="_blank" rel="noopener">题目链接</a></p>
 <a id="more"></a>
 
-<p>示例:</p>
-<p>输入: [1,null,2,3]  </p>
+<p>示例 1：</p>
 <blockquote>
-<p>1</p>
-<p>​    <br>     2<br>    /<br>   3 </p>
-<p>输出: [3,2,1]</p>
+<p>输入：[1,2,3,4,4,3,2,1]</p>
+<p>输出：true<br>解释：可行的分组是 [1,1]，[2,2]，[3,3]，[4,4]</p>
 </blockquote>
-<p>进阶: 递归算法很简单，你可以通过迭代算法完成吗？</p>
-<h4 id="思路及代码实现"><a href="#思路及代码实现" class="headerlink" title="思路及代码实现"></a>思路及代码实现</h4><ul>
-<li><p>递归</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">postorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        postOrder(root, list);</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">postOrder</span><span class="params">(TreeNode node, List&lt;Integer&gt; list)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (node == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        postOrder(node.left, list);</span><br><span class="line">        postOrder(node.right, list);</span><br><span class="line">        list.add(node.val);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>迭代</p>
-<ol>
-<li>用一个指针<code>cur</code>标记当前退出的节点是什么；</li>
-<li>后序遍历中遍历完左子树和右子树<code>cur</code>都会回到根节点，所以当前不管是从左子树还是右子树回到根结点都不应该再操作了，应该退回上层。 </li>
-<li>如果是从右边再返回根结点，应该回到上层。</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">postorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> list;</span><br><span class="line">        &#125;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">        TreeNode cur = root;</span><br><span class="line">        stack.push(root);</span><br><span class="line">        <span class="keyword">while</span> (!stack.isEmpty()) &#123;</span><br><span class="line">            TreeNode peek = stack.peek();</span><br><span class="line">            <span class="comment">//一直将左子树压栈</span></span><br><span class="line">            <span class="keyword">if</span> (peek.left != <span class="keyword">null</span> &amp;&amp; peek.left != cur &amp;&amp; peek.right != cur) &#123;</span><br><span class="line">                stack.push(peek.left);</span><br><span class="line">                <span class="comment">//从左子树返回</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (peek.right != <span class="keyword">null</span> &amp;&amp; peek.right != cur) &#123;</span><br><span class="line">                stack.push(peek.right);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//从右子树返回</span></span><br><span class="line">                list.add(stack.pop().val);</span><br><span class="line">                cur = peek;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>示例 2：</p>
+<blockquote>
+<p>输入：[1,1,1,2,2,2,3,3]<br>输出：false<br>解释：没有满足要求的分组。</p>
+</blockquote>
+<p>示例 3：</p>
+<blockquote>
+<p>输入：[1]</p>
+<p>输出：false</p>
+</blockquote>
+<p>示例 4：</p>
+<blockquote>
+<p>输入：[1,1]<br>输出：true<br>解释：可行的分组是 [1,1]</p>
+</blockquote>
+<p>示例 5：</p>
+<blockquote>
+<p>输入：[1,1,2,2,2,2]<br>输出：true<br>解释：可行的分组是 [1,1]，[2,2]，[2,2]</p>
+</blockquote>
+<p>提示：</p>
+<blockquote>
+<p>1 &lt;= deck.length &lt;= 10000<br>0 &lt;= deck[i] &lt; 10000</p>
+</blockquote>
+<h4 id="思路及代码实现"><a href="#思路及代码实现" class="headerlink" title="思路及代码实现"></a>思路及代码实现</h4><p>统计每个元素出现次数，使用<code>HashMap</code>存储。将数组分成1组或更多组，每组有2张以上的牌，所以我们可知只需求出现次数的最大公约数即可，若最大公约数大于等于2，则<code>return true</code>，否则<code>return false</code>。</p>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasGroupsSizeX</span><span class="params">(<span class="keyword">int</span>[] deck)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (deck == <span class="keyword">null</span> || deck.length == <span class="number">0</span> || deck.length == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> x = <span class="number">0</span>;</span><br><span class="line">        Map&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> d : deck) &#123;</span><br><span class="line">            <span class="keyword">if</span> (map.containsKey(d)) &#123;</span><br><span class="line">                map.put(d, map.get(d) + <span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                map.put(d, <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (Map.Entry&lt;Integer, Integer&gt; entry : map.entrySet()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (x == <span class="number">0</span>) &#123;</span><br><span class="line">                x = entry.getValue();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                x = gcd(x, entry.getValue());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> x &gt;= <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">gcd</span><span class="params">(<span class="keyword">int</span> p, <span class="keyword">int</span> q)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (q == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> p;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> r = p % q;</span><br><span class="line">        <span class="keyword">return</span> gcd(q, r);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-</li>
-</ul>
 
       
     </div>
@@ -413,9 +417,7 @@
           
             <a href="/tags/%E9%80%92%E5%BD%92/" rel="tag"><i class="fa fa-tag"></i>递归</a>
           
-            <a href="/tags/Stack/" rel="tag"><i class="fa fa-tag"></i>Stack</a>
-          
-            <a href="/tags/%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i>树</a>
+            <a href="/tags/%E6%9C%80%E5%A4%A7%E5%85%AC%E7%BA%A6%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i>最大公约数</a>
           
         </div>
       
@@ -428,8 +430,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/25/Leetcode144-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86/" rel="next" title="Leetcode144.二叉树的前序遍历">
-                <i class="fa fa-chevron-left"></i> Leetcode144.二叉树的前序遍历
+              <a href="/2020/03/26/ArrayList%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/" rel="next" title="ArrayList源码学习">
+                <i class="fa fa-chevron-left"></i> ArrayList源码学习
               </a>
             
           </div>
@@ -437,10 +439,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/03/26/Leetcode999-%E8%BD%A6%E7%9A%84%E5%8F%AF%E7%94%A8%E6%8D%95%E8%8E%B7%E9%87%8F/" rel="prev" title="Leetcode999.车的可用捕获量">
-                Leetcode999.车的可用捕获量 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -595,7 +593,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode145-二叉树的后序遍历"><span class="nav-text">Leetcode145.二叉树的后序遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思路及代码实现"><span class="nav-text">思路及代码实现</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode914-卡牌分组"><span class="nav-text">Leetcode914.卡牌分组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思路及代码实现"><span class="nav-text">思路及代码实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-text">代码实现</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
