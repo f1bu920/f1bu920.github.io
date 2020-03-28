@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-27T09:32:34.460Z</updated>
+  <updated>2020-03-28T07:32:14.442Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode820.单词的压缩编码</title>
+    <link href="http://yoursite.com/2020/03/28/Leetcode820-%E5%8D%95%E8%AF%8D%E7%9A%84%E5%8E%8B%E7%BC%A9%E7%BC%96%E7%A0%81/"/>
+    <id>http://yoursite.com/2020/03/28/Leetcode820-%E5%8D%95%E8%AF%8D%E7%9A%84%E5%8E%8B%E7%BC%A9%E7%BC%96%E7%A0%81/</id>
+    <published>2020-03-28T07:20:19.000Z</published>
+    <updated>2020-03-28T07:32:14.442Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Leetcode820-单词的压缩编码"><a href="#Leetcode820-单词的压缩编码" class="headerlink" title="Leetcode820.单词的压缩编码"></a>Leetcode820.单词的压缩编码</h2><p>给定一个单词列表，我们将这个列表编码成一个索引字符串 S 与一个索引列表 A。</p><p>例如，如果这个列表是 [“time”, “me”, “bell”]，我们就可以将其表示为 S = “time#bell#” 和 indexes = [0, 2, 5]。</p><p>对于每一个索引，我们可以通过从字符串 S 中索引的位置开始读取字符串，直到 “#” 结束，来恢复我们之前的单词列表。</p><p>那么成功对给定单词列表进行编码的最小字符串长度是多少呢？</p><p> <a href="https://leetcode-cn.com/problems/short-encoding-of-words/" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例：</p><blockquote><p>输入: words = [“time”, “me”, “bell”]<br>输出: 10<br>说明: S = “time#bell#” ， indexes = [0, 2, 5] 。</p></blockquote><p>提示：</p><blockquote><p>1 &lt;= words.length &lt;= 2000<br>1 &lt;= words[i].length &lt;= 7<br>每个单词都是小写字母 。</p></blockquote><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>如果单词<code>x</code>是单词<code>Y</code>的后缀，那么编码字符串中就不必考虑<code>X</code>了，因为<code>Y</code>中一定包含<code>X</code>，在编码<code>Y</code>时就自动把<code>X</code>编码了。例如：<code>&quot;time&quot;</code>就自动编码了<code>&quot;me&quot;</code>。</p><p>如果单词<code>Y</code>不在任何别的单词<code>X</code>中出现，那么<code>Y</code>一定是编码字符的一部分。</p><p>单词<code>Y</code>的部分出现在其他单词的情况，无法满足，因为从索引开始读字符串，直到<code>#</code>结束。例如：<code>time</code>和<code>mell</code>，只可能为<code>time#mell</code>。</p><p>所以，保留所有不是其他单词后缀的字符，结果就是这些单词长度+1的总和。</p><h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minimumLengthEncoding</span><span class="params">(String[] words)</span> </span>&#123;</span><br><span class="line">        Set&lt;String&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;(Arrays.asList(words));</span><br><span class="line">        <span class="keyword">for</span> (String word : words) &#123;</span><br><span class="line">            <span class="comment">//要从1开始，否则会把set中所有的单词都删除</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; word.length(); i++) &#123;</span><br><span class="line">                set.remove(word.substring(i));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (String word : set) &#123;</span><br><span class="line">            res += word.length() + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Leetcode820-单词的压缩编码&quot;&gt;&lt;a href=&quot;#Leetcode820-单词的压缩编码&quot; class=&quot;headerlink&quot; title=&quot;Leetcode820.单词的压缩编码&quot;&gt;&lt;/a&gt;Leetcode820.单词的压缩编码&lt;/h2&gt;&lt;p&gt;给定一个单词列表，我们将这个列表编码成一个索引字符串 S 与一个索引列表 A。&lt;/p&gt;
+&lt;p&gt;例如，如果这个列表是 [“time”, “me”, “bell”]，我们就可以将其表示为 S = “time#bell#” 和 indexes = [0, 2, 5]。&lt;/p&gt;
+&lt;p&gt;对于每一个索引，我们可以通过从字符串 S 中索引的位置开始读取字符串，直到 “#” 结束，来恢复我们之前的单词列表。&lt;/p&gt;
+&lt;p&gt;那么成功对给定单词列表进行编码的最小字符串长度是多少呢？&lt;/p&gt;
+&lt;p&gt; &lt;a href=&quot;https://leetcode-cn.com/problems/short-encoding-of-words/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
+    
+    
+      <category term="字典树" scheme="http://yoursite.com/tags/%E5%AD%97%E5%85%B8%E6%A0%91/"/>
+    
+      <category term="字符串" scheme="http://yoursite.com/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode206.反转链表</title>
@@ -519,30 +548,6 @@
     
       &lt;h2 id=&quot;Leetcode面试题02-06-回文链表&quot;&gt;&lt;a href=&quot;#Leetcode面试题02-06-回文链表&quot; class=&quot;headerlink&quot; title=&quot;Leetcode面试题02.06.回文链表&quot;&gt;&lt;/a&gt;Leetcode面试题02.06.回文链表&lt;/h2&gt;&lt;p&gt;编写一个函数，检查输入的链表是否是回文的。&lt;/p&gt;
 &lt;p&gt; &lt;a href=&quot;https://leetcode-cn.com/problems/palindrome-linked-list-lcci/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
-    
-    
-      <category term="链表" scheme="http://yoursite.com/tags/%E9%93%BE%E8%A1%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode面试题02.01.移除重复节点</title>
-    <link href="http://yoursite.com/2020/03/20/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9802-01-%E7%A7%BB%E9%99%A4%E9%87%8D%E5%A4%8D%E8%8A%82%E7%82%B9/"/>
-    <id>http://yoursite.com/2020/03/20/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9802-01-%E7%A7%BB%E9%99%A4%E9%87%8D%E5%A4%8D%E8%8A%82%E7%82%B9/</id>
-    <published>2020-03-20T08:30:37.000Z</published>
-    <updated>2020-03-20T08:38:14.931Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Leetcode面试题02-01-移除重复节点"><a href="#Leetcode面试题02-01-移除重复节点" class="headerlink" title="Leetcode面试题02.01.移除重复节点"></a>Leetcode面试题02.01.移除重复节点</h2><p>编写代码，移除未排序链表中的重复节点。保留最开始出现的节点。</p><p><a href="https://leetcode-cn.com/problems/remove-duplicate-node-lcci/" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p><strong>示例1:</strong></p><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>]</span><br><span class="line">输出：[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br></pre></td></tr></table></figure><p><strong>示例2:</strong></p><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">输出：[<span class="number">1</span>, <span class="number">2</span>]</span><br></pre></td></tr></table></figure><p><strong>提示：</strong></p><ol><li>链表长度在[0, 20000]范围内。</li><li>链表元素在[0, 20000]范围内。</li></ol><ul><li><p>思路</p><p>使用<code>HashMap</code>作为缓冲区存储出现过的值，若遇到的值已出现过，则删除。使用了虚拟头结点</p></li><li><p>代码实现</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">removeDuplicateNodes</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (head == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//使用HashSet更好</span></span><br><span class="line">        Map map = <span class="keyword">new</span> HashMap();</span><br><span class="line">        ListNode dummyHead = <span class="keyword">new</span> ListNode(-<span class="number">1</span>);</span><br><span class="line">        dummyHead.next=head;</span><br><span class="line">        ListNode prev = dummyHead;</span><br><span class="line">        <span class="keyword">while</span> (prev.next!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span> (!map.containsKey(prev.next.val))&#123;</span><br><span class="line">                map.put(prev.next.val,<span class="number">1</span>);</span><br><span class="line">                prev = prev.next;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                prev.next = prev.next.next;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dummyHead.next;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Leetcode面试题02-01-移除重复节点&quot;&gt;&lt;a href=&quot;#Leetcode面试题02-01-移除重复节点&quot; class=&quot;headerlink&quot; title=&quot;Leetcode面试题02.01.移除重复节点&quot;&gt;&lt;/a&gt;Leetcode面试题02.01.移除重复节点&lt;/h2&gt;&lt;p&gt;编写代码，移除未排序链表中的重复节点。保留最开始出现的节点。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/remove-duplicate-node-lcci/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
     
     </summary>
     
