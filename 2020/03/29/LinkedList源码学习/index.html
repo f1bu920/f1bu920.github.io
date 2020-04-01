@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="flbu blog">
 <meta property="og:description" content="LinkedList源码学习内部结构LinkedList是Java集合中List接口的一个重要实现类，其底层使用的是双向链表，所以不支持随机访问。基本结点定义如下： 1234567891011private static class Node&amp;lt;E&amp;gt; &amp;#123;    E item;    Node&amp;lt;E&amp;gt; next;    Node&amp;lt;E&amp;gt; prev;    No">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-29T07:03:45.286Z">
+<meta property="og:updated_time" content="2020-04-01T03:21:29.170Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -358,6 +358,8 @@
 <p><code>LinkedList</code>类实现了<code>List</code>接口和<code>Deque</code>接口，所以可以当成一个队列使用。定义如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkedList</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">extends</span> <span class="title">AbstractSequentialList</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;, <span class="title">Deque</span>&lt;<span class="title">E</span>&gt;, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></span><br><span class="line"><span class="class">    <span class="title">transient</span> <span class="title">int</span> <span class="title">size</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Pointer to first node.</span></span><br><span class="line"><span class="comment">     * Invariant: (first == null &amp;&amp; last == null) ||</span></span><br><span class="line"><span class="comment">     *            (first.prev == null &amp;&amp; first.item != null)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">transient</span> Node&lt;E&gt; first;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Pointer to last node.</span></span><br><span class="line"><span class="comment">     * Invariant: (first == null &amp;&amp; last == null) ||</span></span><br><span class="line"><span class="comment">     *            (last.next == null &amp;&amp; last.item != null)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">transient</span> Node&lt;E&gt; last;</span><br><span class="line">    </span><br><span class="line">    ......</span><br><span class="line">        </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<a id="more"></a>
+
 <h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><h4 id="LinkedList构造器"><a href="#LinkedList构造器" class="headerlink" title="LinkedList构造器"></a>LinkedList构造器</h4><ul>
 <li><p>默认构造器</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Constructs an empty list.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">LinkedList</span><span class="params">()</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -564,7 +566,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-count">53</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
