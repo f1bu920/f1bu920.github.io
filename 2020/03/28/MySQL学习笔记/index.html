@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="MySQL," />
 
 
 
@@ -81,14 +81,15 @@
 
 
 
-<meta name="description" content="flbu的技术博客">
+<meta name="description" content="MySQL笔记什么是数据库？​      数据库是按照数据结构来组织、存储和管理的仓库。 ​">
+<meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL学习笔记">
+<meta property="og:title" content="MySQL数据类型与表的管理">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;28&#x2F;MySQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0&#x2F;index.html">
 <meta property="og:site_name" content="flbu blog">
-<meta property="og:description" content="flbu的技术博客">
+<meta property="og:description" content="MySQL笔记什么是数据库？​      数据库是按照数据结构来组织、存储和管理的仓库。 ​">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-28T07:36:15.140Z">
+<meta property="og:updated_time" content="2020-04-02T06:33:25.984Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -125,7 +126,7 @@
 
 
 
-  <title>MySQL学习笔记 | flbu blog</title>
+  <title>MySQL数据类型与表的管理 | flbu blog</title>
   
 
 
@@ -279,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">MySQL学习笔记</h1>
+          <h1 class="post-title" itemprop="name headline">MySQL数据类型与表的管理</h1>
         
 
         <div class="post-meta">
@@ -301,6 +302,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -329,7 +352,41 @@
       
 
       
-        
+        <h2 id="MySQL笔记"><a href="#MySQL笔记" class="headerlink" title="MySQL笔记"></a>MySQL笔记</h2><h4 id="什么是数据库？"><a href="#什么是数据库？" class="headerlink" title="什么是数据库？"></a>什么是数据库？</h4><p>​      数据库是按照数据结构来组织、存储和管理的仓库。</p>
+<p>​      <a id="more"></a></p>
+<ol>
+<li><p>常见数据库</p>
+<ul>
+<li><p>Oracle</p>
+</li>
+<li><p>DB2</p>
+</li>
+<li><p>SQL Server</p>
+</li>
+<li><p>Postgre SQL</p>
+</li>
+<li><p>MySQL</p>
+</li>
+</ul>
+</li>
+<li><p>相关术语</p>
+<p>数据库系统(DataBase System)：(DBS)，包含以下内容</p>
+<ul>
+<li>数据库(DataBase)</li>
+<li>数据库管理系统(DataBase Management System)：(DBMS)</li>
+<li>应用开发工具</li>
+<li>管理员及用户</li>
+</ul>
+<p>SQL语言(Structured Query Language)：结构化查询语言</p>
+<ul>
+<li>DDL：数据定义语言</li>
+<li>DML：数据操作语言</li>
+<li>DQL：数据查询语言</li>
+<li>DCL：数据控制语言</li>
+</ul>
+</li>
+</ol>
+
       
     </div>
     
@@ -354,6 +411,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL/" rel="tag"><i class="fa fa-tag"></i>MySQL</a>
+          
+        </div>
       
 
       
@@ -428,8 +491,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -455,7 +527,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -466,7 +538,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -512,6 +584,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL笔记"><span class="nav-text">MySQL笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是数据库？"><span class="nav-text">什么是数据库？</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
