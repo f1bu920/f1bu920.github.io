@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="哈希表," />
+  <meta name="keywords" content="String," />
 
 
 
@@ -81,15 +81,15 @@
 
 
 
-<meta name="description" content="Leetcode1160.拼写单词给你一份『词汇表』（字符串数组） words 和一张『字母表』（字符串） chars。 假如你可以用 chars 中的『字母』（字符）拼写出 words 中的某个『单词』（字符串），那么我们就认为你掌握了这个单词。 注意：每次拼写时，chars 中的每个字母都只能用一次。 返回词汇表 words 中你掌握的所有单词的 长度之和。  题目链接">
-<meta name="keywords" content="哈希表">
+<meta name="description" content="Leetcode8.字符串转整数(atoi)请你来实现一个 atoi 函数，使其能将字符串转换成整数。 首先，该函数会根据需要丢弃无用的开头空格字符，直到寻找到第一个非空格的字符为止。接下来的转化规则如下： 如果第一个非空字符为正或者负号时，则将该符号与之后面尽可能多的连续数字字符组合起来，形成一个有符号整数。假如第一个非空字符是数字，则直接将其与之后连续的数字字符组合起来，形成一个整数。该字符串">
+<meta name="keywords" content="String">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode1160.拼写单词">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;17&#x2F;Leetcode1160-%E6%8B%BC%E5%86%99%E5%8D%95%E8%AF%8D&#x2F;index.html">
+<meta property="og:title" content="Leetcode8.字符串转整数(atoi)">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;03&#x2F;Leetcode8-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%95%B4%E6%95%B0-atoi&#x2F;index.html">
 <meta property="og:site_name" content="flbu blog">
-<meta property="og:description" content="Leetcode1160.拼写单词给你一份『词汇表』（字符串数组） words 和一张『字母表』（字符串） chars。 假如你可以用 chars 中的『字母』（字符）拼写出 words 中的某个『单词』（字符串），那么我们就认为你掌握了这个单词。 注意：每次拼写时，chars 中的每个字母都只能用一次。 返回词汇表 words 中你掌握的所有单词的 长度之和。  题目链接">
+<meta property="og:description" content="Leetcode8.字符串转整数(atoi)请你来实现一个 atoi 函数，使其能将字符串转换成整数。 首先，该函数会根据需要丢弃无用的开头空格字符，直到寻找到第一个非空格的字符为止。接下来的转化规则如下： 如果第一个非空字符为正或者负号时，则将该符号与之后面尽可能多的连续数字字符组合起来，形成一个有符号整数。假如第一个非空字符是数字，则直接将其与之后连续的数字字符组合起来，形成一个整数。该字符串">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-17T07:19:08.058Z">
+<meta property="og:updated_time" content="2020-04-03T02:55:56.481Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/03/17/Leetcode1160-拼写单词/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/04/03/Leetcode8-字符串转整数-atoi/"/>
 
 
 
 
 
-  <title>Leetcode1160.拼写单词 | flbu blog</title>
+  <title>Leetcode8.字符串转整数(atoi) | flbu blog</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/17/Leetcode1160-%E6%8B%BC%E5%86%99%E5%8D%95%E8%AF%8D/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/03/Leetcode8-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%95%B4%E6%95%B0-atoi/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="flbu">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Leetcode1160.拼写单词</h1>
+          <h1 class="post-title" itemprop="name headline">Leetcode8.字符串转整数(atoi)</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-17T15:08:55+08:00">
-                2020-03-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-03T10:42:02+08:00">
+                2020-04-03
               </time>
             
 
@@ -352,39 +352,48 @@
       
 
       
-        <h2 id="Leetcode1160-拼写单词"><a href="#Leetcode1160-拼写单词" class="headerlink" title="Leetcode1160.拼写单词"></a>Leetcode1160.拼写单词</h2><p>给你一份『词汇表』（字符串数组） words 和一张『字母表』（字符串） chars。</p>
-<p>假如你可以用 chars 中的『字母』（字符）拼写出 words 中的某个『单词』（字符串），那么我们就认为你掌握了这个单词。</p>
-<p>注意：每次拼写时，chars 中的每个字母都只能用一次。</p>
-<p>返回词汇表 words 中你掌握的所有单词的 长度之和。</p>
-<p> <a href="https://leetcode-cn.com/problems/find-words-that-can-be-formed-by-characters" target="_blank" rel="noopener">题目链接</a></p>
+        <h2 id="Leetcode8-字符串转整数-atoi"><a href="#Leetcode8-字符串转整数-atoi" class="headerlink" title="Leetcode8.字符串转整数(atoi)"></a>Leetcode8.字符串转整数(atoi)</h2><p>请你来实现一个 atoi 函数，使其能将字符串转换成整数。</p>
+<p>首先，该函数会根据需要丢弃无用的开头空格字符，直到寻找到第一个非空格的字符为止。接下来的转化规则如下：</p>
+<p>如果第一个非空字符为正或者负号时，则将该符号与之后面尽可能多的连续数字字符组合起来，形成一个有符号整数。<br>假如第一个非空字符是数字，则直接将其与之后连续的数字字符组合起来，形成一个整数。<br>该字符串在有效的整数部分之后也可能会存在多余的字符，那么这些字符可以被忽略，它们对函数不应该造成影响。<br>注意：假如该字符串中的第一个非空格字符不是一个有效整数字符、字符串为空或字符串仅包含空白字符时，则你的函数不需要进行转换，即无法进行有效转换。</p>
+<p>在任何情况下，若函数不能进行有效的转换时，请返回 0 。</p>
+<p><a href="https://leetcode-cn.com/problems/string-to-integer-atoi" target="_blank" rel="noopener">题目链接</a></p>
 <a id="more"></a>
 
-<p>示例 1：</p>
-<blockquote>
-<p>输入：words = [“cat”,”bt”,”hat”,”tree”], chars = “atach”</p>
-<p>输出：6<br>解释：<br>可以形成字符串 “cat” 和 “hat”，所以答案是 3 + 3 = 6。</p>
-</blockquote>
-<p>示例 2：</p>
-<blockquote>
-<p>输入：words = [“hello”,”world”,”leetcode”], chars = “welldonehoneyr”</p>
-<p>输出：10<br>解释：<br>可以形成字符串 “hello” 和 “world”，所以答案是 5 + 5 = 10。</p>
-</blockquote>
 <p>提示：</p>
 <blockquote>
-<p>1 &lt;= words.length &lt;= 1000</p>
-<p>1 &lt;= words[i].length, chars.length &lt;= 100<br>所有字符串中都仅包含小写英文字母</p>
+<p>本题中的空白字符只包括空格字符 ‘ ‘ 。<br>假设我们的环境只能存储 32 位大小的有符号整数，那么其数值范围为 [−231,  231 − 1]。如果数值超过这个范围，请返回  INT_MAX (231 − 1) 或 INT_MIN (−231) 。</p>
 </blockquote>
-<ul>
-<li><p>思路</p>
-<p>很明显可以利用哈希表来做，统计mapChar是否覆盖mapWord。</p>
-<p>也可以统计26个字母出现次数来判断。</p>
+<p>示例 1:</p>
+<blockquote>
+<p>输入: “42”<br>输出: 42</p>
+</blockquote>
+<p>示例 2:</p>
+<blockquote>
+<p>输入: “   -42”<br>输出: -42<br>解释: 第一个非空白字符为 ‘-‘, 它是一个负号。<br>    我们尽可能将负号与后面所有连续出现的数字组合起来，最后得到 -42 。 </p>
+</blockquote>
+<p>示例 3:</p>
+<blockquote>
+<p>输入: “4193 with words”<br>输出: 4193<br>解释: 转换截止于数字 ‘3’ ，因为它的下一个字符不为数字。</p>
+</blockquote>
+<p>示例 4:</p>
+<blockquote>
+<p>输入: “words and 987”<br>输出: 0<br>解释: 第一个非空字符是 ‘w’, 但它不是数字或正、负号。<br>    因此无法执行有效的转换。</p>
+</blockquote>
+<p>示例 5:</p>
+<blockquote>
+<p>输入: “-91283472332”<br>输出: -2147483648<br>解释: 数字 “-91283472332” 超过 32 位有符号整数范围。<br>     因此返回 INT_MIN (−231) 。</p>
+</blockquote>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><ol>
+<li><p>先处理首尾空格</p>
 </li>
-<li><p>代码实现</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">countCharacters</span><span class="params">(String[] words, String chars)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//结果</span></span><br><span class="line">        <span class="keyword">int</span> lenSum = <span class="number">0</span>;</span><br><span class="line">        Map&lt;Character, Integer&gt; mapWord = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        Map&lt;Character, Integer&gt; mapChar = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; chars.length(); i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = chars.charAt(i);</span><br><span class="line">            <span class="keyword">if</span> (mapChar.containsKey(c)) &#123;</span><br><span class="line">                <span class="keyword">int</span> t = mapChar.get(c);</span><br><span class="line">                mapChar.put(c, t + <span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                mapChar.put(c, <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (String word : words) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word.length(); i++) &#123;</span><br><span class="line">                <span class="keyword">char</span> c = word.charAt(i);</span><br><span class="line">                <span class="keyword">if</span> (mapWord.containsKey(c)) &#123;</span><br><span class="line">                    <span class="keyword">int</span> t = mapWord.get(c);</span><br><span class="line">                    mapWord.put(c, t + <span class="number">1</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    mapWord.put(c, <span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">for</span> (Map.Entry&lt;Character, Integer&gt; entry : mapWord.entrySet()) &#123;</span><br><span class="line">                <span class="keyword">char</span> ck = entry.getKey();</span><br><span class="line">                <span class="keyword">if</span> (!(mapChar.containsKey(ck) &amp;&amp; entry.getValue() &lt;= mapChar.get(ck))) &#123;</span><br><span class="line">                    flag = <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            lenSum += (flag == <span class="keyword">true</span>) ? word.length() : <span class="number">0</span>;</span><br><span class="line">            <span class="comment">//记得每次遍历完一次word后要把mapWord清空</span></span><br><span class="line">            mapWord.clear();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> lenSum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<li><p>再处理正负号</p>
 </li>
-</ul>
-
+<li><p>遍历字符串，直到遇到非数字字符</p>
+</li>
+<li><p><strong>字符串转整数时有可能会发生溢出，如<code>res*10+digit&gt;Integer.MAX_VALUE</code>，则移到右边即可，如<code>res&gt;(Integer.MAX_VALUE-digit)/10</code></strong>。</p>
+</li>
+</ol>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">myAtoi</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (str == <span class="keyword">null</span> || str.length() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        String s = str.trim();</span><br><span class="line">        <span class="keyword">if</span> (s == <span class="keyword">null</span> || s.length() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">char</span>[] chars = s.toCharArray();</span><br><span class="line">        <span class="comment">//符号位，默认为正号</span></span><br><span class="line">        <span class="keyword">int</span> flag = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> start = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (chars[<span class="number">0</span>] == <span class="string">'+'</span>) &#123;</span><br><span class="line">            flag = <span class="number">1</span>;</span><br><span class="line">            start = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (chars[<span class="number">0</span>] == <span class="string">'-'</span>) &#123;</span><br><span class="line">            flag = -<span class="number">1</span>;</span><br><span class="line">            start = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = start; i &lt; chars.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (Character.isDigit(chars[i])) &#123;</span><br><span class="line">                <span class="keyword">int</span> digit = chars[i] - <span class="string">'0'</span>;</span><br><span class="line">                <span class="comment">//注意要移到右边防止溢出</span></span><br><span class="line">                <span class="keyword">if</span> (res &gt; (Integer.MAX_VALUE - digit) / <span class="number">10</span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span> flag == <span class="number">1</span> ? Integer.MAX_VALUE : Integer.MIN_VALUE;</span><br><span class="line">                &#125;</span><br><span class="line">                res = res * <span class="number">10</span> + digit;</span><br><span class="line">            &#125;<span class="keyword">else</span></span><br><span class="line">                <span class="comment">//遇到非数字字符直接截断退出</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> flag == <span class="number">1</span> ? res : -res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -412,7 +421,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/" rel="tag"><i class="fa fa-tag"></i>哈希表</a>
+            <a href="/tags/String/" rel="tag"><i class="fa fa-tag"></i>String</a>
           
         </div>
       
@@ -425,8 +434,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/16/Leetcode1013-%E5%B0%86%E6%95%B0%E7%BB%84%E5%88%86%E6%88%90%E7%9B%B8%E7%AD%89%E7%9A%84%E4%B8%89%E4%B8%AA%E9%83%A8%E5%88%86/" rel="next" title="Leetcode1013.将数组分成相等的三个部分">
-                <i class="fa fa-chevron-left"></i> Leetcode1013.将数组分成相等的三个部分
+              <a href="/2020/04/02/Leetcode5-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" rel="next" title="Leetcode5.最长回文子串">
+                <i class="fa fa-chevron-left"></i> Leetcode5.最长回文子串
               </a>
             
           </div>
@@ -434,10 +443,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/03/17/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9801-06-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8E%8B%E7%BC%A9/" rel="prev" title="Leetcode面试题01.06.字符串压缩">
-                Leetcode面试题01.06.字符串压缩 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -592,7 +597,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode1160-拼写单词"><span class="nav-text">Leetcode1160.拼写单词</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode8-字符串转整数-atoi"><span class="nav-text">Leetcode8.字符串转整数(atoi)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-text">代码实现</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
