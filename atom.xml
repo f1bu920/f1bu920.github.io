@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-04-03T02:55:56.481Z</updated>
+  <updated>2020-04-03T07:38:26.467Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode148.排序链表</title>
+    <link href="http://yoursite.com/2020/04/03/Leetcode148-%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8/"/>
+    <id>http://yoursite.com/2020/04/03/Leetcode148-%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8/</id>
+    <published>2020-04-03T07:29:45.000Z</published>
+    <updated>2020-04-03T07:38:26.467Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Leetcode148-排序链表"><a href="#Leetcode148-排序链表" class="headerlink" title="Leetcode148.排序链表"></a>Leetcode148.排序链表</h2><p>在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序。</p><p><a href="https://leetcode-cn.com/problems/sort-list" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例 1:</p><blockquote><p>输入: 4-&gt;2-&gt;1-&gt;3<br>输出: 1-&gt;2-&gt;3-&gt;4</p></blockquote><p>示例 2:</p><blockquote><p>输入: -1-&gt;5-&gt;3-&gt;4-&gt;0<br>输出: -1-&gt;0-&gt;3-&gt;4-&gt;5</p></blockquote><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>在<code>O(n logn)</code>时间复杂度和常数级空间复杂度下，所以我们可以使用归并排序。</p><p>归并排序有两种形式：递归与非递归，这里我使用的是递归写法。</p><ol><li>先用快慢指针找到链表的中点的前一个元素，在此基础上就相当于找到了两个子序列的头结点。</li><li>递归调用</li><li>归并</li></ol><h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">sortList</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode slow = head;</span><br><span class="line">        <span class="comment">//这里找的的是链表中间结点的前一个节点</span></span><br><span class="line">        ListNode fast = head.next.next;</span><br><span class="line">        <span class="keyword">while</span> (fast != <span class="keyword">null</span> &amp;&amp; fast.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">            slow = slow.next;</span><br><span class="line">            fast = fast.next.next;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode rightHead = slow.next;</span><br><span class="line">        slow.next = <span class="keyword">null</span>;</span><br><span class="line">        ListNode left = sortList(head);</span><br><span class="line">        ListNode right = sortList(rightHead);</span><br><span class="line">        <span class="keyword">return</span> mergeListNode(left, right);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> ListNode <span class="title">mergeListNode</span><span class="params">(ListNode l1, ListNode l2)</span> </span>&#123;</span><br><span class="line">        ListNode dummyHead = <span class="keyword">new</span> ListNode(-<span class="number">1</span>);</span><br><span class="line">        ListNode cur = dummyHead;</span><br><span class="line">        <span class="keyword">while</span> (l1 != <span class="keyword">null</span> &amp;&amp; l2 != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (l1.val &lt; l2.val) &#123;</span><br><span class="line">                cur.next = l1;</span><br><span class="line">                l1 = l1.next;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                cur.next = l2;</span><br><span class="line">                l2 = l2.next;</span><br><span class="line">            &#125;</span><br><span class="line">            cur = cur.next;</span><br><span class="line">        &#125;</span><br><span class="line">        cur.next = (l1 != <span class="keyword">null</span>) ? l1 : l2;</span><br><span class="line">        <span class="keyword">return</span> dummyHead.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Leetcode148-排序链表&quot;&gt;&lt;a href=&quot;#Leetcode148-排序链表&quot; class=&quot;headerlink&quot; title=&quot;Leetcode148.排序链表&quot;&gt;&lt;/a&gt;Leetcode148.排序链表&lt;/h2&gt;&lt;p&gt;在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/sort-list&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
+    
+    
+      <category term="链表" scheme="http://yoursite.com/tags/%E9%93%BE%E8%A1%A8/"/>
+    
+      <category term="归并排序" scheme="http://yoursite.com/tags/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode8.字符串转整数(atoi)</title>
@@ -521,39 +547,6 @@
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/binary-tree-preorder-traversal&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;前序遍历&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/binary-tree-inorder-traversal&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;中序遍历&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-    
-    </summary>
-    
-    
-      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
-    
-    
-      <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
-    
-      <category term="递归" scheme="http://yoursite.com/tags/%E9%80%92%E5%BD%92/"/>
-    
-      <category term="树" scheme="http://yoursite.com/tags/%E6%A0%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode144.二叉树的前序遍历</title>
-    <link href="http://yoursite.com/2020/03/25/Leetcode144-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86/"/>
-    <id>http://yoursite.com/2020/03/25/Leetcode144-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86/</id>
-    <published>2020-03-25T05:23:30.000Z</published>
-    <updated>2020-03-25T07:31:04.161Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Leetcode144-二叉树的前序遍历"><a href="#Leetcode144-二叉树的前序遍历" class="headerlink" title="Leetcode144.二叉树的前序遍历"></a>Leetcode144.二叉树的前序遍历</h2><p>给定一个二叉树，返回它的 前序 遍历。</p><p><a href="https://leetcode-cn.com/problems/binary-tree-preorder-traversal" target="_blank" rel="noopener">题目链接</a></p><p>类似题目：</p><ol><li><a href="https://leetcode-cn.com/problems/binary-tree-inorder-traversal" target="_blank" rel="noopener">中序遍历</a></li><li><a href="https://leetcode-cn.com/problems/binary-tree-postorder-traversal" target="_blank" rel="noopener">后序遍历</a></li></ol><a id="more"></a><p> 示例:</p><p>输入: [1,null,2,3]  </p><blockquote><p>1</p><p>​    <br>     2<br>    /<br>   3 </p><p>输出: [1,2,3]</p></blockquote><p>进阶: 递归算法很简单，你可以通过迭代算法完成吗？</p><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><ul><li><p>递归</p><p>借助辅助函数传入当前根结点与集合。</p></li><li><p>迭代</p><p>借助栈模拟递归</p></li></ul><h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><ul><li><p>递归</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">preorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        preOrder(root, list);</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">preOrder</span><span class="params">(TreeNode node, List&lt;Integer&gt; list)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (node == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        list.add(node.val);</span><br><span class="line">        preOrder(node.left, list);</span><br><span class="line">        preOrder(node.right, list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li><p>迭代</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">preorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> list;</span><br><span class="line">        &#125;</span><br><span class="line">        stack.push(root);</span><br><span class="line">        <span class="keyword">while</span> (!stack.isEmpty()) &#123;</span><br><span class="line">            TreeNode node = stack.pop();</span><br><span class="line">            list.add(node.val);</span><br><span class="line">            <span class="keyword">if</span> (node.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">                stack.push(node.right);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (node.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">                stack.push(node.left);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Leetcode144-二叉树的前序遍历&quot;&gt;&lt;a href=&quot;#Leetcode144-二叉树的前序遍历&quot; class=&quot;headerlink&quot; title=&quot;Leetcode144.二叉树的前序遍历&quot;&gt;&lt;/a&gt;Leetcode144.二叉树的前序遍历&lt;/h2&gt;&lt;p&gt;给定一个二叉树，返回它的 前序 遍历。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/binary-tree-preorder-traversal&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;类似题目：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/binary-tree-inorder-traversal&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;中序遍历&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/binary-tree-postorder-traversal&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;后序遍历&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
     
     </summary>
