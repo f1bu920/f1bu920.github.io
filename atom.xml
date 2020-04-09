@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-04-09T02:05:30.498Z</updated>
+  <updated>2020-04-09T03:01:46.753Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode面试题01.07.翻转矩阵</title>
+    <link href="http://yoursite.com/2020/04/09/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9801.07-%E7%BF%BB%E8%BD%AC%E7%9F%A9%E9%98%B5/"/>
+    <id>http://yoursite.com/2020/04/09/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9801.07-%E7%BF%BB%E8%BD%AC%E7%9F%A9%E9%98%B5/</id>
+    <published>2020-04-09T02:43:17.000Z</published>
+    <updated>2020-04-09T03:01:46.753Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Leetcode面试题01-07-旋转矩阵"><a href="#Leetcode面试题01-07-旋转矩阵" class="headerlink" title="Leetcode面试题01.07.旋转矩阵"></a>Leetcode面试题01.07.旋转矩阵</h2><p>给你一幅由 N × N 矩阵表示的图像，其中每个像素的大小为 4 字节。请你设计一种算法，将图像旋转 90 度。</p><p>不占用额外内存空间能否做到？</p><p> <a href="https://leetcode-cn.com/problems/rotate-matrix-lcci" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例 1:</p><blockquote><p>给定 matrix =<br>[<br> [1,2,3],<br> [4,5,6],<br> [7,8,9]<br>],</p><p>原地旋转输入矩阵，使其变为:<br>[<br> [7,4,1],<br> [8,5,2],<br> [9,6,3]<br>]</p></blockquote><p>示例 2:</p><blockquote><p>给定 matrix =<br>[<br> [ 5, 1, 9,11],<br> [ 2, 4, 8,10],<br> [13, 3, 6, 7],<br> [15,14,12,16]<br>], </p><p>原地旋转输入矩阵，使其变为:<br>[<br> [15,13, 2, 5],<br> [14, 3, 4, 1],<br> [12, 6, 8, 9],<br> [16, 7,10,11]<br>]</p></blockquote><h4 id="思路及代码实现"><a href="#思路及代码实现" class="headerlink" title="思路及代码实现"></a>思路及代码实现</h4><ul><li><p>借助辅助数组</p><blockquote><p>对于矩阵中第 i 行的第 j 个元素，在旋转后，它出现在倒数第 i 列的第 j 个位置。 </p></blockquote><p>我们将其翻译成代码。由于矩阵中的行列从 00 开始计数，因此对于矩阵中的元素 <code>temp[i][j]</code>，旋转后他的新位置为<code>matrix[j][N-i-1]</code>。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>[][] matrix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> N = matrix.length;</span><br><span class="line">        <span class="keyword">int</span>[][] temps = <span class="keyword">new</span> <span class="keyword">int</span>[N][N];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; N; j++) &#123;</span><br><span class="line">                temps[i][j] = matrix[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; N; j++) &#123;</span><br><span class="line">                matrix[j][N - i - <span class="number">1</span>] = temps[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul><ul><li><p>用翻转代替旋转</p><blockquote><p>5  1  9 11<br>2  4  8 10<br>13  3  6  7<br>15 14 12 16</p></blockquote><p>作为例子，先将其通过水平轴翻转得到：</p><blockquote><p>5  1  9 11                 15 14 12 16<br>2  4  8 10                 13  3  6  7<br>————   =水平翻转=&gt;   ————<br>13  3  6  7                  2  4  8 10<br>15 14 12 16                  5  1  9 11</p></blockquote><p>再根据主对角线 \ 翻转得到：</p><blockquote><p>15 14 12 16                           15 13  2  5<br>13  3  6  7   =主对角线翻转=&gt;       14  3  4  1<br>2  4  8 10                               12  6  8  9<br>5  1  9 11                               16  7 10 11</p></blockquote><p>对于水平翻转，我们只需要枚举上半部分元素与下半部分元素进行交换。</p><p><code>matrix[row][col] = matrix[N-row-1][col]</code></p><p>对于主对角线翻转，只需要枚举对角线左侧元素与右侧进行交换。</p><p><code>matrix[row][col] = matrix[col][row]</code>.</p><p>代码实现略。</p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Leetcode面试题01-07-旋转矩阵&quot;&gt;&lt;a href=&quot;#Leetcode面试题01-07-旋转矩阵&quot; class=&quot;headerlink&quot; title=&quot;Leetcode面试题01.07.旋转矩阵&quot;&gt;&lt;/a&gt;Leetcode面试题01.07.旋转矩阵&lt;/h2&gt;&lt;p&gt;给你一幅由 N × N 矩阵表示的图像，其中每个像素的大小为 4 字节。请你设计一种算法，将图像旋转 90 度。&lt;/p&gt;
+&lt;p&gt;不占用额外内存空间能否做到？&lt;/p&gt;
+&lt;p&gt; &lt;a href=&quot;https://leetcode-cn.com/problems/rotate-matrix-lcci&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
+    
+    
+      <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
+    
+      <category term="Math" scheme="http://yoursite.com/tags/Math/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode22括号生成</title>
@@ -531,30 +558,6 @@
     
     
       <category term="链表" scheme="http://yoursite.com/tags/%E9%93%BE%E8%A1%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>IDEA使用技巧</title>
-    <link href="http://yoursite.com/2020/03/27/IDEA%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/"/>
-    <id>http://yoursite.com/2020/03/27/IDEA%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</id>
-    <published>2020-03-27T08:46:15.000Z</published>
-    <updated>2020-03-27T09:08:46.898Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="IDEA使用技巧"><a href="#IDEA使用技巧" class="headerlink" title="IDEA使用技巧"></a>IDEA使用技巧</h2><h3 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h3><ol><li>项目间跳转：<code>Ctrl+Alt+右方括号</code>：下一个窗口；<code>Ctrl+Alt+左方括号</code>：上一个窗口。</li><li>文件间跳转：<code>Ctrl+Shift+A</code>：find Action；<code>Ctrl+E</code>：最近文件；<code>Ctrl+Shift+C</code>：最近修改文件；</li><li>浏览修改位置跳转：</li><li><code>Alt+数字</code>跳转侧边栏。</li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;IDEA使用技巧&quot;&gt;&lt;a href=&quot;#IDEA使用技巧&quot; class=&quot;headerlink&quot; title=&quot;IDEA使用技巧&quot;&gt;&lt;/a&gt;IDEA使用技巧&lt;/h2&gt;&lt;h3 id=&quot;跳转&quot;&gt;&lt;a href=&quot;#跳转&quot; class=&quot;headerlink&quot; titl
-      
-    
-    </summary>
-    
-    
-    
-      <category term="IDEA" scheme="http://yoursite.com/tags/IDEA/"/>
     
   </entry>
   
