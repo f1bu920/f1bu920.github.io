@@ -505,56 +505,20 @@
 
       
         
-          
-            <h1 id="HashMap源码学习"><a href="#HashMap源码学习" class="headerlink" title="HashMap源码学习"></a>HashMap源码学习</h1><h4 id="HashMap集合简介"><a href="#HashMap集合简介" class="headerlink" title="HashMap集合简介"></a>HashMap集合简介</h4><p><code>HashMap</code>的类定义如下：</p>
+          <h1 id="HashMap源码学习"><a href="#HashMap源码学习" class="headerlink" title="HashMap源码学习"></a>HashMap源码学习</h1><h3 id="HashMap集合简介"><a href="#HashMap集合简介" class="headerlink" title="HashMap集合简介"></a>HashMap集合简介</h3><p><code>HashMap</code>的类定义如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;, <span class="title">Cloneable</span>, <span class="title">Serializable</span></span></span><br></pre></td></tr></table></figure>
 
 <p><code>HashMap</code>继承自<code>AbstractMap</code>抽象类，实现了<code>Map</code>接口、<code>Cloneable</code>接口和<code>Serializable</code>接口。</p>
 <p><code>HashMap</code>是基于哈希表的<code>Map</code>接口实现，是以<code>key-value</code>存储形式存在，主要用来存储键值对。<code>HashMap</code>的实现不是同步的，即意味着不是线程安全的。<code>HashMap</code>的键、值都可以为<code>null</code>。此外，<code>HashMap</code>的映射不是有序的。</p>
 <p>  JDK1.8以前，<code>HashMap</code>由数组+链表组成，数组是<code>HashMap</code>的主体，链表则是为了解决哈希冲突(<strong>两个对象调用的<code>hashCode()</code>方法计算得到的哈希值一致导致计算的数组索引相同</strong>)，(<strong>使用“拉链法”解决冲突</strong>)。</p>
 <p>JDK1.8以后解决哈希冲突时发生了较大变化。<strong>当链表长度大于阈值(或者红黑树边界值，默认为8)并且当前数组长度大于64时，此时此索引上的所有数据采用红黑树存储。</strong></p>
-<p>补充：将链表转为红黑树时会进行判断，当链表长度大于阈值但数组长度小于64时，并不会转化为红黑树，而是对数组进行扩容。这样做的目的是因为数组较小，尽量避开红黑树结构，强行转化为红黑树反而会降低效率。，因为红黑树需要进行左旋、右旋、变色等操作来保持平衡。具体参考<code>treeifyBin()</code>方法。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MIN_TREEIFY_CAPACITY = <span class="number">64</span>;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Replaces all linked nodes in bin at index for given hash unless</span></span><br><span class="line"><span class="comment">     * table is too small, in which case resizes instead.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">treeifyBin</span><span class="params">(Node&lt;K,V&gt;[] tab, <span class="keyword">int</span> hash)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n, index; Node&lt;K,V&gt; e;</span><br><span class="line">        <span class="comment">//判断数组长度小于64时采用扩容</span></span><br><span class="line">        <span class="keyword">if</span> (tab == <span class="keyword">null</span> || (n = tab.length) &lt; MIN_TREEIFY_CAPACITY)</span><br><span class="line">            resize();</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> ((e = tab[index = (n - <span class="number">1</span>) &amp; hash]) != <span class="keyword">null</span>) &#123;</span><br><span class="line">            TreeNode&lt;K,V&gt; hd = <span class="keyword">null</span>, tl = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                TreeNode&lt;K,V&gt; p = replacementTreeNode(e, <span class="keyword">null</span>);</span><br><span class="line">                <span class="keyword">if</span> (tl == <span class="keyword">null</span>)</span><br><span class="line">                    hd = p;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    p.prev = tl;</span><br><span class="line">                    tl.next = p;</span><br><span class="line">                &#125;</span><br><span class="line">                tl = p;</span><br><span class="line">            &#125; <span class="keyword">while</span> ((e = e.next) != <span class="keyword">null</span>);</span><br><span class="line">            <span class="keyword">if</span> ((tab[index] = hd) != <span class="keyword">null</span>)</span><br><span class="line">                hd.treeify(tab);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>特点：</p>
-<ol>
-<li>存取无序</li>
-<li>键和值都可以为<code>null</code>，但键位置只能有一个<code>null</code></li>
-<li>键位置是惟一的，底层的数据结构控制键的</li>
-<li><strong>jdk1.8以前数据结构是数组+链表，1.8之后是数组+链表+红黑树</strong></li>
-<li><strong>阈值大于8且数组长度大于64时，才会将链表转换为红黑树</strong></li>
-</ol>
-<h4 id="HashMap集合底层数据结构"><a href="#HashMap集合底层数据结构" class="headerlink" title="HashMap集合底层数据结构"></a>HashMap集合底层数据结构</h4><p><code>HashMap</code>底层数据结构：<strong>jdk1.8以前数据结构是数组+链表，1.8之后是数组+链表+红黑树</strong>。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HashMap hashMap = <span class="keyword">new</span> HashMap();</span><br></pre></td></tr></table></figure>
-
-<p>在jdk1.8之前，上面这行代码会直接创建一个默认长度为16，类型为<code>Map.Entry</code>的数组<code>table[]</code>；</p>
-<p>而在<strong>jdk1.8之后，是在第一次调用<code>put</code>方法时才会创建数组<code>Node[] table</code>，这与<code>ArrayList</code>不指定初始容量时一致</strong>。</p>
-<p><strong><code>HashMap</code>通过<code>key</code>的<code>hashCode</code>经过扰动函数处理过后得到<code>hash</code>值，然后通过<code>(n-1)&amp;hash</code>计算当前元素存放位置(n指数组长度)，如果当前位置存在元素，就比较已存在元素和要存放元素的<code>key</code>的<code>hash</code>值是否一致，如果不一致，就采用拉链法解决冲突，如果一致，就会发生哈希碰撞，然后会调用<code>key</code>所属类的<code>equals()</code>方法，如果相等，直接覆盖，如果不相等，遍历链表，直到找到相等的，否则采用拉链法新建一个节点存储数据。</strong></p>
-<p>注：不同<code>key</code>的<code>hashCode()</code>方法得到的值可能会相等。例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"重地"</span>.hashCode());</span><br><span class="line">        System.out.println(<span class="string">"通话"</span>.hashCode());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//结果为：</span></span><br><span class="line"><span class="comment">//1179395</span></span><br><span class="line"><span class="comment">//1179395</span></span><br></pre></td></tr></table></figure>
-
-<p>注：<strong>从上述过程可以看出，一个类中<code>hashCode()</code>和<code>equals()</code>方法一定要一致。</strong></p>
-<p>这里扰动函数就是<code>HashMap</code>的<code>hash()</code>方法，使用<code>hash</code>方法就是为了防止一些实现比较差的<code>hashCode()</code>方法从而减少碰撞。</p>
-<h4 id="HashMap集合类的成员"><a href="#HashMap集合类的成员" class="headerlink" title="HashMap集合类的成员"></a>HashMap集合类的成员</h4><ul>
-<li><p>成员变量</p>
-<ol>
-<li><p>序列化版本号</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">362498820763181265L</span>;</span><br></pre></td></tr></table></figure>
-
-<p><code>HashMap</code>实现了<code>Serializable</code>接口。</p>
-</li>
-<li><p>集合的初始化容量(<strong>必须为2的n次幂</strong>)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The default initial capacity - MUST be a power of two.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_INITIAL_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">4</span>; <span class="comment">// aka 16</span></span><br></pre></td></tr></table></figure>
-
-<p>默认的初始化容量必须为2的n次幂，是<strong>为了让<code>HashMap</code>存取高效，尽量减少碰撞，也就是尽量把数据分配均匀。</strong></p>
-<p><strong>根据<code>key</code>计算得到的<code>hash</code>值数值很大，不能当成内存地址，将其转化为数组下标的计算方法为<code>(n-1)&amp;hash</code>。所以<code>HashMap</code>的长度必须为2的n次幂。</strong></p>
-<p><strong>因为取余操作中如果除数是2的幂次则等价于与其除数减一的与(&amp;)操作，即<code>hash%length == hash&amp;(length-1)</code>的前提是<code>length</code>是2的n次幂。而计算机中采用二进制操作&amp;效率远远大于%，所以<code>HashMap</code>的长度必须为2的n次幂。</strong></p>
-</li>
-</ol>
-</li>
-</ul>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/07/HashMap%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
