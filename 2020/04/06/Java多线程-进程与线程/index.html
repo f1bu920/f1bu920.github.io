@@ -81,15 +81,15 @@
 
 
 
-<meta name="description" content="进程与线程概念 进程 进程就是应用程序在内存中分配的空间，也就是正在运行的程序，是系统运行程序的基本单位。 在Java中，当我们启动main函数时其实就是启动了一个JVM进程，而main函数所在的线程就是这个进程中的一个线程，叫做主线程。  线程 线程是一个比进程更小的执行单位，一个进程在执行过程中可以产生多个线程。与进程不同的是同类的多个线程共享进程的堆和方法区，但每个线程有自己的程序计数器、虚">
+<meta name="description" content="[TOC] 进程与线程概念 进程 进程就是应用程序在内存中分配的空间，也就是正在运行的程序，是系统运行程序的基本单位。 在Java中，当我们启动main函数时其实就是启动了一个JVM进程，而main函数所在的线程就是这个进程中的一个线程，叫做主线程。  线程 线程是一个比进程更小的执行单位，一个进程在执行过程中可以产生多个线程。与进程不同的是同类的多个线程共享进程的堆和方法区，但每个线程有自己的程">
 <meta name="keywords" content="Java,多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java多线程-进程与线程">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;06&#x2F;Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B&#x2F;index.html">
 <meta property="og:site_name" content="flbu blog">
-<meta property="og:description" content="进程与线程概念 进程 进程就是应用程序在内存中分配的空间，也就是正在运行的程序，是系统运行程序的基本单位。 在Java中，当我们启动main函数时其实就是启动了一个JVM进程，而main函数所在的线程就是这个进程中的一个线程，叫做主线程。  线程 线程是一个比进程更小的执行单位，一个进程在执行过程中可以产生多个线程。与进程不同的是同类的多个线程共享进程的堆和方法区，但每个线程有自己的程序计数器、虚">
+<meta property="og:description" content="[TOC] 进程与线程概念 进程 进程就是应用程序在内存中分配的空间，也就是正在运行的程序，是系统运行程序的基本单位。 在Java中，当我们启动main函数时其实就是启动了一个JVM进程，而main函数所在的线程就是这个进程中的一个线程，叫做主线程。  线程 线程是一个比进程更小的执行单位，一个进程在执行过程中可以产生多个线程。与进程不同的是同类的多个线程共享进程的堆和方法区，但每个线程有自己的程">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-06T03:37:10.880Z">
+<meta property="og:updated_time" content="2020-04-09T08:08:29.044Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -352,7 +352,8 @@
       
 
       
-        <h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><ul>
+        <p>[TOC]</p>
+<h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><ul>
 <li><p>进程</p>
 <p>进程就是<strong>应用程序在内存中分配的空间，也就是正在运行的程序，是系统运行程序的基本单位</strong>。</p>
 <p>在Java中，当我们启动<code>main</code>函数时其实就是启动了一个<code>JVM</code>进程，而<code>main</code>函数所在的线程就是这个进程中的一个线程，叫做主线程。</p>
@@ -361,7 +362,7 @@
 <p>线程是一个比进程更小的执行单位，一个进程在执行过程中可以产生多个线程。与进程不同的是<strong>同类的多个线程共享进程的堆和方法区，但每个线程有自己的程序计数器、虚拟机栈和本地方法栈</strong>，所以系统在各个线程间切换工作时，负担会比进程小得多，因此线程也被称为轻量级进程。</p>
 </li>
 </ul>
-<h4 id="线程与进程的区别"><a href="#线程与进程的区别" class="headerlink" title="线程与进程的区别"></a>线程与进程的区别</h4><p>线程是一个比进程更小的执行单位，一个进程在其执行过程中可以产生多个线程。</p>
+<h3 id="线程与进程的区别"><a href="#线程与进程的区别" class="headerlink" title="线程与进程的区别"></a>线程与进程的区别</h3><p>线程是一个比进程更小的执行单位，一个进程在其执行过程中可以产生多个线程。</p>
 <p>进程是一个独立的运行环境，而线程是其中执行的一个任务，他们间本质的区别是<strong>是否单独占有内存地址以及其他系统资源(比如 I/O)</strong>。</p>
 <ul>
 <li>进程间存在内存隔离，数据是分开的，数据共享复杂但同步简单，各个进程间互不干扰；而线程共享进程占有的内存地址空间和资源，数据共享简单但同步复杂。</li>
@@ -369,7 +370,7 @@
 <li>进程间通信比较复杂，线程间通信比较简单。</li>
 <li><strong>进程是操作系统进行资源分配的基本单位，而线程是操作系统进行调度的基本单位，即CPU分配时间的单位。</strong></li>
 </ul>
-<h4 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h4><p>上下文切换是指CPU从一个进程(或线程)切换到另一个进程(或线程)。上下文是指<strong>某一时间点CPU寄存器和程序计数器的内容</strong>。</p>
+<h3 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h3><p>上下文切换是指CPU从一个进程(或线程)切换到另一个进程(或线程)。上下文是指<strong>某一时间点CPU寄存器和程序计数器的内容</strong>。</p>
 <p>CPU通过为每个线程分配CPU时间片来实现多线程机制。CPU通过时间片分配算法来循环执行任务，当前执行一个时间片后会切换到下一个任务。</p>
 <p>但是，在切换前会保存上一个任务的状态，以便下次切换回这个任务时，可以再加载这个任务的状态，所以任务从保存到再加载的过程就是一次上下文切换。</p>
 
@@ -504,7 +505,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-count">64</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -582,7 +583,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#进程与线程"><span class="nav-text">进程与线程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#概念"><span class="nav-text">概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程与进程的区别"><span class="nav-text">线程与进程的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#上下文切换"><span class="nav-text">上下文切换</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#进程与线程"><span class="nav-text">进程与线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概念"><span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程与进程的区别"><span class="nav-text">线程与进程的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上下文切换"><span class="nav-text">上下文切换</span></a></li></ol></li></ol></div>
             
 
           </div>
