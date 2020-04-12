@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="链表," />
+  <meta name="keywords" content="Stack,双指针,动态规划," />
 
 
 
@@ -81,16 +81,18 @@
 
 
 
-<meta name="description" content="Leetcode面试题02.07.链表相交给定两个（单向）链表，判定它们是否相交并返回交点。请注意相交的定义基于节点的引用，而不是基于节点的值。换句话说，如果一个链表的第k个节点与另一个链表的第j个节点是同一节点（引用完全相同），则这两个链表相交。  题目链接">
-<meta name="keywords" content="链表">
+<meta name="description" content="Leetcode42.接雨水给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。  上面是由数组 [0,1,0,2,1,0,1,3,2,1,2,1] 表示的高度图，在这种情况下，可以接 6 个单位的雨水（蓝色部分表示雨水）。  题目链接">
+<meta name="keywords" content="Stack,双指针,动态规划">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode面试题02.07.链表相交">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;23&#x2F;Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9802-07-%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4&#x2F;index.html">
+<meta property="og:title" content="Leetcode42.接雨水">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;12&#x2F;Leetcode42-%E6%8E%A5%E9%9B%A8%E6%B0%B4&#x2F;index.html">
 <meta property="og:site_name" content="flbu blog">
-<meta property="og:description" content="Leetcode面试题02.07.链表相交给定两个（单向）链表，判定它们是否相交并返回交点。请注意相交的定义基于节点的引用，而不是基于节点的值。换句话说，如果一个链表的第k个节点与另一个链表的第j个节点是同一节点（引用完全相同），则这两个链表相交。  题目链接">
+<meta property="og:description" content="Leetcode42.接雨水给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。  上面是由数组 [0,1,0,2,1,0,1,3,2,1,2,1] 表示的高度图，在这种情况下，可以接 6 个单位的雨水（蓝色部分表示雨水）。  题目链接">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-23T04:25:16.959Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;f1bu920.github.io&#x2F;images&#x2F;rainwatertrap.png">
+<meta property="og:updated_time" content="2020-04-12T05:56:07.696Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;f1bu920.github.io&#x2F;images&#x2F;rainwatertrap.png">
 
 
 
@@ -120,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/03/23/Leetcode面试题02-07-链表相交/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/04/12/Leetcode42-接雨水/"/>
 
 
 
 
 
-  <title>Leetcode面试题02.07.链表相交 | flbu blog</title>
+  <title>Leetcode42.接雨水 | flbu blog</title>
   
 
 
@@ -263,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/23/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9802-07-%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/12/Leetcode42-%E6%8E%A5%E9%9B%A8%E6%B0%B4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="flbu">
@@ -280,7 +282,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Leetcode面试题02.07.链表相交</h1>
+          <h1 class="post-title" itemprop="name headline">Leetcode42.接雨水</h1>
         
 
         <div class="post-meta">
@@ -292,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-23T12:12:47+08:00">
-                2020-03-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-12T13:41:18+08:00">
+                2020-04-12
               </time>
             
 
@@ -352,37 +354,33 @@
       
 
       
-        <h2 id="Leetcode面试题02-07-链表相交"><a href="#Leetcode面试题02-07-链表相交" class="headerlink" title="Leetcode面试题02.07.链表相交"></a>Leetcode面试题02.07.链表相交</h2><p>给定两个（单向）链表，判定它们是否相交并返回交点。请注意相交的定义基于节点的引用，而不是基于节点的值。换句话说，如果一个链表的第k个节点与另一个链表的第j个节点是同一节点（引用完全相同），则这两个链表相交。</p>
-<p> <a href="https://leetcode-cn.com/problems/intersection-of-two-linked-lists-lcci/" target="_blank" rel="noopener">题目链接</a></p>
+        <h2 id="Leetcode42-接雨水"><a href="#Leetcode42-接雨水" class="headerlink" title="Leetcode42.接雨水"></a>Leetcode42.接雨水</h2><p>给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。</p>
+<p><img src="https://f1bu920.github.io/images/rainwatertrap.png" alt="rainwatertrap"></p>
+<p>上面是由数组 [0,1,0,2,1,0,1,3,2,1,2,1] 表示的高度图，在这种情况下，可以接 6 个单位的雨水（蓝色部分表示雨水）。 </p>
+<p><a href="https://leetcode-cn.com/problems/trapping-rain-water" target="_blank" rel="noopener">题目链接</a></p>
 <a id="more"></a>
 
-<p><strong>示例 1：</strong></p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：<span class="built_in">int</span>ersectVal = <span class="number">8</span>, listA = [<span class="number">4</span>,<span class="number">1</span>,<span class="number">8</span>,<span class="number">4</span>,<span class="number">5</span>], listB = [<span class="number">5</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">8</span>,<span class="number">4</span>,<span class="number">5</span>], skipA = <span class="number">2</span>, skipB = <span class="number">3</span></span><br><span class="line">输出：Reference of the node with value = <span class="number">8</span></span><br><span class="line">输入解释：相交节点的值为 <span class="number">8</span> （注意，如果两个列表相交则不能为 <span class="number">0</span>）。从各自的表头开始算起，链表 A 为 [<span class="number">4</span>,<span class="number">1</span>,<span class="number">8</span>,<span class="number">4</span>,<span class="number">5</span>]，链表 B 为 [<span class="number">5</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">8</span>,<span class="number">4</span>,<span class="number">5</span>]。在 A 中，相交节点前有 <span class="number">2</span> 个节点；在 B 中，相交节点前有 <span class="number">3</span> 个节点。</span><br></pre></td></tr></table></figure>
-
-<p><strong>示例 2：</strong></p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：<span class="built_in">int</span>ersectVal = <span class="number">2</span>, listA = [<span class="number">0</span>,<span class="number">9</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>], listB = [<span class="number">3</span>,<span class="number">2</span>,<span class="number">4</span>], skipA = <span class="number">3</span>, skipB = <span class="number">1</span></span><br><span class="line">输出：Reference of the node with value = <span class="number">2</span></span><br><span class="line">输入解释：相交节点的值为 <span class="number">2</span> （注意，如果两个列表相交则不能为 <span class="number">0</span>）。从各自的表头开始算起，链表 A 为 [<span class="number">0</span>,<span class="number">9</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>]，链表 B 为 [<span class="number">3</span>,<span class="number">2</span>,<span class="number">4</span>]。在 A 中，相交节点前有 <span class="number">3</span> 个节点；在 B 中，相交节点前有 <span class="number">1</span> 个节点。</span><br></pre></td></tr></table></figure>
-
-<p><strong>示例 3：</strong></p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输入：<span class="built_in">int</span>ersectVal = <span class="number">0</span>, listA = [<span class="number">2</span>,<span class="number">6</span>,<span class="number">4</span>], listB = [<span class="number">1</span>,<span class="number">5</span>], skipA = <span class="number">3</span>, skipB = <span class="number">2</span></span><br><span class="line">输出：<span class="literal">null</span></span><br><span class="line">输入解释：从各自的表头开始算起，链表 A 为 [<span class="number">2</span>,<span class="number">6</span>,<span class="number">4</span>]，链表 B 为 [<span class="number">1</span>,<span class="number">5</span>]。由于这两个链表不相交，所以 <span class="built_in">int</span>ersectVal 必须为 <span class="number">0</span>，而 skipA 和 skipB 可以是任意值。</span><br><span class="line">解释：这两个链表不相交，因此返回 <span class="literal">null</span>。</span><br></pre></td></tr></table></figure>
-
-<p><strong>注意：</strong></p>
-<ul>
-<li>如果两个链表没有交点，返回 <code>null</code> 。</li>
-<li>在返回结果后，两个链表仍须保持原有的结构。</li>
-<li>可假定整个链表结构中没有循环。</li>
-<li>程序尽量满足 O(<em>n</em>) 时间复杂度，且仅用 O(<em>1</em>) 内存。</li>
-</ul>
-<h4 id="思路及代码实现"><a href="#思路及代码实现" class="headerlink" title="思路及代码实现"></a>思路及代码实现</h4><ul>
+<p>示例:</p>
+<blockquote>
+<p>输入: [0,1,0,2,1,0,1,3,2,1,2,1]<br>输出: 6</p>
+</blockquote>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><ul>
 <li><p>暴力法</p>
-<p>对于每个<code>headA</code>中的节点，都在<code>headB</code>中遍历。不符合O(n)的时间复杂度。</p>
+<p>对于数组中的每个元素，我们找到下雨水后能达到的最高位置等于两边最大高度的较小值减去其本身的高度。</p>
 </li>
-<li><p>集合法</p>
-<p>将<code>headA</code>中所有结点放入<code>HashSet</code>中，再遍历<code>headB</code>中结点，看<code>set</code>中是否包含正在遍历的结点</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">getIntersectionNode</span><span class="params">(ListNode headA, ListNode headB)</span> </span>&#123;</span><br><span class="line">        Set&lt;ListNode&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">        ListNode pa = headA;</span><br><span class="line">        <span class="keyword">while</span> (pa != <span class="keyword">null</span>) &#123;</span><br><span class="line">            set.add(pa);</span><br><span class="line">            pa = pa.next;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode pb = headB;</span><br><span class="line">        <span class="keyword">while</span> (pb != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (set.contains(pb)) &#123;</span><br><span class="line">                <span class="keyword">return</span> pb;</span><br><span class="line">            &#125;</span><br><span class="line">            pb = pb.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li><p>动态规划</p>
+<p>我们使用<code>max_left[i]</code>存储<code>i</code>左边的最大高度，用<code>max_right[i]</code>存储<code>i</code>右边的最大高度，<strong>注意不包括<code>i</code>本身</strong>。最后，将<code>min(max_left,max_right)-height[i]</code>累加到结果上。</p>
 </li>
-<li><p>双指针法</p>
-<p>利用双指针法消除长度差，令<code>pa</code>、<code>pb</code>分别指向<code>headA</code>、<code>headB</code>，若<code>pa</code>、<code>pb</code>任一为空，则指向另一链表的头结点。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">getIntersectionNode</span><span class="params">(ListNode headA, ListNode headB)</span> </span>&#123;</span><br><span class="line">    ListNode pa = headA;</span><br><span class="line">    ListNode pb = headB;</span><br><span class="line">    <span class="keyword">while</span> (pa != pb) &#123;</span><br><span class="line">        <span class="keyword">if</span> (pa != <span class="keyword">null</span>) &#123;</span><br><span class="line">            pa = pa.next;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            pa = headB;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (pb != <span class="keyword">null</span>) &#123;</span><br><span class="line">            pb = pb.next;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            pb = headA;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> pa;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li><p>双指针与栈</p>
+<p><a href="https://leetcode-cn.com/problems/trapping-rain-water/solution/jie-yu-shui-by-leetcode/" target="_blank" rel="noopener">参考链接</a></p>
+</li>
+</ul>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><ul>
+<li><p>暴力法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">trap</span><span class="params">(<span class="keyword">int</span>[] height)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> len = height.length;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> max_left = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">int</span> max_right = <span class="number">0</span>;</span><br><span class="line">            <span class="comment">//往左搜索，找到左边的最大高度</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &gt;= <span class="number">0</span>; j--) &#123;</span><br><span class="line">                max_left = Math.max(max_left, height[j]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//往右搜索，找到右边的最大高度</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &lt; len; j++) &#123;</span><br><span class="line">                max_right = Math.max(max_right, height[j]);</span><br><span class="line">            &#125;</span><br><span class="line">            res += Math.min(max_left, max_right) - height[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>动态规划</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">trap</span><span class="params">(<span class="keyword">int</span>[] height)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> len = height.length;</span><br><span class="line">        <span class="keyword">int</span>[] max_left = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="keyword">int</span>[] max_right = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="comment">//存储左边的最大高度，不包括本身</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            max_left[i] = Math.max(max_left[i - <span class="number">1</span>], height[i - <span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//存储右边的最大高度，不包括本身</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = len - <span class="number">2</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">            max_right[i] = Math.max(max_right[i + <span class="number">1</span>], height[i + <span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> min = Math.min(max_left[i], max_right[i]);</span><br><span class="line">            <span class="comment">//因为不包括本身，所以要判断</span></span><br><span class="line">            <span class="keyword">if</span> (min &gt; height[i]) &#123;</span><br><span class="line">                res += min - height[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
@@ -414,7 +412,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/%E9%93%BE%E8%A1%A8/" rel="tag"><i class="fa fa-tag"></i>链表</a>
+            <a href="/tags/Stack/" rel="tag"><i class="fa fa-tag"></i>Stack</a>
+          
+            <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/" rel="tag"><i class="fa fa-tag"></i>双指针</a>
+          
+            <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag"><i class="fa fa-tag"></i>动态规划</a>
           
         </div>
       
@@ -427,8 +429,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/23/Leetcode876-%E9%93%BE%E8%A1%A8%E7%9A%84%E4%B8%AD%E9%97%B4%E7%BB%93%E7%82%B9/" rel="next" title="Leetcode876.链表的中间结点">
-                <i class="fa fa-chevron-left"></i> Leetcode876.链表的中间结点
+              <a href="/2020/04/11/Leetcode887-%E9%B8%A1%E8%9B%8B%E6%8E%89%E8%90%BD/" rel="next" title="Leetcode887.鸡蛋掉落">
+                <i class="fa fa-chevron-left"></i> Leetcode887.鸡蛋掉落
               </a>
             
           </div>
@@ -436,10 +438,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/03/24/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9817-16%E6%8C%89%E6%91%A9%E5%B8%88/" rel="prev" title="Leetcode面试题17.16按摩师">
-                Leetcode面试题17.16按摩师 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -594,7 +592,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode面试题02-07-链表相交"><span class="nav-text">Leetcode面试题02.07.链表相交</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思路及代码实现"><span class="nav-text">思路及代码实现</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode42-接雨水"><span class="nav-text">Leetcode42.接雨水</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-text">代码实现</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
