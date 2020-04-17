@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Array," />
+  <meta name="keywords" content="Array,贪心," />
 
 
 
@@ -81,15 +81,15 @@
 
 
 
-<meta name="description" content="Leetcode999.车的可用捕获量在一个 8 x 8 的棋盘上，有一个白色车（rook）。也可能有空方块，白色的象（bishop）和黑色的卒（pawn）。它们分别以字符 “R”，“.”，“B” 和 “p” 给出。大写字符表示白棋，小写字符表示黑棋。 车按国际象棋中的规则移动：它选择四个基本方向中的一个（北，东，西和南），然后朝那个方向移动，直到它选择停止、到达棋盘的边缘或移动到同一方格来捕获该">
-<meta name="keywords" content="Array">
+<meta name="description" content="Leetcode55.跳跃游戏给定一个非负整数数组，你最初位于数组的第一个位置。 数组中的每个元素代表你在该位置可以跳跃的最大长度。 判断你是否能够到达最后一个位置。 题目链接">
+<meta name="keywords" content="Array,贪心">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode999.车的可用捕获量">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;26&#x2F;Leetcode999-%E8%BD%A6%E7%9A%84%E5%8F%AF%E7%94%A8%E6%8D%95%E8%8E%B7%E9%87%8F&#x2F;index.html">
+<meta property="og:title" content="Leetcode55.跳跃游戏">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;17&#x2F;Leetcode55-%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F&#x2F;index.html">
 <meta property="og:site_name" content="flbu blog">
-<meta property="og:description" content="Leetcode999.车的可用捕获量在一个 8 x 8 的棋盘上，有一个白色车（rook）。也可能有空方块，白色的象（bishop）和黑色的卒（pawn）。它们分别以字符 “R”，“.”，“B” 和 “p” 给出。大写字符表示白棋，小写字符表示黑棋。 车按国际象棋中的规则移动：它选择四个基本方向中的一个（北，东，西和南），然后朝那个方向移动，直到它选择停止、到达棋盘的边缘或移动到同一方格来捕获该">
+<meta property="og:description" content="Leetcode55.跳跃游戏给定一个非负整数数组，你最初位于数组的第一个位置。 数组中的每个元素代表你在该位置可以跳跃的最大长度。 判断你是否能够到达最后一个位置。 题目链接">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-26T01:49:24.194Z">
+<meta property="og:updated_time" content="2020-04-17T00:54:31.377Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/03/26/Leetcode999-车的可用捕获量/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/04/17/Leetcode55-跳跃游戏/"/>
 
 
 
 
 
-  <title>Leetcode999.车的可用捕获量 | flbu blog</title>
+  <title>Leetcode55.跳跃游戏 | flbu blog</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/26/Leetcode999-%E8%BD%A6%E7%9A%84%E5%8F%AF%E7%94%A8%E6%8D%95%E8%8E%B7%E9%87%8F/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/17/Leetcode55-%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="flbu">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Leetcode999.车的可用捕获量</h1>
+          <h1 class="post-title" itemprop="name headline">Leetcode55.跳跃游戏</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-26T09:38:50+08:00">
-                2020-03-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-17T08:44:56+08:00">
+                2020-04-17
               </time>
             
 
@@ -302,28 +302,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">Leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -352,37 +330,25 @@
       
 
       
-        <h2 id="Leetcode999-车的可用捕获量"><a href="#Leetcode999-车的可用捕获量" class="headerlink" title="Leetcode999.车的可用捕获量"></a>Leetcode999.车的可用捕获量</h2><p>在一个 8 x 8 的棋盘上，有一个白色车（rook）。也可能有空方块，白色的象（bishop）和黑色的卒（pawn）。它们分别以字符 “R”，“.”，“B” 和 “p” 给出。大写字符表示白棋，小写字符表示黑棋。</p>
-<p>车按国际象棋中的规则移动：它选择四个基本方向中的一个（北，东，西和南），然后朝那个方向移动，直到它选择停止、到达棋盘的边缘或移动到同一方格来捕获该方格上颜色相反的卒。另外，车不能与其他友方（白色）象进入同一个方格。</p>
-<p>返回车能够在一次移动中捕获到的卒的数量。</p>
-<p><a href="https://leetcode-cn.com/problems/available-captures-for-rook" target="_blank" rel="noopener">题目链接</a></p>
+        <h2 id="Leetcode55-跳跃游戏"><a href="#Leetcode55-跳跃游戏" class="headerlink" title="Leetcode55.跳跃游戏"></a>Leetcode55.跳跃游戏</h2><p>给定一个非负整数数组，你最初位于数组的第一个位置。</p>
+<p>数组中的每个元素代表你在该位置可以跳跃的最大长度。</p>
+<p>判断你是否能够到达最后一个位置。</p>
+<p><a href="https://leetcode-cn.com/problems/jump-game" target="_blank" rel="noopener">题目链接</a></p>
 <a id="more"></a>
 
+<p>示例 1:</p>
+<blockquote>
+<p>输入: [2,3,1,1,4]<br>输出: true<br>解释: 我们可以先跳 1 步，从位置 0 到达 位置 1, 然后再从位置 1 跳 3 步到达最后一个位置。</p>
+</blockquote>
+<p>示例 2:</p>
+<blockquote>
+<p>输入: [3,2,1,0,4]<br>输出: false<br>解释: 无论怎样，你总会到达索引为 3 的位置。但该位置的最大跳跃长度是 0 ， 所以你永远不可能到达最后一个位置。</p>
+</blockquote>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>对于数组中的任意一个位置，如果它本身可以到达，那么它跳跃的最大长度就一定可以到达，<code>i + nums[i]&gt;=y</code>，那么位置y也可以到达。</p>
+<p>遍历整个数组中的每一个位置，记录最远可以到达的位置<code>farmost</code>，如果<code>farmost&gt;=n-1</code>，则一定可以到达最后一个位置，返回<code>true</code>；遍历结束后返回<code>false</code>。</p>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canJump</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.length;</span><br><span class="line">        <span class="keyword">int</span> farmost = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i &lt;= farmost) &#123;</span><br><span class="line">                farmost = Math.max(farmost, i + nums[i]);</span><br><span class="line">                <span class="keyword">if</span> (farmost &gt;= n - <span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>示例 1：</p>
-<blockquote>
-<p>输入：[[“.”,”.”,”.”,”.”,”.”,”.”,”.”,”.”],[“.”,”.”,”.”,”p”,”.”,”.”,”.”,”.”],[“.”,”.”,”.”,”R”,”.”,”.”,”.”,”p”],[“.”,”.”,”.”,”.”,”.”,”.”,”.”,”.”],[“.”,”.”,”.”,”.”,”.”,”.”,”.”,”.”],[“.”,”.”,”.”,”p”,”.”,”.”,”.”,”.”],[“.”,”.”,”.”,”.”,”.”,”.”,”.”,”.”],[“.”,”.”,”.”,”.”,”.”,”.”,”.”,”.”]]<br>输出：3<br>解释：<br>在本例中，车能够捕获所有的卒。</p>
-</blockquote>
-<p>示例 2：</p>
-<blockquote>
-<p>输入：[[“.”,”.”,”.”,”.”,”.”,”.”,”.”,”.”],[“.”,”p”,”p”,”p”,”p”,”p”,”.”,”.”],[“.”,”p”,”p”,”B”,”p”,”p”,”.”,”.”],[“.”,”p”,”B”,”R”,”B”,”p”,”.”,”.”],[“.”,”p”,”p”,”B”,”p”,”p”,”.”,”.”],[“.”,”p”,”p”,”p”,”p”,”p”,”.”,”.”],[“.”,”.”,”.”,”.”,”.”,”.”,”.”,”.”],[“.”,”.”,”.”,”.”,”.”,”.”,”.”,”.”]]<br>输出：0<br>解释：<br>象阻止了车捕获任何卒。</p>
-</blockquote>
-<p>示例 3：</p>
-<blockquote>
-<p>输入：[[“.”,”.”,”.”,”.”,”.”,”.”,”.”,”.”],[“.”,”.”,”.”,”p”,”.”,”.”,”.”,”.”],[“.”,”.”,”.”,”p”,”.”,”.”,”.”,”.”],[“p”,”p”,”.”,”R”,”.”,”p”,”B”,”.”],[“.”,”.”,”.”,”.”,”.”,”.”,”.”,”.”],[“.”,”.”,”.”,”B”,”.”,”.”,”.”,”.”],[“.”,”.”,”.”,”p”,”.”,”.”,”.”,”.”],[“.”,”.”,”.”,”.”,”.”,”.”,”.”,”.”]]<br>输出：3<br>解释：<br>车可以捕获位置 b5，d6 和 f5 的卒。</p>
-</blockquote>
-<p>提示：</p>
-<blockquote>
-<p>board.length == board[i].length == 8<br>board[i][j] 可以是 ‘R’，’.’，’B’ 或 ‘p’<br>只有一个格子上存在 board[i][j] == ‘R’</p>
-</blockquote>
-<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>由题意得：</p>
-<ol>
-<li>棋盘中只有一个车，即只有一个元素是<code>R</code>，所以先找到这个元素的地址<code>(x,y)</code></li>
-<li>每次只会朝东南西北四个方向中的一个方向遍历，所以维护一个方向变量<code>dx、dy</code></li>
-<li>当遇到棋盘边缘或者自家白色棋子<code>B</code>时退出，当遇到黑色棋子<code>p</code>时，结果+1，退出</li>
-<li>所以结果最多只有四个。</li>
-</ol>
-<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numRookCaptures</span><span class="params">(<span class="keyword">char</span>[][] board)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> x = <span class="number">0</span>, y = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span>[] dx = &#123;-<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span>[] dy = &#123;<span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>, <span class="number">1</span>&#125;;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; board.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; board[<span class="number">0</span>].length; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (board[i][j] == <span class="string">'R'</span>) &#123;</span><br><span class="line">                    x = i;</span><br><span class="line">                    y = j;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; <span class="number">4</span>; k++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> step = <span class="number">1</span>; ; step++) &#123;</span><br><span class="line">                <span class="keyword">int</span> cx = x + step * dx[k];</span><br><span class="line">                <span class="keyword">int</span> cy = y + step * dy[k];</span><br><span class="line">                <span class="keyword">if</span> (cx &lt; <span class="number">0</span> || cx &gt;= <span class="number">8</span> || cy &lt; <span class="number">0</span> || cy &gt;= <span class="number">8</span> || board[cx][cy] == <span class="string">'B'</span>) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (board[cx][cy] == <span class="string">'p'</span>) &#123;</span><br><span class="line">                    res++;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
 
       
@@ -414,6 +380,8 @@
           
             <a href="/tags/Array/" rel="tag"><i class="fa fa-tag"></i>Array</a>
           
+            <a href="/tags/%E8%B4%AA%E5%BF%83/" rel="tag"><i class="fa fa-tag"></i>贪心</a>
+          
         </div>
       
 
@@ -425,8 +393,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/25/Leetcode145-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86/" rel="next" title="Leetcode145.二叉树的后序遍历">
-                <i class="fa fa-chevron-left"></i> Leetcode145.二叉树的后序遍历
+              <a href="/2020/04/16/Leetcode56-%E5%90%88%E5%B9%B6%E5%8C%BA%E9%97%B4/" rel="next" title="Leetcode56.合并区间">
+                <i class="fa fa-chevron-left"></i> Leetcode56.合并区间
               </a>
             
           </div>
@@ -434,10 +402,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/03/26/Leetcode543-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84/" rel="prev" title="Leetcode543.二叉树的直径">
-                Leetcode543.二叉树的直径 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -592,7 +556,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode999-车的可用捕获量"><span class="nav-text">Leetcode999.车的可用捕获量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-text">代码实现</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode55-跳跃游戏"><span class="nav-text">Leetcode55.跳跃游戏</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-text">代码实现</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

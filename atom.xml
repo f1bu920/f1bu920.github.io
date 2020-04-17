@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-04-16T01:11:54.979Z</updated>
+  <updated>2020-04-17T00:54:31.377Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode55.跳跃游戏</title>
+    <link href="http://yoursite.com/2020/04/17/Leetcode55-%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F/"/>
+    <id>http://yoursite.com/2020/04/17/Leetcode55-%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F/</id>
+    <published>2020-04-17T00:44:56.000Z</published>
+    <updated>2020-04-17T00:54:31.377Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Leetcode55-跳跃游戏"><a href="#Leetcode55-跳跃游戏" class="headerlink" title="Leetcode55.跳跃游戏"></a>Leetcode55.跳跃游戏</h2><p>给定一个非负整数数组，你最初位于数组的第一个位置。</p><p>数组中的每个元素代表你在该位置可以跳跃的最大长度。</p><p>判断你是否能够到达最后一个位置。</p><p><a href="https://leetcode-cn.com/problems/jump-game" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例 1:</p><blockquote><p>输入: [2,3,1,1,4]<br>输出: true<br>解释: 我们可以先跳 1 步，从位置 0 到达 位置 1, 然后再从位置 1 跳 3 步到达最后一个位置。</p></blockquote><p>示例 2:</p><blockquote><p>输入: [3,2,1,0,4]<br>输出: false<br>解释: 无论怎样，你总会到达索引为 3 的位置。但该位置的最大跳跃长度是 0 ， 所以你永远不可能到达最后一个位置。</p></blockquote><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>对于数组中的任意一个位置，如果它本身可以到达，那么它跳跃的最大长度就一定可以到达，<code>i + nums[i]&gt;=y</code>，那么位置y也可以到达。</p><p>遍历整个数组中的每一个位置，记录最远可以到达的位置<code>farmost</code>，如果<code>farmost&gt;=n-1</code>，则一定可以到达最后一个位置，返回<code>true</code>；遍历结束后返回<code>false</code>。</p><h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canJump</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.length;</span><br><span class="line">        <span class="keyword">int</span> farmost = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i &lt;= farmost) &#123;</span><br><span class="line">                farmost = Math.max(farmost, i + nums[i]);</span><br><span class="line">                <span class="keyword">if</span> (farmost &gt;= n - <span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Leetcode55-跳跃游戏&quot;&gt;&lt;a href=&quot;#Leetcode55-跳跃游戏&quot; class=&quot;headerlink&quot; title=&quot;Leetcode55.跳跃游戏&quot;&gt;&lt;/a&gt;Leetcode55.跳跃游戏&lt;/h2&gt;&lt;p&gt;给定一个非负整数数组，你最初位于数组的第一个位置。&lt;/p&gt;
+&lt;p&gt;数组中的每个元素代表你在该位置可以跳跃的最大长度。&lt;/p&gt;
+&lt;p&gt;判断你是否能够到达最后一个位置。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/jump-game&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
+    
+      <category term="贪心" scheme="http://yoursite.com/tags/%E8%B4%AA%E5%BF%83/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode56.合并区间</title>
@@ -149,9 +175,9 @@
     
       <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
     
-      <category term="动态规划" scheme="http://yoursite.com/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
-    
       <category term="双指针" scheme="http://yoursite.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
+    
+      <category term="动态规划" scheme="http://yoursite.com/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
     
   </entry>
   
@@ -323,9 +349,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="Math" scheme="http://yoursite.com/tags/Math/"/>
-    
       <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
+    
+      <category term="Math" scheme="http://yoursite.com/tags/Math/"/>
     
   </entry>
   
@@ -548,34 +574,6 @@
       <category term="动态规划" scheme="http://yoursite.com/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
     
       <category term="扩展中心" scheme="http://yoursite.com/tags/%E6%89%A9%E5%B1%95%E4%B8%AD%E5%BF%83/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode289.生命游戏</title>
-    <link href="http://yoursite.com/2020/04/02/Leetcode289-%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F/"/>
-    <id>http://yoursite.com/2020/04/02/Leetcode289-%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F/</id>
-    <published>2020-04-02T02:07:41.000Z</published>
-    <updated>2020-04-02T03:47:16.240Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Leetcode289-生命游戏"><a href="#Leetcode289-生命游戏" class="headerlink" title="Leetcode289.生命游戏"></a>Leetcode289.生命游戏</h2><p>根据 百度百科 ，生命游戏，简称为生命，是英国数学家约翰·何顿·康威在 1970 年发明的细胞自动机。</p><p>给定一个包含 m × n 个格子的面板，每一个格子都可以看成是一个细胞。每个细胞都具有一个初始状态：1 即为活细胞（live），或 0 即为死细胞（dead）。每个细胞与其八个相邻位置（水平，垂直，对角线）的细胞都遵循以下四条生存定律：</p><p>如果活细胞周围八个位置的活细胞数少于两个，则该位置活细胞死亡；<br>如果活细胞周围八个位置有两个或三个活细胞，则该位置活细胞仍然存活；<br>如果活细胞周围八个位置有超过三个活细胞，则该位置活细胞死亡；<br>如果死细胞周围正好有三个活细胞，则该位置死细胞复活；<br>根据当前状态，写一个函数来计算面板上所有细胞的下一个（一次更新后的）状态。下一个状态是通过将上述规则同时应用于当前状态下的每个细胞所形成的，其中细胞的出生和死亡是同时发生的。</p><p> <a href="https://leetcode-cn.com/problems/game-of-life" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例：</p><blockquote><p>输入：<br>[<br>  [0,1,0],<br>  [0,0,1],<br>  [1,1,1],<br>  [0,0,0]<br>]<br>输出：<br>[<br>  [0,0,0],<br>  [1,0,1],<br>  [0,1,1],<br>  [0,1,0]<br>]</p></blockquote><p>进阶：</p><blockquote><p>你可以使用原地算法解决本题吗？请注意，面板上所有格子需要同时被更新：你不能先更新某些格子，然后使用它们的更新后的值再更新其他格子。<br>本题中，我们使用二维数组来表示面板。原则上，面板是无限的，但当活细胞侵占了面板边界时会造成问题。你将如何解决这些问题？</p></blockquote><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p><strong>面板上所有格子需要被同时更新，所以不能使用队列，而且为了防止当前轮次已更新细胞的状态影响其他细胞的状态，不能直接将更新后的细胞状态填入原始数组</strong>。所以我们复制了一份原始数组<code>temp</code>，我们遍历temp数组但不更改<code>temp</code>数组的状态，而将更新后的细胞状态填入原始数组。</p><h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">gameOfLife</span><span class="params">(<span class="keyword">int</span>[][] board)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = board.length;</span><br><span class="line">        <span class="keyword">int</span> n = board[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">int</span>[] directions = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">0</span>, <span class="number">1</span>, -<span class="number">1</span>&#125;;</span><br><span class="line">        <span class="comment">//创建复制数组</span></span><br><span class="line">        <span class="keyword">int</span>[][] temp = <span class="keyword">new</span> <span class="keyword">int</span>[m][n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                temp[i][j] = board[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//遍历数组中每一个细胞</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> row = <span class="number">0</span>; row &lt; m; row++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> col = <span class="number">0</span>; col &lt; n; col++) &#123;</span><br><span class="line">                <span class="comment">//当前细胞周围活细胞数量</span></span><br><span class="line">                <span class="keyword">int</span> liveCeil = <span class="number">0</span>;</span><br><span class="line">                <span class="comment">//遍历周围8个位置</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++) &#123;</span><br><span class="line">                        <span class="comment">//除去它自己本身所在位置</span></span><br><span class="line">                        <span class="keyword">if</span> (!(directions[i] == <span class="number">0</span> &amp;&amp; directions[j] == <span class="number">0</span>)) &#123;</span><br><span class="line">                            <span class="keyword">int</span> r = row + directions[i];</span><br><span class="line">                            <span class="keyword">int</span> c = col + directions[j];</span><br><span class="line">                            <span class="keyword">if</span> ((r &gt;= <span class="number">0</span> &amp;&amp; r &lt; m) &amp;&amp; (c &gt;= <span class="number">0</span> &amp;&amp; c &lt; n) &amp;&amp; temp[r][c] == <span class="number">1</span>) &#123;</span><br><span class="line">                                liveCeil++;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//两种情况</span></span><br><span class="line">                <span class="keyword">if</span> (temp[row][col] == <span class="number">1</span> &amp;&amp; (liveCeil &lt; <span class="number">2</span> || liveCeil &gt; <span class="number">3</span>)) &#123;</span><br><span class="line">                    board[row][col] = <span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (temp[row][col] == <span class="number">0</span> &amp;&amp; liveCeil == <span class="number">3</span>) &#123;</span><br><span class="line">                    board[row][col] = <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Leetcode289-生命游戏&quot;&gt;&lt;a href=&quot;#Leetcode289-生命游戏&quot; class=&quot;headerlink&quot; title=&quot;Leetcode289.生命游戏&quot;&gt;&lt;/a&gt;Leetcode289.生命游戏&lt;/h2&gt;&lt;p&gt;根据 百度百科 ，生命游戏，简称为生命，是英国数学家约翰·何顿·康威在 1970 年发明的细胞自动机。&lt;/p&gt;
-&lt;p&gt;给定一个包含 m × n 个格子的面板，每一个格子都可以看成是一个细胞。每个细胞都具有一个初始状态：1 即为活细胞（live），或 0 即为死细胞（dead）。每个细胞与其八个相邻位置（水平，垂直，对角线）的细胞都遵循以下四条生存定律：&lt;/p&gt;
-&lt;p&gt;如果活细胞周围八个位置的活细胞数少于两个，则该位置活细胞死亡；&lt;br&gt;如果活细胞周围八个位置有两个或三个活细胞，则该位置活细胞仍然存活；&lt;br&gt;如果活细胞周围八个位置有超过三个活细胞，则该位置活细胞死亡；&lt;br&gt;如果死细胞周围正好有三个活细胞，则该位置死细胞复活；&lt;br&gt;根据当前状态，写一个函数来计算面板上所有细胞的下一个（一次更新后的）状态。下一个状态是通过将上述规则同时应用于当前状态下的每个细胞所形成的，其中细胞的出生和死亡是同时发生的。&lt;/p&gt;
-&lt;p&gt; &lt;a href=&quot;https://leetcode-cn.com/problems/game-of-life&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
-    
-    
-      <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
-    
-      <category term="广度优先遍历" scheme="http://yoursite.com/tags/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E9%81%8D%E5%8E%86/"/>
     
   </entry>
   
