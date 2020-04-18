@@ -354,39 +354,18 @@
 
       
         
-          
-            <h2 id="Leetcode11-盛最多水的容器"><a href="#Leetcode11-盛最多水的容器" class="headerlink" title="Leetcode11.盛最多水的容器"></a>Leetcode11.盛最多水的容器</h2><p>给你 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。</p>
+          <h2 id="Leetcode11-盛最多水的容器"><a href="#Leetcode11-盛最多水的容器" class="headerlink" title="Leetcode11.盛最多水的容器"></a>Leetcode11.盛最多水的容器</h2><p>给你 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。</p>
 <p>说明：你不能倾斜容器，且 n 的值至少为 2。</p>
 <p><img src="https://f1bu920.github.io/images/Leetcode11.%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8.jpg" alt="Leetcode11.盛最多水的容器.jpg"></p>
 <p>图中垂直线代表输入数组 [1,8,6,2,5,4,8,3,7]。在此情况下，容器能够容纳水（表示为蓝色部分）的最大值为 49。</p>
 <p> <a href="https://leetcode-cn.com/problems/container-with-most-water" target="_blank" rel="noopener">题目链接</a></p>
-<!---->
-
-<p>示例：</p>
-<blockquote>
-<p>输入：[1,8,6,2,5,4,8,3,7]<br>输出：49</p>
-</blockquote>
-<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><ul>
-<li><p>暴力法</p>
-<p>两次遍历整个数组，找到最大盛水容量</p>
-</li>
-<li><p>双指针法</p>
-<p>开始时令两个指针分别指向数组的开头和末尾，记录当前的容量。</p>
-<p>移动对于数组中数字较小的那个指针，这是因为<strong>容纳的水量为两个指针指向数字的较小值*指针间的距离。</strong></p>
-<p>如果我们移动数字较大的那个指针，那么前者「两个指针指向的数字中较小值」不会增加，后者「指针之间的距离」会减小，那么这个乘积会减小。因此，我们移动数字较大的那个指针是不合理的。因此，我们移动 数字较小的那个指针。</p>
-</li>
-</ul>
-<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><ol>
-<li><p>暴力法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxArea</span><span class="params">(<span class="keyword">int</span>[] height)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> maxCapacity = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> capacity = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> n = height.length;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">                capacity = Math.min(height[i], height[j]) * (j - i);</span><br><span class="line">                maxCapacity = Math.max(capacity, maxCapacity);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maxCapacity;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>双指针法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxArea</span><span class="params">(<span class="keyword">int</span>[] height)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> maxCapacity = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> capacity = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> l = <span class="number">0</span>, r = height.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (l &lt; r) &#123;</span><br><span class="line">            capacity = Math.min(height[l], height[r]) * (r - l);</span><br><span class="line">            maxCapacity = Math.max(capacity, maxCapacity);</span><br><span class="line">            <span class="keyword">if</span> (height[l] &gt; height[r]) &#123;</span><br><span class="line">                r--;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                l++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maxCapacity;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/18/Leetcode11-%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -811,8 +790,7 @@
 
       
         
-          
-            <h2 id="共享内存并发模型"><a href="#共享内存并发模型" class="headerlink" title="共享内存并发模型"></a>共享内存并发模型</h2><p>并发编程模型有两个关键问题，即<strong>线程间如何通信，即线程间以何种机制来交换信息；线程间如何同步，即线程以何种机制来控制不同线程间操作发生的相对顺序。</strong></p>
+          <h2 id="共享内存并发模型"><a href="#共享内存并发模型" class="headerlink" title="共享内存并发模型"></a>共享内存并发模型</h2><p>并发编程模型有两个关键问题，即<strong>线程间如何通信，即线程间以何种机制来交换信息；线程间如何同步，即线程以何种机制来控制不同线程间操作发生的相对顺序。</strong></p>
 <p>有两个并发模型</p>
 <ul>
 <li>消息传递并发模型</li>
@@ -838,39 +816,13 @@
 </tr>
 </tbody></table>
 <p><strong>Java中使用的是共享内存并发模型。</strong></p>
-<h2 id="Java内存模型的抽象结构"><a href="#Java内存模型的抽象结构" class="headerlink" title="Java内存模型的抽象结构"></a>Java内存模型的抽象结构</h2><h4 id="运行时内存的划分"><a href="#运行时内存的划分" class="headerlink" title="运行时内存的划分"></a>运行时内存的划分</h4><p>运行时数据区：</p>
-<p><img src="https://f1bu920.github.io/images/Java%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA.png" alt="Java运行时数据区"></p>
-<p>其中，<strong>堆和方法区是所有线程共享的数据区，虚拟机栈、本地方法栈和程序计数器是线程私有的数据区。</strong></p>
-<p>对于每一个线程，栈都是私有的，堆都是共有的。</p>
-<p>在栈中的变量（局部变量、方法定义参数、异常处理器参数）不会在线程间共享，也就不会有内存可见性问题，不受内存模型的影响。而在堆中的变量是共享的，称为共享变量。</p>
-<p><strong>内存可见性针对的是共享变量。</strong></p>
-<h4 id="内存不可见性问题"><a href="#内存不可见性问题" class="headerlink" title="内存不可见性问题"></a>内存不可见性问题</h4><p><strong>线程间的共享变量存在主内存中，每个线程都有一个自己的本地内存，存储了该线程以读、写共享变量的副本</strong>。本地内存是一个抽象概念，并不真实存在，它涵盖了缓存、写缓冲区、寄存器等。</p>
-<p><strong>Java线程间的通信由Java内存模型（JMM）控制，JMM定义了线程与主内存间的抽象关系</strong>。</p>
-<p><img src="https://f1bu920.github.io/images/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png" alt="Java内存模型"></p>
-<ol>
-<li>所有的共享变量都在主内存中</li>
-<li>每个线程保留了一份该线程使用到的共享变量的副本</li>
-<li>线程A与线程B要通信的话，必须经过以下步骤：<ol>
-<li>线程A将本地内存A更新过的共享变量刷新到主内存中</li>
-<li>线程B到主内存中去读取已经更新过的共享变量</li>
-</ol>
-</li>
-</ol>
-<p><strong>线程A无法直接访问线程B的工作内存，线程间通信必须经过主内存。</strong></p>
-<p>根据JMM规定，<strong>线程对共享变量的所有操作都必须在自己的本地内存中进行，不能直接从主内存读取。</strong></p>
-<p>也就是说，<strong>线程B不能直接去主内存中读取共享变量的值，而是先在本地内存找到这个共享变量，发现这个共享变量已经被更新过了，然后本地内存B去主内存中读取这个共享变量的新值，再拷贝到本地内存B中，最后线程B再读取本地内存B中的共享变量值</strong>。</p>
-<p>至于如何知道共享变量已经被更新过了，就是JMM的作用了。<strong>JMM通过控制主内存与每个线程的本地内存之间的交互来提供内存可见性保证。</strong></p>
-<p><em>Java中<code>volatile</code>关键字可以保证多线程操作共享变量的可见性以及禁止指令重排序，<code>synchronized</code>关键字不仅保证了可见性，也保证了原子性。在更底层，JMM通过内存屏障来实现内存的可见性与禁止重排序，并提出了happens-before。</em></p>
-<h4 id="JMM与Java内存区域划分的区别与联系"><a href="#JMM与Java内存区域划分的区别与联系" class="headerlink" title="JMM与Java内存区域划分的区别与联系"></a>JMM与Java内存区域划分的区别与联系</h4><ul>
-<li><p>区别</p>
-<p><strong>JMM是抽象的，用来描述一组规则，通过这个规则来控制各个变量的访问方式，围绕原子性、有序性、可见性等展开的。而Java运行时内存的划分是具体的，时JVM运行Java程序时必要的内存划分。</strong></p>
-</li>
-<li><p>联系</p>
-<p>都存在私有数据区和共享数据区。JMM中的主内存属于共享数据区，包含了堆和方法区；JMM中的本地内存属于私有数据区，包含了虚拟机栈、本地方法栈和程序计数器。</p>
-</li>
-</ul>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/14/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
