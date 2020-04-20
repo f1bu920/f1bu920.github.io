@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-04-20T03:02:31.969Z</updated>
+  <updated>2020-04-20T10:20:35.679Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MyBatis学习笔记</title>
+    <link href="http://yoursite.com/2020/04/20/MyBatis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://yoursite.com/2020/04/20/MyBatis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</id>
+    <published>2020-04-20T09:46:57.000Z</published>
+    <updated>2020-04-20T10:20:35.679Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="MyBatis学习笔记"><a href="#MyBatis学习笔记" class="headerlink" title="MyBatis学习笔记"></a>MyBatis学习笔记</h1><p><code>MyBatis</code>是一款优秀的持久层框架，支持自定义SQL、存储过程和高级映射。<code>MyBatis</code>免除了几乎所有的JDBC代码以及设置参数和获取结果集的工作。可以通过简单的XML或注解来配置和映射原始类型、接口和<code>POJO</code>为数据库中的记录。</p><h2 id="MyBatis安装与入门"><a href="#MyBatis安装与入门" class="headerlink" title="MyBatis安装与入门"></a>MyBatis安装与入门</h2><p><a href="https://github.com/mybatis/mybatis-3/releases" target="_blank" rel="noopener">MyBatis下载链接</a></p><p>要使用<code>MyBatis</code>，只需将下载的jar文件置于类路径(classpath)中。</p><p>如果使用<code>Maven</code>构建项目就更简单了，只需将依赖添加到<code>pom.xml</code>文件中。</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>x.x.x<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure><a id="more"></a><h2 id="XML配置"><a href="#XML配置" class="headerlink" title="XML配置"></a>XML配置</h2><p><code>MyBatis</code>的配置文件会影响<code>MyBatis</code>的行为的设置和属性信息。</p><h4 id="属性-properties"><a href="#属性-properties" class="headerlink" title="属性(properties)"></a>属性(properties)</h4><p>属性可以在外部配置，也可以进行动态替换。</p><p>设置好的属性可以进行动态替换</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">"POOLED"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driver"</span> <span class="attr">value</span>=<span class="string">"$&#123;driver&#125;"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"$&#123;url&#125;"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"$&#123;username&#125;"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"$&#123;password&#125;"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br></pre></td></tr></table></figure><p>这里<code>username</code>和<code>password</code>的值会由properities中的值来替换。</p><h4 id="设置-settings"><a href="#设置-settings" class="headerlink" title="设置(settings)"></a>设置(settings)</h4><p>![MyBatis 3 - 配置.png](<a href="https://f1bu920.github.io/images/MyBatis" target="_blank" rel="noopener">https://f1bu920.github.io/images/MyBatis</a> 3 - 配置.png)</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;MyBatis学习笔记&quot;&gt;&lt;a href=&quot;#MyBatis学习笔记&quot; class=&quot;headerlink&quot; title=&quot;MyBatis学习笔记&quot;&gt;&lt;/a&gt;MyBatis学习笔记&lt;/h1&gt;&lt;p&gt;&lt;code&gt;MyBatis&lt;/code&gt;是一款优秀的持久层框架，支持自定义SQL、存储过程和高级映射。&lt;code&gt;MyBatis&lt;/code&gt;免除了几乎所有的JDBC代码以及设置参数和获取结果集的工作。可以通过简单的XML或注解来配置和映射原始类型、接口和&lt;code&gt;POJO&lt;/code&gt;为数据库中的记录。&lt;/p&gt;
+&lt;h2 id=&quot;MyBatis安装与入门&quot;&gt;&lt;a href=&quot;#MyBatis安装与入门&quot; class=&quot;headerlink&quot; title=&quot;MyBatis安装与入门&quot;&gt;&lt;/a&gt;MyBatis安装与入门&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/mybatis/mybatis-3/releases&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;MyBatis下载链接&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;要使用&lt;code&gt;MyBatis&lt;/code&gt;，只需将下载的jar文件置于类路径(classpath)中。&lt;/p&gt;
+&lt;p&gt;如果使用&lt;code&gt;Maven&lt;/code&gt;构建项目就更简单了，只需将依赖添加到&lt;code&gt;pom.xml&lt;/code&gt;文件中。&lt;/p&gt;
+&lt;figure class=&quot;highlight xml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;dependency&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;groupId&lt;/span&gt;&amp;gt;&lt;/span&gt;org.mybatis&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;groupId&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;artifactId&lt;/span&gt;&amp;gt;&lt;/span&gt;mybatis&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;artifactId&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;version&lt;/span&gt;&amp;gt;&lt;/span&gt;x.x.x&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;version&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;dependency&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="MyBatis" scheme="http://yoursite.com/categories/MyBatis/"/>
+    
+    
+      <category term="SpringBoot" scheme="http://yoursite.com/tags/SpringBoot/"/>
+    
+      <category term="持久层框架" scheme="http://yoursite.com/tags/%E6%8C%81%E4%B9%85%E5%B1%82%E6%A1%86%E6%9E%B6/"/>
+    
+      <category term="MyBatis" scheme="http://yoursite.com/tags/MyBatis/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode200.岛屿数量</title>
@@ -67,9 +98,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="双指针" scheme="http://yoursite.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
-    
       <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
+    
+      <category term="双指针" scheme="http://yoursite.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
   </entry>
   
@@ -252,9 +283,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="双指针" scheme="http://yoursite.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
-    
       <category term="Stack" scheme="http://yoursite.com/tags/Stack/"/>
+    
+      <category term="双指针" scheme="http://yoursite.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
       <category term="动态规划" scheme="http://yoursite.com/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
     
@@ -370,9 +401,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="双指针" scheme="http://yoursite.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
-    
       <category term="String" scheme="http://yoursite.com/tags/String/"/>
+    
+      <category term="双指针" scheme="http://yoursite.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
   </entry>
   
@@ -572,32 +603,6 @@
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
       <category term="多线程" scheme="http://yoursite.com/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode148.排序链表</title>
-    <link href="http://yoursite.com/2020/04/03/Leetcode148-%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8/"/>
-    <id>http://yoursite.com/2020/04/03/Leetcode148-%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8/</id>
-    <published>2020-04-03T07:29:45.000Z</published>
-    <updated>2020-04-03T07:38:26.467Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Leetcode148-排序链表"><a href="#Leetcode148-排序链表" class="headerlink" title="Leetcode148.排序链表"></a>Leetcode148.排序链表</h2><p>在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序。</p><p><a href="https://leetcode-cn.com/problems/sort-list" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例 1:</p><blockquote><p>输入: 4-&gt;2-&gt;1-&gt;3<br>输出: 1-&gt;2-&gt;3-&gt;4</p></blockquote><p>示例 2:</p><blockquote><p>输入: -1-&gt;5-&gt;3-&gt;4-&gt;0<br>输出: -1-&gt;0-&gt;3-&gt;4-&gt;5</p></blockquote><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>在<code>O(n logn)</code>时间复杂度和常数级空间复杂度下，所以我们可以使用归并排序。</p><p>归并排序有两种形式：递归与非递归，这里我使用的是递归写法。</p><ol><li>先用快慢指针找到链表的中点的前一个元素，在此基础上就相当于找到了两个子序列的头结点。</li><li>递归调用</li><li>归并</li></ol><h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">sortList</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode slow = head;</span><br><span class="line">        <span class="comment">//这里找的的是链表中间结点的前一个节点</span></span><br><span class="line">        ListNode fast = head.next.next;</span><br><span class="line">        <span class="keyword">while</span> (fast != <span class="keyword">null</span> &amp;&amp; fast.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">            slow = slow.next;</span><br><span class="line">            fast = fast.next.next;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode rightHead = slow.next;</span><br><span class="line">        slow.next = <span class="keyword">null</span>;</span><br><span class="line">        ListNode left = sortList(head);</span><br><span class="line">        ListNode right = sortList(rightHead);</span><br><span class="line">        <span class="keyword">return</span> mergeListNode(left, right);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> ListNode <span class="title">mergeListNode</span><span class="params">(ListNode l1, ListNode l2)</span> </span>&#123;</span><br><span class="line">        ListNode dummyHead = <span class="keyword">new</span> ListNode(-<span class="number">1</span>);</span><br><span class="line">        ListNode cur = dummyHead;</span><br><span class="line">        <span class="keyword">while</span> (l1 != <span class="keyword">null</span> &amp;&amp; l2 != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (l1.val &lt; l2.val) &#123;</span><br><span class="line">                cur.next = l1;</span><br><span class="line">                l1 = l1.next;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                cur.next = l2;</span><br><span class="line">                l2 = l2.next;</span><br><span class="line">            &#125;</span><br><span class="line">            cur = cur.next;</span><br><span class="line">        &#125;</span><br><span class="line">        cur.next = (l1 != <span class="keyword">null</span>) ? l1 : l2;</span><br><span class="line">        <span class="keyword">return</span> dummyHead.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Leetcode148-排序链表&quot;&gt;&lt;a href=&quot;#Leetcode148-排序链表&quot; class=&quot;headerlink&quot; title=&quot;Leetcode148.排序链表&quot;&gt;&lt;/a&gt;Leetcode148.排序链表&lt;/h2&gt;&lt;p&gt;在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/sort-list&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
-    
-    
-      <category term="链表" scheme="http://yoursite.com/tags/%E9%93%BE%E8%A1%A8/"/>
-    
-      <category term="归并排序" scheme="http://yoursite.com/tags/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/"/>
     
   </entry>
   
