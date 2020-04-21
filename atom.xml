@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>flbu blog</title>
   
-  <subtitle>记录生活点点滴滴</subtitle>
+  <subtitle>记录学习历程</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
