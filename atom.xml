@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-04-20T10:20:35.679Z</updated>
+  <updated>2020-04-21T01:58:23.566Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode1248.统计&#39;优美子数组&#39;</title>
+    <link href="http://yoursite.com/2020/04/21/Leetcode1248-%E7%BB%9F%E8%AE%A1%E4%BC%98%E7%BE%8E%E5%AD%90%E6%95%B0%E7%BB%84/"/>
+    <id>http://yoursite.com/2020/04/21/Leetcode1248-%E7%BB%9F%E8%AE%A1%E4%BC%98%E7%BE%8E%E5%AD%90%E6%95%B0%E7%BB%84/</id>
+    <published>2020-04-21T01:37:20.000Z</published>
+    <updated>2020-04-21T01:58:23.566Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Leetcode1248-统计’优美子数组’"><a href="#Leetcode1248-统计’优美子数组’" class="headerlink" title="Leetcode1248.统计’优美子数组’"></a>Leetcode1248.统计’优美子数组’</h2><p>给你一个整数数组 nums 和一个整数 k。</p><p>如果某个 连续 子数组中恰好有 k 个奇数数字，我们就认为这个子数组是「优美子数组」。</p><p>请返回这个数组中「优美子数组」的数目。</p><p> <a href="https://leetcode-cn.com/problems/count-number-of-nice-subarrays" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例 1：</p><blockquote><p>输入：nums = [1,1,2,1,1], k = 3<br>输出：2<br>解释：包含 3 个奇数的子数组是 [1,1,2,1] 和 [1,2,1,1] 。</p></blockquote><p>示例 2：</p><blockquote><p>输入：nums = [2,4,6], k = 1<br>输出：0<br>解释：数列中不包含任何奇数，所以不存在优美子数组。</p></blockquote><p>示例 3：</p><blockquote><p>输入：nums = [2,2,2,1,2,2,1,2,2,2], k = 2<br>输出：16</p></blockquote><p>提示：</p><blockquote><p>1 &lt;= nums.length &lt;= 50000<br>1 &lt;= nums[i] &lt;= 10^5<br>1 &lt;= k &lt;= nums.length</p></blockquote><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>采用滑动窗口，只需要关注奇数的个数，找到每种情况下最短的符合要求的子数组，此时子数组的左右边界一定都是奇数。向左向右拓展，直到遇到奇数为止。</p><p>创建一个数组<code>array</code>记录原始数组中奇数下标，从<code>array</code>中下标为1处开始存储，左边界为-1，右边界为<code>nums.length</code>。</p><ul><li>向左扩展，有<code>array[i]-array[i-1]</code>种可能；向右扩展，有<code>array[i+k]-array[i+k-1]</code>中可能。</li><li>所有一共有<code>(array[i]-array[i-1])*(array[i+k]-array[i+k-1])</code>种可能。</li><li>遍历整个下标数组。</li></ul><h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numberOfSubarrays</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> n = nums.length;</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//存储奇数下标</span></span><br><span class="line">        <span class="keyword">int</span>[] array = <span class="keyword">new</span> <span class="keyword">int</span>[n + <span class="number">2</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] % <span class="number">2</span> == <span class="number">1</span>) &#123;</span><br><span class="line">                array[++index] = i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//左边界</span></span><br><span class="line">        array[<span class="number">0</span>] = -<span class="number">1</span>;</span><br><span class="line">        <span class="comment">//右边界</span></span><br><span class="line">        array[index + <span class="number">1</span>] = n;</span><br><span class="line">        <span class="comment">//array数组的右边界下标为index+1，一共有index+2个元素</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i + k &lt;= index + <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="comment">//这里i+k是子数组的第k+1个元素</span></span><br><span class="line">            res += (array[i] - array[i - <span class="number">1</span>]) * (array[i + k] - array[i + k - <span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Leetcode1248-统计’优美子数组’&quot;&gt;&lt;a href=&quot;#Leetcode1248-统计’优美子数组’&quot; class=&quot;headerlink&quot; title=&quot;Leetcode1248.统计’优美子数组’&quot;&gt;&lt;/a&gt;Leetcode1248.统计’优美子数组’&lt;/h2&gt;&lt;p&gt;给你一个整数数组 nums 和一个整数 k。&lt;/p&gt;
+&lt;p&gt;如果某个 连续 子数组中恰好有 k 个奇数数字，我们就认为这个子数组是「优美子数组」。&lt;/p&gt;
+&lt;p&gt;请返回这个数组中「优美子数组」的数目。&lt;/p&gt;
+&lt;p&gt; &lt;a href=&quot;https://leetcode-cn.com/problems/count-number-of-nice-subarrays&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
+    
+    
+      <category term="双指针" scheme="http://yoursite.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
+    
+      <category term="Slide Windows" scheme="http://yoursite.com/tags/Slide-Windows/"/>
+    
+  </entry>
   
   <entry>
     <title>MyBatis学习笔记</title>
@@ -564,35 +592,6 @@
 &lt;li&gt;继承&lt;code&gt;Thread&lt;/code&gt;类，并重写&lt;code&gt;run&lt;/code&gt;方法。&lt;/li&gt;
 &lt;li&gt;实现&lt;code&gt;Runnable&lt;/code&gt;接口的&lt;code&gt;run&lt;/code&gt;方法。&lt;/li&gt;
 &lt;/ul&gt;
-    
-    </summary>
-    
-    
-      <category term="Java多线程" scheme="http://yoursite.com/categories/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-    
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
-      <category term="多线程" scheme="http://yoursite.com/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java多线程-进程与线程</title>
-    <link href="http://yoursite.com/2020/04/06/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/"/>
-    <id>http://yoursite.com/2020/04/06/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/</id>
-    <published>2020-04-06T02:52:31.000Z</published>
-    <updated>2020-04-09T08:08:29.044Z</updated>
-    
-    <content type="html"><![CDATA[<p>[TOC]</p><h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><ul><li><p>进程</p><p>进程就是<strong>应用程序在内存中分配的空间，也就是正在运行的程序，是系统运行程序的基本单位</strong>。</p><p>在Java中，当我们启动<code>main</code>函数时其实就是启动了一个<code>JVM</code>进程，而<code>main</code>函数所在的线程就是这个进程中的一个线程，叫做主线程。</p></li><li><p>线程</p><p>线程是一个比进程更小的执行单位，一个进程在执行过程中可以产生多个线程。与进程不同的是<strong>同类的多个线程共享进程的堆和方法区，但每个线程有自己的程序计数器、虚拟机栈和本地方法栈</strong>，所以系统在各个线程间切换工作时，负担会比进程小得多，因此线程也被称为轻量级进程。</p></li></ul><h3 id="线程与进程的区别"><a href="#线程与进程的区别" class="headerlink" title="线程与进程的区别"></a>线程与进程的区别</h3><p>线程是一个比进程更小的执行单位，一个进程在其执行过程中可以产生多个线程。</p><p>进程是一个独立的运行环境，而线程是其中执行的一个任务，他们间本质的区别是<strong>是否单独占有内存地址以及其他系统资源(比如 I/O)</strong>。</p><ul><li>进程间存在内存隔离，数据是分开的，数据共享复杂但同步简单，各个进程间互不干扰；而线程共享进程占有的内存地址空间和资源，数据共享简单但同步复杂。</li><li>进程的创建和销毁开销较大，而线程的开销较小。</li><li>进程间通信比较复杂，线程间通信比较简单。</li><li><strong>进程是操作系统进行资源分配的基本单位，而线程是操作系统进行调度的基本单位，即CPU分配时间的单位。</strong></li></ul><h3 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h3><p>上下文切换是指CPU从一个进程(或线程)切换到另一个进程(或线程)。上下文是指<strong>某一时间点CPU寄存器和程序计数器的内容</strong>。</p><p>CPU通过为每个线程分配CPU时间片来实现多线程机制。CPU通过时间片分配算法来循环执行任务，当前执行一个时间片后会切换到下一个任务。</p><p>但是，在切换前会保存上一个任务的状态，以便下次切换回这个任务时，可以再加载这个任务的状态，所以任务从保存到再加载的过程就是一次上下文切换。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h2 id=&quot;进程与线程&quot;&gt;&lt;a href=&quot;#进程与线程&quot; class=&quot;headerlink&quot; title=&quot;进程与线程&quot;&gt;&lt;/a&gt;进程与线程&lt;/h2&gt;&lt;h3 id=&quot;概念&quot;&gt;&lt;a href=&quot;#概念&quot; class=&quot;headerlink&quot; tit
-      
     
     </summary>
     
