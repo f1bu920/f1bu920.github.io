@@ -26,6 +26,10 @@ public class HashMap<K,V> extends AbstractMap<K,V>
 
 JDK1.8以后解决哈希冲突时发生了较大变化。**当链表长度大于阈值(或者红黑树边界值，默认为8)并且当前数组长度大于64时，此时此索引上的所有数据采用红黑树存储。**
 
+Map接口继承关系如下：
+
+![Map接口继承关系.png](https://f1bu920.github.io/images/Map接口继承关系.png)
+
 <!--more-->
 
 补充：将链表转为红黑树时会进行判断，当链表长度大于阈值但数组长度小于64时，并不会转化为红黑树，而是对数组进行扩容。这样做的目的是因为数组较小，尽量避开红黑树结构，强行转化为红黑树反而会降低效率。，因为红黑树需要进行左旋、右旋、变色等操作来保持平衡。具体参考`treeifyBin()`方法。
@@ -397,10 +401,223 @@ public class Test {
 
 
 
-#### 成员方法
+#### 常用成员方法
+
+##### 确定哈希桶数组索引位置
+
+```java
+    static final int hash(Object key) {
+        int h;
+        return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+    }
+```
+
+`HashMap`中利用`hash`方法得到`key的`散列码，再通过`hash&(n-1)`得到哈希桶数组的索引位置。
+
+注意，**因为`HashMap`底层数组的长度总为2的n次幂，所以`hash&(n-1)`就等价于对`length`取模，而在计算机中`&`比`%`效率更好。**
+
+##### 增加方法(put)
+
+1. 判断键值对数组`table[i]`是否为空或为`null`，是就执行`resize()`进行扩容；
+2. 根据`(n - 1) & hash`得到插入的数组`i`，如果此位置为空，直接插入新节点，转到步骤6；如果此位置已有元素，发生碰撞，执行步骤3。
+3. 判断`table[i]`的首个元素是否和`key`一样，如果相同直接覆盖`value`，否则转向④，这里的相同指的是`hashCode`以及`equals`； 
+4. 解决哈希冲突，如果当前`table[i]`已经是`treeNode`，即已经是红黑树结构，则直接在树中插入键值对，否则转向5；
+5. 此时可以确定是链表结构了，遍历整个链表，判断链表长度是否大于8，如果是将链表转化为红黑树，在红黑树中执行插入；遍历过程中若发现`key`已经存在，直接覆盖即可。
+6. 插入成功后，判断实际存在的键值对数量是否多于最大容量`threshold`，如果是，进行扩容。
+
+`put`方法源码如下：
+
+```java
+
+  public V put(K key, V value) {
+      // 对key的hashCode()做hash
+      return putVal(hash(key), key, value, false, true);
+  }
+  
+  final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
+                 boolean evict) {
+      Node<K,V>[] tab; Node<K,V> p; int n, i;
+      // 步骤①：tab为空则创建
+     if ((tab = table) == null || (n = tab.length) == 0)
+         n = (tab = resize()).length;
+     // 步骤②：计算index，并对null做处理 
+     if ((p = tab[i = (n - 1) & hash]) == null) 
+         tab[i] = newNode(hash, key, value, null);
+     else {
+         Node<K,V> e; K k;
+         // 步骤③：节点key存在，直接覆盖value
+         if (p.hash == hash &&
+             ((k = p.key) == key || (key != null && key.equals(k))))
+             e = p;
+         // 步骤④：判断该链为红黑树
+         else if (p instanceof TreeNode)
+             e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
+         // 步骤⑤：该链为链表
+         else {
+             for (int binCount = 0; ; ++binCount) {
+                 if ((e = p.next) == null) {
+                     p.next = newNode(hash, key,value,null);
+                        //链表长度大于8转换为红黑树进行处理
+                     if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st  
+                         treeifyBin(tab, hash);
+                     break;
+                 }
+                    // key已经存在直接覆盖value
+                 if (e.hash == hash &&
+                     ((k = e.key) == key || (key != null && key.equals(k)))) 
+							break;
+                 p = e;
+             }
+         }
+         
+         if (e != null) { // existing mapping for key
+             V oldValue = e.value;
+             if (!onlyIfAbsent || oldValue == null)
+                 e.value = value;
+             afterNodeAccess(e);
+             return oldValue;
+         }
+     }
+
+     ++modCount;
+     // 步骤⑥：超过最大容量 就扩容
+     if (++size > threshold)
+         resize();
+     afterNodeInsertion(evict);
+     return null;
+ }      
+```
+
+##### 扩容方法
+
+![HashMap扩容.png](https://f1bu920.github.io/images/HashMap扩容.png)
+
+`HashMap`扩容后长度会变为原来两倍，而且**元素的位置要么在原位置，要么在原位置再移动2次幂的位置。**
+
+元素在重新计算hash之后，因为n变为2倍，那么n-1的mask范围在高位多1bit。因此，我们在扩充HashMap的时候，不需要像JDK1.7的实现那样重新计算hash，只需要看看原来的hash值新增的那个bit是1还是0就好了，是0的话索引没变，是1的话索引变成“原索引+oldCap” 。上图为16扩容成32的`resize`示意图。
+
+JDK1.7中rehash的时候，旧链表迁移新链表的时候，如果在新表的数组索引位置相同，则链表元素会倒置，但是从上图可以看出，JDK1.8不会倒置。 
+
+JDK1.8中`resize`方法的源码如下：
+
+```java
+    final Node<K,V>[] resize() {
+        Node<K,V>[] oldTab = table;
+        int oldCap = (oldTab == null) ? 0 : oldTab.length;
+        int oldThr = threshold;
+        int newCap, newThr = 0;
+        if (oldCap > 0) {
+            // 超过最大值就不再扩充了，就只好随你碰撞去吧
+            if (oldCap >= MAXIMUM_CAPACITY) {
+                threshold = Integer.MAX_VALUE;
+                return oldTab;
+            }
+            // 没超过最大值，就扩充为原来的2倍
+            else if ((newCap = oldCap << 1) < MAXIMUM_CAPACITY &&
+                     oldCap >= DEFAULT_INITIAL_CAPACITY)
+                newThr = oldThr << 1; // double threshold
+        }
+        else if (oldThr > 0) // initial capacity was placed in threshold
+            newCap = oldThr;
+        else {               // zero initial threshold signifies using defaults
+            newCap = DEFAULT_INITIAL_CAPACITY;
+            newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
+        }
+        // 计算新的resize上限
+        if (newThr == 0) {
+            float ft = (float)newCap * loadFactor;
+            newThr = (newCap < MAXIMUM_CAPACITY && ft < (float)MAXIMUM_CAPACITY ?
+                      (int)ft : Integer.MAX_VALUE);
+        }
+        threshold = newThr;
+        @SuppressWarnings({"rawtypes","unchecked"})
+            Node<K,V>[] newTab = (Node<K,V>[])new Node[newCap];
+        table = newTab;
+        if (oldTab != null) {
+            // 把每个bucket都移动到新的buckets中
+            for (int j = 0; j < oldCap; ++j) {
+                Node<K,V> e;
+                if ((e = oldTab[j]) != null) {
+                    oldTab[j] = null;
+                    if (e.next == null)
+                        newTab[e.hash & (newCap - 1)] = e;
+                    else if (e instanceof TreeNode)
+                        ((TreeNode<K,V>)e).split(this, newTab, j, oldCap);
+                    else { // preserve order
+                        // 链表优化重hash的代码块
+                        Node<K,V> loHead = null, loTail = null;
+                        Node<K,V> hiHead = null, hiTail = null;
+                        Node<K,V> next;
+                        do {
+                            next = e.next;
+                            // 原索引
+                            if ((e.hash & oldCap) == 0) {
+                                if (loTail == null)
+                                    loHead = e;
+                                else
+                                    loTail.next = e;
+                                loTail = e;
+                            }
+                            // 原索引+oldCap
+                            else {
+                                if (hiTail == null)
+                                    hiHead = e;
+                                else
+                                    hiTail.next = e;
+                                hiTail = e;
+                            }
+                        } while ((e = next) != null);
+                         // 原索引放到bucket里
+                        if (loTail != null) {
+                            loTail.next = null;
+                            newTab[j] = loHead;
+                        }
+                        // 原索引+oldCap放到bucket里
+                        if (hiTail != null) {
+                            hiTail.next = null;
+                            newTab[j + oldCap] = hiHead;
+                        }
+                    }
+                }
+            }
+        }
+        return newTab;
+    }
+```
 
 
 
-​     
+##### get方法
 
-​       
+```java
+    public V get(Object key) {
+        Node<K,V> e;
+        return (e = getNode(hash(key), key)) == null ? null : e.value;
+    }
+
+    final Node<K,V> getNode(int hash, Object key) {
+        Node<K,V>[] tab; Node<K,V> first, e; int n; K k;
+        if ((tab = table) != null && (n = tab.length) > 0 &&
+            (first = tab[(n - 1) & hash]) != null) {
+            if (first.hash == hash && // always check first node
+                ((k = first.key) == key || (key != null && key.equals(k))))
+                return first;
+            if ((e = first.next) != null) {
+                if (first instanceof TreeNode)
+                    return ((TreeNode<K,V>)first).getTreeNode(hash, key);
+                do {
+                    if (e.hash == hash &&
+                        ((k = e.key) == key || (key != null && key.equals(k))))
+                        return e;
+                } while ((e = e.next) != null);
+            }
+        }
+        return null;
+    }
+```
+
+`get`方法会传递`key`的散列码到`getNode`方法中，再根据`(n - 1) & hash`得到桶数组中的下标，如果此位置为空直接返回`null`，否则判断第一个节点的`key`是否等于要查找的`key`，如果相等返回结果，否则判断该结点是否为`TreeNode`树节点，是则按照红黑树查找，不是则按照链表方式查找。
+
+### 多线程场景下的HashMap
+
+在多线程使用场景中，应该尽量避免使用线程不安全的`HashMap`，而使用线程安全的`ConcurrentHashMap`。因为在并发的情况下，使用`HashMap`有可能造成死循环。 
