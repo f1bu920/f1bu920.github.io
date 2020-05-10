@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-05-07T01:58:14.000Z</updated>
+  <updated>2020-05-10T08:18:20.884Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,21 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Test</title>
+    <link href="http://yoursite.com/2020/05/10/Test/"/>
+    <id>http://yoursite.com/2020/05/10/Test/</id>
+    <published>2020-05-10T08:18:20.000Z</published>
+    <updated>2020-05-10T08:18:20.884Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Leetcode572.另一个树的子树</title>
@@ -550,34 +565,6 @@
     
     
       <category term="Java多线程" scheme="http://yoursite.com/categories/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-    
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
-      <category term="多线程" scheme="http://yoursite.com/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java多线程-volatile</title>
-    <link href="http://yoursite.com/2020/04/22/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-volatile/"/>
-    <id>http://yoursite.com/2020/04/22/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-volatile/</id>
-    <published>2020-04-22T07:16:25.000Z</published>
-    <updated>2020-04-22T09:21:12.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h4 id="内存可见性"><a href="#内存可见性" class="headerlink" title="内存可见性"></a>内存可见性</h4><p>JMM有一个主内存，每个线程都有自己私有的工作线程，工作内存中保留了一些变量在主内存的拷贝。</p><p><strong>内存可见性，指的是线程之间的可见性，当一个线程修改了共享变量后，另一个线程可以读取到这个更改后的值。</strong></p><h4 id="重排序"><a href="#重排序" class="headerlink" title="重排序"></a>重排序</h4><p>为了优化程序性能，对原有的指令执行顺序进行优化重新排序。重排序可能发生在多个阶段，比如编译重排序、CPU重排序。</p><h4 id="happens-before原则"><a href="#happens-before原则" class="headerlink" title="happens-before原则"></a>happens-before原则</h4><p>是一个给程序员使用的规则，只要遵守<code>happens-before</code>原则，JVM就能保证指令在多线程之间的顺序性符合预期。</p><a id="more"></a><h2 id="volatile的内存语意"><a href="#volatile的内存语意" class="headerlink" title="volatile的内存语意"></a>volatile的内存语意</h2><p>在Java中，<code>volatile</code>主要有两个功能：</p><ul><li><strong>保证内存可见性</strong></li><li><strong>禁止指令重排序</strong></li></ul><h4 id="内存可见性-1"><a href="#内存可见性-1" class="headerlink" title="内存可见性"></a>内存可见性</h4><p>当一个线程对<code>volatile</code>修饰的变量进行写操作后，JMM会立即把该线程对应的本地内存中的共享变量的值刷新到主内存。当一个线程对<code>volatile</code>修饰的变量进行读操作时，JMM会立即把该线程对应的本地内存置为无效，从主内存中读取共享变量的值。</p><p>所以，<strong><code>volatile</code>与锁具有相同的内存效果。<code>volatile</code>的写与锁的释放、<code>volatile</code>的读与锁的获取有相同的内存语意。</strong></p><h4 id="禁止重排序"><a href="#禁止重排序" class="headerlink" title="禁止重排序"></a>禁止重排序</h4><p><strong>JMM是通过内存屏障实现的禁止重排序。</strong></p><h2 id="volatile的用途"><a href="#volatile的用途" class="headerlink" title="volatile的用途"></a>volatile的用途</h2><p><code>volatile</code>可以保证内存可见性和禁止重排序。</p><p>在保证内存可见性上，<code>volatile</code>与锁具有相同的语意，所以可以当做轻量级的锁来使用。但是<code>volatile</code>仅仅能保证单个变量的读、写具有原子性，而锁可以保证整个临界区代码具有原子性。所以<strong>锁更强大，<code>volatile</code>性能更有优势。</strong></p><p>在禁止重排序上，<code>volatile</code>也十分有用，例如单例模式有一种实现方式就是“双重锁检查”。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Singleton instance;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(instance==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">synchronized</span>(Singleton<span class="class">.<span class="keyword">class</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(instance==<span class="keyword">null</span>)&#123;</span><br><span class="line">                    instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>如果上述变量声明中不使用<code>volatile</code>关键字，可能会发生错误。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;基本概念&quot;&gt;&lt;a href=&quot;#基本概念&quot; class=&quot;headerlink&quot; title=&quot;基本概念&quot;&gt;&lt;/a&gt;基本概念&lt;/h2&gt;&lt;h4 id=&quot;内存可见性&quot;&gt;&lt;a href=&quot;#内存可见性&quot; class=&quot;headerlink&quot; title=&quot;内存可见性&quot;&gt;&lt;/a&gt;内存可见性&lt;/h4&gt;&lt;p&gt;JMM有一个主内存，每个线程都有自己私有的工作线程，工作内存中保留了一些变量在主内存的拷贝。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;内存可见性，指的是线程之间的可见性，当一个线程修改了共享变量后，另一个线程可以读取到这个更改后的值。&lt;/strong&gt;&lt;/p&gt;
-&lt;h4 id=&quot;重排序&quot;&gt;&lt;a href=&quot;#重排序&quot; class=&quot;headerlink&quot; title=&quot;重排序&quot;&gt;&lt;/a&gt;重排序&lt;/h4&gt;&lt;p&gt;为了优化程序性能，对原有的指令执行顺序进行优化重新排序。重排序可能发生在多个阶段，比如编译重排序、CPU重排序。&lt;/p&gt;
-&lt;h4 id=&quot;happens-before原则&quot;&gt;&lt;a href=&quot;#happens-before原则&quot; class=&quot;headerlink&quot; title=&quot;happens-before原则&quot;&gt;&lt;/a&gt;happens-before原则&lt;/h4&gt;&lt;p&gt;是一个给程序员使用的规则，只要遵守&lt;code&gt;happens-before&lt;/code&gt;原则，JVM就能保证指令在多线程之间的顺序性符合预期。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>

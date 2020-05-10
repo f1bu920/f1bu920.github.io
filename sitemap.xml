@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2020/05/10/Test/</loc>
+    
+    <lastmod>2020-05-10T08:18:20.884Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2020/05/07/Leetcode572-%E5%8F%A6%E4%B8%80%E4%B8%AA%E6%A0%91%E7%9A%84%E5%AD%90%E6%A0%91/</loc>
     
     <lastmod>2020-05-07T01:58:14.000Z</lastmod>
