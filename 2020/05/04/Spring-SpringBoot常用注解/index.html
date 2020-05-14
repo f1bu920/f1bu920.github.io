@@ -97,8 +97,11 @@
 <meta property="og:image" content="https://f1bu920.github.io/images/@PathVariable.PNG">
 <meta property="og:image" content="https://f1bu920.github.io/images/@RequestParam.PNG">
 <meta property="og:image" content="https://f1bu920.github.io/images/@RequestBody.PNG">
+<meta property="og:image" content="https://f1bu920.github.io/images/@Validated.PNG">
+<meta property="og:image" content="https://f1bu920.github.io/images/@Valid.PNG">
+<meta property="og:image" content="https://f1bu920.github.io/images/@ControllerAdvice.PNG">
 <meta property="article:published_time" content="2020-05-04T07:07:41.000Z">
-<meta property="article:modified_time" content="2020-05-14T05:15:10.293Z">
+<meta property="article:modified_time" content="2020-05-14T09:35:06.384Z">
 <meta property="article:author" content="flbu">
 <meta property="article:tag" content="SpringBoot">
 <meta property="article:tag" content="Spring">
@@ -421,7 +424,44 @@
 <h4 id="4-2-RequestBody"><a href="#4-2-RequestBody" class="headerlink" title="4.2 @RequestBody"></a>4.2 @RequestBody</h4><p>用于读取Request请求的Body部分，并且<code>Content-Type</code>为<code>application/json</code>格式的数据，接收到数据后自动绑定到Java对象上去。系统会使用<code>HttpMessageConverter</code>或者自定义的<code>HttpMessageConverter</code>将请求的body中的json字符串转换为Java对象。</p>
 <p><img src="https://f1bu920.github.io/images/@RequestBody.PNG" alt=""></p>
 <p><strong>注意：一个请求方法只可以有一个<code>@RequestBody</code>，但可以有多个<code>RequestParam</code>和<code>PathVariable</code>。</strong></p>
-
+<h2 id="5-读取配置信息"><a href="#5-读取配置信息" class="headerlink" title="5. 读取配置信息"></a>5. 读取配置信息</h2><p>很多时候需要把一些常用的配置信息放在配置文件中，Spring提供了以下方法来读取去这些配置信息。</p>
+<h4 id="5-1-value"><a href="#5-1-value" class="headerlink" title="5.1 @value"></a>5.1 @value</h4><p>使用<code>@value(&quot;${property}&quot;)</code>读取一些简单的配置信息。</p>
+<h4 id="5-2-ConfigurationProperty"><a href="#5-2-ConfigurationProperty" class="headerlink" title="5.2 @ConfigurationProperty"></a>5.2 @ConfigurationProperty</h4><p>通过<code>@ConfigurationProperty</code>读取配置信息并与Bean绑定。</p>
+<p>可以像使用Bean一样，将其注入到类中。</p>
+<h4 id="PropertySource"><a href="#PropertySource" class="headerlink" title="@PropertySource"></a>@PropertySource</h4><p><code>@PropertySource</code>指定读取<code>properties</code>文件。</p>
+<h2 id="6-参数校验"><a href="#6-参数校验" class="headerlink" title="6. 参数校验"></a>6. 参数校验</h2><p>在前端已经进行校验的情况下，为了避免一些http工具向后台请求一些违法的数据，还是要对传入后端的数据在进行一遍数据校验。</p>
+<p>JSR就是一套数据校验标准，其定义了很多常用的校验注解，我们可以直接将这些校验注解加在JavaBean的属性上，这样就可以在需要校验时进行校验了。</p>
+<p>校验时使用的是<code>Hibernate Validator</code>框架，SpringBoot的<code>spring-boot-starter-web</code>依赖中已经包含了<code>hibernate-validator</code>包，不需要额外导入。<strong>所有的注解，推荐使用<code>javax.validation.constraints</code>。</strong></p>
+<h4 id="6-1-一些常用的字段验证的注解"><a href="#6-1-一些常用的字段验证的注解" class="headerlink" title="6.1 一些常用的字段验证的注解"></a>6.1 一些常用的字段验证的注解</h4><ul>
+<li><code>@NotEmpty</code>：被注释的字符串不能为<code>null</code>也不能为空。</li>
+<li><code>@NotBlank</code>：被注释的字符串不能为<code>null</code>，且必须包含一个非空字符。</li>
+<li><code>@Null</code>：被注释的元素必须为<code>null</code>。</li>
+<li><code>@NotNull</code>：被注释的元素必须不为<code>null</code>。</li>
+<li><code>@AssertTrue</code>：被注释的元素必须为<code>true</code></li>
+<li><code>@AssertFalse</code>：被注释的元素必须为<code>false</code></li>
+<li><code>@Pattern(regex= ,flag= )</code>：被注释的元素必须符合指定的正则表达式。</li>
+<li><code>@Email</code>：被注释的元素必须符合Email格式。</li>
+<li><code>@Min(value)</code>：被注释的元素必须是一个数字，且必须大于等于指定的<code>value</code></li>
+<li><code>@Max(value)</code>：被注释的元素必须是一个数字，且必须小于等于指定的<code>value</code></li>
+<li><code>@DecimalMin(value)</code>：被注释的元素必须是一个数字，且必须大于等于指定的<code>value</code></li>
+<li><code>@DecimalMax(value)</code>：被注释的元素必须是一个数字，且必须小于等于指定的<code>value</code></li>
+<li><code>@Size(max= ,min= )</code>：被注释的元素的大小必须在指定的范围之内</li>
+<li><code>@Digits(integer, fraction)</code>：被注释的元素必须是一个数字，且必须在可接受的范围之内</li>
+<li><code>@Past</code>：被注释的元素必须是一个过去的日期</li>
+<li><code>@Future</code>：被注释的元素必须是一个未来的日期</li>
+<li>……</li>
+</ul>
+<h4 id="6-2-验证请求体-RequestBody"><a href="#6-2-验证请求体-RequestBody" class="headerlink" title="6.2 验证请求体(RequestBody)"></a>6.2 验证请求体(RequestBody)</h4><p>给需要验证的参数加上<code>@Valid</code>注解，如果验证失败，将抛出<code>MethodArgumentNotValidException</code>。</p>
+<h4 id="6-3-验证请求参数-PathVariable和RequestParam"><a href="#6-3-验证请求参数-PathVariable和RequestParam" class="headerlink" title="6.3 验证请求参数(PathVariable和RequestParam)"></a>6.3 验证请求参数(PathVariable和RequestParam)</h4><p><strong>验证请求参数时，一定要在类上加上<code>@Validated</code>注解，这个注解会告诉Spring去校验方法参数。</strong></p>
+<p><img src="https://f1bu920.github.io/images/@Validated.PNG" alt=""></p>
+<p><img src="https://f1bu920.github.io/images/@Valid.PNG" alt=""></p>
+<h2 id="7-全局处理Controller异常"><a href="#7-全局处理Controller异常" class="headerlink" title="7.全局处理Controller异常"></a>7.全局处理Controller异常</h2><ol>
+<li><code>@ControllerAdvice</code>：注解定义全局异常处理类。</li>
+<li><code>@ExceptionHandler</code>：注解申明异常处理方法。</li>
+</ol>
+<p>例如，对于参数校验时抛出的<code>MethodArgumentNotValidException</code>异常，可以在类上加上<code>@ControllerAdvice</code>注解，在处理方法上加上<code>@ExceptionHandler()</code>并指定处理的异常类。</p>
+<p><img src="https://f1bu920.github.io/images/@ControllerAdvice.PNG" alt=""></p>
+<h2 id="JPA相关"><a href="#JPA相关" class="headerlink" title="JPA相关"></a>JPA相关</h2>
       
     </div>
     
@@ -631,7 +671,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-SpringBootApplication"><span class="nav-text">1. @SpringBootApplication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Spring-Bean相关"><span class="nav-text">2. Spring Bean相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Autowired"><span class="nav-text">2.1 @Autowired</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-Component、-Repository、-Service、-Controller"><span class="nav-text">2.2 @Component、@Repository、@Service、@Controller</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-RestController"><span class="nav-text">2.3 @RestController</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-Scope"><span class="nav-text">2.4 @Scope</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-Configuration"><span class="nav-text">2.5 @Configuration</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-处理常见的HTTP请求类型"><span class="nav-text">3. 处理常见的HTTP请求类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-GET请求"><span class="nav-text">3.1 GET请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-POST请求"><span class="nav-text">3.2 POST请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-PUT请求"><span class="nav-text">3.3 PUT请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-DELETE请求"><span class="nav-text">3.4 DELETE请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-PATCH-请求"><span class="nav-text">3.5 PATCH 请求</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-前后端传值"><span class="nav-text">4. 前后端传值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-PathVariable和-RequestParam"><span class="nav-text">4.1 @PathVariable和@RequestParam</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-RequestBody"><span class="nav-text">4.2 @RequestBody</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-SpringBootApplication"><span class="nav-text">1. @SpringBootApplication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Spring-Bean相关"><span class="nav-text">2. Spring Bean相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Autowired"><span class="nav-text">2.1 @Autowired</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-Component、-Repository、-Service、-Controller"><span class="nav-text">2.2 @Component、@Repository、@Service、@Controller</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-RestController"><span class="nav-text">2.3 @RestController</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-Scope"><span class="nav-text">2.4 @Scope</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-Configuration"><span class="nav-text">2.5 @Configuration</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-处理常见的HTTP请求类型"><span class="nav-text">3. 处理常见的HTTP请求类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-GET请求"><span class="nav-text">3.1 GET请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-POST请求"><span class="nav-text">3.2 POST请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-PUT请求"><span class="nav-text">3.3 PUT请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-DELETE请求"><span class="nav-text">3.4 DELETE请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-PATCH-请求"><span class="nav-text">3.5 PATCH 请求</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-前后端传值"><span class="nav-text">4. 前后端传值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-PathVariable和-RequestParam"><span class="nav-text">4.1 @PathVariable和@RequestParam</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-RequestBody"><span class="nav-text">4.2 @RequestBody</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-读取配置信息"><span class="nav-text">5. 读取配置信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-value"><span class="nav-text">5.1 @value</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-ConfigurationProperty"><span class="nav-text">5.2 @ConfigurationProperty</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PropertySource"><span class="nav-text">@PropertySource</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-参数校验"><span class="nav-text">6. 参数校验</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-一些常用的字段验证的注解"><span class="nav-text">6.1 一些常用的字段验证的注解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-验证请求体-RequestBody"><span class="nav-text">6.2 验证请求体(RequestBody)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-3-验证请求参数-PathVariable和RequestParam"><span class="nav-text">6.3 验证请求参数(PathVariable和RequestParam)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-全局处理Controller异常"><span class="nav-text">7.全局处理Controller异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JPA相关"><span class="nav-text">JPA相关</span></a></li></ol></div>
             
 
           </div>
