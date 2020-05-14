@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2020/05/04/Spring-SpringBoot%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/</loc>
+    
+    <lastmod>2020-05-14T05:15:10.293Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2020/05/14/Leetcode136-%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97/</loc>
     
     <lastmod>2020-05-14T01:38:52.479Z</lastmod>
@@ -47,13 +54,6 @@
     <loc>http://yoursite.com/2020/05/06/Leetcode983-%E6%9C%80%E4%BD%8E%E7%A5%A8%E4%BB%B7/</loc>
     
     <lastmod>2020-05-06T02:44:02.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/05/04/Spring-SpringBoot%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/</loc>
-    
-    <lastmod>2020-05-05T02:50:34.000Z</lastmod>
     
   </url>
   

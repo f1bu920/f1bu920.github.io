@@ -94,8 +94,11 @@
 <meta property="og:image" content="https://f1bu920.github.io/images/@Configuration%E6%B3%A8%E8%A7%A3.PNG">
 <meta property="og:image" content="https://f1bu920.github.io/images/@GetMapping.PNG">
 <meta property="og:image" content="https://f1bu920.github.io/images/@PostMapping.PNG">
+<meta property="og:image" content="https://f1bu920.github.io/images/@PathVariable.PNG">
+<meta property="og:image" content="https://f1bu920.github.io/images/@RequestParam.PNG">
+<meta property="og:image" content="https://f1bu920.github.io/images/@RequestBody.PNG">
 <meta property="article:published_time" content="2020-05-04T07:07:41.000Z">
-<meta property="article:modified_time" content="2020-05-05T02:50:34.000Z">
+<meta property="article:modified_time" content="2020-05-14T05:15:10.293Z">
 <meta property="article:author" content="flbu">
 <meta property="article:tag" content="SpringBoot">
 <meta property="article:tag" content="Spring">
@@ -410,7 +413,15 @@
 <h4 id="3-3-PUT请求"><a href="#3-3-PUT请求" class="headerlink" title="3.3 PUT请求"></a>3.3 PUT请求</h4><p><code>@PostMapping(&quot;/users/{userId}&quot;)</code>等价于<code>@RequestMapping(value=&quot;/users/{userId}&quot;, method=RequestMethod.PUT)</code>。</p>
 <h4 id="3-4-DELETE请求"><a href="#3-4-DELETE请求" class="headerlink" title="3.4 DELETE请求"></a>3.4 DELETE请求</h4><p><code>@DeleteMapping(&quot;/users/{userId}&quot;)</code>等价于<code>@RequestMapping(value=&quot;/users/{userId}&quot;, method=RequestMethod.DELETE)</code>。</p>
 <h4 id="3-5-PATCH-请求"><a href="#3-5-PATCH-请求" class="headerlink" title="3.5 PATCH 请求"></a>3.5 PATCH 请求</h4><p><code>@PatchMapping(&quot;/profile&quot;)</code>等价于<code>@RequestMapping(value=&quot;/profile&quot;, method=RequestMethod.PATCH)</code>。</p>
-<h2 id="4-前后端传值"><a href="#4-前后端传值" class="headerlink" title="4. 前后端传值"></a>4. 前后端传值</h2>
+<h2 id="4-前后端传值"><a href="#4-前后端传值" class="headerlink" title="4. 前后端传值"></a>4. 前后端传值</h2><h4 id="4-1-PathVariable和-RequestParam"><a href="#4-1-PathVariable和-RequestParam" class="headerlink" title="4.1 @PathVariable和@RequestParam"></a>4.1 @PathVariable和@RequestParam</h4><p><code>@PathValiable</code>用于获取路径参数，<code>@RequestParam</code>用于获取查询参数。</p>
+<p><img src="https://f1bu920.github.io/images/@PathVariable.PNG" alt=""></p>
+<p>如果我们请求的URL为：<code>/blogs/edit/1</code>，获得的数据就是<code>blogId=1</code>。</p>
+<p><img src="https://f1bu920.github.io/images/@RequestParam.PNG" alt=""></p>
+<p>如果我们请求的URL为：<code>/blogs/save?blogTitle=title</code>，获得的数据就是<code>blogTitle=title</code>。</p>
+<h4 id="4-2-RequestBody"><a href="#4-2-RequestBody" class="headerlink" title="4.2 @RequestBody"></a>4.2 @RequestBody</h4><p>用于读取Request请求的Body部分，并且<code>Content-Type</code>为<code>application/json</code>格式的数据，接收到数据后自动绑定到Java对象上去。系统会使用<code>HttpMessageConverter</code>或者自定义的<code>HttpMessageConverter</code>将请求的body中的json字符串转换为Java对象。</p>
+<p><img src="https://f1bu920.github.io/images/@RequestBody.PNG" alt=""></p>
+<p><strong>注意：一个请求方法只可以有一个<code>@RequestBody</code>，但可以有多个<code>RequestParam</code>和<code>PathVariable</code>。</strong></p>
+
       
     </div>
     
@@ -620,7 +631,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-SpringBootApplication"><span class="nav-text">1. @SpringBootApplication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Spring-Bean相关"><span class="nav-text">2. Spring Bean相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Autowired"><span class="nav-text">2.1 @Autowired</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-Component、-Repository、-Service、-Controller"><span class="nav-text">2.2 @Component、@Repository、@Service、@Controller</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-RestController"><span class="nav-text">2.3 @RestController</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-Scope"><span class="nav-text">2.4 @Scope</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-Configuration"><span class="nav-text">2.5 @Configuration</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-处理常见的HTTP请求类型"><span class="nav-text">3. 处理常见的HTTP请求类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-GET请求"><span class="nav-text">3.1 GET请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-POST请求"><span class="nav-text">3.2 POST请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-PUT请求"><span class="nav-text">3.3 PUT请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-DELETE请求"><span class="nav-text">3.4 DELETE请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-PATCH-请求"><span class="nav-text">3.5 PATCH 请求</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-前后端传值"><span class="nav-text">4. 前后端传值</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-SpringBootApplication"><span class="nav-text">1. @SpringBootApplication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Spring-Bean相关"><span class="nav-text">2. Spring Bean相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Autowired"><span class="nav-text">2.1 @Autowired</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-Component、-Repository、-Service、-Controller"><span class="nav-text">2.2 @Component、@Repository、@Service、@Controller</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-RestController"><span class="nav-text">2.3 @RestController</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-Scope"><span class="nav-text">2.4 @Scope</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-Configuration"><span class="nav-text">2.5 @Configuration</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-处理常见的HTTP请求类型"><span class="nav-text">3. 处理常见的HTTP请求类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-GET请求"><span class="nav-text">3.1 GET请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-POST请求"><span class="nav-text">3.2 POST请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-PUT请求"><span class="nav-text">3.3 PUT请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-DELETE请求"><span class="nav-text">3.4 DELETE请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-PATCH-请求"><span class="nav-text">3.5 PATCH 请求</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-前后端传值"><span class="nav-text">4. 前后端传值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-PathVariable和-RequestParam"><span class="nav-text">4.1 @PathVariable和@RequestParam</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-RequestBody"><span class="nav-text">4.2 @RequestBody</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
