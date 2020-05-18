@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="String,双指针," />
+  <meta name="keywords" content="Array,动态规划," />
 
 
 
@@ -81,17 +81,17 @@
 
 
 
-<meta name="description" content="Leetcode面试题01.06.字符串压缩字符串压缩。利用字符重复出现的次数，编写一种方法，实现基本的字符串压缩功能。比如，字符串aabcccccaaa会变为a2b1c5a3。若“压缩”后的字符串没有变短，则返回原先的字符串。你可以假设字符串中只包含大小写英文字母（a至z）。 题目链接">
+<meta name="description" content="Leetcode152.乘积最大子数组给你一个整数数组 nums ，请你找出数组中乘积最大的连续子数组（该子数组中至少包含一个数字），并返回该子数组所对应的乘积。  题目链接">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode面试题01.06.字符串压缩">
-<meta property="og:url" content="http://yoursite.com/2020/03/17/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9801-06-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8E%8B%E7%BC%A9/index.html">
+<meta property="og:title" content="Leetcode152.乘积最大子数组">
+<meta property="og:url" content="http://yoursite.com/2020/05/18/Leetcode152-%E4%B9%98%E7%A7%AF%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84/index.html">
 <meta property="og:site_name" content="flbu blog">
-<meta property="og:description" content="Leetcode面试题01.06.字符串压缩字符串压缩。利用字符重复出现的次数，编写一种方法，实现基本的字符串压缩功能。比如，字符串aabcccccaaa会变为a2b1c5a3。若“压缩”后的字符串没有变短，则返回原先的字符串。你可以假设字符串中只包含大小写英文字母（a至z）。 题目链接">
-<meta property="article:published_time" content="2020-03-17T07:27:00.000Z">
-<meta property="article:modified_time" content="2020-03-17T07:59:46.000Z">
+<meta property="og:description" content="Leetcode152.乘积最大子数组给你一个整数数组 nums ，请你找出数组中乘积最大的连续子数组（该子数组中至少包含一个数字），并返回该子数组所对应的乘积。  题目链接">
+<meta property="article:published_time" content="2020-05-18T01:15:41.000Z">
+<meta property="article:modified_time" content="2020-05-18T01:42:58.931Z">
 <meta property="article:author" content="flbu">
-<meta property="article:tag" content="String">
-<meta property="article:tag" content="双指针">
+<meta property="article:tag" content="Array">
+<meta property="article:tag" content="动态规划">
 <meta name="twitter:card" content="summary">
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/03/17/Leetcode面试题01-06-字符串压缩/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/05/18/Leetcode152-乘积最大子数组/"/>
 
 
 
 
 
-  <title>Leetcode面试题01.06.字符串压缩 | flbu blog</title>
+  <title>Leetcode152.乘积最大子数组 | flbu blog</title>
   
 
 
@@ -265,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/17/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9801-06-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8E%8B%E7%BC%A9/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/18/Leetcode152-%E4%B9%98%E7%A7%AF%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="flbu">
@@ -282,7 +282,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Leetcode面试题01.06.字符串压缩</h1>
+          <h1 class="post-title" itemprop="name headline">Leetcode152.乘积最大子数组</h1>
         
 
         <div class="post-meta">
@@ -294,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-17T15:27:00+08:00">
-                2020-03-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-18T09:15:41+08:00">
+                2020-05-18
               </time>
             
 
@@ -354,34 +354,24 @@
       
 
       
-        <h2 id="Leetcode面试题01-06-字符串压缩"><a href="#Leetcode面试题01-06-字符串压缩" class="headerlink" title="Leetcode面试题01.06.字符串压缩"></a>Leetcode面试题01.06.字符串压缩</h2><p>字符串压缩。利用字符重复出现的次数，编写一种方法，实现基本的字符串压缩功能。比如，字符串aabcccccaaa会变为a2b1c5a3。若“压缩”后的字符串没有变短，则返回原先的字符串。你可以假设字符串中只包含大小写英文字母（a至z）。</p>
-<p><a href="https://leetcode-cn.com/problems/compress-string-lcci" target="_blank" rel="noopener">题目链接</a></p>
+        <h2 id="Leetcode152-乘积最大子数组"><a href="#Leetcode152-乘积最大子数组" class="headerlink" title="Leetcode152.乘积最大子数组"></a>Leetcode152.乘积最大子数组</h2><p>给你一个整数数组 <code>nums</code> ，请你找出数组中乘积最大的连续子数组（该子数组中至少包含一个数字），并返回该子数组所对应的乘积。</p>
+<p> <a href="https://leetcode-cn.com/problems/maximum-product-subarray" target="_blank" rel="noopener">题目链接</a></p>
 <a id="more"></a>
 
-<p>示例1:</p>
-<blockquote>
-<p>输入：”aabcccccaaa”</p>
-<p>输出：”a2b1c5a3”</p>
-</blockquote>
-<p>示例2:</p>
-<blockquote>
-<p>输入：”abbccd”</p>
-<p>输出：”abbccd”<br>解释：”abbccd”压缩后为”a1b2c2d1”，比原字符串长度更长。</p>
-</blockquote>
-<p>提示：</p>
-<blockquote>
-<p>字符串长度在[0, 50000]范围内。</p>
-</blockquote>
+<p>示例 1:</p>
+<p>输入: [2,3,-2,4]<br>输出: 6<br>解释: 子数组 [2,3] 有最大乘积 6。<br>示例 2:</p>
+<p>输入: [-2,0,-1]<br>输出: 0<br>解释: 结果不能为 2, 因为 [-2,-1] 不是子数组。</p>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>因为是乘积，一个正数乘以负数就变成了负数，所以最大值和最小值是可以相互转换的。</p>
+<p>令<code>dp[i][j]</code>表示以<code>nums[i]</code>结尾的连续子数组的最值，其中<code>j=0</code>代表最小值，<code>j=1</code>代表最大值。</p>
 <ul>
-<li><p>思路</p>
-<p>利用双指针可以很快速的得到结果，不能用哈希表，因为会有前后出现一样字母的可能，例<code>aabcccccaaa</code></p>
-<p>使用<code>StringBuilder</code>可以消耗少量内存构建字符串。</p>
-</li>
-<li><p>代码实现</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">compressString</span><span class="params">(String S)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> lenS = S.length();</span><br><span class="line">    StringBuilder stringBuilder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; lenS; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> j = i;</span><br><span class="line">        <span class="keyword">while</span> (j &lt; lenS &amp;&amp; S.charAt(i) == S.charAt(j)) &#123;</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">        stringBuilder.append(S.charAt(i));</span><br><span class="line">        stringBuilder.append(j - i);</span><br><span class="line">        i = j - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (lenS &lt;= stringBuilder.length()) ? S : stringBuilder.toString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
+<li>当<code>nums[i]&gt;=0</code>时，最大值乘以正数仍然是最大值，最小值乘以负数仍然是最小值。</li>
+<li>当<code>nums[i]&lt;0</code>时，最大值乘以负数就变成了最小值，最小值乘以负数就变成了最大值。</li>
+<li>如果<code>nums[i]&gt;0</code>时，之前的最大值小于0，<code>dp[i-1][1]&lt;0</code>，那么取两者的最大值。</li>
+<li>其他情况同理。</li>
 </ul>
+<p>所以可得状态转移方程为：<br>$$<br>dp[i][1]=max(nums[i-1][1]<em>nums[i],nums[i]),nums[i]&gt;=0;\<br>dp[i][0]=min(nums[i-1][0]</em>nums[i],nums[i]),nums[i]&gt;=0;\<br>dp[i][1]=max(nums[i-1][0]<em>nums[i],nums[i]),nums[i]&lt;0;\<br>dp[i][0]=min(nums[i-1][1]</em>nums[i],nums[i]),nums[i]&lt;0;<br>$$<br>最后遍历<code>dp[i][1]</code>，找到最大值。</p>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProduct</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = nums.length;</span><br><span class="line">        <span class="keyword">if</span> (len == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span>[][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[len][<span class="number">2</span>];</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = nums[<span class="number">0</span>];</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">1</span>] = nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                dp[i][<span class="number">1</span>] = Math.max(dp[i - <span class="number">1</span>][<span class="number">1</span>] * nums[i], nums[i]);</span><br><span class="line">                dp[i][<span class="number">0</span>] = Math.min(dp[i - <span class="number">1</span>][<span class="number">0</span>] * nums[i], nums[i]);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                dp[i][<span class="number">1</span>] = Math.max(dp[i - <span class="number">1</span>][<span class="number">0</span>] * nums[i], nums[i]);</span><br><span class="line">                dp[i][<span class="number">0</span>] = Math.min(dp[i - <span class="number">1</span>][<span class="number">1</span>] * nums[i], nums[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> result = dp[<span class="number">0</span>][<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len; i++) &#123;</span><br><span class="line">            result = Math.max(result, dp[i][<span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -410,9 +400,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/String/" rel="tag"><i class="fa fa-tag"></i>String</a>
+            <a href="/tags/Array/" rel="tag"><i class="fa fa-tag"></i>Array</a>
           
-            <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/" rel="tag"><i class="fa fa-tag"></i>双指针</a>
+            <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag"><i class="fa fa-tag"></i>动态规划</a>
           
         </div>
       
@@ -425,8 +415,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/17/Leetcode1160-%E6%8B%BC%E5%86%99%E5%8D%95%E8%AF%8D/" rel="next" title="Leetcode1160.拼写单词">
-                <i class="fa fa-chevron-left"></i> Leetcode1160.拼写单词
+              <a href="/2020/05/17/Leetcode210-%E8%AF%BE%E7%A8%8B%E8%A1%A8II/" rel="next" title="Leetcode210.课程表II">
+                <i class="fa fa-chevron-left"></i> Leetcode210.课程表II
               </a>
             
           </div>
@@ -434,10 +424,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/03/18/Leetcode836-%E7%9F%A9%E5%BD%A2%E9%87%8D%E5%8F%A0/" rel="prev" title="Leetcode836.矩形重叠">
-                Leetcode836.矩形重叠 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -592,7 +578,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode面试题01-06-字符串压缩"><span class="nav-text">Leetcode面试题01.06.字符串压缩</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode152-乘积最大子数组"><span class="nav-text">Leetcode152.乘积最大子数组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-text">代码实现</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
