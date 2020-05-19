@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Array,广度优先遍历," />
+  <meta name="keywords" content="String,双指针," />
 
 
 
@@ -81,17 +81,17 @@
 
 
 
-<meta name="description" content="Leetcode289.生命游戏根据 百度百科 ，生命游戏，简称为生命，是英国数学家约翰·何顿·康威在 1970 年发明的细胞自动机。 给定一个包含 m × n 个格子的面板，每一个格子都可以看成是一个细胞。每个细胞都具有一个初始状态：1 即为活细胞（live），或 0 即为死细胞（dead）。每个细胞与其八个相邻位置（水平，垂直，对角线）的细胞都遵循以下四条生存定律： 如果活细胞周围八个位置的活">
+<meta name="description" content="Leetcode680.验证回文字符串II给定一个非空字符串 s，最多删除一个字符。判断是否能成为回文字符串。 题目链接">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode289.生命游戏">
-<meta property="og:url" content="http://yoursite.com/2020/04/02/Leetcode289-%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F/index.html">
+<meta property="og:title" content="Leetcode680.验证回文字符串II">
+<meta property="og:url" content="http://yoursite.com/2020/05/19/Leetcode680-%E9%AA%8C%E8%AF%81%E5%9B%9E%E6%96%87%E5%AD%97%E7%AC%A6%E4%B8%B2II/index.html">
 <meta property="og:site_name" content="flbu blog">
-<meta property="og:description" content="Leetcode289.生命游戏根据 百度百科 ，生命游戏，简称为生命，是英国数学家约翰·何顿·康威在 1970 年发明的细胞自动机。 给定一个包含 m × n 个格子的面板，每一个格子都可以看成是一个细胞。每个细胞都具有一个初始状态：1 即为活细胞（live），或 0 即为死细胞（dead）。每个细胞与其八个相邻位置（水平，垂直，对角线）的细胞都遵循以下四条生存定律： 如果活细胞周围八个位置的活">
-<meta property="article:published_time" content="2020-04-02T02:07:41.000Z">
-<meta property="article:modified_time" content="2020-04-02T03:47:18.000Z">
+<meta property="og:description" content="Leetcode680.验证回文字符串II给定一个非空字符串 s，最多删除一个字符。判断是否能成为回文字符串。 题目链接">
+<meta property="article:published_time" content="2020-05-19T01:44:56.000Z">
+<meta property="article:modified_time" content="2020-05-19T01:56:14.274Z">
 <meta property="article:author" content="flbu">
-<meta property="article:tag" content="Array">
-<meta property="article:tag" content="广度优先遍历">
+<meta property="article:tag" content="String">
+<meta property="article:tag" content="双指针">
 <meta name="twitter:card" content="summary">
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/04/02/Leetcode289-生命游戏/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/05/19/Leetcode680-验证回文字符串II/"/>
 
 
 
 
 
-  <title>Leetcode289.生命游戏 | flbu blog</title>
+  <title>Leetcode680.验证回文字符串II | flbu blog</title>
   
 
 
@@ -265,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/02/Leetcode289-%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/19/Leetcode680-%E9%AA%8C%E8%AF%81%E5%9B%9E%E6%96%87%E5%AD%97%E7%AC%A6%E4%B8%B2II/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="flbu">
@@ -282,7 +282,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Leetcode289.生命游戏</h1>
+          <h1 class="post-title" itemprop="name headline">Leetcode680.验证回文字符串II</h1>
         
 
         <div class="post-meta">
@@ -294,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-02T10:07:41+08:00">
-                2020-04-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-19T09:44:56+08:00">
+                2020-05-19
               </time>
             
 
@@ -354,24 +354,17 @@
       
 
       
-        <h2 id="Leetcode289-生命游戏"><a href="#Leetcode289-生命游戏" class="headerlink" title="Leetcode289.生命游戏"></a>Leetcode289.生命游戏</h2><p>根据 百度百科 ，生命游戏，简称为生命，是英国数学家约翰·何顿·康威在 1970 年发明的细胞自动机。</p>
-<p>给定一个包含 m × n 个格子的面板，每一个格子都可以看成是一个细胞。每个细胞都具有一个初始状态：1 即为活细胞（live），或 0 即为死细胞（dead）。每个细胞与其八个相邻位置（水平，垂直，对角线）的细胞都遵循以下四条生存定律：</p>
-<p>如果活细胞周围八个位置的活细胞数少于两个，则该位置活细胞死亡；<br>如果活细胞周围八个位置有两个或三个活细胞，则该位置活细胞仍然存活；<br>如果活细胞周围八个位置有超过三个活细胞，则该位置活细胞死亡；<br>如果死细胞周围正好有三个活细胞，则该位置死细胞复活；<br>根据当前状态，写一个函数来计算面板上所有细胞的下一个（一次更新后的）状态。下一个状态是通过将上述规则同时应用于当前状态下的每个细胞所形成的，其中细胞的出生和死亡是同时发生的。</p>
-<p> <a href="https://leetcode-cn.com/problems/game-of-life" target="_blank" rel="noopener">题目链接</a></p>
+        <h2 id="Leetcode680-验证回文字符串II"><a href="#Leetcode680-验证回文字符串II" class="headerlink" title="Leetcode680.验证回文字符串II"></a>Leetcode680.验证回文字符串II</h2><p>给定一个非空字符串 s，最多删除一个字符。判断是否能成为回文字符串。</p>
+<p><a href="https://leetcode-cn.com/problems/valid-palindrome-ii" target="_blank" rel="noopener">题目链接</a></p>
 <a id="more"></a>
 
-<p>示例：</p>
-<blockquote>
-<p>输入：<br>[<br>  [0,1,0],<br>  [0,0,1],<br>  [1,1,1],<br>  [0,0,0]<br>]<br>输出：<br>[<br>  [0,0,0],<br>  [1,0,1],<br>  [0,1,1],<br>  [0,1,0]<br>]</p>
-</blockquote>
-<p>进阶：</p>
-<blockquote>
-<p>你可以使用原地算法解决本题吗？请注意，面板上所有格子需要同时被更新：你不能先更新某些格子，然后使用它们的更新后的值再更新其他格子。<br>本题中，我们使用二维数组来表示面板。原则上，面板是无限的，但当活细胞侵占了面板边界时会造成问题。你将如何解决这些问题？</p>
-</blockquote>
-<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p><strong>面板上所有格子需要被同时更新，所以不能使用队列，而且为了防止当前轮次已更新细胞的状态影响其他细胞的状态，不能直接将更新后的细胞状态填入原始数组</strong>。所以我们复制了一份原始数组<code>temp</code>，我们遍历temp数组但不更改<code>temp</code>数组的状态，而将更新后的细胞状态填入原始数组。</p>
-<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">gameOfLife</span><span class="params">(<span class="keyword">int</span>[][] board)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = board.length;</span><br><span class="line">        <span class="keyword">int</span> n = board[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">int</span>[] directions = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">0</span>, <span class="number">1</span>, -<span class="number">1</span>&#125;;</span><br><span class="line">        <span class="comment">//创建复制数组</span></span><br><span class="line">        <span class="keyword">int</span>[][] temp = <span class="keyword">new</span> <span class="keyword">int</span>[m][n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                temp[i][j] = board[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//遍历数组中每一个细胞</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> row = <span class="number">0</span>; row &lt; m; row++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> col = <span class="number">0</span>; col &lt; n; col++) &#123;</span><br><span class="line">                <span class="comment">//当前细胞周围活细胞数量</span></span><br><span class="line">                <span class="keyword">int</span> liveCeil = <span class="number">0</span>;</span><br><span class="line">                <span class="comment">//遍历周围8个位置</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++) &#123;</span><br><span class="line">                        <span class="comment">//除去它自己本身所在位置</span></span><br><span class="line">                        <span class="keyword">if</span> (!(directions[i] == <span class="number">0</span> &amp;&amp; directions[j] == <span class="number">0</span>)) &#123;</span><br><span class="line">                            <span class="keyword">int</span> r = row + directions[i];</span><br><span class="line">                            <span class="keyword">int</span> c = col + directions[j];</span><br><span class="line">                            <span class="keyword">if</span> ((r &gt;= <span class="number">0</span> &amp;&amp; r &lt; m) &amp;&amp; (c &gt;= <span class="number">0</span> &amp;&amp; c &lt; n) &amp;&amp; temp[r][c] == <span class="number">1</span>) &#123;</span><br><span class="line">                                liveCeil++;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//两种情况</span></span><br><span class="line">                <span class="keyword">if</span> (temp[row][col] == <span class="number">1</span> &amp;&amp; (liveCeil &lt; <span class="number">2</span> || liveCeil &gt; <span class="number">3</span>)) &#123;</span><br><span class="line">                    board[row][col] = <span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (temp[row][col] == <span class="number">0</span> &amp;&amp; liveCeil == <span class="number">3</span>) &#123;</span><br><span class="line">                    board[row][col] = <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
+<p>示例 1:</p>
+<p>输入: “aba”<br>输出: True<br>示例 2:</p>
+<p>输入: “abca”<br>输出: True<br>解释: 你可以删除c字符。<br>注意:</p>
+<p>字符串只包含从 a-z 的小写字母。字符串的最大长度是50000。</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>令<code>l</code>和<code>r</code>分别指向字符串的两端，如果<code>l</code>和<code>r</code>指向的字符相等，则左右指针向中间移动，直到左右指针相遇，代表是回文串。</p>
+<p>当遇到不相等的情况时，分两种情况：<code>l</code>向右移动一位或者<code>r</code>向左移动一位，移动一位就代表删去一位字符。当两种情况至少有一个是回文串时，返回<code>true</code>。</p>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">validPalindrome</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> l = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> r = s.length() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (l &lt; r) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s.charAt(l) == s.charAt(r)) &#123;</span><br><span class="line">                l++;</span><br><span class="line">                r--;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">boolean</span> flagL = <span class="keyword">true</span>;</span><br><span class="line">                <span class="keyword">boolean</span> flagR = <span class="keyword">true</span>;</span><br><span class="line">                <span class="comment">//l向右移动一位</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = l + <span class="number">1</span>, j = r; i &lt; j; i++, j--) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (s.charAt(i) != s.charAt(j)) &#123;</span><br><span class="line">                        flagL = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//r向左移动一位</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = l, j = r - <span class="number">1</span>; i &lt; j; i++, j--) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (s.charAt(i) != s.charAt(j)) &#123;</span><br><span class="line">                        flagR = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> flagL || flagR;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -401,9 +394,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Array/" rel="tag"><i class="fa fa-tag"></i>Array</a>
+            <a href="/tags/String/" rel="tag"><i class="fa fa-tag"></i>String</a>
           
-            <a href="/tags/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E9%81%8D%E5%8E%86/" rel="tag"><i class="fa fa-tag"></i>广度优先遍历</a>
+            <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/" rel="tag"><i class="fa fa-tag"></i>双指针</a>
           
         </div>
       
@@ -416,8 +409,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/04/01/Leetcode1111-%E6%9C%89%E6%95%88%E6%8B%AC%E5%8F%B7%E7%9A%84%E5%B5%8C%E5%A5%97%E6%B7%B1%E5%BA%A6/" rel="next" title="Leetcode1111.有效括号的嵌套深度">
-                <i class="fa fa-chevron-left"></i> Leetcode1111.有效括号的嵌套深度
+              <a href="/2020/05/18/Leetcode152-%E4%B9%98%E7%A7%AF%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84/" rel="next" title="Leetcode152.乘积最大子数组">
+                <i class="fa fa-chevron-left"></i> Leetcode152.乘积最大子数组
               </a>
             
           </div>
@@ -425,10 +418,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/04/02/Leetcode5-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" rel="prev" title="Leetcode5.最长回文子串">
-                Leetcode5.最长回文子串 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -583,7 +572,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode289-生命游戏"><span class="nav-text">Leetcode289.生命游戏</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-text">代码实现</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode680-验证回文字符串II"><span class="nav-text">Leetcode680.验证回文字符串II</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思路"><span class="nav-text">思路</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-text">代码实现</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
