@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="SpringBoot,Spring," />
+  <meta name="keywords" content="Spring,SpringBoot," />
 
 
 
@@ -100,11 +100,12 @@
 <meta property="og:image" content="https://f1bu920.github.io/images/@Validated.PNG">
 <meta property="og:image" content="https://f1bu920.github.io/images/@Valid.PNG">
 <meta property="og:image" content="https://f1bu920.github.io/images/@ControllerAdvice.PNG">
+<meta property="og:image" content="https://f1bu920.github.io/images/JPA%E7%9B%B8%E5%85%B3@Entity.PNG">
 <meta property="article:published_time" content="2020-05-04T07:07:41.000Z">
-<meta property="article:modified_time" content="2020-05-14T09:35:06.384Z">
+<meta property="article:modified_time" content="2020-05-21T03:19:06.111Z">
 <meta property="article:author" content="flbu">
-<meta property="article:tag" content="SpringBoot">
 <meta property="article:tag" content="Spring">
+<meta property="article:tag" content="SpringBoot">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://f1bu920.github.io/images/SpringBoot%E6%B3%A8%E8%A7%A3@SpringBootApplication.PNG">
 
@@ -461,7 +462,46 @@
 </ol>
 <p>例如，对于参数校验时抛出的<code>MethodArgumentNotValidException</code>异常，可以在类上加上<code>@ControllerAdvice</code>注解，在处理方法上加上<code>@ExceptionHandler()</code>并指定处理的异常类。</p>
 <p><img src="https://f1bu920.github.io/images/@ControllerAdvice.PNG" alt=""></p>
-<h2 id="JPA相关"><a href="#JPA相关" class="headerlink" title="JPA相关"></a>JPA相关</h2>
+<h2 id="8-JPA相关"><a href="#8-JPA相关" class="headerlink" title="8. JPA相关"></a>8. JPA相关</h2><h4 id="8-1-创建表"><a href="#8-1-创建表" class="headerlink" title="8.1 创建表"></a>8.1 创建表</h4><ol>
+<li><code>@Entity</code>：声明一个类对应一个数据库实体。</li>
+<li><code>Table</code>：设置表名。</li>
+</ol>
+<p><img src="https://f1bu920.github.io/images/JPA%E7%9B%B8%E5%85%B3@Entity.PNG" alt=""></p>
+<h4 id="8-2-创建主键"><a href="#8-2-创建主键" class="headerlink" title="8.2 创建主键"></a>8.2 创建主键</h4><p>如上图所示，使用<code>@Id</code>将一个字段声明为主键。此外，还需要声明主键的生成策略，在MySQL中一般使用<code>@GeneratedValue(strategy = GenerationType.IDENTITY)</code>，主键自动递增。这里<code>GenerationType</code>是枚举类型，其有以下几种：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> GenerationType &#123;</span><br><span class="line">    <span class="comment">//使用一个特定的数据库表来存储主键，持久化引擎通过关系数据库的一张特定的表格来生成主键</span></span><br><span class="line">    <span class="comment">//好处是不依赖于外部环境和数据库的具体实现，在不同数据库间可以很容易的移植。</span></span><br><span class="line">    TABLE,</span><br><span class="line">    <span class="comment">//在某些数据库中不支持主键自增长，比如Oracle,其提供了一种叫做"序列(sequence)"的机制生成主键。</span></span><br><span class="line">    SEQUENCE,</span><br><span class="line">    <span class="comment">//主键自增长</span></span><br><span class="line">    IDENTITY,</span><br><span class="line">    <span class="comment">//把主键生成策略交给持久化引擎(persistence engine),持久化引擎会根据数据库在以上三种主键生成策略中选择其中一种。</span></span><br><span class="line">    <span class="comment">//这也是JPA默认的生成策略</span></span><br><span class="line">    AUTO;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">GenerationType</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="8-3-设置字段类型"><a href="#8-3-设置字段类型" class="headerlink" title="8.3 设置字段类型"></a>8.3 设置字段类型</h4><p><code>@Column</code>声明字段。举例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Column</span>(name = <span class="string">"username"</span>,nullable = <span class="keyword">false</span>,length = <span class="number">225</span>)</span><br><span class="line"><span class="keyword">private</span> String username;</span><br><span class="line"><span class="meta">@Column</span>(name = <span class="string">"password"</span>,columnDefinition = <span class="string">"varchar(225) default 123456"</span>)</span><br><span class="line"><span class="keyword">private</span> String password;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="8-4-指定不可持久化字段"><a href="#8-4-指定不可持久化字段" class="headerlink" title="8.4 指定不可持久化字段"></a>8.4 指定不可持久化字段</h4><p>利用<code>@Transient</code>声明不需要与数据库映射的字段，在保存时不保存进数据库。</p>
+<p>也可以将属性声明为<code>static</code>、<code>final</code>或直接声明为<code>transient</code>类型。</p>
+<h4 id="8-5-声明大字段"><a href="#8-5-声明大字段" class="headerlink" title="8.5 声明大字段"></a>8.5 声明大字段</h4><p><code>@Lob</code>：声明字段为大字段。</p>
+<h4 id="8-6-创建枚举类型的字段"><a href="#8-6-创建枚举类型的字段" class="headerlink" title="8.6 创建枚举类型的字段"></a>8.6 创建枚举类型的字段</h4><p>使用<code>@Enumerated</code>注解创建枚举类型字段。</p>
+<h4 id="8-7-删除、修改数据"><a href="#8-7-删除、修改数据" class="headerlink" title="8.7 删除、修改数据"></a>8.7 删除、修改数据</h4><p><code>@Modifying</code>注解表示该操作是修改操作，注意一般会与<code>@Transactional</code>配合使用。</p>
+<h4 id="8-8-关联关系"><a href="#8-8-关联关系" class="headerlink" title="8.8 关联关系"></a>8.8 关联关系</h4><ul>
+<li><code>@OneToOne</code>：声明一对一关系</li>
+<li><code>OneToMany</code>：声明一对多关系</li>
+<li><code>ManyToOne</code>：声明多对一关系</li>
+<li><code>ManyToMany</code>：声明多对多关系。</li>
+</ul>
+<h2 id="9-事务-Transactional"><a href="#9-事务-Transactional" class="headerlink" title="9. 事务@Transactional"></a>9. 事务@Transactional</h2><p>使用<code>@Transactional</code>注解在要开启事务的方法上开启事务。</p>
+<p>注意，在<code>Transactional</code>注解中如果不配置<code>rollbackFor</code>属性，那么只会在遇到<code>RuntimeException</code>时才会回滚。加上<code>rollbackFor=Exception.class</code>后在遇到非运行时异常时也会回滚。</p>
+<p><code>Transactional</code>作用于类上时，表示该类的所有方法都配置了这个事务属性；当类上配置了<code>Transactional</code>，方法上再次配置则会覆盖类上的配置信息。</p>
+<h2 id="10-json数据处理"><a href="#10-json数据处理" class="headerlink" title="10. json数据处理"></a>10. json数据处理</h2><h4 id="10-1-过滤json数据"><a href="#10-1-过滤json数据" class="headerlink" title="10.1 过滤json数据"></a>10.1 过滤json数据</h4><p>使用<code>@JsonIgnoreProperties</code>注解作用于类上来过滤指定的字段不返回或者不解析。</p>
+<p>也可以使用<code>@JsonIgnore</code>作用于类的属性上，作用相同。</p>
+<h4 id="10-2-格式化json数据"><a href="#10-2-格式化json数据" class="headerlink" title="10.2 格式化json数据"></a>10.2 格式化json数据</h4><p>使用<code>@JsonFormat</code>来格式化json数据。</p>
+<h2 id="11-单元测试"><a href="#11-单元测试" class="headerlink" title="11. 单元测试"></a>11. 单元测试</h2><p><code>@ActiveProfiles</code>一般用于测试类上，指定生效的配置文件。</p>
+<p><code>Test</code>声明一个方法为测试方法。</p>
+<p><code>@Transactional</code>被声明的测试方法的数据会回滚，避免污染测试数据。</p>
+<p><code>WithMockUser</code>，Spring Security提供的用于模拟一个真实用户，并且可以赋予权限。</p>
+<p>平时写SpringBoot单元测试时，需要在类上加上<code>@RunWith(SpringRunner.class)</code>和<code>@SpringBootTest</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith</span>(SpringRunner<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">@<span class="title">SpringBootTest</span></span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">AdminUserMapperTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> AdminUserMapper adminUserMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
       
     </div>
     
@@ -489,9 +529,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/SpringBoot/" rel="tag"><i class="fa fa-tag"></i>SpringBoot</a>
-          
             <a href="/tags/Spring/" rel="tag"><i class="fa fa-tag"></i>Spring</a>
+          
+            <a href="/tags/SpringBoot/" rel="tag"><i class="fa fa-tag"></i>SpringBoot</a>
           
         </div>
       
@@ -593,7 +633,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-count">110</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -671,7 +711,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-SpringBootApplication"><span class="nav-text">1. @SpringBootApplication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Spring-Bean相关"><span class="nav-text">2. Spring Bean相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Autowired"><span class="nav-text">2.1 @Autowired</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-Component、-Repository、-Service、-Controller"><span class="nav-text">2.2 @Component、@Repository、@Service、@Controller</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-RestController"><span class="nav-text">2.3 @RestController</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-Scope"><span class="nav-text">2.4 @Scope</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-Configuration"><span class="nav-text">2.5 @Configuration</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-处理常见的HTTP请求类型"><span class="nav-text">3. 处理常见的HTTP请求类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-GET请求"><span class="nav-text">3.1 GET请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-POST请求"><span class="nav-text">3.2 POST请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-PUT请求"><span class="nav-text">3.3 PUT请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-DELETE请求"><span class="nav-text">3.4 DELETE请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-PATCH-请求"><span class="nav-text">3.5 PATCH 请求</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-前后端传值"><span class="nav-text">4. 前后端传值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-PathVariable和-RequestParam"><span class="nav-text">4.1 @PathVariable和@RequestParam</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-RequestBody"><span class="nav-text">4.2 @RequestBody</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-读取配置信息"><span class="nav-text">5. 读取配置信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-value"><span class="nav-text">5.1 @value</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-ConfigurationProperty"><span class="nav-text">5.2 @ConfigurationProperty</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PropertySource"><span class="nav-text">@PropertySource</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-参数校验"><span class="nav-text">6. 参数校验</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-一些常用的字段验证的注解"><span class="nav-text">6.1 一些常用的字段验证的注解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-验证请求体-RequestBody"><span class="nav-text">6.2 验证请求体(RequestBody)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-3-验证请求参数-PathVariable和RequestParam"><span class="nav-text">6.3 验证请求参数(PathVariable和RequestParam)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-全局处理Controller异常"><span class="nav-text">7.全局处理Controller异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JPA相关"><span class="nav-text">JPA相关</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-SpringBootApplication"><span class="nav-text">1. @SpringBootApplication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Spring-Bean相关"><span class="nav-text">2. Spring Bean相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Autowired"><span class="nav-text">2.1 @Autowired</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-Component、-Repository、-Service、-Controller"><span class="nav-text">2.2 @Component、@Repository、@Service、@Controller</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-RestController"><span class="nav-text">2.3 @RestController</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-Scope"><span class="nav-text">2.4 @Scope</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-Configuration"><span class="nav-text">2.5 @Configuration</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-处理常见的HTTP请求类型"><span class="nav-text">3. 处理常见的HTTP请求类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-GET请求"><span class="nav-text">3.1 GET请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-POST请求"><span class="nav-text">3.2 POST请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-PUT请求"><span class="nav-text">3.3 PUT请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-DELETE请求"><span class="nav-text">3.4 DELETE请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-PATCH-请求"><span class="nav-text">3.5 PATCH 请求</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-前后端传值"><span class="nav-text">4. 前后端传值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-PathVariable和-RequestParam"><span class="nav-text">4.1 @PathVariable和@RequestParam</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-RequestBody"><span class="nav-text">4.2 @RequestBody</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-读取配置信息"><span class="nav-text">5. 读取配置信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-value"><span class="nav-text">5.1 @value</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-ConfigurationProperty"><span class="nav-text">5.2 @ConfigurationProperty</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PropertySource"><span class="nav-text">@PropertySource</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-参数校验"><span class="nav-text">6. 参数校验</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-一些常用的字段验证的注解"><span class="nav-text">6.1 一些常用的字段验证的注解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-验证请求体-RequestBody"><span class="nav-text">6.2 验证请求体(RequestBody)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-3-验证请求参数-PathVariable和RequestParam"><span class="nav-text">6.3 验证请求参数(PathVariable和RequestParam)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-全局处理Controller异常"><span class="nav-text">7.全局处理Controller异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-JPA相关"><span class="nav-text">8. JPA相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#8-1-创建表"><span class="nav-text">8.1 创建表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-2-创建主键"><span class="nav-text">8.2 创建主键</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-3-设置字段类型"><span class="nav-text">8.3 设置字段类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-4-指定不可持久化字段"><span class="nav-text">8.4 指定不可持久化字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-5-声明大字段"><span class="nav-text">8.5 声明大字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-6-创建枚举类型的字段"><span class="nav-text">8.6 创建枚举类型的字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-7-删除、修改数据"><span class="nav-text">8.7 删除、修改数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-8-关联关系"><span class="nav-text">8.8 关联关系</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-事务-Transactional"><span class="nav-text">9. 事务@Transactional</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-json数据处理"><span class="nav-text">10. json数据处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#10-1-过滤json数据"><span class="nav-text">10.1 过滤json数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-2-格式化json数据"><span class="nav-text">10.2 格式化json数据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-单元测试"><span class="nav-text">11. 单元测试</span></a></li></ol></div>
             
 
           </div>
