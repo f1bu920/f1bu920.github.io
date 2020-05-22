@@ -89,7 +89,7 @@
 <meta property="og:description" content="线程池原理线程池的优势 创建&#x2F;销毁线程会消耗系统资源，线程池可以复用已创建的线程。 控制并发的数量。线程并发数量过多，会抢占系统资源并造成阻塞。 可以对线程做一些简单的管理。  ThreadPoolExecutor的原理Java中线程池顶层接口为Executor，ThreadPoolExecutor是其一个具体实现类。">
 <meta property="og:image" content="https://f1bu920.github.io/images/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B.jpg">
 <meta property="article:published_time" content="2020-05-20T09:00:03.000Z">
-<meta property="article:modified_time" content="2020-05-21T07:26:44.651Z">
+<meta property="article:modified_time" content="2020-05-22T05:40:55.506Z">
 <meta property="article:author" content="flbu">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="多线程">
@@ -461,7 +461,25 @@
 <li>如果<code>SynchronousQueue</code>中已有任务在等待，则入队操作会阻塞。</li>
 </ol>
 <p><code>CachedThreadPool</code>适用于需要执行很多短时间任务的场景，因为其线程复用率比较高，可以显著提高性能。而且线程60s后回收，也不会占用太多资源。</p>
-<h4 id="newFixedThreadPool"><a href="#newFixedThreadPool" class="headerlink" title="newFixedThreadPool"></a>newFixedThreadPool</h4>
+<h4 id="newFixedThreadPool"><a href="#newFixedThreadPool" class="headerlink" title="newFixedThreadPool"></a>newFixedThreadPool</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newFixedThreadPool</span><span class="params">(<span class="keyword">int</span> nThreads, ThreadFactory threadFactory)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(nThreads, nThreads, <span class="number">0L</span>, TimeUnit.MILLISECONDS, <span class="keyword">new</span> LinkedBlockingQueue(), threadFactory);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，<code>corePoolSize==maximumPoolSize</code>，所以只能创建核心线程，永远不会创建非核心线程。因为<code>LinkedBlockingQueue</code>默认大小为<code>Integer.MAX_VALUE</code>，所以如果核心线程空闲，则交给核心线程处理；如果不空闲则入队等待空闲线程。</p>
+<ul>
+<li>与<code>CachedThreadPool</code>的对比<ul>
+<li><code>FixedThreadPool</code>只会创建核心线程，<code>CacheThreadPool</code>只会创建非核心线程。</li>
+<li>在<code>getTask()</code>方法中，如果队列中没有任务，则会一直阻塞在<code>LinkedBlockingQueue.take()</code>，线程不会被回收，而<code>CachedThreadPool</code>中因为全是非核心线程，所以如果没有任务，线程会在60s后被回收。</li>
+<li>因为不会被回收，所以没有任务时，<code>FixedThreadPool</code>占用资源更多。</li>
+<li>几乎都不会触发拒绝处理策略，但原理不同。<code>FixedThreadPool</code>是因为任务队列很大，而<code>CachedThreadPool</code>则是因为线程池容量很大。</li>
+</ul>
+</li>
+</ul>
+<h4 id="newSingleThreadExecutor"><a href="#newSingleThreadExecutor" class="headerlink" title="newSingleThreadExecutor"></a>newSingleThreadExecutor</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newSingleThreadExecutor</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Executors.FinalizableDelegatedExecutorService(<span class="keyword">new</span> ThreadPoolExecutor(<span class="number">1</span>, <span class="number">1</span>, <span class="number">0L</span>, TimeUnit.MILLISECONDS, <span class="keyword">new</span> LinkedBlockingQueue()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有且仅有一个核心线程，使用了<code>LinkedBlockingQueue</code>作为任务队列。所以不会创建核心线程，所有任务按照先来先执行的顺序进行。如果唯一的线程不空闲，则新来的任务在任务队列中等待。</p>
+<h4 id="newScheduledThreadPool"><a href="#newScheduledThreadPool" class="headerlink" title="newScheduledThreadPool"></a>newScheduledThreadPool</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ScheduledExecutorService <span class="title">newScheduledThreadPool</span><span class="params">(<span class="keyword">int</span> corePoolSize)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ScheduledThreadPoolExecutor(corePoolSize);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ScheduledThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>(corePoolSize, <span class="number">2147483647</span>, <span class="number">10L</span>, TimeUnit.MILLISECONDS, <span class="keyword">new</span> ScheduledThreadPoolExecutor.DelayedWorkQueue());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>创建一个定长线程池，支持定时及周期性任务执行。</p>
+
       
     </div>
     
@@ -671,7 +689,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线程池原理"><span class="nav-text">线程池原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线程池的优势"><span class="nav-text">线程池的优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ThreadPoolExecutor的原理"><span class="nav-text">ThreadPoolExecutor的原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ThreadPoolExecutor的构造方法"><span class="nav-text">ThreadPoolExecutor的构造方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程池的状态"><span class="nav-text">线程池的状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程池的处理流程"><span class="nav-text">线程池的处理流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程池的复用"><span class="nav-text">线程池的复用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四种常见的线程池"><span class="nav-text">四种常见的线程池</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#newCachedThreadPool"><span class="nav-text">newCachedThreadPool</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#newFixedThreadPool"><span class="nav-text">newFixedThreadPool</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线程池原理"><span class="nav-text">线程池原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线程池的优势"><span class="nav-text">线程池的优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ThreadPoolExecutor的原理"><span class="nav-text">ThreadPoolExecutor的原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ThreadPoolExecutor的构造方法"><span class="nav-text">ThreadPoolExecutor的构造方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程池的状态"><span class="nav-text">线程池的状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程池的处理流程"><span class="nav-text">线程池的处理流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程池的复用"><span class="nav-text">线程池的复用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四种常见的线程池"><span class="nav-text">四种常见的线程池</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#newCachedThreadPool"><span class="nav-text">newCachedThreadPool</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#newFixedThreadPool"><span class="nav-text">newFixedThreadPool</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#newSingleThreadExecutor"><span class="nav-text">newSingleThreadExecutor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#newScheduledThreadPool"><span class="nav-text">newScheduledThreadPool</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
