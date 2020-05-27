@@ -88,8 +88,9 @@
 <meta property="og:site_name" content="flbu blog">
 <meta property="og:description" content="并发容器集合java.util包下提供了一些容器类，其中vector和HashTable是线程安全的容器类。但这些容器类实现同步的方式是通过对方法加锁(synchronized)来实现的。这样的话读写操作均需要锁操作，造成效率低下。 因此，Java5之后提供了一些并发容器来在多线程下代替同步容器，提高容器的并发访问性，同时定义了线程安全的复合操作。 并发容器类">
 <meta property="og:image" content="https://f1bu920.github.io/images/Java%E5%B9%B6%E5%8F%91%E5%AE%B9%E5%99%A8%E7%B1%BB%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://f1bu920.github.io/images/ConcurrentHashMap.png">
 <meta property="article:published_time" content="2020-05-26T09:27:13.000Z">
-<meta property="article:modified_time" content="2020-05-26T11:42:10.645Z">
+<meta property="article:modified_time" content="2020-05-27T06:02:13.663Z">
 <meta property="article:author" content="flbu">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="多线程">
@@ -368,7 +369,21 @@
 <p><code>putIfAbsent</code>：如果插入的<code>key</code>相同，则不替换原有的<code>value</code>值。</p>
 <p><code>remove</code>：这个<code>remove</code>方法增加了对<code>value</code>的判断，如果要删除的key-value不能与<code>Map</code>中的key-value对应上，则不会删除该元素。</p>
 <p><code>replace(K var1, V var2, V var3)</code>：增加了对<code>value</code>的判断，如果key-oldValue能与<code>Map</code>中原有的key-value对应上，才进行替换操作。</p>
-<p><code>replace(K var1, V var2)</code>：不会</p>
+<p><code>replace(K var1, V var2)</code>：不会对<code>Map</code>中原有的key-value进行比较，如果存在key，则直接替换。</p>
+<h4 id="ConcurrentHashMap类"><a href="#ConcurrentHashMap类" class="headerlink" title="ConcurrentHashMap类"></a>ConcurrentHashMap类</h4><p><a href="https://www.ibm.com/developerworks/cn/java/java-lo-concurrenthashmap/index.html" target="_blank" rel="noopener">参考链接</a></p>
+<p><code>ConcurrentHashMap</code>类提供了一种粒度更细的加锁机制来实现多线程下的更高性能，这种机制叫做分段锁，分段锁在并发环境下会实现更高的吞吐量，而在单线程环境下只会损失非常小的性能。</p>
+<p><code>ConcurrentHashMap</code>会把数据分成一段段的来存储，然后给每一段数据分配一把锁，当一个线程占用锁访问一个段数据时，其他线程能够访问其他数据段。执行有些需要跨段的方法时，如<code>size()</code>、<code>containsValue()</code>等，可能需要锁定整个表而不仅仅是某个段，这需要按照顺序锁定所有段，操作完毕后，按顺序释放所有段的锁。</p>
+<p><img src="https://f1bu920.github.io/images/ConcurrentHashMap.png" alt=""></p>
+<p><code>ConcurrentHashMap</code>是由<code>Segment</code>数组结构和<code>HashEntry</code>数组结构组成。<code>Segment</code>是一种可重入锁<code>ReentrantLock</code>，在<code>ConcurrentHashMap</code>中扮演锁的角色，<code>HashEntry</code>则用于存储键值对数据。一个<code>ConcurrentHashMap</code>里包含一个<code>Segment</code>数组，<code>Segment</code>的结构和<code>HashMap</code>类似，是一种数组和链表结构。一个<code>Segment</code>中包含一个<code>HashEntry</code>数组，每个<code>HashEntry</code>是一个链表结构的元素，每个<code>Segment</code>守护着一个<code>HashEntry</code>数组中的元素，当对<code>HashEntry</code>中的元素进行修改时，必须首先获得它的<code>Segment</code>锁。</p>
+<p>具体的<code>ConcurrentHashMap</code>源码分析会另行学习。</p>
+<h4 id="ConcurrentNavigableMap接口与ConcurrentSkipListMap类"><a href="#ConcurrentNavigableMap接口与ConcurrentSkipListMap类" class="headerlink" title="ConcurrentNavigableMap接口与ConcurrentSkipListMap类"></a>ConcurrentNavigableMap接口与ConcurrentSkipListMap类</h4><p><code>ConcurrentNavigableMap</code>接口继承了<code>NavigableMap</code>接口，这个接口提供了针对给定搜索目标返回最接近匹配项的导航方法。</p>
+<p><code>ConcurrentNavigableMap</code>接口的主要实现类是<code>ConcurrentSkipListMap</code>类。这个类使用的底层数据结构是跳表(SkipList)的数据结构。</p>
+<p>跳表是一种以空间换时间的数据结构，可以使用CAS操作保证并发安全性。详情参考下面链接：</p>
+<p><a href="https://cloud.tencent.com/developer/article/1463023" target="_blank" rel="noopener">什么是跳表</a></p>
+<p><a href="https://blog.csdn.net/sunxianghuang/article/details/52221913" target="_blank" rel="noopener">跳表（SkipList）及ConcurrentSkipListMap源码解析</a></p>
+<h3 id="并发Queue"><a href="#并发Queue" class="headerlink" title="并发Queue"></a>并发Queue</h3><p>JDK并没有提供线程安全的List类，因为对于List来说，实现一个通用并且没有并发瓶颈的线程安全List很难。</p>
+<p>但JDK提供了队列和双端队列的线程安全类：<code>ConcurrentLinkedDeque</code>和<code>ConcurrentLinkedQueue</code>。这两个类是通过CAS来实现线程安全的。</p>
+<h3 id="并发Set"><a href="#并发Set" class="headerlink" title="并发Set"></a>并发Set</h3><p>JDK提供了<code>ConcurrentSkipListSet</code>，是线程安全的有序集合。底层使用<code>ConcurrentSkipMap</code>实现。</p>
 
       
     </div>
@@ -581,7 +596,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#并发容器集合"><span class="nav-text">并发容器集合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#并发容器类"><span class="nav-text">并发容器类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#并发Map"><span class="nav-text">并发Map</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ConcurrentMap接口"><span class="nav-text">ConcurrentMap接口</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#并发容器集合"><span class="nav-text">并发容器集合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#并发容器类"><span class="nav-text">并发容器类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#并发Map"><span class="nav-text">并发Map</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ConcurrentMap接口"><span class="nav-text">ConcurrentMap接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ConcurrentHashMap类"><span class="nav-text">ConcurrentHashMap类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ConcurrentNavigableMap接口与ConcurrentSkipListMap类"><span class="nav-text">ConcurrentNavigableMap接口与ConcurrentSkipListMap类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并发Queue"><span class="nav-text">并发Queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并发Set"><span class="nav-text">并发Set</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
