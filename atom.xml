@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-05-29T01:28:52.634Z</updated>
+  <updated>2020-05-30T02:47:05.021Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode84.柱状图中最大的矩形</title>
+    <link href="http://yoursite.com/2020/05/30/Leetcode84-%E6%9F%B1%E7%8A%B6%E5%9B%BE%E4%B8%AD%E6%9C%80%E5%A4%A7%E7%9A%84%E7%9F%A9%E5%BD%A2/"/>
+    <id>http://yoursite.com/2020/05/30/Leetcode84-%E6%9F%B1%E7%8A%B6%E5%9B%BE%E4%B8%AD%E6%9C%80%E5%A4%A7%E7%9A%84%E7%9F%A9%E5%BD%A2/</id>
+    <published>2020-05-30T01:59:55.000Z</published>
+    <updated>2020-05-30T02:47:05.021Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Leetcode84-柱状图中最大的矩形"><a href="#Leetcode84-柱状图中最大的矩形" class="headerlink" title="Leetcode84.柱状图中最大的矩形"></a>Leetcode84.柱状图中最大的矩形</h2><p>给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。</p><p>求在该柱状图中，能够勾勒出来的矩形的最大面积。</p><p> <img src="https://f1bu920.github.io/images/Leetcode84.%E6%9F%B1%E7%8A%B6%E5%9B%BE%E4%B8%AD%E7%9A%84%E6%9C%80%E5%A4%A7%E7%9F%A9%E5%BD%A21.png" alt=""></p><p>以上是柱状图的示例，其中每个柱子的宽度为 1，给定的高度为 [2,1,5,6,2,3]。</p><p><img src="https://f1bu920.github.io/images/Leetcode84.%E6%9F%B1%E7%8A%B6%E5%9B%BE%E4%B8%AD%E7%9A%84%E6%9C%80%E5%A4%A7%E7%9F%A9%E5%BD%A22.png" alt=""></p><p>图中阴影部分为所能勾勒出的最大矩形面积，其面积为 10 个单位。</p> <a id="more"></a><p><a href="https://leetcode-cn.com/problems/largest-rectangle-in-histogram" target="_blank" rel="noopener">题目链接</a></p><p>相似题目：<a href="[https://f1bu920.github.io/2020/04/12/Leetcode42-%E6%8E%A5%E9%9B%A8%E6%B0%B4/](https://f1bu920.github.io/2020/04/12/Leetcode42-接雨水/)">接雨水</a></p><p>示例:</p><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: [<span class="number">2</span>,<span class="number">1</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">输出: <span class="number">10</span></span><br></pre></td></tr></table></figure><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><ul><li><p>暴力法</p><p>遍历数组，找到当前数组位置<code>i</code>的左右两侧比<code>heights[i]</code>小的位置<code>left</code>和·<code>right</code>。则当前矩形面积为<code>heights[i]*(right-left-1)</code>。</p></li><li><p>栈</p></li></ul><p><a href="https://leetcode-cn.com/problems/largest-rectangle-in-histogram/solution/zhu-zhuang-tu-zhong-zui-da-de-ju-xing-by-leetcode-/" target="_blank" rel="noopener">官方题解</a></p><h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><ul><li>暴力法</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">largestRectangleArea</span><span class="params">(<span class="keyword">int</span>[] heights)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (heights == <span class="keyword">null</span> || heights.length == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> len = heights.length;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> left = i;</span><br><span class="line">            <span class="keyword">int</span> right = i;</span><br><span class="line">            <span class="comment">//找到左侧比它小的位置</span></span><br><span class="line">            <span class="keyword">while</span> (left &gt;= <span class="number">0</span> &amp;&amp; heights[left] &gt;= heights[i]) &#123;</span><br><span class="line">                left--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//找到右侧比它小的位置</span></span><br><span class="line">            <span class="keyword">while</span> (right &lt; len &amp;&amp; heights[right] &gt;= heights[i]) &#123;</span><br><span class="line">                right++;</span><br><span class="line">            &#125;</span><br><span class="line">            result = Math.max(result, heights[i] * (right - left - <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li>单调栈</li></ul><p><a href="https://leetcode-cn.com/problems/largest-rectangle-in-histogram/solution/zhu-zhuang-tu-zhong-zui-da-de-ju-xing-by-leetcode-/" target="_blank" rel="noopener">官方题解</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Leetcode84-柱状图中最大的矩形&quot;&gt;&lt;a href=&quot;#Leetcode84-柱状图中最大的矩形&quot; class=&quot;headerlink&quot; title=&quot;Leetcode84.柱状图中最大的矩形&quot;&gt;&lt;/a&gt;Leetcode84.柱状图中最大的矩形&lt;/h2&gt;&lt;p&gt;给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。&lt;/p&gt;
+&lt;p&gt;求在该柱状图中，能够勾勒出来的矩形的最大面积。&lt;/p&gt;
+&lt;p&gt; &lt;img src=&quot;https://f1bu920.github.io/images/Leetcode84.%E6%9F%B1%E7%8A%B6%E5%9B%BE%E4%B8%AD%E7%9A%84%E6%9C%80%E5%A4%A7%E7%9F%A9%E5%BD%A21.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;以上是柱状图的示例，其中每个柱子的宽度为 1，给定的高度为 [2,1,5,6,2,3]。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://f1bu920.github.io/images/Leetcode84.%E6%9F%B1%E7%8A%B6%E5%9B%BE%E4%B8%AD%E7%9A%84%E6%9C%80%E5%A4%A7%E7%9F%A9%E5%BD%A22.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;图中阴影部分为所能勾勒出的最大矩形面积，其面积为 10 个单位。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
+    
+    
+      <category term="栈" scheme="http://yoursite.com/tags/%E6%A0%88/"/>
+    
+      <category term="双指针" scheme="http://yoursite.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode198.打家劫舍</title>
@@ -531,34 +561,6 @@
       <category term="数组" scheme="http://yoursite.com/tags/%E6%95%B0%E7%BB%84/"/>
     
       <category term="前缀和" scheme="http://yoursite.com/tags/%E5%89%8D%E7%BC%80%E5%92%8C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode136.只出现一次的数字</title>
-    <link href="http://yoursite.com/2020/05/14/Leetcode136-%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97/"/>
-    <id>http://yoursite.com/2020/05/14/Leetcode136-%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97/</id>
-    <published>2020-05-14T01:17:10.000Z</published>
-    <updated>2020-05-14T01:38:52.479Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Leetcode136-只出现一次的数字"><a href="#Leetcode136-只出现一次的数字" class="headerlink" title="Leetcode136.只出现一次的数字"></a>Leetcode136.只出现一次的数字</h2><p>给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。</p><p>说明：</p><p>你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？</p><p><a href="https://leetcode-cn.com/problems/single-number" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例 1:</p><p>输入: [2,2,1]<br>输出: 1<br>示例 2:</p><p>输入: [4,1,2,1,2]<br>输出: 4</p><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><ul><li><p>哈希表</p><p>使用集合存储数字，遍历数组中的每个数字，如果集合中没有该数字，则将该数字添加进集合；如果集合中有该数字，则将该数字从集合中删除。</p></li><li><p>位运算</p><p>异或运算有3个性质：</p><ol><li>任何数和0做异或结果都为其本身。</li><li>任何数和其本身做异或结果都为0。</li><li>异或运算满足交换律和结合律。</li></ol><p>因为数组中只有一个元素出现一次，其他元素都出现两次，所以将每个元素都做异或，结果就是只出现一次的数字。</p></li></ul><h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><ul><li>哈希表</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">singleNumber</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        Set&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;(nums.length);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num : nums) &#123;</span><br><span class="line">            <span class="keyword">if</span> (set.contains(num)) &#123;</span><br><span class="line">                set.remove(num);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                set.add(num);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> (<span class="keyword">int</span>) set.toArray()[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li>位运算</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">singleNumber</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num : nums) &#123;</span><br><span class="line">            result ^= num;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Leetcode136-只出现一次的数字&quot;&gt;&lt;a href=&quot;#Leetcode136-只出现一次的数字&quot; class=&quot;headerlink&quot; title=&quot;Leetcode136.只出现一次的数字&quot;&gt;&lt;/a&gt;Leetcode136.只出现一次的数字&lt;/h2&gt;&lt;p&gt;给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。&lt;/p&gt;
-&lt;p&gt;说明：&lt;/p&gt;
-&lt;p&gt;你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/single-number&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
-    
-    
-      <category term="哈希表" scheme="http://yoursite.com/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/"/>
-    
-      <category term="位运算" scheme="http://yoursite.com/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/"/>
     
   </entry>
   
