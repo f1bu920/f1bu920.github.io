@@ -90,7 +90,7 @@
 <meta property="og:image" content="https://f1bu920.github.io/images/Leetcode84.%E6%9F%B1%E7%8A%B6%E5%9B%BE%E4%B8%AD%E7%9A%84%E6%9C%80%E5%A4%A7%E7%9F%A9%E5%BD%A21.png">
 <meta property="og:image" content="https://f1bu920.github.io/images/Leetcode84.%E6%9F%B1%E7%8A%B6%E5%9B%BE%E4%B8%AD%E7%9A%84%E6%9C%80%E5%A4%A7%E7%9F%A9%E5%BD%A22.png">
 <meta property="article:published_time" content="2020-05-30T01:59:55.000Z">
-<meta property="article:modified_time" content="2020-05-30T02:47:05.021Z">
+<meta property="article:modified_time" content="2020-05-30T02:53:04.008Z">
 <meta property="article:author" content="flbu">
 <meta property="article:tag" content="栈">
 <meta property="article:tag" content="双指针">
@@ -389,6 +389,8 @@
 <li>单调栈</li>
 </ul>
 <p><a href="https://leetcode-cn.com/problems/largest-rectangle-in-histogram/solution/zhu-zhuang-tu-zhong-zui-da-de-ju-xing-by-leetcode-/" target="_blank" rel="noopener">官方题解</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">largestRectangleArea</span><span class="params">(<span class="keyword">int</span>[] heights)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = heights.length;</span><br><span class="line">        <span class="keyword">int</span>[] left = <span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line">        <span class="keyword">int</span>[] right = <span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line">        </span><br><span class="line">        Stack&lt;Integer&gt; mono_stack = <span class="keyword">new</span> Stack&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">while</span> (!mono_stack.isEmpty() &amp;&amp; heights[mono_stack.peek()] &gt;= heights[i]) &#123;</span><br><span class="line">                mono_stack.pop();</span><br><span class="line">            &#125;</span><br><span class="line">            left[i] = (mono_stack.isEmpty() ? -<span class="number">1</span> : mono_stack.peek());</span><br><span class="line">            mono_stack.push(i);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        mono_stack.clear();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; --i) &#123;</span><br><span class="line">            <span class="keyword">while</span> (!mono_stack.isEmpty() &amp;&amp; heights[mono_stack.peek()] &gt;= heights[i]) &#123;</span><br><span class="line">                mono_stack.pop();</span><br><span class="line">            &#125;</span><br><span class="line">            right[i] = (mono_stack.isEmpty() ? n : mono_stack.peek());</span><br><span class="line">            mono_stack.push(i);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            ans = Math.max(ans, (right[i] - left[i] - <span class="number">1</span>) * heights[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -441,6 +443,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/31/Leetcode101-%E5%AF%B9%E7%A7%B0%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="prev" title="Leetcode101.对称二叉树">
+                Leetcode101.对称二叉树 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -517,7 +523,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">123</span>
+                  <span class="site-state-item-count">124</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
