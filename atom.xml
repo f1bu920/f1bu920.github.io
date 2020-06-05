@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-06-04T01:53:15.549Z</updated>
+  <updated>2020-06-05T01:38:24.975Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode面试题29.顺时针打印矩阵</title>
+    <link href="http://yoursite.com/2020/06/05/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9829-%E9%A1%BA%E6%97%B6%E9%92%88%E6%89%93%E5%8D%B0%E7%9F%A9%E9%98%B5/"/>
+    <id>http://yoursite.com/2020/06/05/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9829-%E9%A1%BA%E6%97%B6%E9%92%88%E6%89%93%E5%8D%B0%E7%9F%A9%E9%98%B5/</id>
+    <published>2020-06-05T01:27:40.000Z</published>
+    <updated>2020-06-05T01:38:24.975Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Leetcode面试题29-顺时针打印矩阵"><a href="#Leetcode面试题29-顺时针打印矩阵" class="headerlink" title="Leetcode面试题29.顺时针打印矩阵"></a>Leetcode面试题29.顺时针打印矩阵</h2><p>输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字。</p><p> <a href="https://leetcode-cn.com/problems/shun-shi-zhen-da-yin-ju-zhen-lcof" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例 1：</p><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：matrix = [[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>],[<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>]]</span><br><span class="line">输出：[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">9</span>,<span class="number">8</span>,<span class="number">7</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br></pre></td></tr></table></figure><p>示例 2：</p><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：matrix = [[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>],[<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>],[<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>]]</span><br><span class="line">输出：[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">8</span>,<span class="number">12</span>,<span class="number">11</span>,<span class="number">10</span>,<span class="number">9</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>]</span><br></pre></td></tr></table></figure><p>限制：</p><ul><li>0 &lt;= matrix.length &lt;= 100</li><li>0 &lt;= matrix[i].length &lt;= 100</li></ul><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>设定矩阵的四个边界，初始化时上边界<code>top=0</code>，下边界<code>bottom=matrix.length-1</code>，左边界<code>left=0</code>，右边界<code>right=matrix[0].length-1</code>。模拟顺时针打印。</p><p>循环打印，将元素添加到<code>result</code>尾部，边界向内收缩，判断是否相遇，相遇则代表打印完毕。</p><h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] spiralOrder(<span class="keyword">int</span>[][] matrix) &#123;</span><br><span class="line">        <span class="keyword">if</span> (matrix == <span class="keyword">null</span> || matrix.length == <span class="number">0</span> || matrix[<span class="number">0</span>].length == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> row = matrix.length;</span><br><span class="line">        <span class="keyword">int</span> col = matrix[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">int</span>[] result = <span class="keyword">new</span> <span class="keyword">int</span>[row * col];</span><br><span class="line">        <span class="keyword">int</span> x = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">0</span>, right = matrix[<span class="number">0</span>].length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> top = <span class="number">0</span>, bottom = matrix.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = left; i &lt;= right; i++) &#123;</span><br><span class="line">                result[x++] = matrix[top][i];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//上边界向下收缩</span></span><br><span class="line">            <span class="keyword">if</span> (++top &gt; bottom) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = top; i &lt;= bottom; i++) &#123;</span><br><span class="line">                result[x++] = matrix[i][right];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//右边界向左收缩</span></span><br><span class="line">            <span class="keyword">if</span> (--right &lt; left) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = right; i &gt;= left; i--) &#123;</span><br><span class="line">                result[x++] = matrix[bottom][i];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//下边界向上收缩</span></span><br><span class="line">            <span class="keyword">if</span> (--bottom &lt; top) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = bottom; i &gt;= top; i--) &#123;</span><br><span class="line">                result[x++] = matrix[i][left];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//左边界向右收缩</span></span><br><span class="line">            <span class="keyword">if</span> (++left &gt; right) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Leetcode面试题29-顺时针打印矩阵&quot;&gt;&lt;a href=&quot;#Leetcode面试题29-顺时针打印矩阵&quot; class=&quot;headerlink&quot; title=&quot;Leetcode面试题29.顺时针打印矩阵&quot;&gt;&lt;/a&gt;Leetcode面试题29.顺时针打印矩阵&lt;/h2&gt;&lt;p&gt;输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字。&lt;/p&gt;
+&lt;p&gt; &lt;a href=&quot;https://leetcode-cn.com/problems/shun-shi-zhen-da-yin-ju-zhen-lcof&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
+    
+    
+      <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
+    
+      <category term="模拟" scheme="http://yoursite.com/tags/%E6%A8%A1%E6%8B%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode238.除自身以外数组的乘积</title>
@@ -367,9 +393,9 @@
       <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
     
     
-      <category term="双指针" scheme="http://yoursite.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
-    
       <category term="二分查找" scheme="http://yoursite.com/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"/>
+    
+      <category term="双指针" scheme="http://yoursite.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
   </entry>
   
@@ -521,32 +547,6 @@
       &lt;h2 id=&quot;Leetcode125-验证回文串&quot;&gt;&lt;a href=&quot;#Leetcode125-验证回文串&quot; class=&quot;headerlink&quot; title=&quot;Leetcode125.验证回文串&quot;&gt;&lt;/a&gt;Leetcode125.验证回文串&lt;/h2&gt;&lt;p&gt;给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。&lt;/p&gt;
 &lt;p&gt;说明：本题中，我们将空字符串定义为有效的回文串。&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/valid-palindrome&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
-    
-    
-      <category term="String" scheme="http://yoursite.com/tags/String/"/>
-    
-      <category term="双指针" scheme="http://yoursite.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode680.验证回文字符串II</title>
-    <link href="http://yoursite.com/2020/05/19/Leetcode680-%E9%AA%8C%E8%AF%81%E5%9B%9E%E6%96%87%E5%AD%97%E7%AC%A6%E4%B8%B2II/"/>
-    <id>http://yoursite.com/2020/05/19/Leetcode680-%E9%AA%8C%E8%AF%81%E5%9B%9E%E6%96%87%E5%AD%97%E7%AC%A6%E4%B8%B2II/</id>
-    <published>2020-05-19T01:44:56.000Z</published>
-    <updated>2020-05-19T01:56:14.274Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Leetcode680-验证回文字符串II"><a href="#Leetcode680-验证回文字符串II" class="headerlink" title="Leetcode680.验证回文字符串II"></a>Leetcode680.验证回文字符串II</h2><p>给定一个非空字符串 s，最多删除一个字符。判断是否能成为回文字符串。</p><p><a href="https://leetcode-cn.com/problems/valid-palindrome-ii" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例 1:</p><p>输入: “aba”<br>输出: True<br>示例 2:</p><p>输入: “abca”<br>输出: True<br>解释: 你可以删除c字符。<br>注意:</p><p>字符串只包含从 a-z 的小写字母。字符串的最大长度是50000。</p><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>令<code>l</code>和<code>r</code>分别指向字符串的两端，如果<code>l</code>和<code>r</code>指向的字符相等，则左右指针向中间移动，直到左右指针相遇，代表是回文串。</p><p>当遇到不相等的情况时，分两种情况：<code>l</code>向右移动一位或者<code>r</code>向左移动一位，移动一位就代表删去一位字符。当两种情况至少有一个是回文串时，返回<code>true</code>。</p><h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">validPalindrome</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> l = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> r = s.length() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (l &lt; r) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s.charAt(l) == s.charAt(r)) &#123;</span><br><span class="line">                l++;</span><br><span class="line">                r--;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">boolean</span> flagL = <span class="keyword">true</span>;</span><br><span class="line">                <span class="keyword">boolean</span> flagR = <span class="keyword">true</span>;</span><br><span class="line">                <span class="comment">//l向右移动一位</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = l + <span class="number">1</span>, j = r; i &lt; j; i++, j--) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (s.charAt(i) != s.charAt(j)) &#123;</span><br><span class="line">                        flagL = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//r向左移动一位</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = l, j = r - <span class="number">1</span>; i &lt; j; i++, j--) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (s.charAt(i) != s.charAt(j)) &#123;</span><br><span class="line">                        flagR = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> flagL || flagR;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Leetcode680-验证回文字符串II&quot;&gt;&lt;a href=&quot;#Leetcode680-验证回文字符串II&quot; class=&quot;headerlink&quot; title=&quot;Leetcode680.验证回文字符串II&quot;&gt;&lt;/a&gt;Leetcode680.验证回文字符串II&lt;/h2&gt;&lt;p&gt;给定一个非空字符串 s，最多删除一个字符。判断是否能成为回文字符串。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/valid-palindrome-ii&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
     
     </summary>
     
