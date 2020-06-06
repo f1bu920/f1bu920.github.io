@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-06-05T01:38:24.975Z</updated>
+  <updated>2020-06-06T01:09:30.496Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode128.最长连续序列</title>
+    <link href="http://yoursite.com/2020/06/06/Leetcode128-%E6%9C%80%E9%95%BF%E8%BF%9E%E7%BB%AD%E5%BA%8F%E5%88%97/"/>
+    <id>http://yoursite.com/2020/06/06/Leetcode128-%E6%9C%80%E9%95%BF%E8%BF%9E%E7%BB%AD%E5%BA%8F%E5%88%97/</id>
+    <published>2020-06-06T00:51:18.000Z</published>
+    <updated>2020-06-06T01:09:30.496Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Leetcode128-最长连续序列"><a href="#Leetcode128-最长连续序列" class="headerlink" title="Leetcode128.最长连续序列"></a>Leetcode128.最长连续序列</h2><p>给定一个未排序的整数数组，找出最长连续序列的长度。</p><p>要求算法的时间复杂度为 O(n)。</p><p><a href="https://leetcode-cn.com/problems/longest-consecutive-sequence" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例:</p><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: [<span class="number">100</span>, <span class="number">4</span>, <span class="number">200</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">2</span>]</span><br><span class="line">输出: <span class="number">4</span></span><br><span class="line">解释: 最长连续序列是 [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]。它的长度为 <span class="number">4</span>。</span><br></pre></td></tr></table></figure><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>暴力做法是枚举数组中每个元素<code>x</code>，考虑以其为起点，判断<code>x+1, x+2</code>等是否存在。不断枚举并更新答案。更高效的做法是利用哈希表，判断哈希表中是否存在这个数，但极端情况下的时间复杂度仍为<code>O(n^2)</code>。</p><p>对于一个序列<code>x, x+1, x+2, x+3...</code>，只需要枚举一次<code>x</code>即可，不需要再枚举<code>x+1</code>、<code>x+2</code>和之后的元素了，因此对于哈希表中当前元素<code>x</code>，需要判断是否存在<code>x-1</code>，若存在，则跳过，不存在则接着统计以其为起点的连续序列。</p><h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestConsecutive</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> longestSize = <span class="number">0</span>;</span><br><span class="line">        Set&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">        <span class="comment">//将数组元素添加到集合中</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num : nums) &#123;</span><br><span class="line">            set.add(num);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num : set) &#123;</span><br><span class="line">            <span class="comment">//遍历集合中元素x，若存在x-1，跳过；不存在则记录当前连续序列</span></span><br><span class="line">            <span class="keyword">if</span> (!set.contains(num - <span class="number">1</span>)) &#123;</span><br><span class="line">                <span class="comment">//统计以x为起点的连续序列</span></span><br><span class="line">                <span class="keyword">int</span> currentSize = <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">int</span> currentNum = num;</span><br><span class="line">                <span class="keyword">while</span> (set.contains(currentNum + <span class="number">1</span>)) &#123;</span><br><span class="line">                    currentNum += <span class="number">1</span>;</span><br><span class="line">                    currentSize += <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                longestSize = Math.max(longestSize, currentSize);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> longestSize;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Leetcode128-最长连续序列&quot;&gt;&lt;a href=&quot;#Leetcode128-最长连续序列&quot; class=&quot;headerlink&quot; title=&quot;Leetcode128.最长连续序列&quot;&gt;&lt;/a&gt;Leetcode128.最长连续序列&lt;/h2&gt;&lt;p&gt;给定一个未排序的整数数组，找出最长连续序列的长度。&lt;/p&gt;
+&lt;p&gt;要求算法的时间复杂度为 O(n)。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/longest-consecutive-sequence&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
+    
+    
+      <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
+    
+      <category term="哈希表" scheme="http://yoursite.com/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode面试题29.顺时针打印矩阵</title>
@@ -530,33 +557,6 @@
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
       <category term="多线程" scheme="http://yoursite.com/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode125.验证回文串</title>
-    <link href="http://yoursite.com/2020/05/19/Leetcode125-%E9%AA%8C%E8%AF%81%E5%9B%9E%E6%96%87%E4%B8%B2/"/>
-    <id>http://yoursite.com/2020/05/19/Leetcode125-%E9%AA%8C%E8%AF%81%E5%9B%9E%E6%96%87%E4%B8%B2/</id>
-    <published>2020-05-19T02:12:01.000Z</published>
-    <updated>2020-05-19T02:18:14.489Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Leetcode125-验证回文串"><a href="#Leetcode125-验证回文串" class="headerlink" title="Leetcode125.验证回文串"></a>Leetcode125.验证回文串</h2><p>给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。</p><p>说明：本题中，我们将空字符串定义为有效的回文串。</p><p><a href="https://leetcode-cn.com/problems/valid-palindrome" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例 1:</p><p>输入: “A man, a plan, a canal: Panama”<br>输出: true<br>示例 2:</p><p>输入: “race a car”<br>输出: false</p><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>令左右指针分别指向字符串的两端，越过非数字和非字母的字符，若左右指针指向的字符相等，则左右指针向中间移动，直到左右指针相遇。</p><h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> l = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> r = s.length() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (l&lt;r)&#123;</span><br><span class="line">            <span class="keyword">char</span> cl = s.charAt(l);</span><br><span class="line">            <span class="keyword">char</span> cr = s.charAt(r);</span><br><span class="line">            <span class="keyword">if</span> (!Character.isLetterOrDigit(cl))&#123;</span><br><span class="line">                l++;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!Character.isLetterOrDigit(cr))&#123;</span><br><span class="line">                r--;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (Character.toLowerCase(s.charAt(l)) == Character.toLowerCase(s.charAt(r)))&#123;</span><br><span class="line">                l++;</span><br><span class="line">                r--;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Leetcode125-验证回文串&quot;&gt;&lt;a href=&quot;#Leetcode125-验证回文串&quot; class=&quot;headerlink&quot; title=&quot;Leetcode125.验证回文串&quot;&gt;&lt;/a&gt;Leetcode125.验证回文串&lt;/h2&gt;&lt;p&gt;给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。&lt;/p&gt;
-&lt;p&gt;说明：本题中，我们将空字符串定义为有效的回文串。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/valid-palindrome&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
-    
-    
-      <category term="String" scheme="http://yoursite.com/tags/String/"/>
-    
-      <category term="双指针" scheme="http://yoursite.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
   </entry>
   
