@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-06-09T01:01:39.309Z</updated>
+  <updated>2020-06-10T00:34:23.710Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode9.回文数</title>
+    <link href="http://yoursite.com/2020/06/10/Leetcode9-%E5%9B%9E%E6%96%87%E6%95%B0/"/>
+    <id>http://yoursite.com/2020/06/10/Leetcode9-%E5%9B%9E%E6%96%87%E6%95%B0/</id>
+    <published>2020-06-10T00:31:24.000Z</published>
+    <updated>2020-06-10T00:34:23.710Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Leetcode9-回文数"><a href="#Leetcode9-回文数" class="headerlink" title="Leetcode9.回文数"></a>Leetcode9.回文数</h2><p>判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。</p><p><a href="https://leetcode-cn.com/problems/palindrome-number" target="_blank" rel="noopener">题目连接</a></p><a id="more"></a><p>示例 1:</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">输入:</span> <span class="number">121</span></span><br><span class="line"><span class="string">输出:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure><p>示例 2:</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">输入:</span> <span class="number">-121</span></span><br><span class="line"><span class="string">输出:</span> <span class="literal">false</span></span><br><span class="line"><span class="string">解释:</span> <span class="string">从左向右读,</span> <span class="string">为</span> <span class="number">-121</span> <span class="string">。</span> <span class="string">从右向左读,</span> <span class="string">为</span> <span class="number">121</span><span class="bullet">-</span> <span class="string">。因此它不是一个回文数。</span></span><br></pre></td></tr></table></figure><p>示例 3:</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">输入:</span> <span class="number">10</span></span><br><span class="line"><span class="string">输出:</span> <span class="literal">false</span></span><br><span class="line"><span class="string">解释:</span> <span class="string">从右向左读,</span> <span class="string">为</span> <span class="number">01</span> <span class="string">。因此它不是一个回文数。</span></span><br></pre></td></tr></table></figure><p>进阶:</p><p>你能不将整数转为字符串来解决这个问题吗？</p><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>最简单的方法是将数字转化为字符串，然后利用双指针前后移动进行判断。</p><h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">char</span>[] chars = String.valueOf(x).toCharArray();</span><br><span class="line">        <span class="keyword">int</span> len = chars.length;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len / <span class="number">2</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (chars[i] != chars[len - <span class="number">1</span> - i]) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Leetcode9-回文数&quot;&gt;&lt;a href=&quot;#Leetcode9-回文数&quot; class=&quot;headerlink&quot; title=&quot;Leetcode9.回文数&quot;&gt;&lt;/a&gt;Leetcode9.回文数&lt;/h2&gt;&lt;p&gt;判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/palindrome-number&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目连接&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
+    
+    
+      <category term="String" scheme="http://yoursite.com/tags/String/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode面试题46.把数字翻译成字符串</title>
@@ -524,33 +548,6 @@
       <category term="双指针" scheme="http://yoursite.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
       <category term="Sliding Windows" scheme="http://yoursite.com/tags/Sliding-Windows/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode105.从前序与中序遍历序列构造二叉树</title>
-    <link href="http://yoursite.com/2020/05/22/Leetcode105-%E4%BB%8E%E5%89%8D%E5%BA%8F%E4%B8%8E%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97%E6%9E%84%E9%80%A0%E4%BA%8C%E5%8F%89%E6%A0%91/"/>
-    <id>http://yoursite.com/2020/05/22/Leetcode105-%E4%BB%8E%E5%89%8D%E5%BA%8F%E4%B8%8E%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97%E6%9E%84%E9%80%A0%E4%BA%8C%E5%8F%89%E6%A0%91/</id>
-    <published>2020-05-22T04:37:52.000Z</published>
-    <updated>2020-05-22T05:05:51.427Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Leetcode105-从前序与中序遍历序列构造二叉树"><a href="#Leetcode105-从前序与中序遍历序列构造二叉树" class="headerlink" title="Leetcode105.从前序与中序遍历序列构造二叉树"></a>Leetcode105.从前序与中序遍历序列构造二叉树</h2><p>根据一棵树的前序遍历与中序遍历构造二叉树。</p><p>注意:<br>你可以假设树中没有重复的元素。</p><p><a href="https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>例如，给出</p><p>前序遍历 <code>preorder</code> = [3,9,20,15,7]<br>中序遍历 <code>inorder</code> = [9,3,15,20,7]<br>返回如下的二叉树：</p><pre><code>  3 / \9  20  /  \ 15   7</code></pre><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p><a href="https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/solution/cong-qian-xu-yu-zhong-xu-bian-li-xu-lie-gou-zao-9/" target="_blank" rel="noopener">参考链接</a></p><p>对于任意一颗二叉树，前序遍历的结果总是：根节点–&gt;左子树的前序遍历结果–&gt;右子树的前序遍历结果。即根节点总是前序遍历的第一个节点。</p><p>中序遍历的结果总是：左子树的中序遍历结果–&gt;根节点–&gt;右子树的中序遍历结果。</p><p>所以，我们可以在中序遍历中定位到根节点所在的位置，然后我们就可以知道左子树和右子树的节点数目。对于同一棵树，左子树和右子树的长度相同，所以我们又知道了左子树和右子树的前序和中序遍历结果。我们就可以递归地构造出左子树和右子树，并连接到根节点上。</p><p>我们在中序遍历中定位根节点位置时需要从头到尾遍历，会增加复杂度。题中说明了树中没有重复的元素，所有可以建立哈希表存储树中元素与数组索引的对应关系。</p><p><img src="https://f1bu920.github.io/images/Leetcode105-%E4%BB%8E%E5%89%8D%E5%BA%8F%E4%B8%8E%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97%E6%9E%84%E9%80%A0%E4%BA%8C%E5%8F%89%E6%A0%91.png" alt=""></p><h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">buildTree</span><span class="params">(<span class="keyword">int</span>[] preorder, <span class="keyword">int</span>[] inorder)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = preorder.length;</span><br><span class="line">        <span class="comment">//哈希表存储树中元素与中序遍历下标的对应关系</span></span><br><span class="line">        Map&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;(len);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            map.put(inorder[i], i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//方法重载，构造根节点并将根节点的左右子树连接到根节点上</span></span><br><span class="line">        <span class="keyword">return</span> buildTree(preorder, map, <span class="number">0</span>, len - <span class="number">1</span>, <span class="number">0</span>, len - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//preOrder: 前序遍历序列</span></span><br><span class="line">    <span class="comment">//preLeft：前序遍历序列子区间的左边界</span></span><br><span class="line">    <span class="comment">//preRight：前序遍历序列子区间的右边界</span></span><br><span class="line">    <span class="comment">//map：中序遍历中数值与下标的对应关系</span></span><br><span class="line">    <span class="comment">//inLeft：中序遍历序列子区间的左边界</span></span><br><span class="line">    <span class="comment">//inRight：中序遍历序列子区间的右边界</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> TreeNode <span class="title">buildTree</span><span class="params">(<span class="keyword">int</span>[] preOrder, Map&lt;Integer, Integer&gt; map, <span class="keyword">int</span> preLeft, <span class="keyword">int</span> preRight, <span class="keyword">int</span> inLeft, <span class="keyword">int</span> inRight)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//递归终止条件为：不构成左闭右闭区间</span></span><br><span class="line">        <span class="keyword">if</span> (preLeft &gt; preRight || inLeft &gt; inRight) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//根节点值</span></span><br><span class="line">        <span class="keyword">int</span> rootVal = preOrder[preLeft];</span><br><span class="line">        <span class="comment">//根节点在中序遍历中的下标</span></span><br><span class="line">        <span class="keyword">int</span> pIndex = map.get(rootVal);</span><br><span class="line">        TreeNode root = <span class="keyword">new</span> TreeNode(rootVal);</span><br><span class="line">        root.left = buildTree(preOrder, map, preLeft + <span class="number">1</span>, pIndex - inLeft + preLeft, inLeft, pIndex - <span class="number">1</span>);</span><br><span class="line">        root.right = buildTree(preOrder, map, pIndex - inLeft + preLeft + <span class="number">1</span>, preRight, pIndex + <span class="number">1</span>, inRight);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Leetcode105-从前序与中序遍历序列构造二叉树&quot;&gt;&lt;a href=&quot;#Leetcode105-从前序与中序遍历序列构造二叉树&quot; class=&quot;headerlink&quot; title=&quot;Leetcode105.从前序与中序遍历序列构造二叉树&quot;&gt;&lt;/a&gt;Leetcode105.从前序与中序遍历序列构造二叉树&lt;/h2&gt;&lt;p&gt;根据一棵树的前序遍历与中序遍历构造二叉树。&lt;/p&gt;
-&lt;p&gt;注意:&lt;br&gt;你可以假设树中没有重复的元素。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
-    
-    
-      <category term="树" scheme="http://yoursite.com/tags/%E6%A0%91/"/>
-    
-      <category term="递归" scheme="http://yoursite.com/tags/%E9%80%92%E5%BD%92/"/>
     
   </entry>
   
