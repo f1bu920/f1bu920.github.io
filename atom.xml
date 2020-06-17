@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-06-17T02:01:21.326Z</updated>
+  <updated>2020-06-17T05:57:11.178Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode69.x的平方根</title>
+    <link href="http://yoursite.com/2020/06/17/Leetcode69-x%E7%9A%84%E5%B9%B3%E6%96%B9%E6%A0%B9/"/>
+    <id>http://yoursite.com/2020/06/17/Leetcode69-x%E7%9A%84%E5%B9%B3%E6%96%B9%E6%A0%B9/</id>
+    <published>2020-06-17T05:47:44.000Z</published>
+    <updated>2020-06-17T05:57:11.178Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Leetcode69-x的平方根"><a href="#Leetcode69-x的平方根" class="headerlink" title="Leetcode69.x的平方根"></a>Leetcode69.x的平方根</h2><p>实现 <code>int sqrt(int x)</code> 函数。</p><p>计算并返回 <code>x</code> 的平方根，其中 <code>x</code>是非负整数。</p><p>由于返回类型是整数，结果只保留整数的部分，小数部分将被舍去。</p><p><a href="https://leetcode-cn.com/problems/sqrtx" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p><a href="https://oi-wiki.org/math/newton/" target="_blank" rel="noopener">牛顿迭代法wiki</a></p><p>示例 1:</p><p>输入: 4<br>输出: 2<br>示例 2:</p><p>输入: 8<br>输出: 2<br>说明: 8 的平方根是 2.82842…,<br>     由于返回类型是整数，小数部分将被舍去。</p><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>牛顿迭代法的公式为：$X_{i+1} = X_{i}-f(x_{i})/f’(x_{i})$。</p><p>对应此题求平方根就是$X_{i+1} = (X_{i}+n/X_{i})/2$。</p><h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">mySqrt</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(x==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//精确度</span></span><br><span class="line">        <span class="keyword">double</span> e = <span class="number">1e-15</span>;</span><br><span class="line">        <span class="keyword">double</span> n = x;</span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">            <span class="comment">//nx即为X（i+1）</span></span><br><span class="line">            <span class="keyword">double</span> nx = (n+x/n)/<span class="number">2</span>;</span><br><span class="line">            <span class="comment">//如果小于这个精确度就退出循环</span></span><br><span class="line">            <span class="keyword">if</span>(Math.abs(nx-n)&lt;=e)&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            n = nx;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> (<span class="keyword">int</span>) n;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Leetcode69-x的平方根&quot;&gt;&lt;a href=&quot;#Leetcode69-x的平方根&quot; class=&quot;headerlink&quot; title=&quot;Leetcode69.x的平方根&quot;&gt;&lt;/a&gt;Leetcode69.x的平方根&lt;/h2&gt;&lt;p&gt;实现 &lt;code&gt;int sqrt(int x)&lt;/code&gt; 函数。&lt;/p&gt;
+&lt;p&gt;计算并返回 &lt;code&gt;x&lt;/code&gt; 的平方根，其中 &lt;code&gt;x&lt;/code&gt;是非负整数。&lt;/p&gt;
+&lt;p&gt;由于返回类型是整数，结果只保留整数的部分，小数部分将被舍去。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/sqrtx&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
+    
+    
+      <category term="二分搜索" scheme="http://yoursite.com/tags/%E4%BA%8C%E5%88%86%E6%90%9C%E7%B4%A2/"/>
+    
+      <category term="牛顿迭代法" scheme="http://yoursite.com/tags/%E7%89%9B%E9%A1%BF%E8%BF%AD%E4%BB%A3%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>nowcoder.201301 JAVA题目0-1级</title>
@@ -563,30 +591,6 @@
     
     
       <category term="String" scheme="http://yoursite.com/tags/String/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode面试题46.把数字翻译成字符串</title>
-    <link href="http://yoursite.com/2020/06/09/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9846-%E6%8A%8A%E6%95%B0%E5%AD%97%E7%BF%BB%E8%AF%91%E6%88%90%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
-    <id>http://yoursite.com/2020/06/09/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9846-%E6%8A%8A%E6%95%B0%E5%AD%97%E7%BF%BB%E8%AF%91%E6%88%90%E5%AD%97%E7%AC%A6%E4%B8%B2/</id>
-    <published>2020-06-09T00:46:19.000Z</published>
-    <updated>2020-06-09T01:01:39.309Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Leetcode面试题46-把数字翻译成字符串"><a href="#Leetcode面试题46-把数字翻译成字符串" class="headerlink" title="Leetcode面试题46.把数字翻译成字符串"></a>Leetcode面试题46.把数字翻译成字符串</h2><p>给定一个数字，我们按照如下规则把它翻译为字符串：0 翻译成 “a” ，1 翻译成 “b”，……，11 翻译成 “l”，……，25 翻译成 “z”。一个数字可能有多个翻译。请编程实现一个函数，用来计算一个数字有多少种不同的翻译方法。</p><p> <a href="https://leetcode-cn.com/problems/ba-shu-zi-fan-yi-cheng-zi-fu-chuan-lcof" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例 1:</p><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: <span class="number">12258</span></span><br><span class="line">输出: <span class="number">5</span></span><br><span class="line">解释: <span class="number">12258</span>有<span class="number">5</span>种不同的翻译，分别是<span class="string">"bccfi"</span>, <span class="string">"bwfi"</span>, <span class="string">"bczi"</span>, <span class="string">"mcfi"</span>和<span class="string">"mzi"</span></span><br></pre></td></tr></table></figure><p>提示：</p><ul><li>0 &lt;= num &lt; 231</li></ul><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>与<a href="https://leetcode-cn.com/problems/house-robber/" target="_blank" rel="noopener">Leetcode198.打家劫舍</a>类似，可以用<code>dp[i]</code>来表示以第<code>i</code>位结尾的前缀串翻译的个数，对于第<code>i</code>个位置，有如下的翻译规则：</p><ul><li>可以当作单独一位来翻译</li><li>如果第<code>i-1</code>位和第<code>i</code>位可以一起翻译，即大于等于10且小于等于25，就连起来翻译。</li></ul><p>可以得到状态转移方程：$dp[i] = dp[i-1] + dp[i-2],[10&lt;=x&lt;=25]$</p><p>其中，<code>x</code>代表第<code>i-1</code>位与第<code>i</code>位连在一起得到的数字。如果不满足后面条件，则$dp[i] = d[i-1]$.</p><p><strong>注意：当满足<code>10&lt;=x&lt;=25</code>时还要判断<code>i</code>是否大于等于2，否则会数组下标越界，可以将<code>i=1</code>单独考虑。</strong></p><h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">translateNum</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">        String str = String.valueOf(num);</span><br><span class="line">        <span class="keyword">int</span> len = str.length();</span><br><span class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len; i++) &#123;</span><br><span class="line">            <span class="comment">//一定可以单独翻译</span></span><br><span class="line">            dp[i] = dp[i - <span class="number">1</span>];</span><br><span class="line">            String pre = str.substring(i - <span class="number">1</span>, i + <span class="number">1</span>);</span><br><span class="line">            <span class="comment">//可以连起来翻译的条件</span></span><br><span class="line">            <span class="keyword">if</span> (pre.compareTo(<span class="string">"10"</span>) &gt;= <span class="number">0</span> &amp;&amp; pre.compareTo(<span class="string">"25"</span>) &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="comment">//i=1单独讨论</span></span><br><span class="line">                <span class="keyword">if</span> (i != <span class="number">1</span>) &#123;</span><br><span class="line">                    dp[i] += dp[i - <span class="number">2</span>];</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    dp[i] = <span class="number">2</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[len - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Leetcode面试题46-把数字翻译成字符串&quot;&gt;&lt;a href=&quot;#Leetcode面试题46-把数字翻译成字符串&quot; class=&quot;headerlink&quot; title=&quot;Leetcode面试题46.把数字翻译成字符串&quot;&gt;&lt;/a&gt;Leetcode面试题46.把数字翻译成字符串&lt;/h2&gt;&lt;p&gt;给定一个数字，我们按照如下规则把它翻译为字符串：0 翻译成 “a” ，1 翻译成 “b”，……，11 翻译成 “l”，……，25 翻译成 “z”。一个数字可能有多个翻译。请编程实现一个函数，用来计算一个数字有多少种不同的翻译方法。&lt;/p&gt;
-&lt;p&gt; &lt;a href=&quot;https://leetcode-cn.com/problems/ba-shu-zi-fan-yi-cheng-zi-fu-chuan-lcof&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
-    
-    
-      <category term="动态规划" scheme="http://yoursite.com/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
     
   </entry>
   
