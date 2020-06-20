@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="广度优先搜索,Queue," />
+  <meta name="keywords" content="动态规划," />
 
 
 
@@ -81,17 +81,16 @@
 
 
 
-<meta name="description" content="Leetcode994.腐烂的橘子在给定的网格中，每个单元格可以有以下三个值之一： 值 0 代表空单元格；值 1 代表新鲜橘子；值 2 代表腐烂的橘子。每分钟，任何与腐烂的橘子（在 4 个正方向上）相邻的新鲜橘子都会腐烂。 返回直到单元格中没有新鲜橘子为止所必须经过的最小分钟数。如果不可能，返回 -1。  题目链接">
+<meta name="description" content="Leetcode10.正则表达式匹配给你一个字符串 s 和一个字符规律 p，请你来实现一个支持 &#39;.&#39; 和 &#39;*&#39; 的正则表达式匹配。 ‘.‘ 匹配任意单个字符‘*‘ 匹配零个或多个前面的那一个元素所谓匹配，是要涵盖 整个 字符串 s的，而不是部分字符串。 说明: s 可能为空，且只包含从 a-z 的小写字母。p 可能为空，且只包含从 a-z 的小写字母，以及字符">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode994.腐烂的橘子">
-<meta property="og:url" content="http://yoursite.com/2020/03/16/Leetcode994-%E8%85%90%E7%83%82%E7%9A%84%E6%A9%98%E5%AD%90/index.html">
+<meta property="og:title" content="Leetcode10.正则表达式匹配">
+<meta property="og:url" content="http://yoursite.com/2020/06/20/Leetcode10-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%B9%E9%85%8D/index.html">
 <meta property="og:site_name" content="flbu blog">
-<meta property="og:description" content="Leetcode994.腐烂的橘子在给定的网格中，每个单元格可以有以下三个值之一： 值 0 代表空单元格；值 1 代表新鲜橘子；值 2 代表腐烂的橘子。每分钟，任何与腐烂的橘子（在 4 个正方向上）相邻的新鲜橘子都会腐烂。 返回直到单元格中没有新鲜橘子为止所必须经过的最小分钟数。如果不可能，返回 -1。  题目链接">
-<meta property="article:published_time" content="2020-03-16T07:57:37.000Z">
-<meta property="article:modified_time" content="2020-03-16T08:10:50.000Z">
+<meta property="og:description" content="Leetcode10.正则表达式匹配给你一个字符串 s 和一个字符规律 p，请你来实现一个支持 &#39;.&#39; 和 &#39;*&#39; 的正则表达式匹配。 ‘.‘ 匹配任意单个字符‘*‘ 匹配零个或多个前面的那一个元素所谓匹配，是要涵盖 整个 字符串 s的，而不是部分字符串。 说明: s 可能为空，且只包含从 a-z 的小写字母。p 可能为空，且只包含从 a-z 的小写字母，以及字符">
+<meta property="article:published_time" content="2020-06-20T05:46:19.000Z">
+<meta property="article:modified_time" content="2020-06-20T06:40:18.196Z">
 <meta property="article:author" content="flbu">
-<meta property="article:tag" content="广度优先搜索">
-<meta property="article:tag" content="Queue">
+<meta property="article:tag" content="动态规划">
 <meta name="twitter:card" content="summary">
 
 
@@ -122,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/03/16/Leetcode994-腐烂的橘子/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/06/20/Leetcode10-正则表达式匹配/"/>
 
 
 
 
 
-  <title>Leetcode994.腐烂的橘子 | flbu blog</title>
+  <title>Leetcode10.正则表达式匹配 | flbu blog</title>
   
 
 
@@ -265,7 +264,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/16/Leetcode994-%E8%85%90%E7%83%82%E7%9A%84%E6%A9%98%E5%AD%90/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/20/Leetcode10-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%B9%E9%85%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="flbu">
@@ -282,7 +281,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Leetcode994.腐烂的橘子</h1>
+          <h1 class="post-title" itemprop="name headline">Leetcode10.正则表达式匹配</h1>
         
 
         <div class="post-meta">
@@ -294,8 +293,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-16T15:57:37+08:00">
-                2020-03-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-20T13:46:19+08:00">
+                2020-06-20
               </time>
             
 
@@ -354,41 +353,59 @@
       
 
       
-        <h2 id="Leetcode994-腐烂的橘子"><a href="#Leetcode994-腐烂的橘子" class="headerlink" title="Leetcode994.腐烂的橘子"></a>Leetcode994.腐烂的橘子</h2><p>在给定的网格中，每个单元格可以有以下三个值之一：</p>
-<p>值 0 代表空单元格；<br>值 1 代表新鲜橘子；<br>值 2 代表腐烂的橘子。<br>每分钟，任何与腐烂的橘子（在 4 个正方向上）相邻的新鲜橘子都会腐烂。</p>
-<p>返回直到单元格中没有新鲜橘子为止所必须经过的最小分钟数。如果不可能，返回 -1。</p>
-<p> <a href="https://leetcode-cn.com/problems/rotting-oranges" target="_blank" rel="noopener">题目链接</a></p>
+        <h2 id="Leetcode10-正则表达式匹配"><a href="#Leetcode10-正则表达式匹配" class="headerlink" title="Leetcode10.正则表达式匹配"></a>Leetcode10.正则表达式匹配</h2><p>给你一个字符串 <code>s</code> 和一个字符规律 <code>p</code>，请你来实现一个支持 <code>&#39;.&#39;</code> 和 <code>&#39;*&#39;</code> 的正则表达式匹配。</p>
+<p>‘<code>.</code>‘ 匹配任意单个字符<br>‘<code>*</code>‘ 匹配零个或多个前面的那一个元素<br>所谓匹配，是要涵盖 整个 字符串 s的，而不是部分字符串。</p>
+<p>说明:</p>
+<p><code>s</code> 可能为空，且只包含从 a-z 的小写字母。<br><code>p</code> 可能为空，且只包含从 a-z 的小写字母，以及字符 . 和 *。</p>
+<p><a href="https://leetcode-cn.com/problems/regular-expression-matching" target="_blank" rel="noopener">题目链接</a></p>
 <a id="more"></a>
 
-<p>示例 1：</p>
-<blockquote>
-<p>输入：[[2,1,1],[1,1,0],[0,1,1]]</p>
-<p>输出：4</p>
-</blockquote>
-<p>示例 2：</p>
-<blockquote>
-<p>输入：[[2,1,1],[0,1,1],[1,0,1]]</p>
-<p>输出：-1<br>解释：左下角的橘子（第 2 行， 第 0 列）永远不会腐烂，因为腐烂只会发生在 4 个正向上。</p>
-</blockquote>
-<p>示例 3：</p>
-<blockquote>
-<p>输入：[[0,2]]</p>
-<p>输出：0<br>解释：因为 0 分钟时已经没有新鲜橘子了，所以答案就是 0 。</p>
-</blockquote>
-<p>提示：</p>
-<blockquote>
-<p>1 &lt;= grid.length &lt;= 10</p>
-<p>1 &lt;= grid[0].length &lt;= 10<br>grid[i][j] 仅为 0、1 或 2</p>
-</blockquote>
-<ul>
-<li><p>思路</p>
-<p>第一天将所有的烂橘子入队列，然后按天数依次腐烂，新腐烂的橘子入队列，记录天数。然后判断是否还有没腐烂的橘子。</p>
-</li>
-<li><p>代码实现</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">//按照上左下右的顺序腐烂</span></span><br><span class="line">    <span class="keyword">int</span>[] tr = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;-<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span>[] tc = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>, <span class="number">1</span>&#125;;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">orangesRotting</span><span class="params">(<span class="keyword">int</span>[][] grid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> R = grid.length;</span><br><span class="line">        <span class="comment">//队列</span></span><br><span class="line">        Queue&lt;Integer&gt; arrayDeque = <span class="keyword">new</span> ArrayDeque&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span> C = grid[<span class="number">0</span>].length;</span><br><span class="line">        <span class="comment">//存储天数</span></span><br><span class="line">        Map&lt;Integer, Integer&gt; depth = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="comment">//将第0天所有腐烂的橘子入队列</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r &lt; R; r++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> c = <span class="number">0</span>; c &lt; C; c++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (grid[r][c] == <span class="number">2</span>) &#123;</span><br><span class="line">                    <span class="comment">//转换为单数组</span></span><br><span class="line">                    <span class="keyword">int</span> code = r * C + c;</span><br><span class="line">                    arrayDeque.add(code);</span><br><span class="line">                    depth.put(code, <span class="number">0</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//存储结果</span></span><br><span class="line">        <span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (!arrayDeque.isEmpty()) &#123;</span><br><span class="line">            <span class="keyword">int</span> code = arrayDeque.remove();</span><br><span class="line">            <span class="keyword">int</span> r = code / C, c = code % C;</span><br><span class="line">            <span class="comment">//按上左下右顺序</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; <span class="number">4</span>; k++) &#123;</span><br><span class="line">                <span class="keyword">int</span> nr = r + tr[k];</span><br><span class="line">                <span class="keyword">int</span> nc = c + tc[k];</span><br><span class="line">                <span class="keyword">if</span> (<span class="number">0</span> &lt;= nr &amp;&amp; nr &lt; R &amp;&amp; <span class="number">0</span> &lt;= nc &amp;&amp; nc &lt; C &amp;&amp; grid[nr][nc] == <span class="number">1</span>) &#123;</span><br><span class="line">                    grid[nr][nc] = <span class="number">2</span>;</span><br><span class="line">                    <span class="keyword">int</span> ncode = nr * C + nc;</span><br><span class="line">                    arrayDeque.add(ncode);</span><br><span class="line">                    depth.put(ncode, depth.get(code) + <span class="number">1</span>);</span><br><span class="line">                    ret = depth.get(ncode);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//最后判断是否还有新鲜的橘子</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span>[] row : grid) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> col : row) &#123;</span><br><span class="line">                <span class="keyword">if</span> (col == <span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>示例 1:</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">输入:</span></span><br><span class="line">s = <span class="string">"aa"</span></span><br><span class="line">p = <span class="string">"a"</span></span><br><span class="line"><span class="section">输出: false</span></span><br><span class="line"><span class="section">解释: "a" 无法匹配 "aa" 整个字符串。</span></span><br></pre></td></tr></table></figure>
 
-</li>
+
+
+<p>示例 2:</p>
+<figure class="highlight smalltalk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">s = <span class="comment">"aa"</span></span><br><span class="line">p = <span class="comment">"a*"</span></span><br><span class="line">输出: <span class="keyword">true</span></span><br><span class="line">解释: 因为 <span class="string">'*'</span> 代表可以匹配零个或多个前面的那一个元素, 在这里前面的元素就是 <span class="string">'a'</span>。因此，字符串 <span class="comment">"aa"</span> 可被视为 <span class="string">'a'</span> 重复了一次。</span><br></pre></td></tr></table></figure>
+
+
+
+<p>示例 3:</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">输入:</span></span><br><span class="line">s = <span class="string">"ab"</span></span><br><span class="line">p = <span class="string">".*"</span></span><br><span class="line"><span class="section">输出: true</span></span><br><span class="line"><span class="section">解释: ".*" 表示可匹配零个或多个（'*'）任意字符（'.'）。</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>示例 4:</p>
+<figure class="highlight smalltalk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">s = <span class="comment">"aab"</span></span><br><span class="line">p = <span class="comment">"c*a*b"</span></span><br><span class="line">输出: <span class="keyword">true</span></span><br><span class="line">解释: 因为 <span class="string">'*'</span> 表示零个或多个，这里 <span class="string">'c'</span> 为 <span class="number">0</span> 个, <span class="string">'a'</span> 被重复一次。因此可以匹配字符串 <span class="comment">"aab"</span>。</span><br></pre></td></tr></table></figure>
+
+
+
+<p>示例 5:</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">输入:</span></span><br><span class="line">s = <span class="string">"mississippi"</span></span><br><span class="line">p = <span class="string">"mis*is*p*."</span></span><br><span class="line"><span class="section">输出: false</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p><a href="https://leetcode-cn.com/problems/regular-expression-matching/solution/dong-tai-gui-hua-zen-yao-cong-0kai-shi-si-kao-da-b/" target="_blank" rel="noopener">参考链接</a></p>
+<p>令<code>dp[i][j]</code>代表<code>s</code>的前<code>i</code>个字符能否被<code>p</code>的前<code>j</code>个字符匹配。</p>
+<p>对于当前遍历的字符<code>s[i]</code>和<code>p[j]</code>，</p>
+<ol>
+<li>如果两者相等，则<code>dp[i][j]</code>=<code>dp[i-1][j-1]</code> ;</li>
+<li>如果<code>p[j]==&#39;.&#39;</code>，有<code>dp[i][j] = dp[i-1][j-1]</code>。</li>
+<li>如果<code>p[j]==&#39;*&#39;</code>，有：<ol>
+<li>如果<code>s[i] != p[j-1]</code>，则<code>dp[i][j] = d[i][j-2]</code>。</li>
+<li>如果<code>s[i] == p[j-1]</code>或者<code>p[j-1]  == &#39;.&#39;</code>：有<ul>
+<li>多个字符匹配的情况，<code>dp[i][j] = dp[i-1][j]</code>。</li>
+<li>单个字符匹配的情况，<code>dp[i][j] = dp[i][j-1]</code>。</li>
+<li>没有匹配的情况，<code>dp[i][j] = dp[i][j-2]</code>。</li>
 </ul>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isMatch</span><span class="params">(String s, String p)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s == <span class="keyword">null</span> || p == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> m = s.length();</span><br><span class="line">        <span class="keyword">int</span> n = p.length();</span><br><span class="line">        <span class="comment">//dp[i][j]表示s的前i个能否被p的前j个匹配</span></span><br><span class="line">        <span class="keyword">boolean</span>[][] dp = <span class="keyword">new</span> <span class="keyword">boolean</span>[m + <span class="number">1</span>][n + <span class="number">1</span>];</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="keyword">true</span>;</span><br><span class="line">        <span class="comment">//这里初始化是防止s=""，p="a*b*c*d*"这种情况</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (p.charAt(i) == <span class="string">'*'</span> &amp;&amp; dp[<span class="number">0</span>][i - <span class="number">1</span>])</span><br><span class="line">                dp[<span class="number">0</span>][i + <span class="number">1</span>] = <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//这里采用的加法形式</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (p.charAt(j) == <span class="string">'.'</span> || p.charAt(j) == s.charAt(i)) &#123;</span><br><span class="line">                    dp[i + <span class="number">1</span>][j + <span class="number">1</span>] = dp[i][j];</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (p.charAt(j) == <span class="string">'*'</span>) &#123;</span><br><span class="line">                    <span class="comment">/*</span></span><br><span class="line"><span class="comment">                     dp[i][j] = dp[i-1][j] // 多个字符匹配的情况</span></span><br><span class="line"><span class="comment">                     or dp[i][j] = dp[i][j-1] // 单个字符匹配的情况</span></span><br><span class="line"><span class="comment">                     or dp[i][j] = dp[i][j-2] // 没有匹配的情况</span></span><br><span class="line"><span class="comment">                     */</span></span><br><span class="line">                    <span class="comment">//没有匹配</span></span><br><span class="line">                    <span class="keyword">if</span> (p.charAt(j - <span class="number">1</span>) != s.charAt(i) &amp;&amp; p.charAt(j - <span class="number">1</span>) != <span class="string">'.'</span>) &#123;</span><br><span class="line">                        dp[i + <span class="number">1</span>][j + <span class="number">1</span>] = dp[i + <span class="number">1</span>][j - <span class="number">1</span>];</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="comment">//dp[i+1][j+1] = dp[i+1][j]:单个字符匹配的情况</span></span><br><span class="line">                        <span class="comment">//dp[i+1][j+1] = dp[i+1][j]:没有字符的匹配情况</span></span><br><span class="line">                        <span class="comment">//dp[i+1][j+1] = dp[i][j+1]:多个字符匹配的情况</span></span><br><span class="line">                        dp[i + <span class="number">1</span>][j + <span class="number">1</span>] = (dp[i + <span class="number">1</span>][j] || dp[i + <span class="number">1</span>][j - <span class="number">1</span>] || dp[i][j + <span class="number">1</span>]);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[m][n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 
       
     </div>
@@ -417,9 +434,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" rel="tag"><i class="fa fa-tag"></i>广度优先搜索</a>
-          
-            <a href="/tags/Queue/" rel="tag"><i class="fa fa-tag"></i>Queue</a>
+            <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag"><i class="fa fa-tag"></i>动态规划</a>
           
         </div>
       
@@ -432,8 +447,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/15/Leetcode169-%E5%A4%9A%E6%95%B0%E5%85%83%E7%B4%A0/" rel="next" title="LeetCode169.多数元素">
-                <i class="fa fa-chevron-left"></i> LeetCode169.多数元素
+              <a href="/2020/06/19/Leetcode226-%E7%BF%BB%E8%BD%AC%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="next" title="Leetcode226.翻转二叉树">
+                <i class="fa fa-chevron-left"></i> Leetcode226.翻转二叉树
               </a>
             
           </div>
@@ -441,10 +456,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/03/16/Leetcode1013-%E5%B0%86%E6%95%B0%E7%BB%84%E5%88%86%E6%88%90%E7%9B%B8%E7%AD%89%E7%9A%84%E4%B8%89%E4%B8%AA%E9%83%A8%E5%88%86/" rel="prev" title="Leetcode1013.将数组分成相等的三个部分">
-                Leetcode1013.将数组分成相等的三个部分 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -599,7 +610,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode994-腐烂的橘子"><span class="nav-text">Leetcode994.腐烂的橘子</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode10-正则表达式匹配"><span class="nav-text">Leetcode10.正则表达式匹配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-text">代码实现</span></a></li></ol></li></ol></div>
             
 
           </div>
