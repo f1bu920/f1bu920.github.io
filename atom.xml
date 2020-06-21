@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-06-20T06:40:18.196Z</updated>
+  <updated>2020-06-21T05:17:13.796Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode124.二叉树中的最大路径和</title>
+    <link href="http://yoursite.com/2020/06/21/Leetcode124-%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E7%9A%84%E6%9C%80%E5%A4%A7%E8%B7%AF%E5%BE%84%E5%92%8C/"/>
+    <id>http://yoursite.com/2020/06/21/Leetcode124-%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E7%9A%84%E6%9C%80%E5%A4%A7%E8%B7%AF%E5%BE%84%E5%92%8C/</id>
+    <published>2020-06-21T04:53:16.000Z</published>
+    <updated>2020-06-21T05:17:13.796Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Leetcode124-二叉树中的最大路径和"><a href="#Leetcode124-二叉树中的最大路径和" class="headerlink" title="Leetcode124.二叉树中的最大路径和"></a>Leetcode124.二叉树中的最大路径和</h2><p>给定一个非空二叉树，返回其最大路径和。</p><p>本题中，路径被定义为一条从树中任意节点出发，达到任意节点的序列。该路径至少包含一个节点，且不一定经过根节点。</p><p><a href="https://leetcode-cn.com/problems/binary-tree-maximum-path-sum" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例 1:</p><pre><code>输入: [1,2,3]   1  / \ 2   3输出: 6</code></pre><p>示例 2:</p><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">输入: [<span class="number">-10</span>,<span class="number">9</span>,<span class="number">20</span>,<span class="literal">null</span>,<span class="literal">null</span>,<span class="number">15</span>,<span class="number">7</span>]</span><br><span class="line"></span><br><span class="line">   <span class="number">-10</span></span><br><span class="line">   / \</span><br><span class="line">  <span class="number">9</span>  <span class="number">20</span></span><br><span class="line">    /  \</span><br><span class="line">   <span class="number">15</span>   <span class="number">7</span></span><br><span class="line"></span><br><span class="line">输出: <span class="number">42</span></span><br></pre></td></tr></table></figure><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>创建递归函数<code>private int getMaxPath(TreeNode root)</code>，其返回以<code>root</code>为根节点的树的最大贡献值。</p><p>树中一个节点的最大路径和取决于该节点的值与该节点的左右子节点的最大贡献值。如果子节点最大贡献值为正，则计入该节点的最大路径和，否则不计入。维护一个全局变量<code>maxRoute</code>存储最大路径和，在递归中更新这个最大值。</p><h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> maxRoute = Integer.MIN_VALUE;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxPathSum</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        getMaxPath(root);</span><br><span class="line">        <span class="keyword">return</span> maxRoute;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getMaxPath</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> left = Math.max(getMaxPath(root.left), <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">int</span> right = Math.max(getMaxPath(root.right), <span class="number">0</span>);</span><br><span class="line">        maxRoute = Math.max(maxRoute, left + right + root.val);</span><br><span class="line">        <span class="keyword">return</span> root.val + Math.max(left, right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Leetcode124-二叉树中的最大路径和&quot;&gt;&lt;a href=&quot;#Leetcode124-二叉树中的最大路径和&quot; class=&quot;headerlink&quot; title=&quot;Leetcode124.二叉树中的最大路径和&quot;&gt;&lt;/a&gt;Leetcode124.二叉树中的最大路径和&lt;/h2&gt;&lt;p&gt;给定一个非空二叉树，返回其最大路径和。&lt;/p&gt;
+&lt;p&gt;本题中，路径被定义为一条从树中任意节点出发，达到任意节点的序列。该路径至少包含一个节点，且不一定经过根节点。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/binary-tree-maximum-path-sum&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
+    
+    
+      <category term="树" scheme="http://yoursite.com/tags/%E6%A0%91/"/>
+    
+      <category term="递归" scheme="http://yoursite.com/tags/%E9%80%92%E5%BD%92/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode10.正则表达式匹配</title>
@@ -580,36 +607,6 @@
       <category term="Array" scheme="http://yoursite.com/tags/Array/"/>
     
       <category term="String" scheme="http://yoursite.com/tags/String/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>nowcoder.求解立方根</title>
-    <link href="http://yoursite.com/2020/06/11/nowcoder-%E6%B1%82%E8%A7%A3%E7%AB%8B%E6%96%B9%E6%A0%B9/"/>
-    <id>http://yoursite.com/2020/06/11/nowcoder-%E6%B1%82%E8%A7%A3%E7%AB%8B%E6%96%B9%E6%A0%B9/</id>
-    <published>2020-06-11T02:22:25.000Z</published>
-    <updated>2020-06-11T02:36:49.908Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="nowcoder-求解立方根"><a href="#nowcoder-求解立方根" class="headerlink" title="nowcoder.求解立方根"></a>nowcoder.求解立方根</h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>•计算一个数字的立方根，不使用库函数</p><p>详细描述：</p><p>•接口说明</p><p>原型：</p><p>public static double getCubeRoot(double input)</p><p>输入:double 待求解参数</p><p>返回值:double 输入参数的立方根，保留一位小数</p><p><a href="https://www.nowcoder.com/practice/caf35ae421194a1090c22fe223357dca?tpId=37&&tqId=21330&rp=1&ru=/activity/oj&qru=/ta/huawei/question-ranking" target="_blank" rel="noopener">链接</a></p><a id="more"></a><h2 id="输入描述"><a href="#输入描述" class="headerlink" title="输入描述:"></a>输入描述:</h2><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">待求解参数 <span class="built_in">double</span>类型</span><br></pre></td></tr></table></figure><h3 id="输出描述"><a href="#输出描述" class="headerlink" title="输出描述:"></a>输出描述:</h3><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">输入参数的立方根 也是<span class="built_in">double</span>类型</span><br></pre></td></tr></table></figure><p>示例1</p><h3 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h3><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">216</span></span><br></pre></td></tr></table></figure><h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6.0</span></span><br></pre></td></tr></table></figure><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>利用二分查找，每次检查中间数的立方，如果刚好等于目标值，直接返回；如果小于目标值，将左边界移到<code>mid</code>处；如果大于目标值，将右边界移到<code>mid</code>处。</p><p>注意<strong>循环退出条件需要将精度设置小一点。</strong></p><h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        Scanner sc = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        <span class="keyword">while</span>(sc.hasNext())&#123;</span><br><span class="line">            <span class="keyword">double</span> input = sc.nextDouble();</span><br><span class="line">            System.out.printf(<span class="string">"%.1f\n"</span>,getCubeRoot(input));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">getCubeRoot</span><span class="params">(<span class="keyword">double</span> input)</span></span>&#123;</span><br><span class="line">        <span class="keyword">double</span> left = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">double</span> right = input;</span><br><span class="line">        <span class="keyword">while</span> (right - left &gt; <span class="number">0.0001</span>) &#123;</span><br><span class="line">            <span class="keyword">double</span> mid = left + (right - left) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">double</span> t = mid * mid * mid;</span><br><span class="line">            <span class="keyword">if</span> (t == input) &#123;</span><br><span class="line">                <span class="keyword">return</span> mid;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (t &lt; input) &#123;</span><br><span class="line">                left = mid;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                right = mid;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;nowcoder-求解立方根&quot;&gt;&lt;a href=&quot;#nowcoder-求解立方根&quot; class=&quot;headerlink&quot; title=&quot;nowcoder.求解立方根&quot;&gt;&lt;/a&gt;nowcoder.求解立方根&lt;/h2&gt;&lt;h3 id=&quot;题目描述&quot;&gt;&lt;a href=&quot;#题目描述&quot; class=&quot;headerlink&quot; title=&quot;题目描述&quot;&gt;&lt;/a&gt;题目描述&lt;/h3&gt;&lt;p&gt;•计算一个数字的立方根，不使用库函数&lt;/p&gt;
-&lt;p&gt;详细描述：&lt;/p&gt;
-&lt;p&gt;•接口说明&lt;/p&gt;
-&lt;p&gt;原型：&lt;/p&gt;
-&lt;p&gt;public static double getCubeRoot(double input)&lt;/p&gt;
-&lt;p&gt;输入:double 待求解参数&lt;/p&gt;
-&lt;p&gt;返回值:double 输入参数的立方根，保留一位小数&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.nowcoder.com/practice/caf35ae421194a1090c22fe223357dca?tpId=37&amp;&amp;tqId=21330&amp;rp=1&amp;ru=/activity/oj&amp;qru=/ta/huawei/question-ranking&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;链接&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="nowcoder" scheme="http://yoursite.com/categories/nowcoder/"/>
-    
-    
-      <category term="二分查找" scheme="http://yoursite.com/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"/>
     
   </entry>
   
