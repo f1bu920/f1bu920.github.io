@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="递归,位运算," />
+  <meta name="keywords" content="Array," />
 
 
 
@@ -81,17 +81,16 @@
 
 
 
-<meta name="description" content="Leetcode面试题64.1+2+…+n求 1+2+…+n ，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。  题目链接">
+<meta name="description" content="Leetcode31.下一个排列实现获取下一个排列的函数，算法需要将给定数字序列重新排列成字典序中下一个更大的排列。 如果不存在下一个更大的排列，则将数字重新排列成最小的排列（即升序排列）。 必须原地修改，只允许使用额外常数空间。 题目链接">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode面试题64.1+2+...+n">
-<meta property="og:url" content="http://yoursite.com/2020/06/02/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9864.%E6%B1%821+2+n/index.html">
+<meta property="og:title" content="Leetcode31.下一个排列">
+<meta property="og:url" content="http://yoursite.com/2020/06/22/Leetcode31-%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%8E%92%E5%88%97/index.html">
 <meta property="og:site_name" content="flbu blog">
-<meta property="og:description" content="Leetcode面试题64.1+2+…+n求 1+2+…+n ，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。  题目链接">
-<meta property="article:published_time" content="2020-06-02T00:19:11.000Z">
-<meta property="article:modified_time" content="2020-06-02T00:42:32.864Z">
+<meta property="og:description" content="Leetcode31.下一个排列实现获取下一个排列的函数，算法需要将给定数字序列重新排列成字典序中下一个更大的排列。 如果不存在下一个更大的排列，则将数字重新排列成最小的排列（即升序排列）。 必须原地修改，只允许使用额外常数空间。 题目链接">
+<meta property="article:published_time" content="2020-06-22T05:57:09.000Z">
+<meta property="article:modified_time" content="2020-06-22T06:11:47.760Z">
 <meta property="article:author" content="flbu">
-<meta property="article:tag" content="递归">
-<meta property="article:tag" content="位运算">
+<meta property="article:tag" content="Array">
 <meta name="twitter:card" content="summary">
 
 
@@ -122,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/06/02/Leetcode面试题64.求1+2+n/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/06/22/Leetcode31-下一个排列/"/>
 
 
 
 
 
-  <title>Leetcode面试题64.1+2+...+n | flbu blog</title>
+  <title>Leetcode31.下一个排列 | flbu blog</title>
   
 
 
@@ -265,7 +264,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/02/Leetcode%E9%9D%A2%E8%AF%95%E9%A2%9864.%E6%B1%821+2+n/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/22/Leetcode31-%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%8E%92%E5%88%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="flbu">
@@ -282,7 +281,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Leetcode面试题64.1+2+...+n</h1>
+          <h1 class="post-title" itemprop="name headline">Leetcode31.下一个排列</h1>
         
 
         <div class="post-meta">
@@ -294,8 +293,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-02T08:19:11+08:00">
-                2020-06-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-22T13:57:09+08:00">
+                2020-06-22
               </time>
             
 
@@ -354,25 +353,23 @@
       
 
       
-        <h2 id="Leetcode面试题64-1-2-…-n"><a href="#Leetcode面试题64-1-2-…-n" class="headerlink" title="Leetcode面试题64.1+2+…+n"></a>Leetcode面试题64.1+2+…+n</h2><p>求 1+2+…+n ，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。</p>
-<p> <a href="https://leetcode-cn.com/problems/qiu-12n-lcof" target="_blank" rel="noopener">题目链接</a></p>
+        <h2 id="Leetcode31-下一个排列"><a href="#Leetcode31-下一个排列" class="headerlink" title="Leetcode31.下一个排列"></a>Leetcode31.下一个排列</h2><p>实现获取下一个排列的函数，算法需要将给定数字序列重新排列成字典序中下一个更大的排列。</p>
+<p>如果不存在下一个更大的排列，则将数字重新排列成最小的排列（即升序排列）。</p>
+<p>必须原地修改，只允许使用额外常数空间。</p>
+<p><a href="https://leetcode-cn.com/problems/next-permutation" target="_blank" rel="noopener">题目链接</a></p>
 <a id="more"></a>
 
-<p>示例 1：</p>
-<p>输入: n = 3<br>输出: 6<br>示例 2：</p>
-<p>输入: n = 9<br>输出: 45</p>
-<p>限制：</p>
-<p>1 &lt;= n &lt;= 10000</p>
-<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>不允许用循环和乘除,第一反应是用递归. 但递归也要用到<code>if</code>判断终止条件.</p>
-<p>但可以应用逻辑运算符的短路效应:</p>
-<ul>
-<li><code>A&amp;&amp;B</code>: 若<code>A=false</code>, 则<code>B</code>不会被执行.</li>
-<li><code>A||B</code>: 若<code>A=true</code>, 则<code>B</code>不会被执行.</li>
-</ul>
-<p>因为当<code>n=1</code>时需要终止递归, 所以可以利用短路效应<code>n&gt;1&amp;&amp;sumNums(n-1)</code>.</p>
-<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sumNums</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">boolean</span> b = (n &gt; <span class="number">1</span>) &amp;&amp; sumNums(n - <span class="number">1</span>) &gt; <span class="number">0</span>;</span><br><span class="line">        sum += n;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以下是一些例子，输入位于左侧列，其相应输出位于右侧列。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span> → <span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span></span><br><span class="line"><span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span> → <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span></span><br><span class="line"><span class="number">1</span>,<span class="number">1</span>,<span class="number">5</span> → <span class="number">1</span>,<span class="number">5</span>,<span class="number">1</span></span><br></pre></td></tr></table></figure>
 
 
+
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>下一个排列的定义是将给定数字序列按照字典序排成下一个更大的排列，如果没有更大的排列，就排成最小的即升序排列。如<code>12385764</code>的下一个更大的排列为<code>12386457</code>.</p>
+<p><a href="https://leetcode-cn.com/problems/next-permutation/solution/xia-yi-ge-pai-lie-suan-fa-xiang-jie-si-lu-tui-dao-/" target="_blank" rel="noopener">参考思路</a></p>
+<p>从后往前查找第一个相邻升序的元素对，其下标分别为<code>i</code>、<code>j</code>. 此时<code>nums[i]&lt;nums[j]</code>且<code>[j, n-1]</code>上数组必定降序。</p>
+<p>在<code>[j, n-1]</code>上从后往前找到第一个大于<code>nums[i]</code>的值，其下标记为<code>k</code>。</p>
+<p>交换<code>nums[i]</code>和<code>nums[k]</code>，此时<code>[j, n-1]</code>一定降序，将<code>[j, n-1]</code>逆序排列。</p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">nextPermutation</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.length;</span><br><span class="line">        <span class="keyword">if</span> (n &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> i = n - <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> j = n - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> k = n - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">//从后往前找到第一个升序的元素对</span></span><br><span class="line">        <span class="keyword">while</span> (i &gt;= <span class="number">0</span> &amp;&amp; nums[j] &lt;= nums[i]) &#123;</span><br><span class="line">            i--;</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//i&gt;=0代表此时不是最大排列</span></span><br><span class="line">        <span class="keyword">if</span> (i &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//从后往前找到第一个大于nums[i]的元素，其下标为k</span></span><br><span class="line">            <span class="keyword">while</span> (nums[k] &lt;= nums[i]) &#123;</span><br><span class="line">                k--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//交换nums[i]与nums[k]</span></span><br><span class="line">            <span class="keyword">int</span> temp = nums[i];</span><br><span class="line">            nums[i] = nums[k];</span><br><span class="line">            nums[k] = temp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//此时[j, n-1]一定为逆序，将[j, n-1]逆序排列</span></span><br><span class="line">        <span class="keyword">int</span> lo = j, hi = n - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (lo &lt;= hi) &#123;</span><br><span class="line">            <span class="keyword">int</span> temp = nums[lo];</span><br><span class="line">            nums[lo] = nums[hi];</span><br><span class="line">            nums[hi] = temp;</span><br><span class="line">            lo++;</span><br><span class="line">            hi--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -402,9 +399,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/%E9%80%92%E5%BD%92/" rel="tag"><i class="fa fa-tag"></i>递归</a>
-          
-            <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/" rel="tag"><i class="fa fa-tag"></i>位运算</a>
+            <a href="/tags/Array/" rel="tag"><i class="fa fa-tag"></i>Array</a>
           
         </div>
       
@@ -417,8 +412,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/06/01/Leetcode1431-%E6%8B%A5%E6%9C%89%E6%9C%80%E5%A4%9A%E7%B3%96%E6%9E%9C%E7%9A%84%E5%AD%A9%E5%AD%90/" rel="next" title="Leetcode1431.拥有最多糖果的孩子">
-                <i class="fa fa-chevron-left"></i> Leetcode1431.拥有最多糖果的孩子
+              <a href="/2020/06/22/Leetcode17-%E7%94%B5%E8%AF%9D%E5%8F%B7%E7%A0%81%E7%9A%84%E5%AD%97%E6%AF%8D%E7%BB%84%E5%90%88/" rel="next" title="Leetcode17.电话号码的字母组合">
+                <i class="fa fa-chevron-left"></i> Leetcode17.电话号码的字母组合
               </a>
             
           </div>
@@ -426,10 +421,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/06/04/Leetcode238-%E9%99%A4%E8%87%AA%E8%BA%AB%E4%BB%A5%E5%A4%96%E6%95%B0%E7%BB%84%E7%9A%84%E4%B9%98%E7%A7%AF/" rel="prev" title="Leetcode238.除自身以外数组的乘积">
-                Leetcode238.除自身以外数组的乘积 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -584,7 +575,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode面试题64-1-2-…-n"><span class="nav-text">Leetcode面试题64.1+2+…+n</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-text">代码实现</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode31-下一个排列"><span class="nav-text">Leetcode31.下一个排列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-text">代码实现</span></a></li></ol></li></ol></div>
             
 
           </div>
