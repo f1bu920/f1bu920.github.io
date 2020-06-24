@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="链表,归并排序," />
+  <meta name="keywords" content="双指针," />
 
 
 
@@ -81,17 +81,16 @@
 
 
 
-<meta name="description" content="Leetcode148.排序链表在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序。 题目链接">
+<meta name="description" content="Leetcode16.最接近的三数之和给定一个包括 n 个整数的数组 nums 和 一个目标值 target。找出 nums 中的三个整数，使得它们的和与 target 最接近。返回这三个数的和。假定每组输入只存在唯一答案。  题目链接">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode148.排序链表">
-<meta property="og:url" content="http://yoursite.com/2020/04/03/Leetcode148-%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8/index.html">
+<meta property="og:title" content="Leetcode16.最接近的三数之和">
+<meta property="og:url" content="http://yoursite.com/2020/06/24/Leetcode16-%E6%9C%80%E6%8E%A5%E8%BF%91%E7%9A%84%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C/index.html">
 <meta property="og:site_name" content="flbu blog">
-<meta property="og:description" content="Leetcode148.排序链表在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序。 题目链接">
-<meta property="article:published_time" content="2020-04-03T07:29:45.000Z">
-<meta property="article:modified_time" content="2020-04-03T07:38:28.000Z">
+<meta property="og:description" content="Leetcode16.最接近的三数之和给定一个包括 n 个整数的数组 nums 和 一个目标值 target。找出 nums 中的三个整数，使得它们的和与 target 最接近。返回这三个数的和。假定每组输入只存在唯一答案。  题目链接">
+<meta property="article:published_time" content="2020-06-24T01:32:18.000Z">
+<meta property="article:modified_time" content="2020-06-24T01:40:44.174Z">
 <meta property="article:author" content="flbu">
-<meta property="article:tag" content="链表">
-<meta property="article:tag" content="归并排序">
+<meta property="article:tag" content="双指针">
 <meta name="twitter:card" content="summary">
 
 
@@ -122,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/04/03/Leetcode148-排序链表/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/06/24/Leetcode16-最接近的三数之和/"/>
 
 
 
 
 
-  <title>Leetcode148.排序链表 | flbu blog</title>
+  <title>Leetcode16.最接近的三数之和 | flbu blog</title>
   
 
 
@@ -265,7 +264,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/03/Leetcode148-%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/24/Leetcode16-%E6%9C%80%E6%8E%A5%E8%BF%91%E7%9A%84%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="flbu">
@@ -282,7 +281,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Leetcode148.排序链表</h1>
+          <h1 class="post-title" itemprop="name headline">Leetcode16.最接近的三数之和</h1>
         
 
         <div class="post-meta">
@@ -294,8 +293,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-03T15:29:45+08:00">
-                2020-04-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-24T09:32:18+08:00">
+                2020-06-24
               </time>
             
 
@@ -354,26 +353,24 @@
       
 
       
-        <h2 id="Leetcode148-排序链表"><a href="#Leetcode148-排序链表" class="headerlink" title="Leetcode148.排序链表"></a>Leetcode148.排序链表</h2><p>在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序。</p>
-<p><a href="https://leetcode-cn.com/problems/sort-list" target="_blank" rel="noopener">题目链接</a></p>
+        <h2 id="Leetcode16-最接近的三数之和"><a href="#Leetcode16-最接近的三数之和" class="headerlink" title="Leetcode16.最接近的三数之和"></a>Leetcode16.最接近的三数之和</h2><p>给定一个包括 <code>n</code> 个整数的数组 <code>nums</code> 和 一个目标值 <code>target</code>。找出 <code>nums</code> 中的三个整数，使得它们的和与 <code>target</code> 最接近。返回这三个数的和。假定每组输入只存在唯一答案。</p>
+<p> <a href="https://leetcode-cn.com/problems/3sum-closest" target="_blank" rel="noopener">题目链接</a></p>
 <a id="more"></a>
 
-<p>示例 1:</p>
-<blockquote>
-<p>输入: 4-&gt;2-&gt;1-&gt;3<br>输出: 1-&gt;2-&gt;3-&gt;4</p>
-</blockquote>
-<p>示例 2:</p>
-<blockquote>
-<p>输入: -1-&gt;5-&gt;3-&gt;4-&gt;0<br>输出: -1-&gt;0-&gt;3-&gt;4-&gt;5</p>
-</blockquote>
-<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>在<code>O(n logn)</code>时间复杂度和常数级空间复杂度下，所以我们可以使用归并排序。</p>
-<p>归并排序有两种形式：递归与非递归，这里我使用的是递归写法。</p>
-<ol>
-<li>先用快慢指针找到链表的中点的前一个元素，在此基础上就相当于找到了两个子序列的头结点。</li>
-<li>递归调用</li>
-<li>归并</li>
-</ol>
-<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">sortList</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode slow = head;</span><br><span class="line">        <span class="comment">//这里找的的是链表中间结点的前一个节点</span></span><br><span class="line">        ListNode fast = head.next.next;</span><br><span class="line">        <span class="keyword">while</span> (fast != <span class="keyword">null</span> &amp;&amp; fast.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">            slow = slow.next;</span><br><span class="line">            fast = fast.next.next;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode rightHead = slow.next;</span><br><span class="line">        slow.next = <span class="keyword">null</span>;</span><br><span class="line">        ListNode left = sortList(head);</span><br><span class="line">        ListNode right = sortList(rightHead);</span><br><span class="line">        <span class="keyword">return</span> mergeListNode(left, right);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> ListNode <span class="title">mergeListNode</span><span class="params">(ListNode l1, ListNode l2)</span> </span>&#123;</span><br><span class="line">        ListNode dummyHead = <span class="keyword">new</span> ListNode(-<span class="number">1</span>);</span><br><span class="line">        ListNode cur = dummyHead;</span><br><span class="line">        <span class="keyword">while</span> (l1 != <span class="keyword">null</span> &amp;&amp; l2 != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (l1.val &lt; l2.val) &#123;</span><br><span class="line">                cur.next = l1;</span><br><span class="line">                l1 = l1.next;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                cur.next = l2;</span><br><span class="line">                l2 = l2.next;</span><br><span class="line">            &#125;</span><br><span class="line">            cur = cur.next;</span><br><span class="line">        &#125;</span><br><span class="line">        cur.next = (l1 != <span class="keyword">null</span>) ? l1 : l2;</span><br><span class="line">        <span class="keyword">return</span> dummyHead.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [<span class="number">-1</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">-4</span>], target = <span class="number">1</span></span><br><span class="line">输出：<span class="number">2</span></span><br><span class="line">解释：与 target 最接近的和是 <span class="number">2</span> (<span class="number">-1</span> + <span class="number">2</span> + <span class="number">1</span> = <span class="number">2</span>) 。</span><br></pre></td></tr></table></figure>
+
+
+
+
+<p>提示：</p>
+<ul>
+<li>3 &lt;= nums.length &lt;= 10^3</li>
+<li>-10^3 &lt;= nums[i] &lt;= 10^3</li>
+<li>-10^4 &lt;= target &lt;= 10^4</li>
+</ul>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>排序后利用双指针进行枚举，外层循环<code>i</code>从0到<code>n-3</code>进行枚举，内层循环使用双指针<code>left</code>和<code>right</code>分别从两侧进行枚举。使用<code>closestNum</code>记录最接近<code>target</code>的和，使用<code>distance</code>记录距离<code>target</code>的最短距离，并在循环中更新这两个值。</p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">threeSumClosest</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line">        <span class="keyword">int</span> n = nums.length;</span><br><span class="line">        <span class="keyword">int</span> closestNum = nums[<span class="number">0</span>] + nums[<span class="number">1</span>] + nums[<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">int</span> distance = Math.abs(closestNum - target);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">2</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> left = i + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">int</span> right = n - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">                <span class="comment">//当前和</span></span><br><span class="line">                <span class="keyword">int</span> temp = nums[i] + nums[left] + nums[right];</span><br><span class="line">                <span class="keyword">if</span> (temp &lt; target) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (Math.abs(temp - target) &lt; distance) &#123;</span><br><span class="line">                        distance = Math.abs(temp - target);</span><br><span class="line">                        closestNum = temp;</span><br><span class="line">                    &#125;</span><br><span class="line">                    left++;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (temp &gt; target) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (Math.abs(temp - target) &lt; distance) &#123;</span><br><span class="line">                        distance = Math.abs(temp - target);</span><br><span class="line">                        closestNum = temp;</span><br><span class="line">                    &#125;</span><br><span class="line">                    right--;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">return</span> target;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> closestNum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -403,9 +400,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/%E9%93%BE%E8%A1%A8/" rel="tag"><i class="fa fa-tag"></i>链表</a>
-          
-            <a href="/tags/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" rel="tag"><i class="fa fa-tag"></i>归并排序</a>
+            <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/" rel="tag"><i class="fa fa-tag"></i>双指针</a>
           
         </div>
       
@@ -418,8 +413,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/04/03/Leetcode8-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%95%B4%E6%95%B0-atoi/" rel="next" title="Leetcode8.字符串转整数(atoi)">
-                <i class="fa fa-chevron-left"></i> Leetcode8.字符串转整数(atoi)
+              <a href="/2020/06/23/Leetcode67-%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%B1%82%E5%92%8C/" rel="next" title="Leetcode67.二进制求和">
+                <i class="fa fa-chevron-left"></i> Leetcode67.二进制求和
               </a>
             
           </div>
@@ -427,10 +422,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/04/06/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/" rel="prev" title="Java多线程-进程与线程">
-                Java多线程-进程与线程 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -585,7 +576,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode148-排序链表"><span class="nav-text">Leetcode148.排序链表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-text">代码实现</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode16-最接近的三数之和"><span class="nav-text">Leetcode16.最接近的三数之和</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-text">代码实现</span></a></li></ol></li></ol></div>
             
 
           </div>
