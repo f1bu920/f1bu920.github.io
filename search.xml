@@ -1379,7 +1379,7 @@
 <p>如果上述变量声明中不使用<code>volatile</code>关键字，可能会发生错误。</p>
 ]]></content>
       <categories>
-        <category>Leetcode</category>
+        <category>Java多线程</category>
       </categories>
       <tags>
         <tag>Java</tag>
@@ -1704,7 +1704,7 @@
 <p>乐观读锁并没有改变<code>state</code>的值，而是在获取锁的时候记录<code>state</code>的状态，在操作完成后检查<code>state</code>的写状态部分是否发生变化，因为每次写锁都会留下痕迹。</p>
 ]]></content>
       <categories>
-        <category>Leetcode</category>
+        <category>Java多线程</category>
       </categories>
       <tags>
         <tag>Java</tag>
