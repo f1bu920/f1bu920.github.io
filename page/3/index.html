@@ -296,7 +296,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/25/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E9%94%81%E6%8E%A5%E5%8F%A3%E5%92%8C%E7%B1%BB/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/24/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="flbu">
@@ -315,7 +315,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/05/25/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E9%94%81%E6%8E%A5%E5%8F%A3%E5%92%8C%E7%B1%BB/" itemprop="url">Java多线程-锁接口和类</a></h1>
+                <a class="post-title-link" href="/2019/11/24/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" itemprop="url">lambda表达式</a></h1>
         
 
         <div class="post-meta">
@@ -327,8 +327,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-25T14:05:51+08:00">
-                2020-05-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-24T20:18:48+08:00">
+                2019-11-24
               </time>
             
 
@@ -350,8 +350,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index">
-                    <span itemprop="name">Java多线程</span>
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
                   </a>
                 </span>
 
@@ -388,266 +388,20 @@
 
       
         
-          
-            <h1 id="Java多线程-锁接口和类"><a href="#Java多线程-锁接口和类" class="headerlink" title="Java多线程-锁接口和类"></a>Java多线程-锁接口和类</h1><p>Java原生的锁是基于对象的锁，一般是配合<code>synchronized</code>使用的。而在<code>java.util.concurrent</code>包下，还提供了几个关于锁的接口和类。</p>
-<h3 id="synchronized的不足"><a href="#synchronized的不足" class="headerlink" title="synchronized的不足"></a>synchronized的不足</h3><ul>
-<li>使用<code>synchronized</code>，临界区的代码同一时间只有一个线程能执行。即便临界区是只读操作。</li>
-<li><code>synchronized</code>无法知道线程有没有成功获得锁。</li>
-<li>使用<code>synchronized</code>如果临界区因为IO或者<code>sleep</code>等阻塞了，当前线程又没有释放锁，就会导致所有的线程都会等待。</li>
-</ul>
-<h3 id="锁的分类"><a href="#锁的分类" class="headerlink" title="锁的分类"></a>锁的分类</h3><p>锁可以根据不同的方式进行分类。</p>
-<h4 id="可重入锁和不可重入锁"><a href="#可重入锁和不可重入锁" class="headerlink" title="可重入锁和不可重入锁"></a>可重入锁和不可重入锁</h4><p>可重入锁就是支持重新进入的锁，也就是支持一个线程对资源重复加锁。</p>
-<p><code>synchronized</code>就是使用的可重入锁。可重入性实际上是基于线程的分配，而不是基于方法调用的分配。</p>
-<p><code>Lock</code>也是一个可重入锁。</p>
-<h4 id="公平锁与非公平锁"><a href="#公平锁与非公平锁" class="headerlink" title="公平锁与非公平锁"></a>公平锁与非公平锁</h4><p>这里的公平指的是先来先执行。如果一个锁对先请求获取的线程先满足，对后请求获取的线程后满足，这个锁就是一个公平锁。</p>
-<p>一般，<strong>非公平锁能提升效率，但非公平锁可能会导致一些线程长时间获取不到锁。</strong></p>
-<p><code>ReentrantLock</code>支持公平锁与非公平锁两种。</p>
-<h4 id="读写锁和排它锁"><a href="#读写锁和排它锁" class="headerlink" title="读写锁和排它锁"></a>读写锁和排它锁</h4><p><code>synchronized</code>和<code>ReetrantLock</code>都是排它锁，这些锁在同一时间内只允许一个线程进行访问。</p>
-<p>而读写锁同一时刻允许多个线程访问。Java提供了<code>ReetrantReadAndWriterLock</code>类作为读写锁的默认实现，其内部维护了两个锁：一个读锁、一个写锁。通过分离读锁和写锁，使得读多写少的场景下效率大大提高。使用读写锁时，在写线程启动时，读线程和其他的写线程均被阻塞。</p>
-<h3 id="JDK中关于锁的接口和类"><a href="#JDK中关于锁的接口和类" class="headerlink" title="JDK中关于锁的接口和类"></a>JDK中关于锁的接口和类</h3><h4 id="抽象类AQS-AQLS-AOS"><a href="#抽象类AQS-AQLS-AOS" class="headerlink" title="抽象类AQS/AQLS/AOS"></a>抽象类AQS/AQLS/AOS</h4><p><code>AQS</code>，抽象队列同步器，是JDK提供的一个“队列同步器”的基本功能实现。</p>
-<p><code>AQS</code>中的资源使用一个<code>int</code>类型的数据表示的，如果我们的资源数量超出了<code>int</code>的范围，就可以使用<code>AQLS</code>。<code>AQLS</code>与<code>AQS</code>几乎一样，只是把资源的类型变成了<code>long</code>类型。</p>
-<p><code>AQS</code>和<code>AQLS</code>都继承了一个类<code>AOS</code>：<code>AbstractOwnableSynchronizer</code>，用于表示锁与持有者的关系(独占模式)。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractOwnableSynchronizer</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">3737899427754241961L</span>;</span><br><span class="line">    <span class="comment">//独占模式，锁的持有者</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> Thread exclusiveOwnerThread;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="title">AbstractOwnableSynchronizer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//设置锁持有者</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">setExclusiveOwnerThread</span><span class="params">(Thread thread)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.exclusiveOwnerThread = thread;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//获取锁的持有线程</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> Thread <span class="title">getExclusiveOwnerThread</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.exclusiveOwnerThread;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h2 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a>lambda表达式</h2><h3 id="格式：参数-gt-表达式"><a href="#格式：参数-gt-表达式" class="headerlink" title="格式：参数 -&gt; (表达式)"></a>格式：参数 -&gt; (表达式)</h3><p>如果代码要完成的计算无法放在一个表达式中，可以把代码放在{}中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(str, (String first,String second) -&gt; (<span class="keyword">return</span> (first.length()-second.length()))</span><br></pre></td></tr></table></figure>
 
+<p>即使<code>lambda</code>无参数，也要提供空括号.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">()-&gt; &#123;<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++) System.out.println(i);&#125;</span><br></pre></td></tr></table></figure>
 
+<p>如果可以推导出一个<code>lambda</code>的参数类型，则可以忽略参数类型</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(friends,(first,second) -&gt; (first.length()-second.length()));<span class="comment">//friends是一个字符串数组</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="接口Condition-Lock-ReadWriteLock"><a href="#接口Condition-Lock-ReadWriteLock" class="headerlink" title="接口Condition/Lock/ReadWriteLock"></a>接口Condition/Lock/ReadWriteLock</h4><p><code>java.util.concurrent</code>包下有三个接口：<code>Condition</code>、<code>Lock</code>、<code>ReaderWriteLock</code>。其中，<code>Lock</code>和<code>ReadWriteLock</code>分别是锁和读写锁。</p>
-<p><code>ReadWriteLock</code>只有两个方法，分别返回读锁和写锁。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ReadWriteLock</span> </span>&#123;</span><br><span class="line">    <span class="function">Lock <span class="title">readLock</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">Lock <span class="title">writeLock</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>Lock</code>接口的方法如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Lock</span> </span>&#123;</span><br><span class="line">    <span class="comment">//获得锁，如果锁被其他线程获取，则等待</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">lock</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//通过这个方法获取锁时，如果这个线程正在等待获取锁，则这个线程能够中断等待状态。</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">lockInterruptibly</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException</span>;</span><br><span class="line">    <span class="comment">//尝试获得锁，成功返回true，失败返回false。立即返回，拿不到锁时不会一直等待</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">tryLock</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//与tryLock大体相同，但拿不到锁时会等待指定时间</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">tryLock</span><span class="params">(<span class="keyword">long</span> var1, TimeUnit var3)</span> <span class="keyword">throws</span> InterruptedException</span>;</span><br><span class="line">    <span class="comment">//释放锁，与synchronized不同，Lock必须手动释放锁，否则会可能陷入死锁</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">unlock</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//实现类似于Object的wait/notify等待/通知机制</span></span><br><span class="line">    <span class="function">Condition <span class="title">newCondition</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>Lock</code>接口中有一个方法可以获得<code>Condition</code>。每个对象都可以利用继承自<code>Object</code>的<code>wait/notify</code>方法来实现等待/通知机制。<code>Condition</code>也提供了类似的方法，通过与<code>Lock</code>的配合来实现等待/通知机制。</p>
-<table>
-<thead>
-<tr>
-<th>对比项</th>
-<th>Object监视器</th>
-<th>Condition</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>前置条件</td>
-<td>获取对象的锁</td>
-<td>调用<code>Lock.lock</code>获取锁，调用<code>Lock.newCondition()</code>获取<code>Condition</code>对象</td>
-</tr>
-<tr>
-<td>调用方式</td>
-<td>直接调用，如<code>object.notify()</code></td>
-<td>直接调用，如<code>condition.await()</code></td>
-</tr>
-<tr>
-<td>等待队列的个数</td>
-<td>一个</td>
-<td>多个</td>
-</tr>
-<tr>
-<td>当前线程释放锁进入等待状态</td>
-<td>支持</td>
-<td>支持</td>
-</tr>
-<tr>
-<td>当前线程释放锁进入等待状态，在等待状态中断</td>
-<td>不支持</td>
-<td>支持</td>
-</tr>
-<tr>
-<td>当前线程释放锁并进入超市等待状态</td>
-<td>支持</td>
-<td>支持</td>
-</tr>
-<tr>
-<td>当前线程释放锁进入等待状态直到将来的某个时间</td>
-<td>不支持</td>
-<td>支持</td>
-</tr>
-<tr>
-<td>唤醒等待队列中的一个线程</td>
-<td>支持</td>
-<td>支持</td>
-</tr>
-<tr>
-<td>唤醒等待队列中的全部线程</td>
-<td>支持</td>
-<td>支持</td>
-</tr>
-</tbody></table>
-<p><code>Condition</code>与<code>Object</code>的<code>wait/notify</code>基本相似。<code>Condition.await()</code>对应<code>Object.wait()</code>，<code>Condition.signal/signalAll</code>对应<code>Object.notify/notifyAll</code>。</p>
-<h4 id="ReentrantLock"><a href="#ReentrantLock" class="headerlink" title="ReentrantLock"></a>ReentrantLock</h4><p><code>ReentrantLock</code>是JDK提供的<code>Lock</code>接口的默认实现，实现了锁的基本功能。其是一个可重入锁，内部有一个抽象类<code>abstract static class Sync extends AbstractQueuedSynchronizer</code>继承了<code>AQS</code>，是自己实现的一个同步器，有两个非抽象类<code>static final class FairSync extends ReentrantLock.Sync</code>和<code>static final class NonfairSync extends ReentrantLock.Sync</code>，分别是公平同步器和非公平同步器，代表着<code>ReentrantLock</code>支持公平锁与非公平锁。</p>
-<p>这两个同步器都调用了<code>AOS</code>的<code>setExclusiveOwnerThread(current);</code>方法，所以<code>ReentrantLock</code>的锁是独占的，也就是说是排他锁，不能共享。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ReentrantLock</span><span class="params">(<span class="keyword">boolean</span> fair)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.sync = (ReentrantLock.Sync)(fair ? <span class="keyword">new</span> ReentrantLock.FairSync() : <span class="keyword">new</span> ReentrantLock.NonfairSync());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在<code>ReentrantLock</code>的构造方法中，可以传入一个布尔类型的参数<code>fair</code>来指定其是否是公平锁，默认是非公平锁。</p>
-<h4 id="ReentrantReadWriteLock"><a href="#ReentrantReadWriteLock" class="headerlink" title="ReentrantReadWriteLock"></a>ReentrantReadWriteLock</h4><p><code>ReentrantReadWriteLock</code>类是<code>ReadWriteLock</code>接口的默认实现。与<code>ReentrantLock</code>类似，都是可重入的，支持公平锁与非公平锁。不同的是其还支持读写锁。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReentrantReadWriteLock</span> <span class="keyword">implements</span> <span class="title">ReadWriteLock</span>, <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="comment">//省略部分代码</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ReentrantReadWriteLock.ReadLock readerLock;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ReentrantReadWriteLock.WriteLock writerLock;</span><br><span class="line">    <span class="keyword">final</span> ReentrantReadWriteLock.Sync sync;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//构造方法，默认是非公平锁</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="title">ReentrantReadWriteLock</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>(<span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ReentrantReadWriteLock</span><span class="params">(<span class="keyword">boolean</span> fair)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.sync = (ReentrantReadWriteLock.Sync)(fair ? <span class="keyword">new</span> ReentrantReadWriteLock.FairSync() : <span class="keyword">new</span> ReentrantReadWriteLock.NonfairSync());</span><br><span class="line">        <span class="keyword">this</span>.readerLock = <span class="keyword">new</span> ReentrantReadWriteLock.ReadLock(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">this</span>.writerLock = <span class="keyword">new</span> ReentrantReadWriteLock.WriteLock(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//获取读锁与写锁的方法</span></span><br><span class="line">    <span class="keyword">public</span> ReentrantReadWriteLock.<span class="function">WriteLock <span class="title">writeLock</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.writerLock;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> ReentrantReadWriteLock.<span class="function">ReadLock <span class="title">readLock</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.readerLock;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">FairSync</span> <span class="keyword">extends</span> <span class="title">ReentrantReadWriteLock</span>.<span class="title">Sync</span> </span>&#123;</span><br><span class="line">        <span class="comment">//省略实现</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">NonfairSync</span> <span class="keyword">extends</span> <span class="title">ReentrantReadWriteLock</span>.<span class="title">Sync</span> </span>&#123;</span><br><span class="line">        <span class="comment">//省略实现</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">abstract</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Sync</span> <span class="keyword">extends</span> <span class="title">AbstractQueuedSynchronizer</span></span>&#123;</span><br><span class="line">        <span class="comment">//省略实现</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//读锁与写锁</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ReadLock</span> <span class="keyword">implements</span> <span class="title">Lock</span>, <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> ReentrantReadWriteLock.Sync sync;</span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="title">ReadLock</span><span class="params">(ReentrantReadWriteLock lock)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.sync = lock.sync;</span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">WriteLock</span> <span class="keyword">implements</span> <span class="title">Lock</span>, <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> ReentrantReadWriteLock.Sync sync;</span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="title">WriteLock</span><span class="params">(ReentrantReadWriteLock lock)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.sync = lock.sync;</span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看到，<code>ReentrantReadWriteLock</code>内部维护了两个同步器和两个<code>Lock</code>的实现类<code>ReadLock</code>和<code>WriteLock</code>。</p>
-<p>实现了读写锁，但在写操作时，其他线程不能读也不能写，存在“写饥饿”。</p>
-<h4 id="StampedLock"><a href="#StampedLock" class="headerlink" title="StampedLock"></a>StampedLock</h4><p><code>public class StampedLock implements Serializable</code>可以看到，<code>StampedLock</code>并没有实现<code>Lock</code>接口和<code>ReadWriteLock</code>接口，但其实现了“读写锁”的功能，并且性能更好。<code>StampedLock</code>把读锁和写锁分为乐观读锁和悲观读锁两种。</p>
-<p><code>StampedLock</code>避免了写饥饿现象，它的核心思想在于，<strong>在读的时候如果发生了写，应该通过重试的方法来获取新的值，而不应该阻塞写操作。这种模式也是典型的无锁编程思想，与CAS自旋的思想一样。</strong><code>StampedLock</code>适合在读多写少的场景下使用，同时避免了写饥饿的产生。官方使用实例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Point</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">double</span> x, y;	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> StampedLock stampedLock = <span class="keyword">new</span> StampedLock();</span><br><span class="line">	<span class="comment">//写锁的使用</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">move</span><span class="params">(<span class="keyword">double</span> deltaX, <span class="keyword">double</span> deltaY)</span></span>&#123;</span><br><span class="line">		<span class="keyword">long</span> stamp = stampedLock.writeLock(); <span class="comment">//获取写锁</span></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			x += deltaX;</span><br><span class="line">			y += deltaY;</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			stampedLock.unlockWrite(stamp); <span class="comment">//释放写锁</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//乐观读锁的使用</span></span><br><span class="line">	<span class="function"><span class="keyword">double</span> <span class="title">distanceFromOrigin</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">long</span> stamp = stampedLock.tryOptimisticRead(); <span class="comment">//获得一个乐观读锁</span></span><br><span class="line">		<span class="keyword">double</span> currentX = x;</span><br><span class="line">		<span class="keyword">double</span> currentY = y;</span><br><span class="line">		<span class="keyword">if</span> (!stampedLock.validate(stamp)) &#123; <span class="comment">//检查乐观读锁后是否有其他写锁发生，有则返回false</span></span><br><span class="line">			stamp = stampedLock.readLock(); <span class="comment">//获取一个悲观读锁</span></span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				currentX = x;</span><br><span class="line">			&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">				stampedLock.unlockRead(stamp); <span class="comment">//释放悲观读锁</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125; </span><br><span class="line">		<span class="keyword">return</span> Math.sqrt(currentX*currentX + currentY*currentY);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//悲观读锁以及读锁升级写锁的使用</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">moveIfAtOrigin</span><span class="params">(<span class="keyword">double</span> newX,<span class="keyword">double</span> newY)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">long</span> stamp = stampedLock.readLock(); <span class="comment">//悲观读锁</span></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">while</span> (x == <span class="number">0.0</span> &amp;&amp; y == <span class="number">0.0</span>) &#123;</span><br><span class="line">				<span class="keyword">long</span> ws = stampedLock.tryConvertToWriteLock(stamp); <span class="comment">//读锁转换为写锁</span></span><br><span class="line">				<span class="keyword">if</span> (ws != <span class="number">0L</span>) &#123; <span class="comment">//转换成功</span></span><br><span class="line">					stamp = ws; <span class="comment">//票据更新为写锁的</span></span><br><span class="line">					x = newX;</span><br><span class="line">					y = newY;</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					stampedLock.unlockRead(stamp); <span class="comment">//转换失败释放读锁</span></span><br><span class="line">					stamp = stampedLock.writeLock(); <span class="comment">//强制获取写锁</span></span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			stampedLock.unlock(stamp); <span class="comment">//释放所有锁</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>乐观读锁的意思是假定在这个锁获取期间，共享变量不会被改变。在获取乐观读锁后进行了一些操作，然后调用<code>validate</code>方法，这个方法是验证是否有写操作执行过，如果有，则获取一个悲观读锁。</p>
-<p><code>StampedLock</code>获取锁时会返回一个<code>long</code>类型的变量，释放锁时再把这个变量传进去。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">//用于操作state后获取stamp的值</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> LG_READERS = <span class="number">7</span>;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> RUNIT = <span class="number">1L</span>;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> WBIT = <span class="number">128L</span>;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> RBITS = <span class="number">127L</span>;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> RFULL = <span class="number">126L</span>;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> ABITS = <span class="number">255L</span>;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> SBITS = -<span class="number">128L</span>;</span><br><span class="line"><span class="comment">//初始化state的值</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> ORIGIN = <span class="number">256L</span>;</span><br><span class="line"><span class="comment">//锁共享变量state</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">volatile</span> <span class="keyword">long</span> state = <span class="number">256L</span>;</span><br><span class="line"><span class="comment">//读锁溢出时用来存储多出的读锁</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">int</span> readerOverflow;</span><br></pre></td></tr></table></figure>
-
-<p><code>StampedLock</code>用<code>long</code>类型变量的前7位(<code>LG_READERS</code>)来表示读锁，每获得一个悲观读锁，就加一(<code>RUNIT</code>)，每释放一个悲观读锁，就减一。而悲观读锁最多只能存储128个（7位限制），所以用一个<code>int</code>类型的变量来存储溢出的悲观读锁。</p>
-<p>写锁用<code>state</code>变量剩下的位来表示，每次获得一个写锁，就加 0000 1000 0000(<code>WBIT</code>)。<strong>每次释放一个写锁，并不是减<code>WBIT</code>，而是再加上<code>WBIT</code>，这样做的目的是让每次写锁都留下痕迹，解决CAS的ABA问题，也为乐观锁见检查变化<code>validate</code>方法提供基础。</strong></p>
-<p>乐观读锁并没有改变<code>state</code>的值，而是在获取锁的时候记录<code>state</code>的状态，在操作完成后检查<code>state</code>的写状态部分是否发生变化，因为每次写锁都会留下痕迹。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-<div>
-  
-</div>
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/20/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%8E%9F%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="flbu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="flbu blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/20/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%8E%9F%E7%90%86/" itemprop="url">Java多线程-线程池原理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-20T17:00:03+08:00">
-                2020-05-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index">
-                    <span itemprop="name">Java多线程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="线程池原理"><a href="#线程池原理" class="headerlink" title="线程池原理"></a>线程池原理</h1><h2 id="线程池的优势"><a href="#线程池的优势" class="headerlink" title="线程池的优势"></a>线程池的优势</h2><ol>
-<li>创建/销毁线程会消耗系统资源，线程池可以复用已创建的线程。</li>
-<li>控制并发的数量。线程并发数量过多，会抢占系统资源并造成阻塞。</li>
-<li>可以对线程做一些简单的管理。</li>
-</ol>
-<h2 id="ThreadPoolExecutor的原理"><a href="#ThreadPoolExecutor的原理" class="headerlink" title="ThreadPoolExecutor的原理"></a>ThreadPoolExecutor的原理</h2><p>Java中线程池顶层接口为<code>Executor</code>，<code>ThreadPoolExecutor</code>是其一个具体实现类。</p>
+<p>无需指定lambda的返回值类型，返回值类型会由上下文推导得到</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(String str1,String str2) -&gt; str1.length()-str2.length();</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/05/20/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%8E%9F%E7%90%86/#more" rel="contents">
+            <a class="btn" href="/2019/11/24/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -702,7 +456,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/04/Spring-SpringBoot%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/23/Git%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="flbu">
@@ -721,7 +475,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/05/04/Spring-SpringBoot%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/" itemprop="url">Spring/SpringBoot常用注解</a></h1>
+                <a class="post-title-link" href="/2019/11/23/Git%E7%AC%94%E8%AE%B0/" itemprop="url">Git笔记</a></h1>
         
 
         <div class="post-meta">
@@ -733,8 +487,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-04T15:07:41+08:00">
-                2020-05-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-23T17:47:42+08:00">
+                2019-11-23
               </time>
             
 
@@ -756,8 +510,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SpringBoot/" itemprop="url" rel="index">
-                    <span itemprop="name">SpringBoot</span>
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
                   </a>
                 </span>
 
@@ -794,19 +548,10 @@
 
       
         
-          <h2 id="1-SpringBootApplication"><a href="#1-SpringBootApplication" class="headerlink" title="1. @SpringBootApplication"></a>1. @SpringBootApplication</h2><p>这个注解是SpringBoot项目的基石，所有创建的SpringBoot项目都会默认在主类上加上这个注解。</p>
-<p><img src="https://f1bu920.github.io/images/SpringBoot%E6%B3%A8%E8%A7%A3@SpringBootApplication.PNG" alt="SpringBoot注解@SpringBootApplication.PNG"></p>
-<p>我们可以把<code>@SpringBootApplication</code>看成是<code>@Configuration</code>、<code>@EnableAutoConfiguration</code>和<code>@ComponentScan</code>注解的集合。</p>
-<p><img src="https://f1bu920.github.io/images/SpringBoot%E6%B3%A8%E8%A7%A3@SpringBootApplication%E8%AF%A6%E6%83%85.PNG" alt=""></p>
-<p>这三个注解的作用分别如下：</p>
-<ul>
-<li><code>@EnableAutoConfiguration</code>：启动SpringBoot的自动配置机制。</li>
-<li><code>@ComponentScan</code>：扫描被<code>@Component</code>(<code>@Service</code>、<code>@Controller</code>)注解的Bean，注解会默认扫描该类所在包下的所有类。</li>
-<li><code>@Configuration</code>：允许在Spring上下文中注册额外的Bean或导入其他配置类。</li>
-</ul>
+          <h3 id="下载与安装Git"><a href="#下载与安装Git" class="headerlink" title="下载与安装Git"></a>下载与安装Git</h3><p><a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git" target="_blank" rel="noopener">Git下载</a>，在git Bash下执行<code>git --version</code>，返回Git版本。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/05/04/Spring-SpringBoot%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/#more" rel="contents">
+            <a class="btn" href="/2019/11/23/Git%E7%AC%94%E8%AE%B0/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -861,7 +606,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/22/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-synchronized%E4%B8%8E%E9%94%81/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/22/Django%E6%A8%A1%E5%9E%8B%E5%B1%82_%E6%9F%A5%E8%AF%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="flbu">
@@ -880,7 +625,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/04/22/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-synchronized%E4%B8%8E%E9%94%81/" itemprop="url">Java多线程-synchronized与锁</a></h1>
+                <a class="post-title-link" href="/2019/11/22/Django%E6%A8%A1%E5%9E%8B%E5%B1%82_%E6%9F%A5%E8%AF%A2/" itemprop="url">My New Post</a></h1>
         
 
         <div class="post-meta">
@@ -892,8 +637,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-22T15:47:46+08:00">
-                2020-04-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-22T22:26:19+08:00">
+                2019-11-22
               </time>
             
 
@@ -915,8 +660,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index">
-                    <span itemprop="name">Java多线程</span>
+                  <a href="/categories/Django/" itemprop="url" rel="index">
+                    <span itemprop="name">Django</span>
                   </a>
                 </span>
 
@@ -953,962 +698,11 @@
 
       
         
-          <h2 id="synchronized关键字"><a href="#synchronized关键字" class="headerlink" title="synchronized关键字"></a>synchronized关键字</h2><p><code>synchronized</code>翻译成中文就是同步的意思。我们通常使用<code>synchronized</code>关键字来给一段代码或一个方法上锁。其主要有以下三种方式</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment">//关键字在实例方法上，锁为当前实例</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">instanceLock</span><span class="params">()</span></span>&#123;</span><br><span class="line">       <span class="comment">//code</span></span><br><span class="line">   &#125;</span><br><span class="line"><span class="comment">//关键字在静态方法上，锁为当前Class对象</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">classLock</span><span class="params">()</span></span>&#123;</span><br><span class="line">       <span class="comment">//code</span></span><br><span class="line">   &#125;</span><br><span class="line"><span class="comment">//关键字在代码块上，锁为括号里面对象</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">blockLock</span><span class="params">()</span></span>&#123;</span><br><span class="line">       Object o = <span class="keyword">new</span> Object();</span><br><span class="line">       <span class="keyword">synchronized</span> (o)&#123;</span><br><span class="line">           <span class="comment">//code</span></span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><strong>java中的锁都是对象锁，我们常说的类锁也是对象锁。Java类只要一个Class对象，多个实例对象共享这一个Class对象。类锁就是Class对象的锁。</strong></p>
-</blockquote>
+          <h2 id="执行查询"><a href="#执行查询" class="headerlink" title="执行查询"></a>执行查询</h2><p>创建数据模型后，Django自动提供了一套API来实现数据库的增删改查，模型代码如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Blog</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">100</span>)</span><br><span class="line">    tagline = models.TextField()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Author</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">200</span>)</span><br><span class="line">    email = models.EmailField()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Entry</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)</span><br><span class="line">    headline = models.CharField(max_length=<span class="number">255</span>)</span><br><span class="line">    body_text = models.TextField()</span><br><span class="line">    pub_date = models.DateField()</span><br><span class="line">    mod_date = models.DateField()</span><br><span class="line">    authors = models.ManyToManyField(Author)</span><br><span class="line">    n_comments = models.IntegerField()</span><br><span class="line">    n_pingbacks = models.IntegerField()</span><br><span class="line">    rating = models.IntegerField()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.headline</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/04/22/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-synchronized%E4%B8%8E%E9%94%81/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-<div>
-  
-</div>
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/22/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-volatile/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="flbu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="flbu blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/22/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-volatile/" itemprop="url">Java多线程-volatile</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-22T15:16:25+08:00">
-                2020-04-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index">
-                    <span itemprop="name">Java多线程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h4 id="内存可见性"><a href="#内存可见性" class="headerlink" title="内存可见性"></a>内存可见性</h4><p>JMM有一个主内存，每个线程都有自己私有的工作线程，工作内存中保留了一些变量在主内存的拷贝。</p>
-<p><strong>内存可见性，指的是线程之间的可见性，当一个线程修改了共享变量后，另一个线程可以读取到这个更改后的值。</strong></p>
-<h4 id="重排序"><a href="#重排序" class="headerlink" title="重排序"></a>重排序</h4><p>为了优化程序性能，对原有的指令执行顺序进行优化重新排序。重排序可能发生在多个阶段，比如编译重排序、CPU重排序。</p>
-<h4 id="happens-before原则"><a href="#happens-before原则" class="headerlink" title="happens-before原则"></a>happens-before原则</h4><p>是一个给程序员使用的规则，只要遵守<code>happens-before</code>原则，JVM就能保证指令在多线程之间的顺序性符合预期。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/04/22/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-volatile/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-<div>
-  
-</div>
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/20/MyBatis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="flbu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="flbu blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/20/MyBatis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">MyBatis学习笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-20T17:46:57+08:00">
-                2020-04-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MyBatis/" itemprop="url" rel="index">
-                    <span itemprop="name">MyBatis</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="MyBatis学习笔记"><a href="#MyBatis学习笔记" class="headerlink" title="MyBatis学习笔记"></a>MyBatis学习笔记</h1><p><code>MyBatis</code>是一款优秀的持久层框架，支持自定义SQL、存储过程和高级映射。<code>MyBatis</code>免除了几乎所有的JDBC代码以及设置参数和获取结果集的工作。可以通过简单的XML或注解来配置和映射原始类型、接口和<code>POJO</code>为数据库中的记录。</p>
-<h2 id="MyBatis安装与入门"><a href="#MyBatis安装与入门" class="headerlink" title="MyBatis安装与入门"></a>MyBatis安装与入门</h2><p><a href="https://github.com/mybatis/mybatis-3/releases" target="_blank" rel="noopener">MyBatis下载链接</a></p>
-<p>要使用<code>MyBatis</code>，只需将下载的jar文件置于类路径(classpath)中。</p>
-<p>如果使用<code>Maven</code>构建项目就更简单了，只需将依赖添加到<code>pom.xml</code>文件中。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>x.x.x<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/04/20/MyBatis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-<div>
-  
-</div>
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/14/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="flbu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="flbu blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/14/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" itemprop="url">Java多线程-内存模型</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-14T13:20:02+08:00">
-                2020-04-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index">
-                    <span itemprop="name">Java多线程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="共享内存并发模型"><a href="#共享内存并发模型" class="headerlink" title="共享内存并发模型"></a>共享内存并发模型</h2><p>并发编程模型有两个关键问题，即<strong>线程间如何通信，即线程间以何种机制来交换信息；线程间如何同步，即线程以何种机制来控制不同线程间操作发生的相对顺序。</strong></p>
-<p>有两个并发模型</p>
-<ul>
-<li>消息传递并发模型</li>
-<li>共享内存并发模型</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center">如何通信</th>
-<th align="center">如何同步</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">消息传递并发模型</td>
-<td align="center">线程间没有公共状态，必须通过发送消息显示地进行通信</td>
-<td align="center">发送消息总在接受消息之前，同步是隐式的</td>
-</tr>
-<tr>
-<td align="center">共享内存并发模型</td>
-<td align="center">线程间共享程序的公共状态，通过<strong>读-写内存中的公共状态</strong>进行隐式通信</td>
-<td align="center">必须显示指定某段代码需要在线程之间互斥执行，同步是显示的。</td>
-</tr>
-</tbody></table>
-<p><strong>Java中使用的是共享内存并发模型。</strong></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/04/14/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-<div>
-  
-</div>
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/13/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E7%BA%BF%E7%A8%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="flbu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="flbu blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/13/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E7%BA%BF%E7%A8%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1/" itemprop="url">Java多线程-线程间的通信</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-13T14:52:18+08:00">
-                2020-04-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index">
-                    <span itemprop="name">Java多线程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>[TOC]</p>
-<p>一般来讲，线程内部有自己私有的线程上下文，互不干扰。但当我们需要多个线程相互协作时，就需要利用线程间的通信。以下介绍几种常用的通信机制。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/04/13/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E7%BA%BF%E7%A8%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-<div>
-  
-</div>
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/10/Java%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81%E4%B8%8E%E4%B8%BB%E8%A6%81%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="flbu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="flbu blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/10/Java%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81%E4%B8%8E%E4%B8%BB%E8%A6%81%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95/" itemprop="url">Java线程的状态与主要转换方法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-10T14:32:34+08:00">
-                2020-04-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index">
-                    <span itemprop="name">Java多线程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>[TOC]</p>
-<h2 id="操作系统中的线程状态转换"><a href="#操作系统中的线程状态转换" class="headerlink" title="操作系统中的线程状态转换"></a>操作系统中的线程状态转换</h2><p>在现代操作系统中，线程被视为轻量级进程，所以操作系统中线程的状态其实是和操作系统中进程的状态是一致的。</p>
-<p><img src="https://f1bu920.github.io/images/Java%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2.png" alt="操作系统中线程状态转换.png"></p>
-<p>操作系统中线程主要有三个状态：</p>
-<ul>
-<li>就绪状态(ready)：线程正在等待使用CPU，等分配到CPU时间片就可以进入running状态。</li>
-<li>执行状态(running)：线程正在使用CPU。</li>
-<li>等待状态(waiting)：线程经过等待事件的调用或者正在等待其他资源，如 I/O等。</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/04/10/Java%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81%E4%B8%8E%E4%B8%BB%E8%A6%81%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-<div>
-  
-</div>
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/09/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E7%BA%BF%E7%A8%8B%E7%BB%84%E5%92%8C%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="flbu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="flbu blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/09/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E7%BA%BF%E7%A8%8B%E7%BB%84%E5%92%8C%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7/" itemprop="url">Java多线程-线程组和线程优先级</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-09T16:03:05+08:00">
-                2020-04-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index">
-                    <span itemprop="name">Java多线程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>[TOC]</p>
-<h1 id="线程组与线程优先级"><a href="#线程组与线程优先级" class="headerlink" title="线程组与线程优先级"></a>线程组与线程优先级</h1><h2 id="线程组"><a href="#线程组" class="headerlink" title="线程组"></a>线程组</h2><p>Java使用<code>ThreadGoup</code>来表示线程组，我们可以使用线程组对线程进行批量控制。</p>
-<p>每个<code>Thread</code>必然存在于一个<code>ThreadGroup</code>中，<code>Thread</code>不能独立于<code>ThreadGroup</code>存在。执行<code>main()</code>方法的主线程所在的线程组名字为”main”，如果我们<code>new Thread()</code>时不指定线程组，那么默认将父线程 (当前执行<code>new Thread</code>) 的线程组设为自己的线程组。举例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            System.out.println(<span class="string">"当前线程组名称: "</span> + Thread.currentThread().getThreadGroup().getName());</span><br><span class="line">            System.out.println(<span class="string">"当前线程名称: "</span> + Thread.currentThread().getName());</span><br><span class="line">        &#125;).start();</span><br><span class="line">        System.out.println(<span class="string">"main方法所在线程的线程组名称： "</span> + Thread.currentThread().getThreadGroup().getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果为：</p>
-<p><img src="https://f1bu920.github.io/images/%E7%BA%BF%E7%A8%8B%E7%BB%84%E4%B8%8E%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7%E7%BB%93%E6%9E%9C1.png" alt="结果"></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/04/09/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E7%BA%BF%E7%A8%8B%E7%BB%84%E5%92%8C%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7/#more" rel="contents">
+            <a class="btn" href="/2019/11/22/Django%E6%A8%A1%E5%9E%8B%E5%B1%82_%E6%9F%A5%E8%AF%A2/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1954,7 +748,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
   </nav>
 
 
@@ -2000,7 +794,7 @@
               
                 <a href="/archives/%7C%7Carchive">
               
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2011,7 +805,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2022,7 +816,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
