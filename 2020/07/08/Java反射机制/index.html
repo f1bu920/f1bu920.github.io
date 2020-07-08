@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Java,lambda," />
+  <meta name="keywords" content="Java,反射," />
 
 
 
@@ -81,18 +81,20 @@
 
 
 
-<meta name="description" content="lambda表达式格式：参数 -&gt; (表达式)如果代码要完成的计算无法放在一个表达式中，可以把代码放在{}中。 1Arrays.sort(str, (String first,String second) -&gt; (return (first.length()-second.length()))  即使lambda无参数，也要提供空括号. 1()-&gt; &amp;#123;for(int i">
+<meta name="description" content="Java反射 Java 反射机制在程序运行时，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性。这种 动态的获取信息 以及 动态调用对象的方法 的功能称为 Java 的反射机制。   反射机制很重要的一点就是“运行时”，其使得我们可以在程序运行时加载、探索以及使用编译期间完全未知的 .class 文件。换句话说，Java 程序可以加载一个运行时才">
 <meta property="og:type" content="article">
-<meta property="og:title" content="lambda表达式">
-<meta property="og:url" content="http://yoursite.com/2019/11/24/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
+<meta property="og:title" content="Java反射机制">
+<meta property="og:url" content="http://yoursite.com/2020/07/08/Java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/index.html">
 <meta property="og:site_name" content="flbu blog">
-<meta property="og:description" content="lambda表达式格式：参数 -&gt; (表达式)如果代码要完成的计算无法放在一个表达式中，可以把代码放在{}中。 1Arrays.sort(str, (String first,String second) -&gt; (return (first.length()-second.length()))  即使lambda无参数，也要提供空括号. 1()-&gt; &amp;#123;for(int i">
-<meta property="article:published_time" content="2019-11-24T12:18:48.000Z">
-<meta property="article:modified_time" content="2020-03-14T08:00:08.000Z">
+<meta property="og:description" content="Java反射 Java 反射机制在程序运行时，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性。这种 动态的获取信息 以及 动态调用对象的方法 的功能称为 Java 的反射机制。   反射机制很重要的一点就是“运行时”，其使得我们可以在程序运行时加载、探索以及使用编译期间完全未知的 .class 文件。换句话说，Java 程序可以加载一个运行时才">
+<meta property="og:image" content="https://f1bu920.github.io/images/Javareflect.png">
+<meta property="article:published_time" content="2020-07-08T02:03:18.000Z">
+<meta property="article:modified_time" content="2020-07-08T03:09:02.237Z">
 <meta property="article:author" content="flbu">
 <meta property="article:tag" content="Java">
-<meta property="article:tag" content="lambda">
+<meta property="article:tag" content="反射">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://f1bu920.github.io/images/Javareflect.png">
 
 
 
@@ -122,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/11/24/lambda表达式/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/07/08/Java反射机制/"/>
 
 
 
 
 
-  <title>lambda表达式 | flbu blog</title>
+  <title>Java反射机制 | flbu blog</title>
   
 
 
@@ -299,7 +301,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/24/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/08/Java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="flbu">
@@ -316,7 +318,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">lambda表达式</h1>
+          <h1 class="post-title" itemprop="name headline">Java反射机制</h1>
         
 
         <div class="post-meta">
@@ -328,8 +330,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-24T20:18:48+08:00">
-                2019-11-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-08T10:03:18+08:00">
+                2020-07-08
               </time>
             
 
@@ -388,67 +390,59 @@
       
 
       
-        <h2 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a>lambda表达式</h2><h3 id="格式：参数-gt-表达式"><a href="#格式：参数-gt-表达式" class="headerlink" title="格式：参数 -&gt; (表达式)"></a>格式：参数 -&gt; (表达式)</h3><p>如果代码要完成的计算无法放在一个表达式中，可以把代码放在{}中。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(str, (String first,String second) -&gt; (<span class="keyword">return</span> (first.length()-second.length()))</span><br></pre></td></tr></table></figure>
-
-<p>即使<code>lambda</code>无参数，也要提供空括号.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">()-&gt; &#123;<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++) System.out.println(i);&#125;</span><br></pre></td></tr></table></figure>
-
-<p>如果可以推导出一个<code>lambda</code>的参数类型，则可以忽略参数类型</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(friends,(first,second) -&gt; (first.length()-second.length()));<span class="comment">//friends是一个字符串数组</span></span><br></pre></td></tr></table></figure>
-
-<p>无需指定lambda的返回值类型，返回值类型会由上下文推导得到</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(String str1,String str2) -&gt; str1.length()-str2.length();</span><br></pre></td></tr></table></figure>
-
-<a id="more"></a> 
-
-<h3 id="函数式接口"><a href="#函数式接口" class="headerlink" title="函数式接口"></a>函数式接口</h3><p>对于只有一个抽象方法的接口，需要这种接口的对象时，就可以提供一个<code>lambda</code>，这种接口叫做函数式接口。</p>
-<p><strong>lambda可以转换为函数式接口</strong>，举例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(words, (first,second)-&gt;first.length()-second.length());</span><br><span class="line">people.removeIf(person -&gt; (person.getName().length()&gt;<span class="number">3</span>)); <span class="comment">//removeIf接受一个Predicate参数，这个接口专门用来传递lambda表达式</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h3><p>可以<code>::</code>分隔方法名与对象或类名。主要有3种情况。</p>
-<ol>
-<li><code>object::instanceMethod</code></li>
-<li><code>Class::staticMethod</code></li>
-<li><code>Class:;instanceMethod</code></li>
-</ol>
-<p>前2种情况下，方法引用等价于提供方法参数的lambda表达式。</p>
-<blockquote>
-<p>System.out::println等价于x -&gt; System.out.println(x);</p>
-<p>Math::power等价于(x,y) -&gt; (Math.power(x,y));</p>
+        <h2 id="Java反射"><a href="#Java反射" class="headerlink" title="Java反射"></a>Java反射</h2><blockquote>
+<p>Java 反射机制在程序<strong>运行时</strong>，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性。这种 <strong>动态的获取信息</strong> 以及 <strong>动态调用对象的方法</strong> 的功能称为 <strong>Java 的反射机制</strong>。</p>
 </blockquote>
-<p>  第三种情况下，第一个参数会成为方法的目标。</p>
 <blockquote>
-<p>String::compareToIgnoreCase等价于(x,y) -&gt; x.compareToIgnoreCase(y);</p>
+<p>反射机制很重要的一点就是“运行时”，其使得我们可以在程序运行时加载、探索以及使用编译期间完全未知的 <code>.class</code> 文件。换句话说，Java 程序可以加载一个运行时才得知名称的 <code>.class</code> 文件，然后获悉其完整构造，并生成其对象实体、或对其 fields（变量）设值、或调用其 methods（方法）。</p>
 </blockquote>
-<p>方法引用中也可以使用<code>this</code>和<code>super</code>，如``super::instanceMethod`.</p>
-<h3 id="构造器引用"><a href="#构造器引用" class="headerlink" title="构造器引用"></a>构造器引用</h3><p>构造器引用用法与方法引用类似，只不过方法名为new。举例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> []::<span class="keyword">new</span>  <span class="comment">//等价于 x -&gt; new int[x],x是数组的长度</span></span><br><span class="line">Perosn [] people = stream.toArray(Person::<span class="keyword">new</span>);</span><br></pre></td></tr></table></figure>
+<p>反射可以实现在运行时知道一个类的属性和方法。</p>
+<p><img src="https://f1bu920.github.io/images/Javareflect.png" alt=""></p>
+<a id="more"></a>
 
-<h3 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h3><p>通常会使用<code>lambda</code>访问外围方法或类中的变量</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">repeatMessage</span><span class="params">(String str)</span></span>&#123;</span><br><span class="line">    ActionListener listener = event -&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">repeatMessage(<span class="string">"hello"</span>);</span><br></pre></td></tr></table></figure>
-
-<p>这里str就是一个自由变量。我们说它被lambda捕获。</p>
-<p><code>lambda</code>表达式有3个部分：</p>
+<h3 id="Java反射的优缺点"><a href="#Java反射的优缺点" class="headerlink" title="Java反射的优缺点"></a>Java反射的优缺点</h3><ul>
+<li><p>优点</p>
+<p>可以实现动态的创建对象和编译，有很大的灵活性。</p>
+</li>
+<li><p>缺点</p>
+<p>反射是一种解释操作，对性能有影响，如使用反射来创建对象效率比不上直接使用<code>new</code>关键字，因为要先查找类资源，再使用类加载器创建。</p>
+</li>
+</ul>
+<h3 id="Class类"><a href="#Class类" class="headerlink" title="Class类"></a>Class类</h3><p><code>Class</code>类是实现反射的基础。<code>Class</code>类的构造器是私有的，这意味着只有JVM才能创建一个<code>Class</code>类型的对象，而不可以直接使用<code>new</code>关键字。共有三种方法来获得一个<code>Class</code>对象：</p>
 <ol>
-<li>一个代码块</li>
-<li>参数</li>
-<li>自由变量的值，这里指非参数而且不在代码中定义的变量。</li>
+<li><code>Class.forName(&quot;类路径&quot;)</code>：通过调用<code>forName</code>方法，通过一个类的全量限定名来获得。</li>
+<li><code>类名.class</code>：任何一个类都有一个隐藏的成员变量<code>class</code>，通过类的静态成员变量来获得</li>
+<li><code>对象名.getClass()</code>：通过一个类的对象的<code>getClass</code>方法获得。</li>
 </ol>
-<p><strong>在Java中，<code>lambda</code>就是闭包</strong>。</p>
-<p><strong><code>lambda</code>只能捕获值不变的变量</strong>，指变量初始化后就不会再为它赋新值。</p>
-<h3 id="处理lambda表达式"><a href="#处理lambda表达式" class="headerlink" title="处理lambda表达式"></a>处理lambda表达式</h3><p>使用<code>lambda</code>的重点是延迟执行，例如</p>
+<h3 id="Java反射API"><a href="#Java反射API" class="headerlink" title="Java反射API"></a>Java反射API</h3><p>反射 API 用来生成 JVM 中的类、接口或则对象的信息。</p>
 <ol>
-<li>在一个单独的线程中运行代码</li>
-<li>多次运行代码</li>
-<li>在算法的合适位置运行代码(例如，排序中的比较操作)</li>
-<li>发生某种情况时执行代码(如，点击了某个按钮，数据到达等)</li>
-<li>只在必要时运行代码</li>
+<li><code>Class</code> 类：反射的核心类，可以获取类的属性，方法等信息。</li>
+<li><code>Field</code>类：Java.lang.reflec包中的类，表示类的成员变量，可以用来获取和设置类之中的属性值。</li>
+<li><code>Method</code> 类： Java.lang.reflec包中的类，表示类的方法，它可以用来获取类中的方法信息或者执行方法。</li>
+<li><code>Constructor</code> 类： Java.lang.reflec 包中的类，表示类的构造方法。</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">IntConsumer</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">accept</span><span class="params">(<span class="keyword">int</span> value)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">repeat</span><span class="params">(<span class="keyword">int</span> n, IntConsumer action)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i =<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		action.accept(i);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">Student.repeat(<span class="number">10</span>,i-&gt; System.out.println(<span class="string">"CountDown:"</span>+(<span class="number">9</span>-i)));<span class="comment">//调用</span></span><br></pre></td></tr></table></figure>
+<p><strong>使用反射需要先获取操作类的<code>Class</code>对象，通过<code>Class</code>对象可以获取类的信息和方法属性。</strong></p>
+<ul>
+<li>获取<code>public</code>的变量信息<code>getFields()</code>。</li>
+<li>获取变量信息<code>getDeclaredFields()</code>。</li>
+<li>获取<code>public</code>的方法信息<code>getMethods()</code></li>
+<li>获取方法信息<code>getMethods()</code>。</li>
+<li>获得方法访问权限<code>getModifiers()</code></li>
+<li>获得方法返回类型<code>getReturnType()</code></li>
+<li>获得方法参数<code>getParameters()</code></li>
+</ul>
+<p><strong>获取到方法后，使用<code>invoke</code>反射调用私有方法。对于私有方法和变量，注意要先获得访问权`setAccessible(</strong>true<strong>)`</strong>。</p>
+<h3 id="利用反射动态创建对象实例"><a href="#利用反射动态创建对象实例" class="headerlink" title="利用反射动态创建对象实例"></a>利用反射动态创建对象实例</h3><ol>
+<li><p>使用 <code>Class</code> 对象的 <code>newInstance()</code>方法来创建该 <code>Class</code> 对象对应类的实例，但是这种方法要求该 <code>Class</code> 对象对应的类有默认的空构造器。 调用 <code>Constructor</code> 对象的 <code>newInstance()</code></p>
+</li>
+<li><p>先使用 <code>Class</code> 对象获取指定的 <code>Constructor</code> 对象，再调用 <code>Constructor</code> 对象的 <code>newInstance()</code>方法来创建 <code>Class</code> 对象对应类的实例,通过这种方法可以选定构造方法创建实例。</p>
+</li>
+</ol>
+<p>反射在<code>JavaEE</code>中也有广泛的应用，如<code>Class.forName(&quot;com.mysql.cj.jdbc.Driver.class&quot;)</code>就是用来加载MySQL的驱动类。此外，<code>Spring</code>中也用到了大量的反射。</p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="http://tengj.top/2016/04/28/javareflect/" target="_blank" rel="noopener">Java反射机制</a></p>
+<p><a href="https://juejin.im/post/598ea9116fb9a03c335a99a4" target="_blank" rel="noopener">Java反射由浅入深</a></p>
+<p><a href="https://juejin.im/post/5ea92cbd5188256d9a28cd40" target="_blank" rel="noopener">Java反射高频面试题</a></p>
 
-<h3 id="再谈Comparator"><a href="#再谈Comparator" class="headerlink" title="再谈Comparator"></a>再谈Comparator</h3><p><code>Comparator</code>接口包含很多的静态方法来创建构造器，这些方法可用于lambda表达式或方法引用。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(people,Comparator.comparing(Person::getName));<span class="comment">//按名字对people进行排序</span></span><br><span class="line">Arrays.sort(people,Comparator.comparing(Person::getLastName).thencomparing(Person::getFirstName));<span class="comment">//如果两人的姓一致则比较名；</span></span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -478,7 +472,7 @@
           
             <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i>Java</a>
           
-            <a href="/tags/lambda/" rel="tag"><i class="fa fa-tag"></i>lambda</a>
+            <a href="/tags/%E5%8F%8D%E5%B0%84/" rel="tag"><i class="fa fa-tag"></i>反射</a>
           
         </div>
       
@@ -491,8 +485,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/11/23/Git%E7%AC%94%E8%AE%B0/" rel="next" title="Git笔记">
-                <i class="fa fa-chevron-left"></i> Git笔记
+              <a href="/2020/07/05/Java%E5%BC%82%E5%B8%B8/" rel="next" title="Java异常">
+                <i class="fa fa-chevron-left"></i> Java异常
               </a>
             
           </div>
@@ -500,10 +494,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/03/11/JSP%E7%AC%94%E8%AE%B0/" rel="prev" title="JSP笔记">
-                JSP笔记 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -658,7 +648,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#lambda表达式"><span class="nav-text">lambda表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#格式：参数-gt-表达式"><span class="nav-text">格式：参数 -&gt; (表达式)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数式接口"><span class="nav-text">函数式接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法引用"><span class="nav-text">方法引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构造器引用"><span class="nav-text">构造器引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量作用域"><span class="nav-text">变量作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理lambda表达式"><span class="nav-text">处理lambda表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#再谈Comparator"><span class="nav-text">再谈Comparator</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java反射"><span class="nav-text">Java反射</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java反射的优缺点"><span class="nav-text">Java反射的优缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Class类"><span class="nav-text">Class类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java反射API"><span class="nav-text">Java反射API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用反射动态创建对象实例"><span class="nav-text">利用反射动态创建对象实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-text">参考链接</span></a></li></ol></li></ol></div>
             
 
           </div>
