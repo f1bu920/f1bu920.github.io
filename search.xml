@@ -1,6 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>ArrayList源码学习</title>
+    <url>/2020/03/26/ArrayList%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<h1 id="ArrayList源码学习"><a href="#ArrayList源码学习" class="headerlink" title="ArrayList源码学习"></a>ArrayList源码学习</h1><h3 id="ArrayList的构造函数"><a href="#ArrayList的构造函数" class="headerlink" title="ArrayList的构造函数"></a>ArrayList的构造函数</h3><ul>
+<li><p>默认的构造函数</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Constructs an empty list with an initial capacity of ten.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ArrayList</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>由上述代码可知，当我们创建一个<code>ArrayList</code>时，<strong>如果不传入参数，会使用初始容量10构造一个空数组，只有当真正对数组进行添加元素操作时才会分配容量。即向数组中添加第一个元素时，数组容量扩容为10.</strong></p>
+<a id="more"></a>
+</li>
+<li><p>传入初始容量的构造函数</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Constructs an empty list with the specified initial capacity.</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span>  initialCapacity  the initial capacity of the list</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@throws</span> IllegalArgumentException if the specified initial capacity</span></span><br><span class="line"><span class="comment">   *         is negative</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">transient</span> Object[] elementData; <span class="comment">// non-private to simplify nested class access</span></span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">ArrayList</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (initialCapacity &gt; <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="keyword">this</span>.elementData = <span class="keyword">new</span> Object[initialCapacity];</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (initialCapacity == <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="keyword">this</span>.elementData = EMPTY_ELEMENTDATA;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Illegal Capacity: "</span>+</span><br><span class="line">                                             initialCapacity);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>传入容量大于0时，创建<code>initialCapacity</code>大小的数组；传入容量等于0时，创建空数组；小于0时抛出异常。</p>
+</li>
+<li><p>传入集合的构造函数</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * Constructs a list containing the elements of the specified</span></span><br><span class="line"><span class="comment">  * collection, in the order they are returned by the collection's</span></span><br><span class="line"><span class="comment">  * iterator.</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> c the collection whose elements are to be placed into this list</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@throws</span> NullPointerException if the specified collection is null</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="title">ArrayList</span><span class="params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;</span><br><span class="line">     elementData = c.toArray();</span><br><span class="line">     <span class="keyword">if</span> ((size = elementData.length) != <span class="number">0</span>) &#123;</span><br><span class="line">         <span class="comment">// c.toArray might (incorrectly) not return Object[] (see 6260652)</span></span><br><span class="line">         <span class="keyword">if</span> (elementData.getClass() != Object[]<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">             <span class="title">elementData</span> </span>= Arrays.copyOf(elementData, size, Object[]<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">     &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">         <span class="comment">// replace with empty array.</span></span><br><span class="line">         <span class="keyword">this</span>.elementData = EMPTY_ELEMENTDATA;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造包含指定collection元素的列表，这些元素利用该集合的迭代器按顺序返回，如果指定的集合为<code>null</code>，抛出<code>throws NullPointerException</code>。</p>
+</li>
+</ul>
+<h2 id="ArrayList扩容机制"><a href="#ArrayList扩容机制" class="headerlink" title="ArrayList扩容机制"></a>ArrayList扩容机制</h2><p>以无参数构造函数为例。</p>
+<ol>
+<li><p><strong><code>add</code>方法</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * Appends the specified element to the end of this list.</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> e element to be appended to this list</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@return</span> &lt;tt&gt;true&lt;/tt&gt; (as specified by &#123;<span class="doctag">@link</span> Collection#add&#125;)</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">     ensureCapacityInternal(size + <span class="number">1</span>);  <span class="comment">// Increments modCount!!</span></span><br><span class="line">     elementData[size++] = e;</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>add</code>方法将指定的元素添加到列表的末尾，添加元素之前先调用<code>ensureCapacityInternal</code>方法，再为数组赋值。</p>
+</li>
+<li><p><strong><code>ensureCapacityInternal</code>方法</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">   <span class="comment">//获取最小需要容量</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ensureCapacityInternal</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) &#123;</span><br><span class="line">           minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);</span><br><span class="line">       &#125;</span><br><span class="line">   </span><br><span class="line">       ensureExplicitCapacity(minCapacity);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>add</code>方法调用了<code>ensureCapacityInternal(size+1)</code>方法，<strong>当要add第一个元素时，<code>minCapacity=1</code>，在<code>Math.max()</code>方法比较后，<code>minCapacity=10</code>。</strong></p>
+</li>
+<li><p><strong><code>ensureExplicitCapacity</code>方法</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//判断是否需要扩容</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ensureExplicitCapacity</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">    modCount++;</span><br><span class="line">   </span><br><span class="line">    <span class="comment">// overflow-conscious code</span></span><br><span class="line">    <span class="keyword">if</span> (minCapacity - elementData.length &gt; <span class="number">0</span>)</span><br><span class="line">        grow(minCapacity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当最小需要容量大于数组长度时，需要扩容。</p>
+<ul>
+<li>当我们<code>add</code>第一个元素进<code>ArrayList</code>时，<code>elementData.length=0</code>，但执行了<code>ensureCapacityInternal</code>方法后<code>minCapacity=10</code>，所以会执行<code>grow(minCapacity)</code>方法，数组扩容为10；</li>
+<li>当<code>add</code>第二个元素时，传入的<code>minCapacity=size+1=2</code>，而<code>elementData.length=10</code>，所以不会调用<code>grow</code>方法。</li>
+<li>当<code>add</code>第三个、第四个、…第十个元素时，依然不会执行<code>grow</code>方法</li>
+<li>直到<code>add</code>第十一个元素时，<code>minCapacity=size+1=11</code>，<code>elementData.length = 10</code>，所以会进行扩容。</li>
+</ul>
+</li>
+<li><p><strong><code>grow</code>方法</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 要分配的最大数组大小</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_ARRAY_SIZE = Integer.MAX_VALUE - <span class="number">8</span>;    </span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Increases the capacity to ensure that it can hold at least the</span></span><br><span class="line"><span class="comment"> * number of elements specified by the minimum capacity argument.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> minCapacity the desired minimum capacity</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">grow</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// overflow-conscious code</span></span><br><span class="line">    <span class="keyword">int</span> oldCapacity = elementData.length;</span><br><span class="line">    <span class="keyword">int</span> newCapacity = oldCapacity + (oldCapacity &gt;&gt; <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> (newCapacity - minCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        newCapacity = minCapacity;</span><br><span class="line">    <span class="keyword">if</span> (newCapacity - MAX_ARRAY_SIZE &gt; <span class="number">0</span>)</span><br><span class="line">        newCapacity = hugeCapacity(minCapacity);</span><br><span class="line">    <span class="comment">// minCapacity is usually close to size, so this is a win:</span></span><br><span class="line">    elementData = Arrays.copyOf(elementData, newCapacity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>int newCapacity = oldCapacity + (oldCapacity &gt;&gt; 1)</code>，所以新容量是旧容量的1.5倍左右，(<code>oldCapacity</code>为偶数时为1.5倍，为奇数时为1.5倍左右)。</p>
+<blockquote>
+<p>“&gt;&gt;”（移位运算符）：&gt;&gt;1 右移一位相当于除2，右移n位相当于除以 2 的 n 次方。这里 oldCapacity 明显右移了1位所以相当于oldCapacity /2。对于大数据的2进制运算,位移运算符比那些普通运算符的运算要快很多,因为程序仅仅移动一下而已,不去计算,这样提高了效率,节省了资源 　</p>
+</blockquote>
+<ul>
+<li>当<code>add</code>第一个元素时，<code>oldCapacity=0</code>，第一个判断成立，<code>newCapacity = minCapacity = 10</code>，第二个判断不成立，不会进入<code>hugeCapacity</code>方法。数组容量为10，<code>size=1</code>，添加成功。</li>
+<li>当<code>add</code>第11个元素时，<code>oldCapacity=10</code>，<code>newCapacity=15</code>，第一个判断不成立，第二个判断也不成立。数组容量扩为15，<code>size=11</code>，添加成功。</li>
+<li>……</li>
+</ul>
+</li>
+<li><p><strong><code>hugeCapacity</code>方法</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * The maximum size of array to allocate.</span></span><br><span class="line"><span class="comment">    * Some VMs reserve some header words in an array.</span></span><br><span class="line"><span class="comment">    * Attempts to allocate larger arrays may result in</span></span><br><span class="line"><span class="comment">    * OutOfMemoryError: Requested array size exceeds VM limit</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_ARRAY_SIZE = Integer.MAX_VALUE - <span class="number">8</span>;    </span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">hugeCapacity</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (minCapacity &lt; <span class="number">0</span>) <span class="comment">// overflow</span></span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> OutOfMemoryError();</span><br><span class="line">       <span class="keyword">return</span> (minCapacity &gt; MAX_ARRAY_SIZE) ?</span><br><span class="line">           Integer.MAX_VALUE :</span><br><span class="line">           MAX_ARRAY_SIZE;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>grow</code>方法中，若<code>newCapacity&gt;MAX_ARRAY_SIZE</code>就会执行<code>hugeCapacity</code>来比较<code>minCapacity</code>和<code>MAX_ARRAY_SIZE</code>，若大于，则新容量为<code>Integer.MAX_vALUE</code>，否则为<code>MAX_ARRAY_SIZE=Integer.MAX_VALUE-8</code>。</p>
+</li>
+</ol>
+<h4 id="System-arraycopy-与Arrays-copyOf-方法"><a href="#System-arraycopy-与Arrays-copyOf-方法" class="headerlink" title="System.arraycopy()与Arrays.copyOf()方法"></a><code>System.arraycopy()</code>与<code>Arrays.copyOf()</code>方法</h4><p>阅读源码后，可以发现<code>ArrayList</code>中大量使用了这两个方法。</p>
+<ol>
+<li><p><code>System.arraycopy()</code>方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">      <span class="comment">/**</span></span><br><span class="line"><span class="comment">      *在指定位置插入集合中的所有元素</span></span><br><span class="line"><span class="comment">      *</span></span><br><span class="line"><span class="comment">      /</span></span><br><span class="line"><span class="comment">public boolean addAll(int index, Collection&lt;? extends E&gt; c) &#123;</span></span><br><span class="line"><span class="comment">       rangeCheckForAdd(index);</span></span><br><span class="line"><span class="comment">   </span></span><br><span class="line"><span class="comment">       Object[] a = c.toArray();</span></span><br><span class="line"><span class="comment">       int numNew = a.length;</span></span><br><span class="line"><span class="comment">       ensureCapacityInternal(size + numNew);  // Increments modCount</span></span><br><span class="line"><span class="comment">   </span></span><br><span class="line"><span class="comment">       int numMoved = size - index;</span></span><br><span class="line"><span class="comment">       if (numMoved &gt; 0)</span></span><br><span class="line"><span class="comment">           System.arraycopy(elementData, index, elementData, index + numNew,</span></span><br><span class="line"><span class="comment">                            numMoved);</span></span><br><span class="line"><span class="comment">   </span></span><br><span class="line"><span class="comment">       System.arraycopy(a, 0, elementData, index, numNew);</span></span><br><span class="line"><span class="comment">       size += numNew;</span></span><br><span class="line"><span class="comment">       return numNew != 0;</span></span><br><span class="line"><span class="comment">   &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>System.arraycopy(a, 0, elementData, index, numNew)</code>中<code>a</code>为源数组，<code>0</code>为源数组起始位置，<code>elementData</code>为目标数组，<code>index</code>为目标数组中的起始位置，<code>numNew</code>为要复制的数组元素的数量。</p>
+</li>
+<li><p><code>Arrays.copyOf()</code>方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  以正确的顺序返回一个包含此列表中所有元素的数组（从第一个到最后一个元素）; 返回的数组的运行时类型是指定数组的运行时类型。 </span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> <span class="keyword">public</span> Object[] toArray() &#123;</span><br><span class="line"> <span class="comment">//elementData：要复制的数组；size：要复制的长度</span></span><br><span class="line">     <span class="keyword">return</span> Arrays.copyOf(elementData, size);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>区别</p>
+<p><code>arraycopy()</code> 需要目标数组，将原数组拷贝到你自己定义的数组里或者原数组，而且可以选择拷贝的起点和长度以及放入新数组中的位置 <code>copyOf()</code> 是系统自动在内部新建一个数组，并返回该数组。 </p>
+</li>
+</ol>
+<h3 id="ensureCapacity方法"><a href="#ensureCapacity方法" class="headerlink" title="ensureCapacity方法"></a><strong><code>ensureCapacity</code>方法</strong></h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">如有必要，增加此 ArrayList 实例的容量，以确保它至少可以容纳由minimum capacity参数指定的元素数。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span>   minCapacity   所需的最小容量</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ensureCapacity</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> minExpand = (elementData != DEFAULTCAPACITY_EMPTY_ELEMENTDATA)</span><br><span class="line">        <span class="comment">// any size if not default element table</span></span><br><span class="line">        ? <span class="number">0</span></span><br><span class="line">        <span class="comment">// larger than default for default empty table. It's already</span></span><br><span class="line">        <span class="comment">// supposed to be at default size.</span></span><br><span class="line">        : DEFAULT_CAPACITY;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (minCapacity &gt; minExpand) &#123;</span><br><span class="line">        ensureExplicitCapacity(minCapacity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>最好在 add 大量元素之前用 ensureCapacity 方法，以减少增量重新分配的次数</strong> </p>
+]]></content>
+      <categories>
+        <category>源码学习</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>ArrayList</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>My New Post</title>
     <url>/2019/11/22/Django%E6%A8%A1%E5%9E%8B%E5%B1%82_%E6%9F%A5%E8%AF%A2/</url>
     <content><![CDATA[<h2 id="执行查询"><a href="#执行查询" class="headerlink" title="执行查询"></a>执行查询</h2><p>创建数据模型后，Django自动提供了一套API来实现数据库的增删改查，模型代码如下</p>
@@ -201,95 +290,6 @@
 ]]></content>
       <tags>
         <tag>IDEA</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ArrayList源码学习</title>
-    <url>/2020/03/26/ArrayList%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<h1 id="ArrayList源码学习"><a href="#ArrayList源码学习" class="headerlink" title="ArrayList源码学习"></a>ArrayList源码学习</h1><h3 id="ArrayList的构造函数"><a href="#ArrayList的构造函数" class="headerlink" title="ArrayList的构造函数"></a>ArrayList的构造函数</h3><ul>
-<li><p>默认的构造函数</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Constructs an empty list with an initial capacity of ten.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ArrayList</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>由上述代码可知，当我们创建一个<code>ArrayList</code>时，<strong>如果不传入参数，会使用初始容量10构造一个空数组，只有当真正对数组进行添加元素操作时才会分配容量。即向数组中添加第一个元素时，数组容量扩容为10.</strong></p>
-<a id="more"></a>
-</li>
-<li><p>传入初始容量的构造函数</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Constructs an empty list with the specified initial capacity.</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span>  initialCapacity  the initial capacity of the list</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@throws</span> IllegalArgumentException if the specified initial capacity</span></span><br><span class="line"><span class="comment">   *         is negative</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">transient</span> Object[] elementData; <span class="comment">// non-private to simplify nested class access</span></span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">ArrayList</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (initialCapacity &gt; <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="keyword">this</span>.elementData = <span class="keyword">new</span> Object[initialCapacity];</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (initialCapacity == <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="keyword">this</span>.elementData = EMPTY_ELEMENTDATA;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Illegal Capacity: "</span>+</span><br><span class="line">                                             initialCapacity);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p>传入容量大于0时，创建<code>initialCapacity</code>大小的数组；传入容量等于0时，创建空数组；小于0时抛出异常。</p>
-</li>
-<li><p>传入集合的构造函数</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * Constructs a list containing the elements of the specified</span></span><br><span class="line"><span class="comment">  * collection, in the order they are returned by the collection's</span></span><br><span class="line"><span class="comment">  * iterator.</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> c the collection whose elements are to be placed into this list</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@throws</span> NullPointerException if the specified collection is null</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="title">ArrayList</span><span class="params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;</span><br><span class="line">     elementData = c.toArray();</span><br><span class="line">     <span class="keyword">if</span> ((size = elementData.length) != <span class="number">0</span>) &#123;</span><br><span class="line">         <span class="comment">// c.toArray might (incorrectly) not return Object[] (see 6260652)</span></span><br><span class="line">         <span class="keyword">if</span> (elementData.getClass() != Object[]<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">             <span class="title">elementData</span> </span>= Arrays.copyOf(elementData, size, Object[]<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">     &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">         <span class="comment">// replace with empty array.</span></span><br><span class="line">         <span class="keyword">this</span>.elementData = EMPTY_ELEMENTDATA;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p>构造包含指定collection元素的列表，这些元素利用该集合的迭代器按顺序返回，如果指定的集合为<code>null</code>，抛出<code>throws NullPointerException</code>。</p>
-</li>
-</ul>
-<h2 id="ArrayList扩容机制"><a href="#ArrayList扩容机制" class="headerlink" title="ArrayList扩容机制"></a>ArrayList扩容机制</h2><p>以无参数构造函数为例。</p>
-<ol>
-<li><p><strong><code>add</code>方法</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * Appends the specified element to the end of this list.</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> e element to be appended to this list</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@return</span> &lt;tt&gt;true&lt;/tt&gt; (as specified by &#123;<span class="doctag">@link</span> Collection#add&#125;)</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">     ensureCapacityInternal(size + <span class="number">1</span>);  <span class="comment">// Increments modCount!!</span></span><br><span class="line">     elementData[size++] = e;</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>add</code>方法将指定的元素添加到列表的末尾，添加元素之前先调用<code>ensureCapacityInternal</code>方法，再为数组赋值。</p>
-</li>
-<li><p><strong><code>ensureCapacityInternal</code>方法</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">   <span class="comment">//获取最小需要容量</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ensureCapacityInternal</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) &#123;</span><br><span class="line">           minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);</span><br><span class="line">       &#125;</span><br><span class="line">   </span><br><span class="line">       ensureExplicitCapacity(minCapacity);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>add</code>方法调用了<code>ensureCapacityInternal(size+1)</code>方法，<strong>当要add第一个元素时，<code>minCapacity=1</code>，在<code>Math.max()</code>方法比较后，<code>minCapacity=10</code>。</strong></p>
-</li>
-<li><p><strong><code>ensureExplicitCapacity</code>方法</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//判断是否需要扩容</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ensureExplicitCapacity</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">    modCount++;</span><br><span class="line">   </span><br><span class="line">    <span class="comment">// overflow-conscious code</span></span><br><span class="line">    <span class="keyword">if</span> (minCapacity - elementData.length &gt; <span class="number">0</span>)</span><br><span class="line">        grow(minCapacity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>当最小需要容量大于数组长度时，需要扩容。</p>
-<ul>
-<li>当我们<code>add</code>第一个元素进<code>ArrayList</code>时，<code>elementData.length=0</code>，但执行了<code>ensureCapacityInternal</code>方法后<code>minCapacity=10</code>，所以会执行<code>grow(minCapacity)</code>方法，数组扩容为10；</li>
-<li>当<code>add</code>第二个元素时，传入的<code>minCapacity=size+1=2</code>，而<code>elementData.length=10</code>，所以不会调用<code>grow</code>方法。</li>
-<li>当<code>add</code>第三个、第四个、…第十个元素时，依然不会执行<code>grow</code>方法</li>
-<li>直到<code>add</code>第十一个元素时，<code>minCapacity=size+1=11</code>，<code>elementData.length = 10</code>，所以会进行扩容。</li>
-</ul>
-</li>
-<li><p><strong><code>grow</code>方法</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 要分配的最大数组大小</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_ARRAY_SIZE = Integer.MAX_VALUE - <span class="number">8</span>;    </span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Increases the capacity to ensure that it can hold at least the</span></span><br><span class="line"><span class="comment"> * number of elements specified by the minimum capacity argument.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> minCapacity the desired minimum capacity</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">grow</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// overflow-conscious code</span></span><br><span class="line">    <span class="keyword">int</span> oldCapacity = elementData.length;</span><br><span class="line">    <span class="keyword">int</span> newCapacity = oldCapacity + (oldCapacity &gt;&gt; <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> (newCapacity - minCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        newCapacity = minCapacity;</span><br><span class="line">    <span class="keyword">if</span> (newCapacity - MAX_ARRAY_SIZE &gt; <span class="number">0</span>)</span><br><span class="line">        newCapacity = hugeCapacity(minCapacity);</span><br><span class="line">    <span class="comment">// minCapacity is usually close to size, so this is a win:</span></span><br><span class="line">    elementData = Arrays.copyOf(elementData, newCapacity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>int newCapacity = oldCapacity + (oldCapacity &gt;&gt; 1)</code>，所以新容量是旧容量的1.5倍左右，(<code>oldCapacity</code>为偶数时为1.5倍，为奇数时为1.5倍左右)。</p>
-<blockquote>
-<p>“&gt;&gt;”（移位运算符）：&gt;&gt;1 右移一位相当于除2，右移n位相当于除以 2 的 n 次方。这里 oldCapacity 明显右移了1位所以相当于oldCapacity /2。对于大数据的2进制运算,位移运算符比那些普通运算符的运算要快很多,因为程序仅仅移动一下而已,不去计算,这样提高了效率,节省了资源 　</p>
-</blockquote>
-<ul>
-<li>当<code>add</code>第一个元素时，<code>oldCapacity=0</code>，第一个判断成立，<code>newCapacity = minCapacity = 10</code>，第二个判断不成立，不会进入<code>hugeCapacity</code>方法。数组容量为10，<code>size=1</code>，添加成功。</li>
-<li>当<code>add</code>第11个元素时，<code>oldCapacity=10</code>，<code>newCapacity=15</code>，第一个判断不成立，第二个判断也不成立。数组容量扩为15，<code>size=11</code>，添加成功。</li>
-<li>……</li>
-</ul>
-</li>
-<li><p><strong><code>hugeCapacity</code>方法</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * The maximum size of array to allocate.</span></span><br><span class="line"><span class="comment">    * Some VMs reserve some header words in an array.</span></span><br><span class="line"><span class="comment">    * Attempts to allocate larger arrays may result in</span></span><br><span class="line"><span class="comment">    * OutOfMemoryError: Requested array size exceeds VM limit</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_ARRAY_SIZE = Integer.MAX_VALUE - <span class="number">8</span>;    </span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">hugeCapacity</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (minCapacity &lt; <span class="number">0</span>) <span class="comment">// overflow</span></span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> OutOfMemoryError();</span><br><span class="line">       <span class="keyword">return</span> (minCapacity &gt; MAX_ARRAY_SIZE) ?</span><br><span class="line">           Integer.MAX_VALUE :</span><br><span class="line">           MAX_ARRAY_SIZE;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<p>在<code>grow</code>方法中，若<code>newCapacity&gt;MAX_ARRAY_SIZE</code>就会执行<code>hugeCapacity</code>来比较<code>minCapacity</code>和<code>MAX_ARRAY_SIZE</code>，若大于，则新容量为<code>Integer.MAX_vALUE</code>，否则为<code>MAX_ARRAY_SIZE=Integer.MAX_VALUE-8</code>。</p>
-</li>
-</ol>
-<h4 id="System-arraycopy-与Arrays-copyOf-方法"><a href="#System-arraycopy-与Arrays-copyOf-方法" class="headerlink" title="System.arraycopy()与Arrays.copyOf()方法"></a><code>System.arraycopy()</code>与<code>Arrays.copyOf()</code>方法</h4><p>阅读源码后，可以发现<code>ArrayList</code>中大量使用了这两个方法。</p>
-<ol>
-<li><p><code>System.arraycopy()</code>方法</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">      <span class="comment">/**</span></span><br><span class="line"><span class="comment">      *在指定位置插入集合中的所有元素</span></span><br><span class="line"><span class="comment">      *</span></span><br><span class="line"><span class="comment">      /</span></span><br><span class="line"><span class="comment">public boolean addAll(int index, Collection&lt;? extends E&gt; c) &#123;</span></span><br><span class="line"><span class="comment">       rangeCheckForAdd(index);</span></span><br><span class="line"><span class="comment">   </span></span><br><span class="line"><span class="comment">       Object[] a = c.toArray();</span></span><br><span class="line"><span class="comment">       int numNew = a.length;</span></span><br><span class="line"><span class="comment">       ensureCapacityInternal(size + numNew);  // Increments modCount</span></span><br><span class="line"><span class="comment">   </span></span><br><span class="line"><span class="comment">       int numMoved = size - index;</span></span><br><span class="line"><span class="comment">       if (numMoved &gt; 0)</span></span><br><span class="line"><span class="comment">           System.arraycopy(elementData, index, elementData, index + numNew,</span></span><br><span class="line"><span class="comment">                            numMoved);</span></span><br><span class="line"><span class="comment">   </span></span><br><span class="line"><span class="comment">       System.arraycopy(a, 0, elementData, index, numNew);</span></span><br><span class="line"><span class="comment">       size += numNew;</span></span><br><span class="line"><span class="comment">       return numNew != 0;</span></span><br><span class="line"><span class="comment">   &#125;</span></span><br></pre></td></tr></table></figure>
-
-<p><code>System.arraycopy(a, 0, elementData, index, numNew)</code>中<code>a</code>为源数组，<code>0</code>为源数组起始位置，<code>elementData</code>为目标数组，<code>index</code>为目标数组中的起始位置，<code>numNew</code>为要复制的数组元素的数量。</p>
-</li>
-<li><p><code>Arrays.copyOf()</code>方法</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  以正确的顺序返回一个包含此列表中所有元素的数组（从第一个到最后一个元素）; 返回的数组的运行时类型是指定数组的运行时类型。 </span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> <span class="keyword">public</span> Object[] toArray() &#123;</span><br><span class="line"> <span class="comment">//elementData：要复制的数组；size：要复制的长度</span></span><br><span class="line">     <span class="keyword">return</span> Arrays.copyOf(elementData, size);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>区别</p>
-<p><code>arraycopy()</code> 需要目标数组，将原数组拷贝到你自己定义的数组里或者原数组，而且可以选择拷贝的起点和长度以及放入新数组中的位置 <code>copyOf()</code> 是系统自动在内部新建一个数组，并返回该数组。 </p>
-</li>
-</ol>
-<h3 id="ensureCapacity方法"><a href="#ensureCapacity方法" class="headerlink" title="ensureCapacity方法"></a><strong><code>ensureCapacity</code>方法</strong></h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">如有必要，增加此 ArrayList 实例的容量，以确保它至少可以容纳由minimum capacity参数指定的元素数。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span>   minCapacity   所需的最小容量</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ensureCapacity</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> minExpand = (elementData != DEFAULTCAPACITY_EMPTY_ELEMENTDATA)</span><br><span class="line">        <span class="comment">// any size if not default element table</span></span><br><span class="line">        ? <span class="number">0</span></span><br><span class="line">        <span class="comment">// larger than default for default empty table. It's already</span></span><br><span class="line">        <span class="comment">// supposed to be at default size.</span></span><br><span class="line">        : DEFAULT_CAPACITY;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (minCapacity &gt; minExpand) &#123;</span><br><span class="line">        ensureExplicitCapacity(minCapacity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>最好在 add 大量元素之前用 ensureCapacity 方法，以减少增量重新分配的次数</strong> </p>
-]]></content>
-      <categories>
-        <category>源码学习</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>ArrayList</tag>
       </tags>
   </entry>
   <entry>
@@ -1029,6 +1029,79 @@
       </tags>
   </entry>
   <entry>
+    <title>Java多线程-内存模型</title>
+    <url>/2020/04/14/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<h2 id="共享内存并发模型"><a href="#共享内存并发模型" class="headerlink" title="共享内存并发模型"></a>共享内存并发模型</h2><p>并发编程模型有两个关键问题，即<strong>线程间如何通信，即线程间以何种机制来交换信息；线程间如何同步，即线程以何种机制来控制不同线程间操作发生的相对顺序。</strong></p>
+<p>有两个并发模型</p>
+<ul>
+<li>消息传递并发模型</li>
+<li>共享内存并发模型</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">如何通信</th>
+<th align="center">如何同步</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">消息传递并发模型</td>
+<td align="center">线程间没有公共状态，必须通过发送消息显示地进行通信</td>
+<td align="center">发送消息总在接受消息之前，同步是隐式的</td>
+</tr>
+<tr>
+<td align="center">共享内存并发模型</td>
+<td align="center">线程间共享程序的公共状态，通过<strong>读-写内存中的公共状态</strong>进行隐式通信</td>
+<td align="center">必须显示指定某段代码需要在线程之间互斥执行，同步是显示的。</td>
+</tr>
+</tbody></table>
+<p><strong>Java中使用的是共享内存并发模型。</strong></p>
+<a id="more"></a>
+
+
+
+<h2 id="Java内存模型的抽象结构"><a href="#Java内存模型的抽象结构" class="headerlink" title="Java内存模型的抽象结构"></a>Java内存模型的抽象结构</h2><h4 id="运行时内存的划分"><a href="#运行时内存的划分" class="headerlink" title="运行时内存的划分"></a>运行时内存的划分</h4><p>运行时数据区：</p>
+<p><img src="https://f1bu920.github.io/images/Java%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA.png" alt="Java运行时数据区"></p>
+<p>其中，<strong>堆和方法区是所有线程共享的数据区，虚拟机栈、本地方法栈和程序计数器是线程私有的数据区。</strong></p>
+<p>对于每一个线程，栈都是私有的，堆都是共有的。</p>
+<p>在栈中的变量（局部变量、方法定义参数、异常处理器参数）不会在线程间共享，也就不会有内存可见性问题，不受内存模型的影响。而在堆中的变量是共享的，称为共享变量。</p>
+<p><strong>内存可见性针对的是共享变量。</strong></p>
+<h4 id="内存不可见性问题"><a href="#内存不可见性问题" class="headerlink" title="内存不可见性问题"></a>内存不可见性问题</h4><p><strong>线程间的共享变量存在主内存中，每个线程都有一个自己的本地内存，存储了该线程以读、写共享变量的副本</strong>。本地内存是一个抽象概念，并不真实存在，它涵盖了缓存、写缓冲区、寄存器等。</p>
+<p><strong>Java线程间的通信由Java内存模型（JMM）控制，JMM定义了线程与主内存间的抽象关系</strong>。</p>
+<p><img src="https://f1bu920.github.io/images/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png" alt="Java内存模型"></p>
+<ol>
+<li>所有的共享变量都在主内存中</li>
+<li>每个线程保留了一份该线程使用到的共享变量的副本</li>
+<li>线程A与线程B要通信的话，必须经过以下步骤：<ol>
+<li>线程A将本地内存A更新过的共享变量刷新到主内存中</li>
+<li>线程B到主内存中去读取已经更新过的共享变量</li>
+</ol>
+</li>
+</ol>
+<p><strong>线程A无法直接访问线程B的工作内存，线程间通信必须经过主内存。</strong></p>
+<p>根据JMM规定，<strong>线程对共享变量的所有操作都必须在自己的本地内存中进行，不能直接从主内存读取。</strong></p>
+<p>也就是说，<strong>线程B不能直接去主内存中读取共享变量的值，而是先在本地内存找到这个共享变量，发现这个共享变量已经被更新过了，然后本地内存B去主内存中读取这个共享变量的新值，再拷贝到本地内存B中，最后线程B再读取本地内存B中的共享变量值</strong>。</p>
+<p>至于如何知道共享变量已经被更新过了，就是JMM的作用了。<strong>JMM通过控制主内存与每个线程的本地内存之间的交互来提供内存可见性保证。</strong></p>
+<p><em>Java中<code>volatile</code>关键字可以保证多线程操作共享变量的可见性以及禁止指令重排序，<code>synchronized</code>关键字不仅保证了可见性，也保证了原子性。在更底层，JMM通过内存屏障来实现内存的可见性与禁止重排序，并提出了happens-before。</em></p>
+<h4 id="JMM与Java内存区域划分的区别与联系"><a href="#JMM与Java内存区域划分的区别与联系" class="headerlink" title="JMM与Java内存区域划分的区别与联系"></a>JMM与Java内存区域划分的区别与联系</h4><ul>
+<li><p>区别</p>
+<p><strong>JMM是抽象的，用来描述一组规则，通过这个规则来控制各个变量的访问方式，围绕原子性、有序性、可见性等展开的。而Java运行时内存的划分是具体的，时JVM运行Java程序时必要的内存划分。</strong></p>
+</li>
+<li><p>联系</p>
+<p>都存在私有数据区和共享数据区。JMM中的主内存属于共享数据区，包含了堆和方法区；JMM中的本地内存属于私有数据区，包含了虚拟机栈、本地方法栈和程序计数器。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Java多线程</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java多线程-synchronized与锁</title>
     <url>/2020/04/22/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-synchronized%E4%B8%8E%E9%94%81/</url>
     <content><![CDATA[<h2 id="synchronized关键字"><a href="#synchronized关键字" class="headerlink" title="synchronized关键字"></a>synchronized关键字</h2><p><code>synchronized</code>翻译成中文就是同步的意思。我们通常使用<code>synchronized</code>关键字来给一段代码或一个方法上锁。其主要有以下三种方式</p>
@@ -1204,79 +1277,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Java多线程-内存模型</title>
-    <url>/2020/04/14/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</url>
-    <content><![CDATA[<h2 id="共享内存并发模型"><a href="#共享内存并发模型" class="headerlink" title="共享内存并发模型"></a>共享内存并发模型</h2><p>并发编程模型有两个关键问题，即<strong>线程间如何通信，即线程间以何种机制来交换信息；线程间如何同步，即线程以何种机制来控制不同线程间操作发生的相对顺序。</strong></p>
-<p>有两个并发模型</p>
-<ul>
-<li>消息传递并发模型</li>
-<li>共享内存并发模型</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center">如何通信</th>
-<th align="center">如何同步</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">消息传递并发模型</td>
-<td align="center">线程间没有公共状态，必须通过发送消息显示地进行通信</td>
-<td align="center">发送消息总在接受消息之前，同步是隐式的</td>
-</tr>
-<tr>
-<td align="center">共享内存并发模型</td>
-<td align="center">线程间共享程序的公共状态，通过<strong>读-写内存中的公共状态</strong>进行隐式通信</td>
-<td align="center">必须显示指定某段代码需要在线程之间互斥执行，同步是显示的。</td>
-</tr>
-</tbody></table>
-<p><strong>Java中使用的是共享内存并发模型。</strong></p>
-<a id="more"></a>
-
-
-
-<h2 id="Java内存模型的抽象结构"><a href="#Java内存模型的抽象结构" class="headerlink" title="Java内存模型的抽象结构"></a>Java内存模型的抽象结构</h2><h4 id="运行时内存的划分"><a href="#运行时内存的划分" class="headerlink" title="运行时内存的划分"></a>运行时内存的划分</h4><p>运行时数据区：</p>
-<p><img src="https://f1bu920.github.io/images/Java%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA.png" alt="Java运行时数据区"></p>
-<p>其中，<strong>堆和方法区是所有线程共享的数据区，虚拟机栈、本地方法栈和程序计数器是线程私有的数据区。</strong></p>
-<p>对于每一个线程，栈都是私有的，堆都是共有的。</p>
-<p>在栈中的变量（局部变量、方法定义参数、异常处理器参数）不会在线程间共享，也就不会有内存可见性问题，不受内存模型的影响。而在堆中的变量是共享的，称为共享变量。</p>
-<p><strong>内存可见性针对的是共享变量。</strong></p>
-<h4 id="内存不可见性问题"><a href="#内存不可见性问题" class="headerlink" title="内存不可见性问题"></a>内存不可见性问题</h4><p><strong>线程间的共享变量存在主内存中，每个线程都有一个自己的本地内存，存储了该线程以读、写共享变量的副本</strong>。本地内存是一个抽象概念，并不真实存在，它涵盖了缓存、写缓冲区、寄存器等。</p>
-<p><strong>Java线程间的通信由Java内存模型（JMM）控制，JMM定义了线程与主内存间的抽象关系</strong>。</p>
-<p><img src="https://f1bu920.github.io/images/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png" alt="Java内存模型"></p>
-<ol>
-<li>所有的共享变量都在主内存中</li>
-<li>每个线程保留了一份该线程使用到的共享变量的副本</li>
-<li>线程A与线程B要通信的话，必须经过以下步骤：<ol>
-<li>线程A将本地内存A更新过的共享变量刷新到主内存中</li>
-<li>线程B到主内存中去读取已经更新过的共享变量</li>
-</ol>
-</li>
-</ol>
-<p><strong>线程A无法直接访问线程B的工作内存，线程间通信必须经过主内存。</strong></p>
-<p>根据JMM规定，<strong>线程对共享变量的所有操作都必须在自己的本地内存中进行，不能直接从主内存读取。</strong></p>
-<p>也就是说，<strong>线程B不能直接去主内存中读取共享变量的值，而是先在本地内存找到这个共享变量，发现这个共享变量已经被更新过了，然后本地内存B去主内存中读取这个共享变量的新值，再拷贝到本地内存B中，最后线程B再读取本地内存B中的共享变量值</strong>。</p>
-<p>至于如何知道共享变量已经被更新过了，就是JMM的作用了。<strong>JMM通过控制主内存与每个线程的本地内存之间的交互来提供内存可见性保证。</strong></p>
-<p><em>Java中<code>volatile</code>关键字可以保证多线程操作共享变量的可见性以及禁止指令重排序，<code>synchronized</code>关键字不仅保证了可见性，也保证了原子性。在更底层，JMM通过内存屏障来实现内存的可见性与禁止重排序，并提出了happens-before。</em></p>
-<h4 id="JMM与Java内存区域划分的区别与联系"><a href="#JMM与Java内存区域划分的区别与联系" class="headerlink" title="JMM与Java内存区域划分的区别与联系"></a>JMM与Java内存区域划分的区别与联系</h4><ul>
-<li><p>区别</p>
-<p><strong>JMM是抽象的，用来描述一组规则，通过这个规则来控制各个变量的访问方式，围绕原子性、有序性、可见性等展开的。而Java运行时内存的划分是具体的，时JVM运行Java程序时必要的内存划分。</strong></p>
-</li>
-<li><p>联系</p>
-<p>都存在私有数据区和共享数据区。JMM中的主内存属于共享数据区，包含了堆和方法区；JMM中的本地内存属于私有数据区，包含了虚拟机栈、本地方法栈和程序计数器。</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Java多线程</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java多线程-线程组和线程优先级</title>
     <url>/2020/04/09/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E7%BA%BF%E7%A8%8B%E7%BB%84%E5%92%8C%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7/</url>
     <content><![CDATA[<p>[TOC]</p>
@@ -1338,98 +1338,6 @@
         <tag>Java</tag>
         <tag>多线程</tag>
         <tag>集合</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java多线程-进程与线程</title>
-    <url>/2020/04/06/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/</url>
-    <content><![CDATA[<p>[TOC]</p>
-<h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><ul>
-<li><p>进程</p>
-<p>进程就是<strong>应用程序在内存中分配的空间，也就是正在运行的程序，是系统运行程序的基本单位</strong>。</p>
-<p>在Java中，当我们启动<code>main</code>函数时其实就是启动了一个<code>JVM</code>进程，而<code>main</code>函数所在的线程就是这个进程中的一个线程，叫做主线程。</p>
-</li>
-<li><p>线程</p>
-<p>线程是一个比进程更小的执行单位，一个进程在执行过程中可以产生多个线程。与进程不同的是<strong>同类的多个线程共享进程的堆和方法区，但每个线程有自己的程序计数器、虚拟机栈和本地方法栈</strong>，所以系统在各个线程间切换工作时，负担会比进程小得多，因此线程也被称为轻量级进程。</p>
-</li>
-</ul>
-<h3 id="线程与进程的区别"><a href="#线程与进程的区别" class="headerlink" title="线程与进程的区别"></a>线程与进程的区别</h3><p>线程是一个比进程更小的执行单位，一个进程在其执行过程中可以产生多个线程。</p>
-<p>进程是一个独立的运行环境，而线程是其中执行的一个任务，他们间本质的区别是<strong>是否单独占有内存地址以及其他系统资源(比如 I/O)</strong>。</p>
-<ul>
-<li>进程间存在内存隔离，数据是分开的，数据共享复杂但同步简单，各个进程间互不干扰；而线程共享进程占有的内存地址空间和资源，数据共享简单但同步复杂。</li>
-<li>进程的创建和销毁开销较大，而线程的开销较小。</li>
-<li>进程间通信比较复杂，线程间通信比较简单。</li>
-<li><strong>进程是操作系统进行资源分配的基本单位，而线程是操作系统进行调度的基本单位，即CPU分配时间的单位。</strong></li>
-</ul>
-<h3 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h3><p>上下文切换是指CPU从一个进程(或线程)切换到另一个进程(或线程)。上下文是指<strong>某一时间点CPU寄存器和程序计数器的内容</strong>。</p>
-<p>CPU通过为每个线程分配CPU时间片来实现多线程机制。CPU通过时间片分配算法来循环执行任务，当前执行一个时间片后会切换到下一个任务。</p>
-<p>但是，在切换前会保存上一个任务的状态，以便下次切换回这个任务时，可以再加载这个任务的状态，所以任务从保存到再加载的过程就是一次上下文切换。</p>
-]]></content>
-      <categories>
-        <category>Java多线程</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java多线程-线程间的通信</title>
-    <url>/2020/04/13/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E7%BA%BF%E7%A8%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1/</url>
-    <content><![CDATA[<p>[TOC]</p>
-<p>一般来讲，线程内部有自己私有的线程上下文，互不干扰。但当我们需要多个线程相互协作时，就需要利用线程间的通信。以下介绍几种常用的通信机制。</p>
-<a id="more"></a>
-
-<h2 id="锁与同步"><a href="#锁与同步" class="headerlink" title="锁与同步"></a>锁与同步</h2><p>Java中锁的概念是基于对象的，所以又叫对象锁。<strong>一个锁同一时间只能被一个线程持有，也就是说一个锁如果被一个线程持有，其他线程要想获得这个锁只能等待这个锁被释放。</strong></p>
-<p>线程同步就是<strong>线程按照一定的顺序执行</strong>。可以利用锁来实现同步。</p>
-<p>如果我们想让两个线程按顺序打印，可以利用锁来实现：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        ThreadTest threadTest = <span class="keyword">new</span> ThreadTest();</span><br><span class="line">        Thread a = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            threadTest.testMethod();</span><br><span class="line">        &#125;);</span><br><span class="line">        Thread b = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            threadTest.testMethod();</span><br><span class="line">        &#125;);</span><br><span class="line">        a.start();</span><br><span class="line">        b.start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">testMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">": "</span> + i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样线程a启动后首先获得锁，线程b启动后因为锁被线程a持有而一直处于等待状态，直到线程a执行完锁被释放。</p>
-<h2 id="等待通知机制"><a href="#等待通知机制" class="headerlink" title="等待通知机制"></a>等待通知机制</h2><p>如上例基于锁的实现中，线程b会一直尝试去获得锁，如果失败了，再继续去尝试。这可能会很耗费资源。这时可以考虑等待/通知机制。</p>
-<p><strong>等待/通知机制是基于<code>Object</code>类的<code>wait()</code>方法和<code>notify()</code>、<code>notifyAll()</code>方法实现的。<code>notify()</code>会随机唤醒一个等待的线程，<code>notifyAll()</code>会唤醒所有处于等待状态的线程</strong>。</p>
-<p><strong>注意<code>wait()</code>方法会使线程释放锁！</strong></p>
-<p>如果我们想要线程a、b交替打印的话，可以使用等待/通知机制：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        ThreadTest threadTest = <span class="keyword">new</span> ThreadTest();</span><br><span class="line">        Thread a = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            threadTest.testMethod();</span><br><span class="line">        &#125;);</span><br><span class="line">        Thread b = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            threadTest.testMethod();</span><br><span class="line">        &#125;);</span><br><span class="line">        a.start();</span><br><span class="line">        b.start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">testMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">": "</span> + i);</span><br><span class="line">                <span class="keyword">this</span>.notify();</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">this</span>.wait();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在这个demo中，线程a、b先打印自己的内容，然后调用<code>notify()</code>方法唤醒另一个在等待的线程，然后调用<code>wait()</code>方法进入等待并释放锁。</p>
-<p><strong>注意等待通知机制使用的是同一个对象锁，如果是使用不同的对象锁，是不能用等待通知机制的。</strong></p>
-<h2 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h2><p>JDK中提供了一个类似地实现了信号量功能的类<code>Semaphore</code>，这里我们利用<code>volatile</code>关键字自己实现信号量通信。</p>
-<p><strong><code>volatile</code>关键字能够保证内存的可见性，如果用<code>volatile</code>声明了一个变量，在一个线程里改变了这个变量的值，那么在其他线程是立马可见更改后的值的。</strong></p>
-<p>举例：两个线程a、b轮流递增地打印数字；(线程a打印0，线程b打印1，线程a打印2)</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keyword">int</span> signal = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        ThreadTest threadTest = <span class="keyword">new</span> ThreadTest();</span><br><span class="line">        Thread a = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">while</span> (signal&lt;<span class="number">5</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span> (signal%<span class="number">2</span>==<span class="number">0</span>)&#123;</span><br><span class="line">                    System.out.println(<span class="string">"ThreadA: "</span>+signal);</span><br><span class="line">                    <span class="keyword">synchronized</span> (threadTest)&#123;</span><br><span class="line">                        signal++;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        Thread b = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">while</span> (signal&lt;<span class="number">5</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span> (signal%<span class="number">2</span>==<span class="number">1</span>)&#123;</span><br><span class="line">                    System.out.println(<span class="string">"ThreadB: "</span>+signal);</span><br><span class="line">                    <span class="keyword">synchronized</span> (threadTest)&#123;</span><br><span class="line">                        signal++;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        a.start();</span><br><span class="line">        b.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//结果</span></span><br><span class="line">ThreadA: <span class="number">0</span></span><br><span class="line">ThreadB: <span class="number">1</span></span><br><span class="line">ThreadA: <span class="number">2</span></span><br><span class="line">ThreadB: <span class="number">3</span></span><br><span class="line">ThreadA: <span class="number">4</span></span><br></pre></td></tr></table></figure>
-
-<p><strong><code>volatile</code>需要原子操作，而<code>signal++</code>并非原子操作，所以需要使用<code>synchronized</code>上锁。</strong></p>
-<p>信号量常用于处理公共资源时，此时需要多个线程相互合作。</p>
-<h2 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h2><p>管道是基于“管道流”的通信方式。JDK提供了<code>PipedWriter</code>、<code>PipedReader</code>、<code>PipedOutputStream</code>、<code>PipedInputStream</code>。其中，前两个是基于字符的，后两个是基于字节的。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ReaderThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> PipedReader reader;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">ReaderThread</span><span class="params">(PipedReader reader)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.reader = reader;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"this is ReaderThread"</span>);</span><br><span class="line">            <span class="keyword">int</span> receive = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">while</span> (((receive = reader.read()) != -<span class="number">1</span>)) &#123;</span><br><span class="line">                    System.out.print((<span class="keyword">char</span>) receive);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">WriterThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> PipedWriter writer;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">WriterThread</span><span class="params">(PipedWriter writer)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.writer = writer;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"this is WriterThread"</span>);</span><br><span class="line">            <span class="keyword">int</span> receive = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                writer.write(<span class="string">"write test!"</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    writer.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, InterruptedException </span>&#123;</span><br><span class="line">        PipedReader pipedReader = <span class="keyword">new</span> PipedReader();</span><br><span class="line">        PipedWriter pipedWriter = <span class="keyword">new</span> PipedWriter();</span><br><span class="line">        pipedWriter.connect(pipedReader);</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> ReaderThread(pipedReader)).start();</span><br><span class="line">        Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> WriterThread(pipedWriter)).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//结果</span></span><br><span class="line"><span class="keyword">this</span> is ReaderThread</span><br><span class="line"><span class="keyword">this</span> is WriterThread</span><br><span class="line">write test!</span><br></pre></td></tr></table></figure>
-
-<p>通过线程的构造函数，我们传入了<code>PipedReader</code>、<code>PipedWriter</code>对象。</p>
-<ol>
-<li>线程<code>ReaderThread</code>开始执行</li>
-<li>线程<code>ReaderThread</code>使用<code>reader.read()</code>进入阻塞</li>
-<li>线程<code>WriterThread</code>开始执行</li>
-<li>线程<code>WriterThread</code>用<code>writer.write()</code>向管道中写入字符</li>
-<li>线程<code>WriterThread</code>使用<code>writer.close()</code>结束管道写入</li>
-<li>线程<code>ReaderThread</code>接受管道输出的字符串并打印</li>
-<li>执行完毕。</li>
-</ol>
-<p>很明显，管道通信多用于IO相关。</p>
-<h2 id="其他通信相关"><a href="#其他通信相关" class="headerlink" title="其他通信相关"></a>其他通信相关</h2><h4 id="join方法"><a href="#join方法" class="headerlink" title="join方法"></a><code>join</code>方法</h4><p><code>join()</code>方法是<code>Thread</code>类的实例方法，它可以让当前线程进入等待状态，直到join的这个线程执行完毕，再继续执行当前线程。</p>
-<p>有时候，主线程创建并启动子线程，如果子线程要进行大量耗时计算而主线程需要子线程计算的结果，就可以用到<code>join()</code>方法，避免主线程早于子线程结束。</p>
-<h4 id="sleep方法"><a href="#sleep方法" class="headerlink" title="sleep方法"></a><code>sleep</code>方法</h4><p><code>sleep()</code>方法是<code>Thread</code>类的静态方法，它可以让当前线程睡眠一段时间。</p>
-<p><strong>注意，与<code>wait(long)</code>不同，<code>sleep(long)</code>不会释放当前的锁！</strong></p>
-<h4 id="ThreadLocal类"><a href="#ThreadLocal类" class="headerlink" title="ThreadLocal类"></a><code>ThreadLocal</code>类</h4><p><code>ThreadLocal</code>是本地线程副本变量工具类，内部使用一个弱引用的<code>Map</code>来维护。</p>
-<p>它使每个线程都有自己独立的变量，互不干扰。它为每个线程都创建了副本，每个线程都可以访问自己内部的副本变量。</p>
-<p>最常见的<code>ThreadLocal</code>类应用场景就是用来解决数据库连接、Session管理等。</p>
-<h4 id="InheritableThreadLocal"><a href="#InheritableThreadLocal" class="headerlink" title="InheritableThreadLocal"></a><code>InheritableThreadLocal</code></h4><p>它不仅仅是当前线程可以存取副本值，它的子线程也可以存取这个副本值。</p>
-]]></content>
-      <categories>
-        <category>Java多线程</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>多线程</tag>
       </tags>
   </entry>
   <entry>
@@ -1568,6 +1476,146 @@
       </tags>
   </entry>
   <entry>
+    <title>Java多线程-进程与线程</title>
+    <url>/2020/04/06/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/</url>
+    <content><![CDATA[<p>[TOC]</p>
+<h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><ul>
+<li><p>进程</p>
+<p>进程就是<strong>应用程序在内存中分配的空间，也就是正在运行的程序，是系统运行程序的基本单位</strong>。</p>
+<p>在Java中，当我们启动<code>main</code>函数时其实就是启动了一个<code>JVM</code>进程，而<code>main</code>函数所在的线程就是这个进程中的一个线程，叫做主线程。</p>
+</li>
+<li><p>线程</p>
+<p>线程是一个比进程更小的执行单位，一个进程在执行过程中可以产生多个线程。与进程不同的是<strong>同类的多个线程共享进程的堆和方法区，但每个线程有自己的程序计数器、虚拟机栈和本地方法栈</strong>，所以系统在各个线程间切换工作时，负担会比进程小得多，因此线程也被称为轻量级进程。</p>
+</li>
+</ul>
+<h3 id="线程与进程的区别"><a href="#线程与进程的区别" class="headerlink" title="线程与进程的区别"></a>线程与进程的区别</h3><p>线程是一个比进程更小的执行单位，一个进程在其执行过程中可以产生多个线程。</p>
+<p>进程是一个独立的运行环境，而线程是其中执行的一个任务，他们间本质的区别是<strong>是否单独占有内存地址以及其他系统资源(比如 I/O)</strong>。</p>
+<ul>
+<li>进程间存在内存隔离，数据是分开的，数据共享复杂但同步简单，各个进程间互不干扰；而线程共享进程占有的内存地址空间和资源，数据共享简单但同步复杂。</li>
+<li>进程的创建和销毁开销较大，而线程的开销较小。</li>
+<li>进程间通信比较复杂，线程间通信比较简单。</li>
+<li><strong>进程是操作系统进行资源分配的基本单位，而线程是操作系统进行调度的基本单位，即CPU分配时间的单位。</strong></li>
+</ul>
+<h3 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h3><p>上下文切换是指CPU从一个进程(或线程)切换到另一个进程(或线程)。上下文是指<strong>某一时间点CPU寄存器和程序计数器的内容</strong>。</p>
+<p>CPU通过为每个线程分配CPU时间片来实现多线程机制。CPU通过时间片分配算法来循环执行任务，当前执行一个时间片后会切换到下一个任务。</p>
+<p>但是，在切换前会保存上一个任务的状态，以便下次切换回这个任务时，可以再加载这个任务的状态，所以任务从保存到再加载的过程就是一次上下文切换。</p>
+]]></content>
+      <categories>
+        <category>Java多线程</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java多线程-线程间的通信</title>
+    <url>/2020/04/13/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E7%BA%BF%E7%A8%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1/</url>
+    <content><![CDATA[<p>[TOC]</p>
+<p>一般来讲，线程内部有自己私有的线程上下文，互不干扰。但当我们需要多个线程相互协作时，就需要利用线程间的通信。以下介绍几种常用的通信机制。</p>
+<a id="more"></a>
+
+<h2 id="锁与同步"><a href="#锁与同步" class="headerlink" title="锁与同步"></a>锁与同步</h2><p>Java中锁的概念是基于对象的，所以又叫对象锁。<strong>一个锁同一时间只能被一个线程持有，也就是说一个锁如果被一个线程持有，其他线程要想获得这个锁只能等待这个锁被释放。</strong></p>
+<p>线程同步就是<strong>线程按照一定的顺序执行</strong>。可以利用锁来实现同步。</p>
+<p>如果我们想让两个线程按顺序打印，可以利用锁来实现：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        ThreadTest threadTest = <span class="keyword">new</span> ThreadTest();</span><br><span class="line">        Thread a = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            threadTest.testMethod();</span><br><span class="line">        &#125;);</span><br><span class="line">        Thread b = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            threadTest.testMethod();</span><br><span class="line">        &#125;);</span><br><span class="line">        a.start();</span><br><span class="line">        b.start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">testMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">": "</span> + i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样线程a启动后首先获得锁，线程b启动后因为锁被线程a持有而一直处于等待状态，直到线程a执行完锁被释放。</p>
+<h2 id="等待通知机制"><a href="#等待通知机制" class="headerlink" title="等待通知机制"></a>等待通知机制</h2><p>如上例基于锁的实现中，线程b会一直尝试去获得锁，如果失败了，再继续去尝试。这可能会很耗费资源。这时可以考虑等待/通知机制。</p>
+<p><strong>等待/通知机制是基于<code>Object</code>类的<code>wait()</code>方法和<code>notify()</code>、<code>notifyAll()</code>方法实现的。<code>notify()</code>会随机唤醒一个等待的线程，<code>notifyAll()</code>会唤醒所有处于等待状态的线程</strong>。</p>
+<p><strong>注意<code>wait()</code>方法会使线程释放锁！</strong></p>
+<p>如果我们想要线程a、b交替打印的话，可以使用等待/通知机制：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        ThreadTest threadTest = <span class="keyword">new</span> ThreadTest();</span><br><span class="line">        Thread a = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            threadTest.testMethod();</span><br><span class="line">        &#125;);</span><br><span class="line">        Thread b = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            threadTest.testMethod();</span><br><span class="line">        &#125;);</span><br><span class="line">        a.start();</span><br><span class="line">        b.start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">testMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">": "</span> + i);</span><br><span class="line">                <span class="keyword">this</span>.notify();</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">this</span>.wait();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个demo中，线程a、b先打印自己的内容，然后调用<code>notify()</code>方法唤醒另一个在等待的线程，然后调用<code>wait()</code>方法进入等待并释放锁。</p>
+<p><strong>注意等待通知机制使用的是同一个对象锁，如果是使用不同的对象锁，是不能用等待通知机制的。</strong></p>
+<h2 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h2><p>JDK中提供了一个类似地实现了信号量功能的类<code>Semaphore</code>，这里我们利用<code>volatile</code>关键字自己实现信号量通信。</p>
+<p><strong><code>volatile</code>关键字能够保证内存的可见性，如果用<code>volatile</code>声明了一个变量，在一个线程里改变了这个变量的值，那么在其他线程是立马可见更改后的值的。</strong></p>
+<p>举例：两个线程a、b轮流递增地打印数字；(线程a打印0，线程b打印1，线程a打印2)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keyword">int</span> signal = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        ThreadTest threadTest = <span class="keyword">new</span> ThreadTest();</span><br><span class="line">        Thread a = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">while</span> (signal&lt;<span class="number">5</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span> (signal%<span class="number">2</span>==<span class="number">0</span>)&#123;</span><br><span class="line">                    System.out.println(<span class="string">"ThreadA: "</span>+signal);</span><br><span class="line">                    <span class="keyword">synchronized</span> (threadTest)&#123;</span><br><span class="line">                        signal++;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        Thread b = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">while</span> (signal&lt;<span class="number">5</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span> (signal%<span class="number">2</span>==<span class="number">1</span>)&#123;</span><br><span class="line">                    System.out.println(<span class="string">"ThreadB: "</span>+signal);</span><br><span class="line">                    <span class="keyword">synchronized</span> (threadTest)&#123;</span><br><span class="line">                        signal++;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        a.start();</span><br><span class="line">        b.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//结果</span></span><br><span class="line">ThreadA: <span class="number">0</span></span><br><span class="line">ThreadB: <span class="number">1</span></span><br><span class="line">ThreadA: <span class="number">2</span></span><br><span class="line">ThreadB: <span class="number">3</span></span><br><span class="line">ThreadA: <span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<p><strong><code>volatile</code>需要原子操作，而<code>signal++</code>并非原子操作，所以需要使用<code>synchronized</code>上锁。</strong></p>
+<p>信号量常用于处理公共资源时，此时需要多个线程相互合作。</p>
+<h2 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h2><p>管道是基于“管道流”的通信方式。JDK提供了<code>PipedWriter</code>、<code>PipedReader</code>、<code>PipedOutputStream</code>、<code>PipedInputStream</code>。其中，前两个是基于字符的，后两个是基于字节的。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ReaderThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> PipedReader reader;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">ReaderThread</span><span class="params">(PipedReader reader)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.reader = reader;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"this is ReaderThread"</span>);</span><br><span class="line">            <span class="keyword">int</span> receive = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">while</span> (((receive = reader.read()) != -<span class="number">1</span>)) &#123;</span><br><span class="line">                    System.out.print((<span class="keyword">char</span>) receive);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">WriterThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> PipedWriter writer;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">WriterThread</span><span class="params">(PipedWriter writer)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.writer = writer;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"this is WriterThread"</span>);</span><br><span class="line">            <span class="keyword">int</span> receive = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                writer.write(<span class="string">"write test!"</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    writer.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, InterruptedException </span>&#123;</span><br><span class="line">        PipedReader pipedReader = <span class="keyword">new</span> PipedReader();</span><br><span class="line">        PipedWriter pipedWriter = <span class="keyword">new</span> PipedWriter();</span><br><span class="line">        pipedWriter.connect(pipedReader);</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> ReaderThread(pipedReader)).start();</span><br><span class="line">        Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> WriterThread(pipedWriter)).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//结果</span></span><br><span class="line"><span class="keyword">this</span> is ReaderThread</span><br><span class="line"><span class="keyword">this</span> is WriterThread</span><br><span class="line">write test!</span><br></pre></td></tr></table></figure>
+
+<p>通过线程的构造函数，我们传入了<code>PipedReader</code>、<code>PipedWriter</code>对象。</p>
+<ol>
+<li>线程<code>ReaderThread</code>开始执行</li>
+<li>线程<code>ReaderThread</code>使用<code>reader.read()</code>进入阻塞</li>
+<li>线程<code>WriterThread</code>开始执行</li>
+<li>线程<code>WriterThread</code>用<code>writer.write()</code>向管道中写入字符</li>
+<li>线程<code>WriterThread</code>使用<code>writer.close()</code>结束管道写入</li>
+<li>线程<code>ReaderThread</code>接受管道输出的字符串并打印</li>
+<li>执行完毕。</li>
+</ol>
+<p>很明显，管道通信多用于IO相关。</p>
+<h2 id="其他通信相关"><a href="#其他通信相关" class="headerlink" title="其他通信相关"></a>其他通信相关</h2><h4 id="join方法"><a href="#join方法" class="headerlink" title="join方法"></a><code>join</code>方法</h4><p><code>join()</code>方法是<code>Thread</code>类的实例方法，它可以让当前线程进入等待状态，直到join的这个线程执行完毕，再继续执行当前线程。</p>
+<p>有时候，主线程创建并启动子线程，如果子线程要进行大量耗时计算而主线程需要子线程计算的结果，就可以用到<code>join()</code>方法，避免主线程早于子线程结束。</p>
+<h4 id="sleep方法"><a href="#sleep方法" class="headerlink" title="sleep方法"></a><code>sleep</code>方法</h4><p><code>sleep()</code>方法是<code>Thread</code>类的静态方法，它可以让当前线程睡眠一段时间。</p>
+<p><strong>注意，与<code>wait(long)</code>不同，<code>sleep(long)</code>不会释放当前的锁！</strong></p>
+<h4 id="ThreadLocal类"><a href="#ThreadLocal类" class="headerlink" title="ThreadLocal类"></a><code>ThreadLocal</code>类</h4><p><code>ThreadLocal</code>是本地线程副本变量工具类，内部使用一个弱引用的<code>Map</code>来维护。</p>
+<p>它使每个线程都有自己独立的变量，互不干扰。它为每个线程都创建了副本，每个线程都可以访问自己内部的副本变量。</p>
+<p>最常见的<code>ThreadLocal</code>类应用场景就是用来解决数据库连接、Session管理等。</p>
+<h4 id="InheritableThreadLocal"><a href="#InheritableThreadLocal" class="headerlink" title="InheritableThreadLocal"></a><code>InheritableThreadLocal</code></h4><p>它不仅仅是当前线程可以存取副本值，它的子线程也可以存取这个副本值。</p>
+]]></content>
+      <categories>
+        <category>Java多线程</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java泛型</title>
+    <url>/2020/07/12/Java%E6%B3%9B%E5%9E%8B/</url>
+    <content><![CDATA[<h2 id="Java泛型"><a href="#Java泛型" class="headerlink" title="Java泛型"></a>Java泛型</h2><p>泛型的意思就是<strong>参数化类型</strong>。在没有引入泛型机制前，需要针对不同的数据类型重复编写相同的代码，而引入泛型后就可以<strong>将数据类型与代码逻辑分离开，提高了程序的简洁性和可读性，同时也提供了编译时的类型转换安全检测功能。</strong></p>
+<p>泛型可以将类型参数化，参数一旦确定，如果类型不匹配，就无法通过编译。</p>
+<a id="more"></a>
+
+<h3 id="泛型的使用"><a href="#泛型的使用" class="headerlink" title="泛型的使用"></a>泛型的使用</h3><p>泛型的使用可以分为：</p>
+<ul>
+<li>泛型类</li>
+<li>泛型方法</li>
+<li>泛型接口</li>
+</ul>
+<h3 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h3><p>对于任意一个类型，可以用字母来表示泛型类型，如<code>List&lt;T&gt;</code>，这种是确定的类型，而使用通配符<code>&lt;?&gt;</code>则可以指定泛型中的类型范围。</p>
+<ol>
+<li><code>&lt;?&gt;</code> 是无限定的通配符；</li>
+<li><code>&lt;? extends A&gt;</code>是有上界的通配符，限定类<code>A</code>和<code>A</code>的子类；</li>
+<li><code>&lt;? super A&gt;</code>是有下界的通配符，限定<code>A</code>和<code>A</code>的父类。</li>
+</ol>
+<p><strong>即便容器的类型之间存在继承关系，但容器间是不构成继承关系的。所以需要将容器类型设置为<code>&lt;? extends T&gt;</code>和<code>&lt;? super T&gt;</code>来让容器间存在继承关系。</strong></p>
+<p><img src="https://f1bu920.github.io/images/Java%E6%B3%9B%E5%9E%8Bextends.png" alt=""></p>
+<p>对于上界<code>&lt;? extends T&gt;</code>类型，在编译期，只知道要存放<code>T</code>和<code>T</code>的子类，具体类型不知道，所以往容器内插入数据不被允许。但读数据时，可以隐式的转化为基类或者Object，所以读操作没有影响。</p>
+<p><img src="https://f1bu920.github.io/images/Java%E6%B3%9B%E5%9E%8Bsuper.png" alt=""></p>
+<p>对于下界<code>&lt;? super T&gt;</code>类型，规定了元素的最小粒度，必须是<code>T</code>或其父类，所以往里添加<code>T</code>或其子类都是可以的，因为可以隐式的转化为T类型。而读时无法转化为任意类型，只能用Object类存储。</p>
+<p>注意：</p>
+<ul>
+<li><strong>上界<code>&lt;? extends T&gt;</code>不能往里存，只能往外取，适合频繁往外面读取内容的场景。</strong></li>
+<li><strong>下界<code>&lt;? super T&gt;</code>不影响往里存，但往外取只能放在Object数组中，适合经常往里面插入数据的场景</strong>。</li>
+</ul>
+<h3 id="类型擦除"><a href="#类型擦除" class="headerlink" title="类型擦除"></a>类型擦除</h3><p><strong>泛型信息只存在于编译阶段，在进入JVM前，所有的泛型信息都会被擦除，这就是类型擦除。</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        List&lt;String&gt; list1 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        List&lt;Integer&gt; list2 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        System.out.println(list1.getClass()==list2.getClass());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//结果输出为true</span></span><br></pre></td></tr></table></figure>
+
+<p>上面举例中编译后<code>list1</code>和<code>list2</code>的类型都为<code>List.class</code>，泛型信息被擦除了。</p>
+<p>在泛型类被类型擦除后，如果泛型类中没有指定上界，如<code>&lt;T&gt;</code>，就会被转译为<code>Object</code>类型；如果指定了上界，就会被转译为上界类型。</p>
+<p>类型擦除保证了能与JDK5之前的代码兼容，但也带来了一些局限性，比如可以通过反射来绕过泛型。如：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchMethodException, InvocationTargetException, IllegalAccessException </span>&#123;</span><br><span class="line">        List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        list.add(<span class="string">"String"</span>);</span><br><span class="line">        Class&lt;? extends List&gt; aClass = list.getClass();</span><br><span class="line">        Method add = aClass.getMethod(<span class="string">"add"</span>, Object<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        add.invoke(list, <span class="number">777</span>);</span><br><span class="line">        System.out.println(list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出结果为[String, 777]</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到利用反射可以向指定了类型为<code>String</code>的集合中添加非<code>String</code>类型的元素。</p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://juejin.im/post/5b614848e51d45355d51f792" target="_blank" rel="noopener">深入理解Java泛型</a></p>
+<p><a href="https://blog.csdn.net/briblue/article/details/76736356" target="_blank" rel="noopener">Java泛型</a></p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java泛型</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java异常</title>
     <url>/2020/07/05/Java%E5%BC%82%E5%B8%B8/</url>
     <content><![CDATA[<h2 id="Java异常"><a href="#Java异常" class="headerlink" title="Java异常"></a>Java异常</h2><p>下图是Java异常层次结构图：</p>
@@ -1598,6 +1646,47 @@
       <tags>
         <tag>Java</tag>
         <tag>Exception</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Leetcode350.两个数组的交集II</title>
+    <url>/2020/07/13/Leetcode350-%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E7%9A%84%E4%BA%A4%E9%9B%86II/</url>
+    <content><![CDATA[<h2 id="Leetcode350-两个数组的交集II"><a href="#Leetcode350-两个数组的交集II" class="headerlink" title="Leetcode350.两个数组的交集II"></a>Leetcode350.两个数组的交集II</h2><p>给定两个数组，编写一个函数来计算它们的交集。</p>
+<p><a href="https://leetcode-cn.com/problems/intersection-of-two-arrays-ii" target="_blank" rel="noopener">题目链接</a></p>
+<a id="more"></a>
+
+<p>示例 1:</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">输入: nums1 = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>], nums2 = [<span class="number">2</span>,<span class="number">2</span>]</span><br><span class="line">输出: [<span class="number">2</span>,<span class="number">2</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+<p>示例 2:</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">输入: nums1 = [<span class="number">4</span>,<span class="number">9</span>,<span class="number">5</span>], nums2 = [<span class="number">9</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">8</span>,<span class="number">4</span>]</span><br><span class="line">输出: [<span class="number">4</span>,<span class="number">9</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+<p>说明：</p>
+<ul>
+<li><p>输出结果中每个元素出现的次数，应与元素在两个数组中出现的次数一致。</p>
+</li>
+<li><p>我们可以不考虑输出结果的顺序。</p>
+</li>
+</ul>
+<p>进阶:</p>
+<p>如果给定的数组已经排好序呢？你将如何优化你的算法？<br>如果 nums1 的大小比 nums2 小很多，哪种方法更优？<br>如果 nums2 的元素存储在磁盘上，磁盘内存是有限的，并且你不能一次加载所有的元素到内存中，你该怎么办？</p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>利用哈希表存储数组中每个数字出现的次数，遍历另一个数组，如果当前元素出现在哈希表中且出现次数大于1，将当前元素添加到结果中，并将出现次数减一；若出现次数小于等于1，将当前元素添加到结果后从哈希表中删除这个元素。</p>
+<p>第二个思路就是将两个数组排序，利用双指针移动直到一个数组遍历完成。</p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//哈希表代码</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] intersect(<span class="keyword">int</span>[] nums1, <span class="keyword">int</span>[] nums2) &#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        Map&lt;Integer, Integer&gt; map1 = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> value : nums1) &#123;</span><br><span class="line">            map1.put(value, map1.getOrDefault(value, <span class="number">0</span>) + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> value : nums2) &#123;</span><br><span class="line">            <span class="keyword">if</span> (map1.containsKey(value)) &#123;</span><br><span class="line">                list.add(value);</span><br><span class="line">                <span class="keyword">int</span> t = map1.get(value);</span><br><span class="line">                <span class="keyword">if</span> (t &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                    map1.put(value, t - <span class="number">1</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    map1.remove(value);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span>[] result = <span class="keyword">new</span> <span class="keyword">int</span>[list.size()];</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> value : list) &#123;</span><br><span class="line">            result[index++] = value;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>Leetcode</category>
+      </categories>
+      <tags>
+        <tag>哈希表</tag>
+        <tag>排序</tag>
       </tags>
   </entry>
   <entry>
@@ -1700,31 +1789,93 @@
       </tags>
   </entry>
   <entry>
-    <title>MyBatis学习笔记</title>
-    <url>/2020/04/20/MyBatis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h1 id="MyBatis学习笔记"><a href="#MyBatis学习笔记" class="headerlink" title="MyBatis学习笔记"></a>MyBatis学习笔记</h1><p><code>MyBatis</code>是一款优秀的持久层框架，支持自定义SQL、存储过程和高级映射。<code>MyBatis</code>免除了几乎所有的JDBC代码以及设置参数和获取结果集的工作。可以通过简单的XML或注解来配置和映射原始类型、接口和<code>POJO</code>为数据库中的记录。</p>
-<h2 id="MyBatis安装与入门"><a href="#MyBatis安装与入门" class="headerlink" title="MyBatis安装与入门"></a>MyBatis安装与入门</h2><p><a href="https://github.com/mybatis/mybatis-3/releases" target="_blank" rel="noopener">MyBatis下载链接</a></p>
-<p>要使用<code>MyBatis</code>，只需将下载的jar文件置于类路径(classpath)中。</p>
-<p>如果使用<code>Maven</code>构建项目就更简单了，只需将依赖添加到<code>pom.xml</code>文件中。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>x.x.x<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
+    <title>Java线程的状态与主要转换方法</title>
+    <url>/2020/04/10/Java%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81%E4%B8%8E%E4%B8%BB%E8%A6%81%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p>[TOC]</p>
+<h2 id="操作系统中的线程状态转换"><a href="#操作系统中的线程状态转换" class="headerlink" title="操作系统中的线程状态转换"></a>操作系统中的线程状态转换</h2><p>在现代操作系统中，线程被视为轻量级进程，所以操作系统中线程的状态其实是和操作系统中进程的状态是一致的。</p>
+<p><img src="https://f1bu920.github.io/images/Java%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2.png" alt="操作系统中线程状态转换.png"></p>
+<p>操作系统中线程主要有三个状态：</p>
+<ul>
+<li>就绪状态(ready)：线程正在等待使用CPU，等分配到CPU时间片就可以进入running状态。</li>
+<li>执行状态(running)：线程正在使用CPU。</li>
+<li>等待状态(waiting)：线程经过等待事件的调用或者正在等待其他资源，如 I/O等。</li>
+</ul>
 <a id="more"></a>
 
-<h2 id="XML配置"><a href="#XML配置" class="headerlink" title="XML配置"></a>XML配置</h2><p><code>MyBatis</code>的配置文件会影响<code>MyBatis</code>的行为的设置和属性信息。</p>
-<h4 id="属性-properties"><a href="#属性-properties" class="headerlink" title="属性(properties)"></a>属性(properties)</h4><p>属性可以在外部配置，也可以进行动态替换。</p>
-<p>设置好的属性可以进行动态替换</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">"POOLED"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driver"</span> <span class="attr">value</span>=<span class="string">"$&#123;driver&#125;"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"$&#123;url&#125;"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"$&#123;username&#125;"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"$&#123;password&#125;"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Java线程的6个状态"><a href="#Java线程的6个状态" class="headerlink" title="Java线程的6个状态"></a>Java线程的6个状态</h2><p>Java中有一个枚举类，代表了Java线程的6个状态，其源码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> State &#123;</span><br><span class="line">         <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Thread state for a thread which has not yet started.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        NEW,</span><br><span class="line">         <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Thread state for a runnable thread.  A thread in the runnable</span></span><br><span class="line"><span class="comment">         * state is executing in the Java virtual machine but it may</span></span><br><span class="line"><span class="comment">         * be waiting for other resources from the operating system</span></span><br><span class="line"><span class="comment">         * such as processor.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        RUNNABLE,</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Thread state for a thread blocked waiting for a monitor lock.</span></span><br><span class="line"><span class="comment">         * A thread in the blocked state is waiting for a monitor lock</span></span><br><span class="line"><span class="comment">         * to enter a synchronized block/method or</span></span><br><span class="line"><span class="comment">         * reenter a synchronized block/method after calling</span></span><br><span class="line"><span class="comment">         * &#123;<span class="doctag">@link</span> Object#wait() Object.wait&#125;.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        BLOCKED,</span><br><span class="line">           <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Thread state for a waiting thread.</span></span><br><span class="line"><span class="comment">         * A thread is in the waiting state due to calling one of the</span></span><br><span class="line"><span class="comment">         * following methods:</span></span><br><span class="line"><span class="comment">         * &lt;ul&gt;</span></span><br><span class="line"><span class="comment">         *   &lt;li&gt;&#123;<span class="doctag">@link</span> Object#wait() Object.wait&#125; with no timeout&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         *   &lt;li&gt;&#123;<span class="doctag">@link</span> #join() Thread.join&#125; with no timeout&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         *   &lt;li&gt;&#123;<span class="doctag">@link</span> LockSupport#park() LockSupport.park&#125;&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         * &lt;/ul&gt;</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * &lt;p&gt;A thread in the waiting state is waiting for another thread to</span></span><br><span class="line"><span class="comment">         * perform a particular action.</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * For example, a thread that has called &lt;tt&gt;Object.wait()&lt;/tt&gt;</span></span><br><span class="line"><span class="comment">         * on an object is waiting for another thread to call</span></span><br><span class="line"><span class="comment">         * &lt;tt&gt;Object.notify()&lt;/tt&gt; or &lt;tt&gt;Object.notifyAll()&lt;/tt&gt; on</span></span><br><span class="line"><span class="comment">         * that object. A thread that has called &lt;tt&gt;Thread.join()&lt;/tt&gt;</span></span><br><span class="line"><span class="comment">         * is waiting for a specified thread to terminate.</span></span><br><span class="line"><span class="comment">         */</span> </span><br><span class="line">        WAITING,</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Thread state for a waiting thread with a specified waiting time.</span></span><br><span class="line"><span class="comment">         * A thread is in the timed waiting state due to calling one of</span></span><br><span class="line"><span class="comment">         * the following methods with a specified positive waiting time:</span></span><br><span class="line"><span class="comment">         * &lt;ul&gt;</span></span><br><span class="line"><span class="comment">         *   &lt;li&gt;&#123;<span class="doctag">@link</span> #sleep Thread.sleep&#125;&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         *   &lt;li&gt;&#123;<span class="doctag">@link</span> Object#wait(long) Object.wait&#125; with timeout&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         *   &lt;li&gt;&#123;<span class="doctag">@link</span> #join(long) Thread.join&#125; with timeout&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         *   &lt;li&gt;&#123;<span class="doctag">@link</span> LockSupport#parkNanos LockSupport.parkNanos&#125;&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         *   &lt;li&gt;&#123;<span class="doctag">@link</span> LockSupport#parkUntil LockSupport.parkUntil&#125;&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         * &lt;/ul&gt;</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        TIMED_WAITING,</span><br><span class="line">          <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Thread state for a terminated thread.</span></span><br><span class="line"><span class="comment">         * The thread has completed execution.</span></span><br><span class="line"><span class="comment">         */</span>  </span><br><span class="line">        TERMINATED;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-<p>这里<code>username</code>和<code>password</code>的值会由properities中的值来替换。</p>
-<h4 id="设置-settings"><a href="#设置-settings" class="headerlink" title="设置(settings)"></a>设置(settings)</h4><p>![MyBatis 3 - 配置.png](<a href="https://f1bu920.github.io/images/MyBatis" target="_blank" rel="noopener">https://f1bu920.github.io/images/MyBatis</a> 3 - 配置.png)</p>
+<h4 id="NEW"><a href="#NEW" class="headerlink" title="NEW"></a><code>NEW</code></h4><p>处于<code>NEW</code>状态的线程尚未启动，即未调用<code>Thread</code>类的<code>start</code>方法。</p>
+<p><code>start</code>方法的源码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (threadStatus != <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalThreadStateException();</span><br><span class="line">    group.add(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">boolean</span> started = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        start0();</span><br><span class="line">        started = <span class="keyword">true</span>;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (!started) &#123;</span><br><span class="line">                group.threadStartFailed(<span class="keyword">this</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Throwable ignore) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，<code>start()</code>方法的内部有一个<code>threadStatus</code>变量，如果它不为0，会直接抛出异常。</p>
+<p>在第一次调用<code>start()</code>方法后，<code>threadStatus</code>变量会从0变为其他值，若第二次调用<code>start()</code>方法就会抛出<code>IllegalThreadStateException</code>异常。</p>
+<h4 id="RUNNABLE"><a href="#RUNNABLE" class="headerlink" title="RUNNABLE"></a><code>RUNNABLE</code></h4><p><code>RUNNABLE</code>表示当前线程正在运行中。<code>RUNNABLE</code>状态的线程运行在虚拟机中，也有可能在等待操作系统的其他资源。<strong>Java中<code>RUNNABLE</code>状态其实包括了操作系统线程的<code>ready</code>和<code>waiting</code>两个状态。</strong></p>
+<h4 id="BLOCKED"><a href="#BLOCKED" class="headerlink" title="BLOCKED"></a><code>BLOCKED</code></h4><p>阻塞状态。处于<code>BLOCKED</code>状态的线程正等待锁的释放以进入同步区。</p>
+<h4 id="WAITING"><a href="#WAITING" class="headerlink" title="WAITING"></a><code>WAITING</code></h4><p>等待状态。处于等待状态的线程要想变为<code>RUNNABLE</code>状态需要其他线程唤醒。</p>
+<p>调用下面三个方法会使线程进入<code>WAITING</code>状态：</p>
+<ul>
+<li><code>Object wait()</code>：使当前线程处于等待状态直到另一个线程唤醒它。</li>
+<li><code>Thread.join()</code>：等待线程执行完毕，底层调用的是<code>Object</code>实例的<code>wait</code>方法。</li>
+<li><code>LockSupport.park()</code>：除非获得调用许可，否则禁止当前线程进行线程调度。</li>
+</ul>
+<h4 id="TIMED-WAITING"><a href="#TIMED-WAITING" class="headerlink" title="TIMED_WAITING"></a><code>TIMED_WAITING</code></h4><p>超时等待状态。线程等待一个具体的时间，时间到后自动唤醒。</p>
+<p>调用下面方法会使线程进入超时等待状态：</p>
+<ul>
+<li><code>Tread.sleep(long millis)</code>：使当前线程睡眠指定时间</li>
+<li><code>Object wait(long millis)</code>：线程休眠指定时间，等待期间可以通过<code>notify()</code>方法唤醒。</li>
+<li><code>Thread.join(long millis)</code>：等待当前线程最多执行millis毫秒，如果<code>millis</code>为0，则会一直执行。</li>
+<li><code>LockSupport.parkNanos(long nanos)</code>：除非获得调用许可，否则禁用当前线程进行线程调度指定时间。</li>
+<li><code>LockSupport.parkUntil(long deadline)</code>：同上，也是禁止线程进行调度指定时间。</li>
+</ul>
+<h4 id="TERMINATED"><a href="#TERMINATED" class="headerlink" title="TERMINATED"></a><code>TERMINATED</code></h4><p>终止状态，线程执行完毕。</p>
+<h2 id="线程状态的转换"><a href="#线程状态的转换" class="headerlink" title="线程状态的转换"></a>线程状态的转换</h2><p><img src="https://f1bu920.github.io/images/%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81%E7%9A%84%E8%BD%AC%E6%8D%A2.png" alt="线程状态的转换"></p>
+<h4 id="BLOCKED与RUNNABLE状态的转换"><a href="#BLOCKED与RUNNABLE状态的转换" class="headerlink" title="BLOCKED与RUNNABLE状态的转换"></a><code>BLOCKED</code>与<code>RUNNABLE</code>状态的转换</h4><p>处于<code>BLOCKED</code>状态的线程是因为在等待锁的释放。当线程获取到锁之后就会进入<code>RUNNABLE</code>状态。</p>
+<h4 id="WAITING状态与RUNNABLE状态的转换"><a href="#WAITING状态与RUNNABLE状态的转换" class="headerlink" title="WAITING状态与RUNNABLE状态的转换"></a><code>WAITING</code>状态与<code>RUNNABLE</code>状态的转换</h4><p>将线程从<code>RUNNABLE</code>状态转换为<code>WAITING</code>状态主要有2种方法。</p>
+<ul>
+<li><p><code>Object.wait()</code></p>
+<p>调用<code>wait()</code>方法前线程必须持有对象的锁，<strong>调用<code>wait()</code>方法后，会释放当前的锁，直到其他线程调用<code>notify()</code>或<code>notifyAll()</code>唤醒等待锁的线程</strong>。</p>
+</li>
+<li><p><code>Thread.join()</code></p>
+<p><strong>调用<code>join()</code>方法不会释放锁，会一直等待当前线程执行完毕(转换为<code>TERMINTED</code>状态)</strong>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        Thread a = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">new</span> ThreadTest().testMethod();</span><br><span class="line">        &#125;);</span><br><span class="line">        Thread b = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">new</span> ThreadTest().testMethod();</span><br><span class="line">        &#125;);</span><br><span class="line">        a.start();</span><br><span class="line">        a.join();</span><br><span class="line">        b.start();</span><br><span class="line">        System.out.println(a.getName() + <span class="string">": "</span> + a.getState());</span><br><span class="line">        System.out.println(b.getName() + <span class="string">": "</span> + b.getState());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">testMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">2000l</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//输出结果为</span></span><br><span class="line">Thread-<span class="number">0</span>: TERMINATED</span><br><span class="line">Thread-<span class="number">1</span>: TIMED_WAITING</span><br></pre></td></tr></table></figure>
+
+<p>要是没有调用<code>join()</code>方法，<code>main</code>线程不管<code>a</code>线程是否执行完毕都会往下执行，但<code>a</code>线程启动后立刻调用了<code>join()</code>方法，这里<code>main</code>线程就会等待直到<code>a</code>执行完毕(转换为<code>TERMINTED</code>状态)。</p>
+<p>所以<code>a</code>会打印的状态为<code>TERMINATED</code>，而<code>b</code>线程可能为<code>TIMED_WAITING</code>状态(已进入同步方法)也可能为<code>RUNNABLE</code>状态(未进入同步方法)。</p>
+</li>
+</ul>
+<h4 id="TIMED-WAITING与RUNNABLE状态的转换"><a href="#TIMED-WAITING与RUNNABLE状态的转换" class="headerlink" title="TIMED_WAITING与RUNNABLE状态的转换"></a><code>TIMED_WAITING</code>与<code>RUNNABLE</code>状态的转换</h4><p><code>TIMED_WAITING</code>与<code>WAITING</code>状态类似，只是<code>TIMED_WAITING</code>等待时间是指定的。</p>
+<ul>
+<li><p><code>Thread.sleep(long)</code></p>
+<p>使当前线程睡眠指定时间。<strong>这里的睡眠指的是暂停执行，并不会释放锁</strong>。时间到后，会自动进入<code>RUNNABLE</code>状态。</p>
+</li>
+<li><p><code>Object.wait(long)</code></p>
+<p>使线程进入<code>TIMED_WAITING</code>状态，<strong>会释放锁</strong>。经过指定时间后，自动唤醒，拥有去争夺锁的资格。</p>
+</li>
+<li><p><code>Thread.join(long)</code></p>
+<p>使当前线程执行指定时间，并且使线程进入<code>TIMED_WAITING</code>状态。</p>
+</li>
+</ul>
+<h2 id="线程中断"><a href="#线程中断" class="headerlink" title="线程中断"></a>线程中断</h2><p>当线程启动后不需要它继续执行下去的时候，需要线程中断机制。线程中断机制是一种协作机制，<strong>通过中断操作并不能直接终止一个线程，而是通知需要中断的线程自行处理。</strong></p>
+<ul>
+<li><p><code>Thread.interrupt()</code></p>
+<p>中断线程。并不会立即停止线程，而是设置线程的中断状态为<code>true</code>，默认为<code>false</code>。</p>
+</li>
+<li><p><code>Thread.interrupted()</code></p>
+<p>测试当前线程是否被中断。调用一次这个方法会使中断状态设置为<code>true</code>，调用两次中断状态重新转变为<code>false</code>。</p>
+</li>
+<li><p><code>Thread.isInterrupted()</code></p>
+<p>测试当前线程状态是否被中断，与上面方法不同的是不会影响线程的中断状态。</p>
+</li>
+</ul>
 ]]></content>
       <categories>
-        <category>MyBatis</category>
+        <category>Java多线程</category>
       </categories>
       <tags>
-        <tag>SpringBoot</tag>
-        <tag>持久层框架</tag>
-        <tag>MyBatis</tag>
+        <tag>Java</tag>
+        <tag>多线程</tag>
       </tags>
   </entry>
   <entry>
@@ -1847,96 +1998,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Java线程的状态与主要转换方法</title>
-    <url>/2020/04/10/Java%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81%E4%B8%8E%E4%B8%BB%E8%A6%81%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<p>[TOC]</p>
-<h2 id="操作系统中的线程状态转换"><a href="#操作系统中的线程状态转换" class="headerlink" title="操作系统中的线程状态转换"></a>操作系统中的线程状态转换</h2><p>在现代操作系统中，线程被视为轻量级进程，所以操作系统中线程的状态其实是和操作系统中进程的状态是一致的。</p>
-<p><img src="https://f1bu920.github.io/images/Java%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2.png" alt="操作系统中线程状态转换.png"></p>
-<p>操作系统中线程主要有三个状态：</p>
-<ul>
-<li>就绪状态(ready)：线程正在等待使用CPU，等分配到CPU时间片就可以进入running状态。</li>
-<li>执行状态(running)：线程正在使用CPU。</li>
-<li>等待状态(waiting)：线程经过等待事件的调用或者正在等待其他资源，如 I/O等。</li>
-</ul>
-<a id="more"></a>
-
-<h2 id="Java线程的6个状态"><a href="#Java线程的6个状态" class="headerlink" title="Java线程的6个状态"></a>Java线程的6个状态</h2><p>Java中有一个枚举类，代表了Java线程的6个状态，其源码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> State &#123;</span><br><span class="line">         <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Thread state for a thread which has not yet started.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        NEW,</span><br><span class="line">         <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Thread state for a runnable thread.  A thread in the runnable</span></span><br><span class="line"><span class="comment">         * state is executing in the Java virtual machine but it may</span></span><br><span class="line"><span class="comment">         * be waiting for other resources from the operating system</span></span><br><span class="line"><span class="comment">         * such as processor.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        RUNNABLE,</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Thread state for a thread blocked waiting for a monitor lock.</span></span><br><span class="line"><span class="comment">         * A thread in the blocked state is waiting for a monitor lock</span></span><br><span class="line"><span class="comment">         * to enter a synchronized block/method or</span></span><br><span class="line"><span class="comment">         * reenter a synchronized block/method after calling</span></span><br><span class="line"><span class="comment">         * &#123;<span class="doctag">@link</span> Object#wait() Object.wait&#125;.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        BLOCKED,</span><br><span class="line">           <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Thread state for a waiting thread.</span></span><br><span class="line"><span class="comment">         * A thread is in the waiting state due to calling one of the</span></span><br><span class="line"><span class="comment">         * following methods:</span></span><br><span class="line"><span class="comment">         * &lt;ul&gt;</span></span><br><span class="line"><span class="comment">         *   &lt;li&gt;&#123;<span class="doctag">@link</span> Object#wait() Object.wait&#125; with no timeout&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         *   &lt;li&gt;&#123;<span class="doctag">@link</span> #join() Thread.join&#125; with no timeout&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         *   &lt;li&gt;&#123;<span class="doctag">@link</span> LockSupport#park() LockSupport.park&#125;&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         * &lt;/ul&gt;</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * &lt;p&gt;A thread in the waiting state is waiting for another thread to</span></span><br><span class="line"><span class="comment">         * perform a particular action.</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * For example, a thread that has called &lt;tt&gt;Object.wait()&lt;/tt&gt;</span></span><br><span class="line"><span class="comment">         * on an object is waiting for another thread to call</span></span><br><span class="line"><span class="comment">         * &lt;tt&gt;Object.notify()&lt;/tt&gt; or &lt;tt&gt;Object.notifyAll()&lt;/tt&gt; on</span></span><br><span class="line"><span class="comment">         * that object. A thread that has called &lt;tt&gt;Thread.join()&lt;/tt&gt;</span></span><br><span class="line"><span class="comment">         * is waiting for a specified thread to terminate.</span></span><br><span class="line"><span class="comment">         */</span> </span><br><span class="line">        WAITING,</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Thread state for a waiting thread with a specified waiting time.</span></span><br><span class="line"><span class="comment">         * A thread is in the timed waiting state due to calling one of</span></span><br><span class="line"><span class="comment">         * the following methods with a specified positive waiting time:</span></span><br><span class="line"><span class="comment">         * &lt;ul&gt;</span></span><br><span class="line"><span class="comment">         *   &lt;li&gt;&#123;<span class="doctag">@link</span> #sleep Thread.sleep&#125;&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         *   &lt;li&gt;&#123;<span class="doctag">@link</span> Object#wait(long) Object.wait&#125; with timeout&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         *   &lt;li&gt;&#123;<span class="doctag">@link</span> #join(long) Thread.join&#125; with timeout&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         *   &lt;li&gt;&#123;<span class="doctag">@link</span> LockSupport#parkNanos LockSupport.parkNanos&#125;&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         *   &lt;li&gt;&#123;<span class="doctag">@link</span> LockSupport#parkUntil LockSupport.parkUntil&#125;&lt;/li&gt;</span></span><br><span class="line"><span class="comment">         * &lt;/ul&gt;</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        TIMED_WAITING,</span><br><span class="line">          <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Thread state for a terminated thread.</span></span><br><span class="line"><span class="comment">         * The thread has completed execution.</span></span><br><span class="line"><span class="comment">         */</span>  </span><br><span class="line">        TERMINATED;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="NEW"><a href="#NEW" class="headerlink" title="NEW"></a><code>NEW</code></h4><p>处于<code>NEW</code>状态的线程尚未启动，即未调用<code>Thread</code>类的<code>start</code>方法。</p>
-<p><code>start</code>方法的源码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (threadStatus != <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalThreadStateException();</span><br><span class="line">    group.add(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">boolean</span> started = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        start0();</span><br><span class="line">        started = <span class="keyword">true</span>;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (!started) &#123;</span><br><span class="line">                group.threadStartFailed(<span class="keyword">this</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Throwable ignore) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看到，<code>start()</code>方法的内部有一个<code>threadStatus</code>变量，如果它不为0，会直接抛出异常。</p>
-<p>在第一次调用<code>start()</code>方法后，<code>threadStatus</code>变量会从0变为其他值，若第二次调用<code>start()</code>方法就会抛出<code>IllegalThreadStateException</code>异常。</p>
-<h4 id="RUNNABLE"><a href="#RUNNABLE" class="headerlink" title="RUNNABLE"></a><code>RUNNABLE</code></h4><p><code>RUNNABLE</code>表示当前线程正在运行中。<code>RUNNABLE</code>状态的线程运行在虚拟机中，也有可能在等待操作系统的其他资源。<strong>Java中<code>RUNNABLE</code>状态其实包括了操作系统线程的<code>ready</code>和<code>waiting</code>两个状态。</strong></p>
-<h4 id="BLOCKED"><a href="#BLOCKED" class="headerlink" title="BLOCKED"></a><code>BLOCKED</code></h4><p>阻塞状态。处于<code>BLOCKED</code>状态的线程正等待锁的释放以进入同步区。</p>
-<h4 id="WAITING"><a href="#WAITING" class="headerlink" title="WAITING"></a><code>WAITING</code></h4><p>等待状态。处于等待状态的线程要想变为<code>RUNNABLE</code>状态需要其他线程唤醒。</p>
-<p>调用下面三个方法会使线程进入<code>WAITING</code>状态：</p>
-<ul>
-<li><code>Object wait()</code>：使当前线程处于等待状态直到另一个线程唤醒它。</li>
-<li><code>Thread.join()</code>：等待线程执行完毕，底层调用的是<code>Object</code>实例的<code>wait</code>方法。</li>
-<li><code>LockSupport.park()</code>：除非获得调用许可，否则禁止当前线程进行线程调度。</li>
-</ul>
-<h4 id="TIMED-WAITING"><a href="#TIMED-WAITING" class="headerlink" title="TIMED_WAITING"></a><code>TIMED_WAITING</code></h4><p>超时等待状态。线程等待一个具体的时间，时间到后自动唤醒。</p>
-<p>调用下面方法会使线程进入超时等待状态：</p>
-<ul>
-<li><code>Tread.sleep(long millis)</code>：使当前线程睡眠指定时间</li>
-<li><code>Object wait(long millis)</code>：线程休眠指定时间，等待期间可以通过<code>notify()</code>方法唤醒。</li>
-<li><code>Thread.join(long millis)</code>：等待当前线程最多执行millis毫秒，如果<code>millis</code>为0，则会一直执行。</li>
-<li><code>LockSupport.parkNanos(long nanos)</code>：除非获得调用许可，否则禁用当前线程进行线程调度指定时间。</li>
-<li><code>LockSupport.parkUntil(long deadline)</code>：同上，也是禁止线程进行调度指定时间。</li>
-</ul>
-<h4 id="TERMINATED"><a href="#TERMINATED" class="headerlink" title="TERMINATED"></a><code>TERMINATED</code></h4><p>终止状态，线程执行完毕。</p>
-<h2 id="线程状态的转换"><a href="#线程状态的转换" class="headerlink" title="线程状态的转换"></a>线程状态的转换</h2><p><img src="https://f1bu920.github.io/images/%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81%E7%9A%84%E8%BD%AC%E6%8D%A2.png" alt="线程状态的转换"></p>
-<h4 id="BLOCKED与RUNNABLE状态的转换"><a href="#BLOCKED与RUNNABLE状态的转换" class="headerlink" title="BLOCKED与RUNNABLE状态的转换"></a><code>BLOCKED</code>与<code>RUNNABLE</code>状态的转换</h4><p>处于<code>BLOCKED</code>状态的线程是因为在等待锁的释放。当线程获取到锁之后就会进入<code>RUNNABLE</code>状态。</p>
-<h4 id="WAITING状态与RUNNABLE状态的转换"><a href="#WAITING状态与RUNNABLE状态的转换" class="headerlink" title="WAITING状态与RUNNABLE状态的转换"></a><code>WAITING</code>状态与<code>RUNNABLE</code>状态的转换</h4><p>将线程从<code>RUNNABLE</code>状态转换为<code>WAITING</code>状态主要有2种方法。</p>
-<ul>
-<li><p><code>Object.wait()</code></p>
-<p>调用<code>wait()</code>方法前线程必须持有对象的锁，<strong>调用<code>wait()</code>方法后，会释放当前的锁，直到其他线程调用<code>notify()</code>或<code>notifyAll()</code>唤醒等待锁的线程</strong>。</p>
-</li>
-<li><p><code>Thread.join()</code></p>
-<p><strong>调用<code>join()</code>方法不会释放锁，会一直等待当前线程执行完毕(转换为<code>TERMINTED</code>状态)</strong>。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        Thread a = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">new</span> ThreadTest().testMethod();</span><br><span class="line">        &#125;);</span><br><span class="line">        Thread b = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">new</span> ThreadTest().testMethod();</span><br><span class="line">        &#125;);</span><br><span class="line">        a.start();</span><br><span class="line">        a.join();</span><br><span class="line">        b.start();</span><br><span class="line">        System.out.println(a.getName() + <span class="string">": "</span> + a.getState());</span><br><span class="line">        System.out.println(b.getName() + <span class="string">": "</span> + b.getState());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">testMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">2000l</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//输出结果为</span></span><br><span class="line">Thread-<span class="number">0</span>: TERMINATED</span><br><span class="line">Thread-<span class="number">1</span>: TIMED_WAITING</span><br></pre></td></tr></table></figure>
-
-<p>要是没有调用<code>join()</code>方法，<code>main</code>线程不管<code>a</code>线程是否执行完毕都会往下执行，但<code>a</code>线程启动后立刻调用了<code>join()</code>方法，这里<code>main</code>线程就会等待直到<code>a</code>执行完毕(转换为<code>TERMINTED</code>状态)。</p>
-<p>所以<code>a</code>会打印的状态为<code>TERMINATED</code>，而<code>b</code>线程可能为<code>TIMED_WAITING</code>状态(已进入同步方法)也可能为<code>RUNNABLE</code>状态(未进入同步方法)。</p>
-</li>
-</ul>
-<h4 id="TIMED-WAITING与RUNNABLE状态的转换"><a href="#TIMED-WAITING与RUNNABLE状态的转换" class="headerlink" title="TIMED_WAITING与RUNNABLE状态的转换"></a><code>TIMED_WAITING</code>与<code>RUNNABLE</code>状态的转换</h4><p><code>TIMED_WAITING</code>与<code>WAITING</code>状态类似，只是<code>TIMED_WAITING</code>等待时间是指定的。</p>
-<ul>
-<li><p><code>Thread.sleep(long)</code></p>
-<p>使当前线程睡眠指定时间。<strong>这里的睡眠指的是暂停执行，并不会释放锁</strong>。时间到后，会自动进入<code>RUNNABLE</code>状态。</p>
-</li>
-<li><p><code>Object.wait(long)</code></p>
-<p>使线程进入<code>TIMED_WAITING</code>状态，<strong>会释放锁</strong>。经过指定时间后，自动唤醒，拥有去争夺锁的资格。</p>
-</li>
-<li><p><code>Thread.join(long)</code></p>
-<p>使当前线程执行指定时间，并且使线程进入<code>TIMED_WAITING</code>状态。</p>
-</li>
-</ul>
-<h2 id="线程中断"><a href="#线程中断" class="headerlink" title="线程中断"></a>线程中断</h2><p>当线程启动后不需要它继续执行下去的时候，需要线程中断机制。线程中断机制是一种协作机制，<strong>通过中断操作并不能直接终止一个线程，而是通知需要中断的线程自行处理。</strong></p>
-<ul>
-<li><p><code>Thread.interrupt()</code></p>
-<p>中断线程。并不会立即停止线程，而是设置线程的中断状态为<code>true</code>，默认为<code>false</code>。</p>
-</li>
-<li><p><code>Thread.interrupted()</code></p>
-<p>测试当前线程是否被中断。调用一次这个方法会使中断状态设置为<code>true</code>，调用两次中断状态重新转变为<code>false</code>。</p>
-</li>
-<li><p><code>Thread.isInterrupted()</code></p>
-<p>测试当前线程状态是否被中断，与上面方法不同的是不会影响线程的中断状态。</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Java多线程</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>LinkedList源码学习</title>
     <url>/2020/03/29/LinkedList%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<h1 id="LinkedList源码学习"><a href="#LinkedList源码学习" class="headerlink" title="LinkedList源码学习"></a>LinkedList源码学习</h1><h2 id="内部结构"><a href="#内部结构" class="headerlink" title="内部结构"></a>内部结构</h2><p><code>LinkedList</code>是Java集合中<code>List</code>接口的一个重要实现类，其底层使用的是双向链表，所以不支持随机访问。基本结点定义如下：</p>
@@ -2031,6 +2092,34 @@
       </tags>
   </entry>
   <entry>
+    <title>MyBatis学习笔记</title>
+    <url>/2020/04/20/MyBatis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h1 id="MyBatis学习笔记"><a href="#MyBatis学习笔记" class="headerlink" title="MyBatis学习笔记"></a>MyBatis学习笔记</h1><p><code>MyBatis</code>是一款优秀的持久层框架，支持自定义SQL、存储过程和高级映射。<code>MyBatis</code>免除了几乎所有的JDBC代码以及设置参数和获取结果集的工作。可以通过简单的XML或注解来配置和映射原始类型、接口和<code>POJO</code>为数据库中的记录。</p>
+<h2 id="MyBatis安装与入门"><a href="#MyBatis安装与入门" class="headerlink" title="MyBatis安装与入门"></a>MyBatis安装与入门</h2><p><a href="https://github.com/mybatis/mybatis-3/releases" target="_blank" rel="noopener">MyBatis下载链接</a></p>
+<p>要使用<code>MyBatis</code>，只需将下载的jar文件置于类路径(classpath)中。</p>
+<p>如果使用<code>Maven</code>构建项目就更简单了，只需将依赖添加到<code>pom.xml</code>文件中。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>x.x.x<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h2 id="XML配置"><a href="#XML配置" class="headerlink" title="XML配置"></a>XML配置</h2><p><code>MyBatis</code>的配置文件会影响<code>MyBatis</code>的行为的设置和属性信息。</p>
+<h4 id="属性-properties"><a href="#属性-properties" class="headerlink" title="属性(properties)"></a>属性(properties)</h4><p>属性可以在外部配置，也可以进行动态替换。</p>
+<p>设置好的属性可以进行动态替换</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">"POOLED"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driver"</span> <span class="attr">value</span>=<span class="string">"$&#123;driver&#125;"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"$&#123;url&#125;"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"$&#123;username&#125;"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"$&#123;password&#125;"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里<code>username</code>和<code>password</code>的值会由properities中的值来替换。</p>
+<h4 id="设置-settings"><a href="#设置-settings" class="headerlink" title="设置(settings)"></a>设置(settings)</h4><p>![MyBatis 3 - 配置.png](<a href="https://f1bu920.github.io/images/MyBatis" target="_blank" rel="noopener">https://f1bu920.github.io/images/MyBatis</a> 3 - 配置.png)</p>
+]]></content>
+      <categories>
+        <category>MyBatis</category>
+      </categories>
+      <tags>
+        <tag>SpringBoot</tag>
+        <tag>持久层框架</tag>
+        <tag>MyBatis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL数据类型与表的管理</title>
     <url>/2020/03/28/MySQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h2 id="MySQL笔记"><a href="#MySQL笔记" class="headerlink" title="MySQL笔记"></a>MySQL笔记</h2><h4 id="什么是数据库？"><a href="#什么是数据库？" class="headerlink" title="什么是数据库？"></a>什么是数据库？</h4><p>​      数据库是按照数据结构来组织、存储和管理的仓库，是一个关系型数据库管理系统。</p>
@@ -2073,6 +2162,78 @@
       </categories>
       <tags>
         <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>lambda表达式</title>
+    <url>/2019/11/24/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
+    <content><![CDATA[<h2 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a>lambda表达式</h2><h3 id="格式：参数-gt-表达式"><a href="#格式：参数-gt-表达式" class="headerlink" title="格式：参数 -&gt; (表达式)"></a>格式：参数 -&gt; (表达式)</h3><p>如果代码要完成的计算无法放在一个表达式中，可以把代码放在{}中。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Arrays.sort(str, (String first,String second) -&gt; (<span class="keyword">return</span> (first.length()-second.length()))</span><br></pre></td></tr></table></figure>
+
+<p>即使<code>lambda</code>无参数，也要提供空括号.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">()-&gt; &#123;<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++) System.out.println(i);&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果可以推导出一个<code>lambda</code>的参数类型，则可以忽略参数类型</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Arrays.sort(friends,(first,second) -&gt; (first.length()-second.length()));<span class="comment">//friends是一个字符串数组</span></span><br></pre></td></tr></table></figure>
+
+<p>无需指定lambda的返回值类型，返回值类型会由上下文推导得到</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">(String str1,String str2) -&gt; str1.length()-str2.length();</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a> 
+
+<h3 id="函数式接口"><a href="#函数式接口" class="headerlink" title="函数式接口"></a>函数式接口</h3><p>对于只有一个抽象方法的接口，需要这种接口的对象时，就可以提供一个<code>lambda</code>，这种接口叫做函数式接口。</p>
+<p><strong>lambda可以转换为函数式接口</strong>，举例：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Arrays.sort(words, (first,second)-&gt;first.length()-second.length());</span><br><span class="line">people.removeIf(person -&gt; (person.getName().length()&gt;<span class="number">3</span>)); <span class="comment">//removeIf接受一个Predicate参数，这个接口专门用来传递lambda表达式</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h3><p>可以<code>::</code>分隔方法名与对象或类名。主要有3种情况。</p>
+<ol>
+<li><code>object::instanceMethod</code></li>
+<li><code>Class::staticMethod</code></li>
+<li><code>Class:;instanceMethod</code></li>
+</ol>
+<p>前2种情况下，方法引用等价于提供方法参数的lambda表达式。</p>
+<blockquote>
+<p>System.out::println等价于x -&gt; System.out.println(x);</p>
+<p>Math::power等价于(x,y) -&gt; (Math.power(x,y));</p>
+</blockquote>
+<p>  第三种情况下，第一个参数会成为方法的目标。</p>
+<blockquote>
+<p>String::compareToIgnoreCase等价于(x,y) -&gt; x.compareToIgnoreCase(y);</p>
+</blockquote>
+<p>方法引用中也可以使用<code>this</code>和<code>super</code>，如``super::instanceMethod`.</p>
+<h3 id="构造器引用"><a href="#构造器引用" class="headerlink" title="构造器引用"></a>构造器引用</h3><p>构造器引用用法与方法引用类似，只不过方法名为new。举例：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> []::<span class="keyword">new</span>  <span class="comment">//等价于 x -&gt; new int[x],x是数组的长度</span></span><br><span class="line">Perosn [] people = stream.toArray(Person::<span class="keyword">new</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h3><p>通常会使用<code>lambda</code>访问外围方法或类中的变量</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">repeatMessage</span><span class="params">(String str)</span></span>&#123;</span><br><span class="line">    ActionListener listener = event -&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">repeatMessage(<span class="string">"hello"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这里str就是一个自由变量。我们说它被lambda捕获。</p>
+<p><code>lambda</code>表达式有3个部分：</p>
+<ol>
+<li>一个代码块</li>
+<li>参数</li>
+<li>自由变量的值，这里指非参数而且不在代码中定义的变量。</li>
+</ol>
+<p><strong>在Java中，<code>lambda</code>就是闭包</strong>。</p>
+<p><strong><code>lambda</code>只能捕获值不变的变量</strong>，指变量初始化后就不会再为它赋新值。</p>
+<h3 id="处理lambda表达式"><a href="#处理lambda表达式" class="headerlink" title="处理lambda表达式"></a>处理lambda表达式</h3><p>使用<code>lambda</code>的重点是延迟执行，例如</p>
+<ol>
+<li>在一个单独的线程中运行代码</li>
+<li>多次运行代码</li>
+<li>在算法的合适位置运行代码(例如，排序中的比较操作)</li>
+<li>发生某种情况时执行代码(如，点击了某个按钮，数据到达等)</li>
+<li>只在必要时运行代码</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">IntConsumer</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">accept</span><span class="params">(<span class="keyword">int</span> value)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">repeat</span><span class="params">(<span class="keyword">int</span> n, IntConsumer action)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i =<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		action.accept(i);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">Student.repeat(<span class="number">10</span>,i-&gt; System.out.println(<span class="string">"CountDown:"</span>+(<span class="number">9</span>-i)));<span class="comment">//调用</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="再谈Comparator"><a href="#再谈Comparator" class="headerlink" title="再谈Comparator"></a>再谈Comparator</h3><p><code>Comparator</code>接口包含很多的静态方法来创建构造器，这些方法可用于lambda表达式或方法引用。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Arrays.sort(people,Comparator.comparing(Person::getName));<span class="comment">//按名字对people进行排序</span></span><br><span class="line">Arrays.sort(people,Comparator.comparing(Person::getLastName).thencomparing(Person::getFirstName));<span class="comment">//如果两人的姓一致则比较名；</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>lambda</tag>
       </tags>
   </entry>
   <entry>
@@ -2217,78 +2378,6 @@
       <tags>
         <tag>SpringBoot</tag>
         <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>lambda表达式</title>
-    <url>/2019/11/24/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
-    <content><![CDATA[<h2 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a>lambda表达式</h2><h3 id="格式：参数-gt-表达式"><a href="#格式：参数-gt-表达式" class="headerlink" title="格式：参数 -&gt; (表达式)"></a>格式：参数 -&gt; (表达式)</h3><p>如果代码要完成的计算无法放在一个表达式中，可以把代码放在{}中。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Arrays.sort(str, (String first,String second) -&gt; (<span class="keyword">return</span> (first.length()-second.length()))</span><br></pre></td></tr></table></figure>
-
-<p>即使<code>lambda</code>无参数，也要提供空括号.</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">()-&gt; &#123;<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++) System.out.println(i);&#125;</span><br></pre></td></tr></table></figure>
-
-<p>如果可以推导出一个<code>lambda</code>的参数类型，则可以忽略参数类型</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Arrays.sort(friends,(first,second) -&gt; (first.length()-second.length()));<span class="comment">//friends是一个字符串数组</span></span><br></pre></td></tr></table></figure>
-
-<p>无需指定lambda的返回值类型，返回值类型会由上下文推导得到</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">(String str1,String str2) -&gt; str1.length()-str2.length();</span><br></pre></td></tr></table></figure>
-
-<a id="more"></a> 
-
-<h3 id="函数式接口"><a href="#函数式接口" class="headerlink" title="函数式接口"></a>函数式接口</h3><p>对于只有一个抽象方法的接口，需要这种接口的对象时，就可以提供一个<code>lambda</code>，这种接口叫做函数式接口。</p>
-<p><strong>lambda可以转换为函数式接口</strong>，举例：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Arrays.sort(words, (first,second)-&gt;first.length()-second.length());</span><br><span class="line">people.removeIf(person -&gt; (person.getName().length()&gt;<span class="number">3</span>)); <span class="comment">//removeIf接受一个Predicate参数，这个接口专门用来传递lambda表达式</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h3><p>可以<code>::</code>分隔方法名与对象或类名。主要有3种情况。</p>
-<ol>
-<li><code>object::instanceMethod</code></li>
-<li><code>Class::staticMethod</code></li>
-<li><code>Class:;instanceMethod</code></li>
-</ol>
-<p>前2种情况下，方法引用等价于提供方法参数的lambda表达式。</p>
-<blockquote>
-<p>System.out::println等价于x -&gt; System.out.println(x);</p>
-<p>Math::power等价于(x,y) -&gt; (Math.power(x,y));</p>
-</blockquote>
-<p>  第三种情况下，第一个参数会成为方法的目标。</p>
-<blockquote>
-<p>String::compareToIgnoreCase等价于(x,y) -&gt; x.compareToIgnoreCase(y);</p>
-</blockquote>
-<p>方法引用中也可以使用<code>this</code>和<code>super</code>，如``super::instanceMethod`.</p>
-<h3 id="构造器引用"><a href="#构造器引用" class="headerlink" title="构造器引用"></a>构造器引用</h3><p>构造器引用用法与方法引用类似，只不过方法名为new。举例：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> []::<span class="keyword">new</span>  <span class="comment">//等价于 x -&gt; new int[x],x是数组的长度</span></span><br><span class="line">Perosn [] people = stream.toArray(Person::<span class="keyword">new</span>);</span><br></pre></td></tr></table></figure>
-
-<h3 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h3><p>通常会使用<code>lambda</code>访问外围方法或类中的变量</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">repeatMessage</span><span class="params">(String str)</span></span>&#123;</span><br><span class="line">    ActionListener listener = event -&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">repeatMessage(<span class="string">"hello"</span>);</span><br></pre></td></tr></table></figure>
-
-<p>这里str就是一个自由变量。我们说它被lambda捕获。</p>
-<p><code>lambda</code>表达式有3个部分：</p>
-<ol>
-<li>一个代码块</li>
-<li>参数</li>
-<li>自由变量的值，这里指非参数而且不在代码中定义的变量。</li>
-</ol>
-<p><strong>在Java中，<code>lambda</code>就是闭包</strong>。</p>
-<p><strong><code>lambda</code>只能捕获值不变的变量</strong>，指变量初始化后就不会再为它赋新值。</p>
-<h3 id="处理lambda表达式"><a href="#处理lambda表达式" class="headerlink" title="处理lambda表达式"></a>处理lambda表达式</h3><p>使用<code>lambda</code>的重点是延迟执行，例如</p>
-<ol>
-<li>在一个单独的线程中运行代码</li>
-<li>多次运行代码</li>
-<li>在算法的合适位置运行代码(例如，排序中的比较操作)</li>
-<li>发生某种情况时执行代码(如，点击了某个按钮，数据到达等)</li>
-<li>只在必要时运行代码</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">IntConsumer</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">accept</span><span class="params">(<span class="keyword">int</span> value)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">repeat</span><span class="params">(<span class="keyword">int</span> n, IntConsumer action)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i =<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		action.accept(i);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">Student.repeat(<span class="number">10</span>,i-&gt; System.out.println(<span class="string">"CountDown:"</span>+(<span class="number">9</span>-i)));<span class="comment">//调用</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="再谈Comparator"><a href="#再谈Comparator" class="headerlink" title="再谈Comparator"></a>再谈Comparator</h3><p><code>Comparator</code>接口包含很多的静态方法来创建构造器，这些方法可用于lambda表达式或方法引用。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Arrays.sort(people,Comparator.comparing(Person::getName));<span class="comment">//按名字对people进行排序</span></span><br><span class="line">Arrays.sort(people,Comparator.comparing(Person::getLastName).thencomparing(Person::getFirstName));<span class="comment">//如果两人的姓一致则比较名；</span></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>lambda</tag>
       </tags>
   </entry>
   <entry>

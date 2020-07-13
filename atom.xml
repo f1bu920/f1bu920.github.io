@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-07-08T03:09:02.237Z</updated>
+  <updated>2020-07-13T02:01:15.094Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,56 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Leetcode350.两个数组的交集II</title>
+    <link href="http://yoursite.com/2020/07/13/Leetcode350-%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E7%9A%84%E4%BA%A4%E9%9B%86II/"/>
+    <id>http://yoursite.com/2020/07/13/Leetcode350-%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E7%9A%84%E4%BA%A4%E9%9B%86II/</id>
+    <published>2020-07-13T01:54:40.000Z</published>
+    <updated>2020-07-13T02:01:15.094Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Leetcode350-两个数组的交集II"><a href="#Leetcode350-两个数组的交集II" class="headerlink" title="Leetcode350.两个数组的交集II"></a>Leetcode350.两个数组的交集II</h2><p>给定两个数组，编写一个函数来计算它们的交集。</p><p><a href="https://leetcode-cn.com/problems/intersection-of-two-arrays-ii" target="_blank" rel="noopener">题目链接</a></p><a id="more"></a><p>示例 1:</p><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: nums1 = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>], nums2 = [<span class="number">2</span>,<span class="number">2</span>]</span><br><span class="line">输出: [<span class="number">2</span>,<span class="number">2</span>]</span><br></pre></td></tr></table></figure><p>示例 2:</p><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: nums1 = [<span class="number">4</span>,<span class="number">9</span>,<span class="number">5</span>], nums2 = [<span class="number">9</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">8</span>,<span class="number">4</span>]</span><br><span class="line">输出: [<span class="number">4</span>,<span class="number">9</span>]</span><br></pre></td></tr></table></figure><p>说明：</p><ul><li><p>输出结果中每个元素出现的次数，应与元素在两个数组中出现的次数一致。</p></li><li><p>我们可以不考虑输出结果的顺序。</p></li></ul><p>进阶:</p><p>如果给定的数组已经排好序呢？你将如何优化你的算法？<br>如果 nums1 的大小比 nums2 小很多，哪种方法更优？<br>如果 nums2 的元素存储在磁盘上，磁盘内存是有限的，并且你不能一次加载所有的元素到内存中，你该怎么办？</p><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>利用哈希表存储数组中每个数字出现的次数，遍历另一个数组，如果当前元素出现在哈希表中且出现次数大于1，将当前元素添加到结果中，并将出现次数减一；若出现次数小于等于1，将当前元素添加到结果后从哈希表中删除这个元素。</p><p>第二个思路就是将两个数组排序，利用双指针移动直到一个数组遍历完成。</p><h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//哈希表代码</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] intersect(<span class="keyword">int</span>[] nums1, <span class="keyword">int</span>[] nums2) &#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        Map&lt;Integer, Integer&gt; map1 = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> value : nums1) &#123;</span><br><span class="line">            map1.put(value, map1.getOrDefault(value, <span class="number">0</span>) + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> value : nums2) &#123;</span><br><span class="line">            <span class="keyword">if</span> (map1.containsKey(value)) &#123;</span><br><span class="line">                list.add(value);</span><br><span class="line">                <span class="keyword">int</span> t = map1.get(value);</span><br><span class="line">                <span class="keyword">if</span> (t &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                    map1.put(value, t - <span class="number">1</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    map1.remove(value);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span>[] result = <span class="keyword">new</span> <span class="keyword">int</span>[list.size()];</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> value : list) &#123;</span><br><span class="line">            result[index++] = value;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Leetcode350-两个数组的交集II&quot;&gt;&lt;a href=&quot;#Leetcode350-两个数组的交集II&quot; class=&quot;headerlink&quot; title=&quot;Leetcode350.两个数组的交集II&quot;&gt;&lt;/a&gt;Leetcode350.两个数组的交集II&lt;/h2&gt;&lt;p&gt;给定两个数组，编写一个函数来计算它们的交集。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://leetcode-cn.com/problems/intersection-of-two-arrays-ii&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;题目链接&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leetcode" scheme="http://yoursite.com/categories/Leetcode/"/>
+    
+    
+      <category term="哈希表" scheme="http://yoursite.com/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/"/>
+    
+      <category term="排序" scheme="http://yoursite.com/tags/%E6%8E%92%E5%BA%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java泛型</title>
+    <link href="http://yoursite.com/2020/07/12/Java%E6%B3%9B%E5%9E%8B/"/>
+    <id>http://yoursite.com/2020/07/12/Java%E6%B3%9B%E5%9E%8B/</id>
+    <published>2020-07-12T03:45:56.000Z</published>
+    <updated>2020-07-13T09:26:31.872Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Java泛型"><a href="#Java泛型" class="headerlink" title="Java泛型"></a>Java泛型</h2><p>泛型的意思就是<strong>参数化类型</strong>。在没有引入泛型机制前，需要针对不同的数据类型重复编写相同的代码，而引入泛型后就可以<strong>将数据类型与代码逻辑分离开，提高了程序的简洁性和可读性，同时也提供了编译时的类型转换安全检测功能。</strong></p><p>泛型可以将类型参数化，参数一旦确定，如果类型不匹配，就无法通过编译。</p><a id="more"></a><h3 id="泛型的使用"><a href="#泛型的使用" class="headerlink" title="泛型的使用"></a>泛型的使用</h3><p>泛型的使用可以分为：</p><ul><li>泛型类</li><li>泛型方法</li><li>泛型接口</li></ul><h3 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h3><p>对于任意一个类型，可以用字母来表示泛型类型，如<code>List&lt;T&gt;</code>，这种是确定的类型，而使用通配符<code>&lt;?&gt;</code>则可以指定泛型中的类型范围。</p><ol><li><code>&lt;?&gt;</code> 是无限定的通配符；</li><li><code>&lt;? extends A&gt;</code>是有上界的通配符，限定类<code>A</code>和<code>A</code>的子类；</li><li><code>&lt;? super A&gt;</code>是有下界的通配符，限定<code>A</code>和<code>A</code>的父类。</li></ol><p><strong>即便容器的类型之间存在继承关系，但容器间是不构成继承关系的。所以需要将容器类型设置为<code>&lt;? extends T&gt;</code>和<code>&lt;? super T&gt;</code>来让容器间存在继承关系。</strong></p><p><img src="https://f1bu920.github.io/images/Java%E6%B3%9B%E5%9E%8Bextends.png" alt=""></p><p>对于上界<code>&lt;? extends T&gt;</code>类型，在编译期，只知道要存放<code>T</code>和<code>T</code>的子类，具体类型不知道，所以往容器内插入数据不被允许。但读数据时，可以隐式的转化为基类或者Object，所以读操作没有影响。</p><p><img src="https://f1bu920.github.io/images/Java%E6%B3%9B%E5%9E%8Bsuper.png" alt=""></p><p>对于下界<code>&lt;? super T&gt;</code>类型，规定了元素的最小粒度，必须是<code>T</code>或其父类，所以往里添加<code>T</code>或其子类都是可以的，因为可以隐式的转化为T类型。而读时无法转化为任意类型，只能用Object类存储。</p><p>注意：</p><ul><li><strong>上界<code>&lt;? extends T&gt;</code>不能往里存，只能往外取，适合频繁往外面读取内容的场景。</strong></li><li><strong>下界<code>&lt;? super T&gt;</code>不影响往里存，但往外取只能放在Object数组中，适合经常往里面插入数据的场景</strong>。</li></ul><h3 id="类型擦除"><a href="#类型擦除" class="headerlink" title="类型擦除"></a>类型擦除</h3><p><strong>泛型信息只存在于编译阶段，在进入JVM前，所有的泛型信息都会被擦除，这就是类型擦除。</strong></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        List&lt;String&gt; list1 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        List&lt;Integer&gt; list2 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        System.out.println(list1.getClass()==list2.getClass());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//结果输出为true</span></span><br></pre></td></tr></table></figure><p>上面举例中编译后<code>list1</code>和<code>list2</code>的类型都为<code>List.class</code>，泛型信息被擦除了。</p><p>在泛型类被类型擦除后，如果泛型类中没有指定上界，如<code>&lt;T&gt;</code>，就会被转译为<code>Object</code>类型；如果指定了上界，就会被转译为上界类型。</p><p>类型擦除保证了能与JDK5之前的代码兼容，但也带来了一些局限性，比如可以通过反射来绕过泛型。如：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchMethodException, InvocationTargetException, IllegalAccessException </span>&#123;</span><br><span class="line">        List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        list.add(<span class="string">"String"</span>);</span><br><span class="line">        Class&lt;? extends List&gt; aClass = list.getClass();</span><br><span class="line">        Method add = aClass.getMethod(<span class="string">"add"</span>, Object<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        add.invoke(list, <span class="number">777</span>);</span><br><span class="line">        System.out.println(list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出结果为[String, 777]</span></span><br></pre></td></tr></table></figure><p>可以看到利用反射可以向指定了类型为<code>String</code>的集合中添加非<code>String</code>类型的元素。</p><h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://juejin.im/post/5b614848e51d45355d51f792" target="_blank" rel="noopener">深入理解Java泛型</a></p><p><a href="https://blog.csdn.net/briblue/article/details/76736356" target="_blank" rel="noopener">Java泛型</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Java泛型&quot;&gt;&lt;a href=&quot;#Java泛型&quot; class=&quot;headerlink&quot; title=&quot;Java泛型&quot;&gt;&lt;/a&gt;Java泛型&lt;/h2&gt;&lt;p&gt;泛型的意思就是&lt;strong&gt;参数化类型&lt;/strong&gt;。在没有引入泛型机制前，需要针对不同的数据类型重复编写相同的代码，而引入泛型后就可以&lt;strong&gt;将数据类型与代码逻辑分离开，提高了程序的简洁性和可读性，同时也提供了编译时的类型转换安全检测功能。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;泛型可以将类型参数化，参数一旦确定，如果类型不匹配，就无法通过编译。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java泛型" scheme="http://yoursite.com/tags/Java%E6%B3%9B%E5%9E%8B/"/>
+    
+  </entry>
   
   <entry>
     <title>Java反射机制</title>
@@ -571,54 +621,6 @@
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
       <category term="LinkedList" scheme="http://yoursite.com/tags/LinkedList/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL数据类型与表的管理</title>
-    <link href="http://yoursite.com/2020/03/28/MySQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    <id>http://yoursite.com/2020/03/28/MySQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</id>
-    <published>2020-03-28T07:36:15.000Z</published>
-    <updated>2020-06-09T06:44:00.056Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="MySQL笔记"><a href="#MySQL笔记" class="headerlink" title="MySQL笔记"></a>MySQL笔记</h2><h4 id="什么是数据库？"><a href="#什么是数据库？" class="headerlink" title="什么是数据库？"></a>什么是数据库？</h4><p>​      数据库是按照数据结构来组织、存储和管理的仓库，是一个关系型数据库管理系统。</p><p>​      <a id="more"></a></p><ol><li><p>常见数据库</p><ul><li><p>Oracle</p></li><li><p>DB2</p></li><li><p>SQL Server</p></li><li><p>Postgre SQL</p></li><li><p>MySQL</p></li></ul></li><li><p>相关术语</p><p>数据库系统(DataBase System)：(DBS)，包含以下内容</p><ul><li>数据库(DataBase)</li><li>数据库管理系统(DataBase Management System)：(DBMS)</li><li>应用开发工具</li><li>管理员及用户</li></ul><p>SQL语言(Structured Query Language)：结构化查询语言</p><ul><li>DDL：数据定义语言</li><li>DML：数据操作语言</li><li>DQL：数据查询语言</li><li>DCL：数据控制语言</li></ul></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;MySQL笔记&quot;&gt;&lt;a href=&quot;#MySQL笔记&quot; class=&quot;headerlink&quot; title=&quot;MySQL笔记&quot;&gt;&lt;/a&gt;MySQL笔记&lt;/h2&gt;&lt;h4 id=&quot;什么是数据库？&quot;&gt;&lt;a href=&quot;#什么是数据库？&quot; class=&quot;headerlink&quot; title=&quot;什么是数据库？&quot;&gt;&lt;/a&gt;什么是数据库？&lt;/h4&gt;&lt;p&gt;​      数据库是按照数据结构来组织、存储和管理的仓库，是一个关系型数据库管理系统。&lt;/p&gt;
-&lt;p&gt;​
-    
-    </summary>
-    
-    
-      <category term="MySQL" scheme="http://yoursite.com/categories/MySQL/"/>
-    
-    
-      <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>IDEA使用技巧</title>
-    <link href="http://yoursite.com/2020/03/27/IDEA%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/"/>
-    <id>http://yoursite.com/2020/03/27/IDEA%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</id>
-    <published>2020-03-27T08:46:15.000Z</published>
-    <updated>2020-03-27T09:08:48.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="IDEA使用技巧"><a href="#IDEA使用技巧" class="headerlink" title="IDEA使用技巧"></a>IDEA使用技巧</h2><h3 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h3><ol><li>项目间跳转：<code>Ctrl+Alt+右方括号</code>：下一个窗口；<code>Ctrl+Alt+左方括号</code>：上一个窗口。</li><li>文件间跳转：<code>Ctrl+Shift+A</code>：find Action；<code>Ctrl+E</code>：最近文件；<code>Ctrl+Shift+C</code>：最近修改文件；</li><li>浏览修改位置跳转：</li><li><code>Alt+数字</code>跳转侧边栏。</li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;IDEA使用技巧&quot;&gt;&lt;a href=&quot;#IDEA使用技巧&quot; class=&quot;headerlink&quot; title=&quot;IDEA使用技巧&quot;&gt;&lt;/a&gt;IDEA使用技巧&lt;/h2&gt;&lt;h3 id=&quot;跳转&quot;&gt;&lt;a href=&quot;#跳转&quot; class=&quot;headerlink&quot; titl
-      
-    
-    </summary>
-    
-    
-    
-      <category term="IDEA" scheme="http://yoursite.com/tags/IDEA/"/>
     
   </entry>
   
