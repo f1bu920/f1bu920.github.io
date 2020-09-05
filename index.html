@@ -296,6 +296,212 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/04/JVM-%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E4%B8%8E%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="flbu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flbu blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/09/04/JVM-%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E4%B8%8E%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5/" itemprop="url">JVM 垃圾收集器与内存分配策略</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-04T14:16:00+08:00">
+                2020-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="JVM-垃圾收集器与内存分配策略"><a href="#JVM-垃圾收集器与内存分配策略" class="headerlink" title="JVM 垃圾收集器与内存分配策略"></a>JVM 垃圾收集器与内存分配策略</h1><p>Java是自动内存管理的，但了解相关的内存分配与回收机制仍然很重要。</p>
+<p>在Java运行时数据区域中，程序计数器、虚拟机栈和本地方法栈都随着线程创建而创建，随着线程消亡而消亡，栈中的栈帧也随着方法的进入和退出而入栈和出栈，这部分的内存回收在编译后就是确定的。而<strong>堆和方法区中则有明显的不确定性，只有在运行时才能确定，内存的分配和回收都是动态的</strong>。通常意义上的垃圾回收都是指的对堆和方法区的回收。</p>
+<h2 id="判断对象可回收"><a href="#判断对象可回收" class="headerlink" title="判断对象可回收"></a>判断对象可回收</h2><p>垃圾回收前首先要确定哪些对象是可回收的。主要有两种方法：</p>
+<h3 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h3><p>即在对象中添加一个引用计数器，没有一个对象引用它，引用计数器就加一；当引用失效时，计数器就减一。引用计数器为0的对象就是可回收的。</p>
+<p>引用计数法虽然使用了一些额外的内存空间，但原理简单、效率也高，但Java并没有使用这种方法。因为这种方法要配合大量的额外处理才能正确工作，如当初的计数引用就无法解决相互循环引用的问题。</p>
+<h3 id="可达性分析算法"><a href="#可达性分析算法" class="headerlink" title="可达性分析算法"></a>可达性分析算法</h3><p>通过将一系列称为<code>GC Roots</code>的根对象作为起始节点集，从这些节点通过引用关系向下搜索，搜索路径称为<strong>引用链</strong>，如果从<code>GC Root</code>到一个对象没有一条引用链相连，即从<code>GC Root</code>到这个对象不可达，则这个对象是可回收的。</p>
+<p>可作为<code>GC Roots</code>的对象有：</p>
+<ol>
+<li>在虚拟机栈中引用的对象</li>
+<li>在方法区中类静态属性对象</li>
+<li>方法区中常量引用的对象</li>
+<li>本地方法栈中引用的对象</li>
+<li>Java虚拟机内部应用</li>
+<li>所有被<code>synchronized</code>持有的对象</li>
+</ol>
+<h3 id="引用分类"><a href="#引用分类" class="headerlink" title="引用分类"></a>引用分类</h3><p>Java中将引用分为四种：<strong>强引用、软引用、弱引用、虚引用。</strong></p>
+<ul>
+<li><p>强引用</p>
+<p><strong>强引用指的是程序代码中最常见的引用赋值，即<code>Object obj = new Object()</code>，无论何时，只要有强引用关系存在，垃圾收集器永远不会回收被引用的对象</strong>。</p>
+</li>
+<li><p>软引用</p>
+<p><strong>软引用用来描述一些还有用但非必需的对象。只被软引用关联的对象，在将要发生内存溢出前会被回收。JDK提供了<code>SoftReference</code>类来实现软引用。</strong></p>
+</li>
+<li><p>弱引用</p>
+<p><strong>弱引用也用来描述非必须的对象，但强度比软引用跟弱一些，被弱引用关联的对象只能生存到下次垃圾回收时。当垃圾回收开始时，无论内存是否足够，都会回收只被弱引用关联的对象。JDK提供了<code>WeakReference</code>类来实现弱引用</strong>。</p>
+</li>
+<li><p>虚引用</p>
+<p><strong>虚引用是最弱的一种引用关系，一个对象是否有虚引用不会对其生命周期造成影响，也无法通过虚引用获得对象实例。设置虚引用只是为了对象被回收时收到一个通知。JDK提供了<code>PhantomReference</code>类来实现虚引用。</strong></p>
+</li>
+</ul>
+<h3 id="回收类"><a href="#回收类" class="headerlink" title="回收类"></a>回收类</h3><p>回收一个实例相对简单，但回收一个类型条件比较苛刻，需要同时满足下面三个条件：</p>
+<ul>
+<li><strong>该类的所有实例都已经被回收</strong>。</li>
+<li><strong>该类的类加载器已经被回收</strong>。</li>
+<li><strong>该类的类对象，即Class对象没有在其他地方被引用</strong>。</li>
+</ul>
+<h2 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h2><h3 id="分代收集理论"><a href="#分代收集理论" class="headerlink" title="分代收集理论"></a>分代收集理论</h3><p>即：<strong>收集器将Java堆分为不同的区域，根据对象的年龄分配到不同的区域中存储。</strong>一般分为<strong>新生代</strong>和<strong>老年代</strong>两个区域。</p>
+<p>Java堆被划分为不同区域后，垃圾收集器可以每次只回收其中一个或几个区域，才有了<code>Minor Gc</code>、<code>Major GC</code>和<code>Full GC</code>，才可以根据不同的区域采用不同的垃圾回收算法：<strong>标记-清除、标记-复制、标记-整理。</strong></p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">部分收集<span class="comment">(Partial GC)</span>: 指不是完整收集整个Java堆的垃圾收集，又分为</span><br><span class="line">	新生代收集<span class="comment">(Minor GC)</span></span><br><span class="line">	老年代收集<span class="comment">(Major GC)</span>: 只有CMS收集器会有单独收集老年代的行为</span><br><span class="line">	</span><br><span class="line">整堆收集<span class="comment">(Full GC)</span>：收集整个Java堆和方法区的垃圾收集</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h3><p><strong>标记-清除算法分为标记和清除两个部分，首先标记出所有要回收的对象，再统一回收被标记的对象。</strong></p>
+<p>其主要有两个缺点：</p>
+<ol>
+<li><strong>执行效率不稳定：如果堆中包含大量要被回收的对象，就必须要进行大量的标记和清除的动作，导致标记和清除的效率随对象数量的增长而降低；</strong></li>
+<li><strong>产生大量内存碎片：标记、清除后会产生大量的内存碎片，可能会导致没有足够的连续内存分配，从而触发另一次垃圾回收。</strong></li>
+</ol>
+<p><img src="https://f1bu920.github.io/images/%E6%A0%87%E8%AE%B0-%E6%B8%85%E9%99%A4%E7%AE%97%E6%B3%95.png" alt=""></p>
+<h3 id="标记-复制算法"><a href="#标记-复制算法" class="headerlink" title="标记-复制算法"></a>标记-复制算法</h3><p>  <strong>标记-复制算法将内存按容量分为大小相等的两块，每次只使用其中一块，当一块内存用完了，就将还存活的对象复制到另一块内存中，然后把已使用的一块内存清除。</strong></p>
+<p><strong>如果内存中大部分对象都是存活的，复制算法会产生大量的复制对象的开销；如果存活对象很少，复制算法开销就较小。而且因为每次都是回收整个半区，所以不会产生内存碎片。但是，可用内存缩小为原来的一半，空间浪费严重！</strong></p>
+<p>因为新生代存活对象很少的特点，还有一种优化的复制分区策略：</p>
+<p><strong>将新生代分为一块较大的<code>Eden</code>区和两块较小的<code>Survivor</code>空间。每次分配内存只使用<code>Eden</code>和一块<code>Survivor</code>空间。当发生垃圾回收时，将存活的对象复制到另一块<code>Survivor</code>上，直接清理掉Eden和已使用的那块<code>Survivor</code>空间。</strong></p>
+<p><strong>当然，上面这种策略需要使用老年代的内存空间作为内存分配担保，当另一块<code>Survivor</code>空间不足时，直接将存活对象复制到老年代。</strong></p>
+<p><img src="https://f1bu920.github.io/images/%E6%A0%87%E8%AE%B0-%E5%A4%8D%E5%88%B6%E7%AE%97%E6%B3%95.jpg" alt=""></p>
+<h3 id="标记-整理算法"><a href="#标记-整理算法" class="headerlink" title="标记-整理算法"></a>标记-整理算法</h3><p>标记-复制算法在对象存活率较高时需要复制大量对象，效率较低，并且如果不想浪费一半空间，需要使用额外空间进行担保，所以老年代一般不会使用这种方法。</p>
+<p><strong>标记-整理算法在标记后，不是直接将可回收对象清除，而是让所有存活对象向一端移动，然后直接清理边界以外的内存。</strong></p>
+<p><img src="https://f1bu920.github.io/images/%E6%A0%87%E8%AE%B0-%E6%95%B4%E7%90%86%E7%AE%97%E6%B3%95.png" alt=""></p>
+<p>移动存活对象并更新所有引用这些对象的引用，尤其是老年代这种存活率较高的区域，需要暂停所有的用户程序，开销较大。但如果像标记-清除算法那样不移动对象，又会产生内存碎片，要依赖更复杂的内存分配机制和内存访问机制。</p>
+<p>移动则内存回收更复杂，不移动则内存分配更复杂。这就需要根据不同的场景进行权衡。</p>
+<p>另一种综合的方法是让<strong>多数时间内采用标记-清除算法，直到内存的碎片化程度影响对象分配时，再采用标记-整理算法收集。</strong>这也是CMS垃圾收集器采用的策略。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+<div>
+  
+</div>
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/21/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1808,161 +2014,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/22/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-synchronized%E4%B8%8E%E9%94%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="flbu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="flbu blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/22/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-synchronized%E4%B8%8E%E9%94%81/" itemprop="url">Java多线程-synchronized与锁</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-22T15:47:46+08:00">
-                2020-04-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index">
-                    <span itemprop="name">Java多线程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="synchronized关键字"><a href="#synchronized关键字" class="headerlink" title="synchronized关键字"></a>synchronized关键字</h2><p><code>synchronized</code>翻译成中文就是同步的意思。我们通常使用<code>synchronized</code>关键字来给一段代码或一个方法上锁。其主要有以下三种方式</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment">//关键字在实例方法上，锁为当前实例</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">instanceLock</span><span class="params">()</span></span>&#123;</span><br><span class="line">       <span class="comment">//code</span></span><br><span class="line">   &#125;</span><br><span class="line"><span class="comment">//关键字在静态方法上，锁为当前Class对象</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">classLock</span><span class="params">()</span></span>&#123;</span><br><span class="line">       <span class="comment">//code</span></span><br><span class="line">   &#125;</span><br><span class="line"><span class="comment">//关键字在代码块上，锁为括号里面对象</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">blockLock</span><span class="params">()</span></span>&#123;</span><br><span class="line">       Object o = <span class="keyword">new</span> Object();</span><br><span class="line">       <span class="keyword">synchronized</span> (o)&#123;</span><br><span class="line">           <span class="comment">//code</span></span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><strong>java中的锁都是对象锁，我们常说的类锁也是对象锁。Java类只要一个Class对象，多个实例对象共享这一个Class对象。类锁就是Class对象的锁。</strong></p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/04/22/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-synchronized%E4%B8%8E%E9%94%81/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-<div>
-  
-</div>
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2013,7 +2064,7 @@
               
                 <a href="/archives/%7C%7Carchive">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
