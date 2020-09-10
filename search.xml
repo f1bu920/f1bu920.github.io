@@ -2587,4 +2587,199 @@
         <tag>Java类加载</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Java多线程-锁</title>
+    <url>/2020/09/10/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E9%94%81/</url>
+    <content><![CDATA[<h1 id="Java中的锁"><a href="#Java中的锁" class="headerlink" title="Java中的锁"></a>Java中的锁</h1><p>本篇文章主要介绍juc包下与锁相关的API和组件，包括<strong><code>Lock</code>接口、<code>AQS</code>抽象队列同步器、重入锁、读写锁和<code>Condition</code>接口。</strong></p>
+<h2 id="Lock接口"><a href="#Lock接口" class="headerlink" title="Lock接口"></a>Lock接口</h2><p>锁是用来控制多个线程访问资源的方式，除了<code>synchronized</code>之外，juc包下还提供了<code>Lock</code>接口来实现锁功能。其提供了与<code>synchronized</code>类似的同步功能，但<strong>需要显示的获取、释放锁</strong>，并且提供了更加强大的功能，如<strong>可中断的获取锁和超时获取锁等</strong>。</p>
+<p><code>Lock</code>接口提供了<code>synchronized</code>关键字不具备的特性：</p>
+<table>
+<thead>
+<tr>
+<th align="center">特性</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">尝试非阻塞的获取锁</td>
+<td align="center">当前线程尝试获取锁，如果锁这一时刻没有被其他线程获取到，则成功获取并持有锁</td>
+</tr>
+<tr>
+<td align="center">可中断的获取锁</td>
+<td align="center">获取到锁的线程能响应中断，拥有锁的线程被中断时，会抛出中断异常并释放锁</td>
+</tr>
+<tr>
+<td align="center">超时获取锁</td>
+<td align="center">在指定时间内获取锁，如果超时仍未获取锁，则返回</td>
+</tr>
+</tbody></table>
+<p><code>Lock</code>接口的默认实现类为<code>ReentrantLock</code>，<code>部分API如下：</code></p>
+<table>
+<thead>
+<tr>
+<th align="center">void lock()</th>
+<th align="center">获取锁，调用该方法的线程尝试获取锁，获取成功后返回</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">void lockInterruptibly() throws InterruptedException</td>
+<td align="center">可中断的获取锁</td>
+</tr>
+<tr>
+<td align="center">boolean tryLock()</td>
+<td align="center">尝试非阻塞的获取锁，调用此方法后立即返回</td>
+</tr>
+<tr>
+<td align="center">boolean tryLock(long var1, TimeUnit var3) throws InterruptedException</td>
+<td align="center">超时获取锁，有三种可能会返回：超时、成功获取锁、被中断</td>
+</tr>
+<tr>
+<td align="center">void unlock()</td>
+<td align="center">释放锁</td>
+</tr>
+<tr>
+<td align="center">Condition newCondition()</td>
+<td align="center">获取等待通知组件，该组件和当前的锁绑定，只有获取了锁才能调用此方法，并且调用后释放锁</td>
+</tr>
+</tbody></table>
+<a id="more"></a>
+
+<h2 id="抽象队列同步器AQS"><a href="#抽象队列同步器AQS" class="headerlink" title="抽象队列同步器AQS"></a>抽象队列同步器AQS</h2><p><strong>抽象队列同步器是用来构造锁和其他同步组件的基础框架，其使用了一个<code>private volatile int</code>类型的成员变量<code>state</code>表示同步状态，通过内置的FIFO队列来完成资源获取线程的排队。</strong></p>
+<p><strong>同步器是基于模板方法设计的，子类通过继承<code>AbstractQueuedSynchronizer</code>并实现它的同步方法来管理同步状态。同步器提供了三个安全的方法来对同步状态进行更改：<code>getState</code>、<code>setState</code>、<code>compareAndSetState(int expect,int update)</code>。</strong>子类推荐被定义为同步组件的一个静态内部类，其定义了一些获取和释放同步状态的方法。<strong>同步器既可以支持独占式获取同步状态，也可以支持共享式获取同步状态，这样可以实现不同的同步组件，如<code>ReentrantLock</code>、<code>ReentrantReadWriteLock</code>、<code>CountDownLatch</code>等</strong>。</p>
+<p><strong>同步器是实现锁的关键，利用同步器来实现锁的语义。锁是面向使用者的，定义了锁与使用者交互的接口，隐藏了实现细节；同步器是面向锁的实现者的，简化了锁的实现方式，屏蔽了同步状态管理、线程排队、等待与唤醒等底层操作。</strong></p>
+<h3 id="队列同步器的接口"><a href="#队列同步器的接口" class="headerlink" title="队列同步器的接口"></a>队列同步器的接口</h3><p>同步器是基于模板方法设计的，所以<strong>通过继承同步器并重写指定的方法，将同步器子类组合在自定义同步组件中，并调用同步器所提供的模板方法，就会调用我们重写的方法，从而实现自定义同步组件的逻辑</strong>。</p>
+<p>重写指定的方法时，需要使用下面三个方法对同步状态进行访问和修改：</p>
+<ul>
+<li>getState()</li>
+<li>setState()</li>
+<li>compareAndSetState(int expect,int update)</li>
+</ul>
+<p>同步器可供重写的方法如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">方法名称</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">protected boolean tryAcquire(int arg)</td>
+<td align="center">独占式的获取同步状态。实现该方法需要查询当前状态并判断当前状态是否符合预期，在进行CAS设置同步状态</td>
+</tr>
+<tr>
+<td align="center">protected boolean tryRelease(int arg)</td>
+<td align="center">独占式的释放同步状态</td>
+</tr>
+<tr>
+<td align="center">protected int tryAcquireShared(int arg)</td>
+<td align="center">共享式的获取同步状态，返回大于等于0的值，获取成功，否则获取失败</td>
+</tr>
+<tr>
+<td align="center">protected boolean tryReleaseShared(int arg)</td>
+<td align="center">共享式释放同步状态</td>
+</tr>
+<tr>
+<td align="center">protected boolean isHeldExclusively()</td>
+<td align="center">当前同步器是否在独占式状态下被线程占用</td>
+</tr>
+</tbody></table>
+<p>实现自定义同步组件时，会调用同步器的模板方法：</p>
+<table>
+<thead>
+<tr>
+<th align="center">方法名称</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">public final void acquire(int arg)</td>
+<td align="center">独占式获取锁。如果获取成功，则返回；否则进入同步队列等待。会调用重写的tryAcquire()方法</td>
+</tr>
+<tr>
+<td align="center">public final void acquireInterruptibly(int arg)</td>
+<td align="center">与acquire()方法相同，但响应中断。</td>
+</tr>
+<tr>
+<td align="center">public final boolean tryAcquireNanos(int arg, long nanosTimeout)</td>
+<td align="center">在acquireInterruptibly(int arg)基础上增加了超时限制</td>
+</tr>
+<tr>
+<td align="center">public final boolean release(int arg)</td>
+<td align="center">独占式释放同步状态，在释放后会唤醒同步队列中下一个节点</td>
+</tr>
+<tr>
+<td align="center">public final void acquireShared(int arg)</td>
+<td align="center">共享式获取同步状态，如果未获取到，则进入同步队列等待</td>
+</tr>
+<tr>
+<td align="center">public final void acquireSharedInterruptibly(int arg)</td>
+<td align="center">在acquireShared(int arg)基础上可响应中断</td>
+</tr>
+<tr>
+<td align="center">public final boolean tryAcquireSharedNanos(int arg, long nanosTimeout)</td>
+<td align="center">在acquireSharedInterruptibly(int arg)基础上增加了超时限制</td>
+</tr>
+<tr>
+<td align="center">public final boolean releaseShared(int arg)</td>
+<td align="center">共享式释放同步状态</td>
+</tr>
+<tr>
+<td align="center">public final Thread getFirstQueuedThread()</td>
+<td align="center">获取同步队列上下一个等待线程</td>
+</tr>
+</tbody></table>
+<p>同步器提供的模板方法可以分为三类：独占式获取和释放同步状态、共享式获取和释放同步状态、查询同步队列中等待线程情况。通过这些模板方法，自定义同步组件可以实现自己的语义。</p>
+<h3 id="队列同步器的实现"><a href="#队列同步器的实现" class="headerlink" title="队列同步器的实现"></a>队列同步器的实现</h3><p>队列同步器的实现主要分为<strong>同步队列、独占式同步状态的获取与释放、共享式同步状态的获取与释放以及超时获取同步状态</strong></p>
+<h4 id="同步队列"><a href="#同步队列" class="headerlink" title="同步队列"></a>同步队列</h4><p><strong>同步器依赖内部的一个FIFO的双向队列来完成线程的排队。当前线程获取同步状态失败时，同步器将当前线程和等待状态等信息构造成一个<code>Node</code>节点加入到同步队列中，并阻塞当前线程。当释放同步状态时，会唤醒同步队列首节点线程，使其再次尝试获取同步状态。</strong></p>
+<p><img src="https://f1bu920.github.io/images/AQS%E5%90%8C%E6%AD%A5%E9%98%9F%E5%88%97.jpg" alt=""></p>
+<p>节点时构成同步队列的基础，同步器记录首节点(head)和尾节点(tail)，没有成功获取同步状态的线程会被构造出节点添加到同步队列的尾部。<strong>同步器提供了一个基于CAS的安全设置尾节点的方法：<code>compareAndSetTail(Node expect,Node update)</code>，设置成功后，当前节点才会与之前的尾节点建立关联。</strong></p>
+<p><img src="https://f1bu920.github.io/images/AQS%E5%90%8C%E6%AD%A5%E9%98%9F%E5%88%97%E8%AE%BE%E7%BD%AE%E5%B0%BE%E8%8A%82%E7%82%B9.jpg" alt=""></p>
+<p>同步队列遵循FIFO规则，释放同步状态时，会唤醒后继节点，而<strong>后继节点在获取同步状态后会把自己设置为首节点，注意因为只有一个线程能成功获取同步状态，所以不需要通过CAS来保证安全性</strong>。</p>
+<h4 id="独占式获取和释放同步状态"><a href="#独占式获取和释放同步状态" class="headerlink" title="独占式获取和释放同步状态"></a>独占式获取和释放同步状态</h4><p>通过调用同步器的<code>acquire()</code>方法来独占式的获取同步状态。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">acquire</span><span class="params">(<span class="keyword">int</span> arg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.tryAcquire(arg) &amp;&amp; <span class="keyword">this</span>.acquireQueued(<span class="keyword">this</span>.addWaiter(AbstractQueuedSynchronizer.Node.EXCLUSIVE), arg)) &#123;</span><br><span class="line">        selfInterrupt();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该方法首先调用自定义的<code>tryAcquire()</code>方法尝试获取同步状态，如果同步状态获取失败，则构造成<code>Node</code>节点并通过<code>addWaiter()</code>方法添加到同步队列尾部，最后通过<code>acquireQueued</code>方法使得该<strong>节点以“死循环”的方式尝试获取同步状态，如果获取不到则阻塞当前线程。而被阻塞线程的唤醒主要靠前驱节点出队和阻塞线程被中断来实现。</strong></p>
+<p><img src="https://f1bu920.github.io/images/AQS%E7%8B%AC%E5%8D%A0%E5%BC%8F%E8%8A%82%E7%82%B9%E8%87%AA%E6%97%8B%E8%8E%B7%E5%8F%96%E5%90%8C%E6%AD%A5%E7%8A%B6%E6%80%81.png" alt=""></p>
+<p><strong>节点进入同步队列后，就进入一个自旋的过程，不断检查前驱节点是否是头节点，如果是，则尝试获取前驱节点，否则处于等待状态。</strong></p>
+<p><img src="https://f1bu920.github.io/images/AQS%E7%8B%AC%E5%8D%A0%E5%BC%8F%E8%8E%B7%E5%8F%96%E5%90%8C%E6%AD%A5%E7%8A%B6%E6%80%81%E6%B5%81%E7%A8%8B.png" alt=""></p>
+<p>总结：</p>
+<p><strong>在获取同步状态时，同步器维护一个同步状态，获取同步状态失败的线程都会被加入到队列中并在队列中进行自旋；移出队列的条件是前驱节点是头节点并且成功获取了同步状态。在释放同步状态时，调用<code>tryRelease()</code>方法释放同步状态，然后唤醒头节点的后继节点。</strong></p>
+]]></content>
+      <categories>
+        <category>Java多线程</category>
+      </categories>
+      <tags>
+        <tag>锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Leetcode40.组合总和II</title>
+    <url>/2020/09/10/Leetcode40-%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8CII/</url>
+    <content><![CDATA[<h2 id="Leetcode40-组合总和II"><a href="#Leetcode40-组合总和II" class="headerlink" title="Leetcode40.组合总和II"></a>Leetcode40.组合总和II</h2><p>给定一个数组 <code>candidates</code> 和一个目标数 <code>target</code> ，找出 <code>candidates</code> 中所有可以使数字和为 <code>target</code> 的组合。</p>
+<p><code>candidates</code> 中的每个数字在每个组合中只能使用一次。</p>
+<p><a href="https://leetcode-cn.com/problems/combination-sum-ii" target="_blank" rel="noopener">题目链接</a></p>
+<a id="more"></a>
+
+<p>说明：</p>
+<p>所有数字（包括目标数）都是正整数。<br>解集不能包含重复的组合。<br>示例 1:</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">输入: candidates = [<span class="number">10</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">7</span>,<span class="number">6</span>,<span class="number">1</span>,<span class="number">5</span>], target = <span class="number">8</span>,</span><br><span class="line">所求解集为:</span><br><span class="line">[</span><br><span class="line">  [<span class="number">1</span>, <span class="number">7</span>],</span><br><span class="line">  [<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>],</span><br><span class="line">  [<span class="number">2</span>, <span class="number">6</span>],</span><br><span class="line">  [<span class="number">1</span>, <span class="number">1</span>, <span class="number">6</span>]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+
+
+<p>示例 2:</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">输入: candidates = [<span class="number">2</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">2</span>], target = <span class="number">5</span>,</span><br><span class="line">所求解集为:</span><br><span class="line">[</span><br><span class="line">  [<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>],</span><br><span class="line">  [<span class="number">5</span>]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>因为不能有重复的集合，所以需要按顺序进行搜索并剪枝。</p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    List&lt;Integer&gt; path = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; combinationSum2(<span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        <span class="comment">//先进行排序</span></span><br><span class="line">        Arrays.sort(candidates);</span><br><span class="line">        dfs(candidates, <span class="number">0</span>, target);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span>[] candidates, <span class="keyword">int</span> index, <span class="keyword">int</span> leftNum)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//添加到结果中</span></span><br><span class="line">        <span class="keyword">if</span> (leftNum == <span class="number">0</span>) &#123;</span><br><span class="line">            result.add(<span class="keyword">new</span> ArrayList&lt;&gt;(path));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = index; i &lt; candidates.length; i++) &#123;</span><br><span class="line">            <span class="comment">//剪枝</span></span><br><span class="line">            <span class="keyword">if</span> (leftNum - candidates[i] &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//去重</span></span><br><span class="line">            <span class="keyword">if</span> (i &gt; index &amp;&amp; candidates[i] == candidates[i - <span class="number">1</span>]) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            path.add(candidates[i]);</span><br><span class="line">            dfs(candidates, i + <span class="number">1</span>, leftNum - candidates[i]);</span><br><span class="line">            path.remove(path.size() - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Leetcode</category>
+      </categories>
+      <tags>
+        <tag>回溯</tag>
+      </tags>
+  </entry>
 </search>
