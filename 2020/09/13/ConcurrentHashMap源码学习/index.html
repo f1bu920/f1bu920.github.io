@@ -90,7 +90,7 @@
 <meta property="og:image" content="https://f1bu920.github.io/images/ConcurrentHashMap1.7.png">
 <meta property="og:image" content="https://f1bu920.github.io/images/ConcurrentHashMap1.8.JPG">
 <meta property="article:published_time" content="2020-09-13T07:53:34.000Z">
-<meta property="article:modified_time" content="2020-09-13T09:44:01.039Z">
+<meta property="article:modified_time" content="2020-09-13T09:46:40.626Z">
 <meta property="article:author" content="flbu">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="ConcurrentHashMap">
@@ -395,6 +395,8 @@
 <p>虽然JDK也提供了一个安全版本的<code>HashMap</code>：<code>Collections.SynchronizedMap</code>，但因为其使用的是全局锁，并发性能较差。</p>
 <p>因此，juc包下提供了线程安全且锁粒度较小的<code>ConcurrentHashMap</code>。</p>
 <h2 id="ConcurrentHashMap的结构与实现原理"><a href="#ConcurrentHashMap的结构与实现原理" class="headerlink" title="ConcurrentHashMap的结构与实现原理"></a>ConcurrentHashMap的结构与实现原理</h2><p><code>ConcurrentHashMap</code>在JDK1.7和JDK1.8中有者不同的实现。</p>
+<a id="more"></a>
+
 <h3 id="1-7下的ConcurrentHashMap"><a href="#1-7下的ConcurrentHashMap" class="headerlink" title="1.7下的ConcurrentHashMap"></a>1.7下的ConcurrentHashMap</h3><p>JDK1.7下的<code>ConcurrentHashMap</code>使用分段锁来提高并发访问效率，每把锁锁容器内的一部分数据，当多线程访问容器里不同数据段的数据时，就不会出现锁竞争。</p>
 <p><img src="https://f1bu920.github.io/images/ConcurrentHashMap1.7.png" alt=""></p>
 <p>1.7中<code>ConcurrentHashMap</code>是<strong>由<code>Segment</code>数组和<code>HashEntry</code>数组组成。<code>Segment</code>是一种可重入锁<code>ReentrantLock</code>，扮演锁的角色；<code>HashEntry</code>则用于存储键值对。一个<code>ConcurrentHashMap</code>中包含一个<code>Segment</code>数组。<code>Segment</code>的结构和<code>HashMap</code>类似，都是数组+链表结构。一个<code>Segment</code>里包含一个<code>HashEntry</code>数组，每个<code>HashEntry</code>是一个链表结构的元素，每个<code>Segment</code>元素锁着对应的<code>HashEntry</code>数组里的元素。想要修改<code>HashEntry</code>数组中的元素时，必须先获得对应的<code>Segment</code>锁。</strong></p>
