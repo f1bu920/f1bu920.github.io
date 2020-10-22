@@ -89,8 +89,9 @@
 <meta property="og:description" content="1. Redis数据结构及其使用场景Redis中主要有5种数据结构：字符串String、列表list、字典hash、集合set和有序集合zset，并且每种数据类型都提供了最少两种的内部编码。">
 <meta property="og:image" content="https://f1bu920.github.io/images/RedisObject.png">
 <meta property="og:image" content="https://f1bu920.github.io/images/redis-quicklist.jpg">
+<meta property="og:image" content="https://f1bu920.github.io/images/Redis%E4%B8%8EMemcached%E5%AF%B9%E6%AF%94.jpg">
 <meta property="article:published_time" content="2020-10-12T12:09:37.000Z">
-<meta property="article:modified_time" content="2020-10-22T08:53:02.110Z">
+<meta property="article:modified_time" content="2020-10-22T14:24:26.860Z">
 <meta property="article:author" content="flbu">
 <meta property="article:tag" content="面试总结">
 <meta property="article:tag" content="Redis">
@@ -462,7 +463,37 @@
 <p>跳跃表的查找过程就是按层次不断向下细化查找范围直到找到数据，与平衡树类似，但实现比平衡树简单，增删查的平均复杂度都为<code>O(log(n))</code>，所以<code>Redis</code>采用了<code>skiplist</code>作为底层实现。</p>
 <p>常用命令：<code>ZADD</code>、<code>ZRANGE</code>、<code>ZREVRANGE</code>、<code>ZCARD</code>、<code>ZRANGEBYSCORE</code>、<code>ZREM</code>等</p>
 <p>使用场景：各类排行榜等。</p>
-
+<h4 id="2-Redis事务"><a href="#2-Redis事务" class="headerlink" title="2. Redis事务"></a>2. Redis事务</h4><p><code>Redis</code>通过<code>MULTI</code>、<code>DISCARD</code>、<code>EXEC</code>和<code>WATCH</code>四个命令来实现事务功能。</p>
+<p><code>MULTI</code>用来显示开启一个事务，并保证事务在执行期间不会中断，即服务器处理完事务中所有命令后才会继续处理其他客户端的命令。<code>MULTI</code>开启后，客户端进入事务状态，接下来的所有命令都会放进一个事务队列中，当服务器接收到<code>EXEC</code>命令后，服务器以FIFO的方式执行任务队列中的命令。</p>
+<p><code>DISCARD</code>命令用于取消一个事务，其会清空客户端的任务队列，并将客户端从事务状态转化为非事务状态。</p>
+<p>当发生命令错误时，在<code>EXEC</code>调用之前发生错误会拒绝执行事务，返回错误信息并清空任务队列；在<code>EXEC</code>调用之后发生了错误，即使命令失败也不会回滚，队列中其他命令也会被处理。</p>
+<p><code>WATCH</code>命令用于在事务开始前监视任意数量的键，当调用<code>EXEC</code>命令执行事务时，如果任意一个被监视的键被其他客户端修改，那么事务不会执行，直接返回失败。<code>Redis</code>中维护一个<code>watched_keys</code>字典，字典的键就是被监视的键，字典的值是一个链表，链表中保存了所有监视这个键的客户端。通过检查字典中是否存在这个键就可以判断这个键是否被监视；通过获取某个键的链表，就可以获取监视这个键的所有客户端。</p>
+<p><strong>Redis在事务命令执行失败时不会回滚，而是会继续执行剩余命令。</strong></p>
+<h4 id="3-Redis与Memcached的区别"><a href="#3-Redis与Memcached的区别" class="headerlink" title="3. Redis与Memcached的区别"></a>3. Redis与Memcached的区别</h4><ol>
+<li><code>redis</code>有更丰富的数据类型，支持更复杂的应用场景。</li>
+<li><code>redis</code>支持数据持久化，可以把数据持久化到硬盘中，重启后可以进行数据恢复，而<code>Memcached</code>只能把数据存在内存中</li>
+<li><code>Redis</code>原生支持集群模式</li>
+<li><code>Memcached</code>是多线程的非阻塞IO复用模型；<code>Redis</code>是单线程的多路IO复用模型。</li>
+</ol>
+<p><img src="https://f1bu920.github.io/images/Redis%E4%B8%8EMemcached%E5%AF%B9%E6%AF%94.jpg" alt=""></p>
+<h4 id="4-Redis的线程模型"><a href="#4-Redis的线程模型" class="headerlink" title="4. Redis的线程模型"></a>4. Redis的线程模型</h4><p><code>Redis</code>内部使用文件事件处理器<code>event file handler</code>，这个文件事件处理器是单线程的，所以<code>Redis</code>才叫单线程模型。它采用IO多路复用机制同时监听多个<code>Socket</code>，将产生事件的<code>Socket</code>压入队列中，事件分派器根据<code>Socket</code>上的事件类型选择对应的事件处理器进行处理。</p>
+<p>文件事件处理器的结构分为4个部分：</p>
+<ul>
+<li>多个<code>Socket</code></li>
+<li>IO多路复用程序</li>
+<li>文件事件分派器</li>
+<li>事件处理器（连接应答处理器、命令请求处理器、命令回复处理器）</li>
+</ul>
+<p>多个<code>Socket</code>可能产生不同的操作，每个操作对应不同的文件事件，但IO多路复用程序会监听多个<code>Socket</code>，会见产生事件的<code>Socket</code>放入队列进行排队，事件分派器每次从队列中取出一个<code>Socket</code>，根据<code>Socket</code>的事件类型交给对应的事件处理器进行处理。</p>
+<h4 id="5-Redis单线程模型效率也很高？-amp-amp-Redis为什么这么快？"><a href="#5-Redis单线程模型效率也很高？-amp-amp-Redis为什么这么快？" class="headerlink" title="5. Redis单线程模型效率也很高？&amp;&amp;Redis为什么这么快？"></a>5. Redis单线程模型效率也很高？&amp;&amp;Redis为什么这么快？</h4><ul>
+<li>纯内存操作</li>
+<li>核心是基于非阻塞的IO多路复用模型</li>
+<li>C语言实现，速度较快</li>
+<li>单线程反而避免了频繁地上下文切换，预防了多线程可能的竞争问题</li>
+</ul>
+<h4 id="6-Redis为什么引入多线程？"><a href="#6-Redis为什么引入多线程？" class="headerlink" title="6. Redis为什么引入多线程？"></a>6. Redis为什么引入多线程？</h4><p><code>Redis</code>6.0后引入了多线程模型，这是因为读写网络的<code>Read/Write</code>系统调用在<code>Redis</code>执行期间占用了大部分CPU时间，所以将网络读写部分引入多线程可以提高性能。</p>
+<p><strong>Redis的多线程部分只是用来处理网络数据的读写和协议解析，执行命令仍然是单线程。</strong></p>
+<h4 id="7-Redis设置过期时间-amp-amp-删除过期键的策略"><a href="#7-Redis设置过期时间-amp-amp-删除过期键的策略" class="headerlink" title="7. Redis设置过期时间&amp;&amp;删除过期键的策略"></a>7. Redis设置过期时间&amp;&amp;删除过期键的策略</h4>
       
     </div>
     
@@ -514,6 +545,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/10/22/%E5%89%91%E6%8C%87offer-%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE/" rel="prev" title="剑指offer.二维数组中的查找">
+                剑指offer.二维数组中的查找 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -590,7 +625,7 @@
               
                 <a href="/archives/%7C%7Carchive">
               
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -601,7 +636,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -612,7 +647,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -668,7 +703,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Redis数据结构及其使用场景"><span class="nav-text">1. Redis数据结构及其使用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-字符串String"><span class="nav-text">1. 字符串String</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-列表list"><span class="nav-text">2. 列表list</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-哈希hash"><span class="nav-text">3. 哈希hash</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#渐进式rehash"><span class="nav-text">渐进式rehash</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-集合set"><span class="nav-text">4. 集合set</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-有序集合zset"><span class="nav-text">5. 有序集合zset</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Redis数据结构及其使用场景"><span class="nav-text">1. Redis数据结构及其使用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-字符串String"><span class="nav-text">1. 字符串String</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-列表list"><span class="nav-text">2. 列表list</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-哈希hash"><span class="nav-text">3. 哈希hash</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#渐进式rehash"><span class="nav-text">渐进式rehash</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-集合set"><span class="nav-text">4. 集合set</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-有序集合zset"><span class="nav-text">5. 有序集合zset</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Redis事务"><span class="nav-text">2. Redis事务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Redis与Memcached的区别"><span class="nav-text">3. Redis与Memcached的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-Redis的线程模型"><span class="nav-text">4. Redis的线程模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-Redis单线程模型效率也很高？-amp-amp-Redis为什么这么快？"><span class="nav-text">5. Redis单线程模型效率也很高？&amp;&amp;Redis为什么这么快？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-Redis为什么引入多线程？"><span class="nav-text">6. Redis为什么引入多线程？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-Redis设置过期时间-amp-amp-删除过期键的策略"><span class="nav-text">7. Redis设置过期时间&amp;&amp;删除过期键的策略</span></a></li></ol></div>
             
 
           </div>
