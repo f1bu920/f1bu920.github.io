@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2020/10/12/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-Redis/</loc>
+    
+    <lastmod>2020-10-22T08:53:02.110Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/06/24/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</loc>
+    
+    <lastmod>2020-10-03T03:02:53.183Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2020/09/13/ConcurrentHashMap%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/</loc>
     
     <lastmod>2020-09-13T09:46:40.626Z</lastmod>
@@ -54,13 +68,6 @@
     <loc>http://yoursite.com/2020/07/05/Java%E5%BC%82%E5%B8%B8/</loc>
     
     <lastmod>2020-07-05T03:49:45.511Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/06/24/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</loc>
-    
-    <lastmod>2020-06-29T06:35:13.846Z</lastmod>
     
   </url>
   

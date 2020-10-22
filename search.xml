@@ -2841,7 +2841,7 @@
 <p>堆中最大值总是位于根节点。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">heapSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span> len = arr.length - <span class="number">1</span>;</span><br><span class="line">       <span class="comment">//将数组堆化， beginIndex为第一个非叶子节点索引，叶子节点可以看成满足堆结构的节点</span></span><br><span class="line">       <span class="keyword">int</span> beginIndex = (arr.length &gt;&gt; <span class="number">1</span>) - <span class="number">1</span>;</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = beginIndex; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">           maxHeapify(i, len, arr);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//对堆化数据排序</span></span><br><span class="line">       <span class="comment">//每次都移出最顶层的根节点与最尾部节点进行交换，同时遍历长度减一</span></span><br><span class="line">       <span class="comment">//然后重新整理被交换到根节点的元素进行下沉操作使其满足堆的结构</span></span><br><span class="line">       <span class="comment">//直到未排序堆的长度为0</span></span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = len; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">           <span class="keyword">int</span> temp = arr[<span class="number">0</span>];</span><br><span class="line">           arr[<span class="number">0</span>] = arr[i];</span><br><span class="line">           arr[i] = temp;</span><br><span class="line">           maxHeapify(<span class="number">0</span>, i - <span class="number">1</span>, arr);</span><br><span class="line">       &#125;</span><br><span class="line">       System.out.println(<span class="string">"HeapSort:"</span>);</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> value : arr) &#123;</span><br><span class="line">           System.out.print(value + <span class="string">" "</span>);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"><span class="comment">//调整索引为index处的元素，使其满足堆结构，len为未排序堆的长度</span></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">maxHeapify</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">int</span> len, <span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//左子节点索引</span></span><br><span class="line">       <span class="keyword">int</span> li = (index &lt;&lt; <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">       <span class="comment">//右子节点索引</span></span><br><span class="line">       <span class="keyword">int</span> ri = li + <span class="number">1</span>;</span><br><span class="line">       <span class="comment">//左子节点超出计算范围</span></span><br><span class="line">       <span class="keyword">if</span> (li &gt; len) &#123;</span><br><span class="line">           <span class="keyword">return</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//子节点最大值索引，初始默认为左节点</span></span><br><span class="line">       <span class="keyword">int</span> maxIndex = li;</span><br><span class="line">       <span class="keyword">if</span> (ri &lt;= len &amp;&amp; arr[li] &lt; arr[ri]) &#123;</span><br><span class="line">           maxIndex = ri;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//如果子节点最大值大于父节点，交换，并继续递归调用直到满足堆结构</span></span><br><span class="line">       <span class="keyword">if</span> (arr[maxIndex] &gt; arr[index]) &#123;</span><br><span class="line">           <span class="keyword">int</span> temp = arr[index];</span><br><span class="line">           arr[index] = arr[maxIndex];</span><br><span class="line">           arr[maxIndex] = temp;</span><br><span class="line">           maxHeapify(maxIndex, len - <span class="number">1</span>, arr);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
-<p>堆排序的时间复杂度为<code>O(nlogn)</code>。</p>
+<p>堆排序的时间复杂度为<code>O(nlogn)</code>。 </p>
 ]]></content>
       <categories>
         <category>Algorithms</category>
@@ -2920,6 +2920,89 @@
       <tags>
         <tag>Java</tag>
         <tag>lambda</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>面试总结-Redis</title>
+    <url>/2020/10/12/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-Redis/</url>
+    <content><![CDATA[<h4 id="1-Redis数据结构及其使用场景"><a href="#1-Redis数据结构及其使用场景" class="headerlink" title="1. Redis数据结构及其使用场景"></a>1. Redis数据结构及其使用场景</h4><p><code>Redis</code>中主要有5种数据结构：字符串<code>String</code>、列表<code>list</code>、字典<code>hash</code>、集合<code>set</code>和有序集合<code>zset</code>，并且每种数据类型都提供了最少两种的内部编码。</p>
+<p><img src="https://f1bu920.github.io/images/RedisObject.png" alt=""></p>
+<a id="more"></a>
+
+<p>首先<code>Redis</code>内部使用一个<code>redisObject</code>表示所有的<code>key</code>和<code>value</code>，其信息如图所示。<code>type</code>表示一个<code>value</code>对象是什么数据类型，<code>encoding</code>表示不同数据类型在<code>redis</code>的内部编码。</p>
+<h5 id="1-字符串String"><a href="#1-字符串String" class="headerlink" title="1. 字符串String"></a>1. 字符串String</h5><p>字符串是<code>Redis</code>中最基本的数据结构，主要用来存储<code>key-value</code>型的键值对。<code>Redis</code>中字符串对象的编码可以是<code>int</code>、<code>raw</code>和<code>embstr</code>。</p>
+<ul>
+<li><code>int</code>编码：保存<code>long</code>型的64位有符号整数</li>
+<li><code>embstr</code>编码：保存长度小于44字节的字符串</li>
+<li><code>raw</code>编码：保存长度大于44字节的字符串。</li>
+</ul>
+<p><strong><code>Redis</code>使用<code>SDS</code>简单动态字符串结构体来存储字符串。</strong></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sdshdr</span>&#123;</span></span><br><span class="line">    </span><br><span class="line">     <span class="keyword">int</span> len; <span class="comment">//记录buf中已使用字节的数量等于SDS所保存的字符串的长度</span></span><br><span class="line">     </span><br><span class="line">     <span class="keyword">int</span> <span class="built_in">free</span>; <span class="comment">//记录buf中未使用字节的长度</span></span><br><span class="line"></span><br><span class="line">     <span class="keyword">char</span> []buf; <span class="comment">//字节数据，保存字符串</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>SDS</code>相比C语言字符串有以下好处：</strong></p>
+<ul>
+<li><strong>可以实现<code>O(1)</code>复杂度的获取字符串长度，而C语言需要通过时间复杂度为<code>O(n)</code>的遍历来获取</strong></li>
+<li><strong>杜绝缓冲区溢出。当对字符串进行拼接时，SDS会检测<code>buf</code>的空间，如果空间不足会先扩容</strong></li>
+<li><strong>通过空间预分配和惰性回收减少内存重新分配次数。</strong><ul>
+<li><strong>当<code>len</code>小于1mb时，每次扩容后<code>buf</code>数组长度都为<code>len*2+1</code>，此时<code>len</code>和<code>free</code>相等，一个字节用于保存字符串结尾的空字符；当<code>len</code>大于1mb时，每次会额外分配1mb的free空间</strong></li>
+<li><strong>当SDS进行缩容时，不会立即进行内存重分配回收缩短后空出来的字节，而是用free记录这些字节留待将来使用。</strong></li>
+</ul>
+</li>
+<li><strong>二进制安全。SDS通过len属性判断字符串是否结束而不是通过结尾的空字符，所以可以存储任何数据。</strong></li>
+<li><strong>兼容部分C字符串函数。</strong></li>
+</ul>
+<p>常用命令：<code>GET key</code>、<code>SET key value</code>、<code>EXISTS key</code>、<code>DEL key</code>、<code>SETNX</code></p>
+<p>使用场景：常规<code>key-value</code>缓存、计数等。</p>
+<h5 id="2-列表list"><a href="#2-列表list" class="headerlink" title="2. 列表list"></a>2. 列表list</h5><p><code>Redis</code>中的列表相当于Java中的<code>LinkedList</code>，其插入删除非常快但随机访问较慢。<strong><code>Redis</code>在3.2之前使用<code>ziplist</code>或<code>linkedlist</code>作为底层结构，而在3.2后改用<code>quicklist</code>作为底层实现</strong>。</p>
+<p><strong><code>Redis</code>列表使用两种数据结构作为底层实现：压缩列表<code>ziplist</code>和双向链表<code>linkedlist</code>。因为双向链表占用内存较多，当满足列表节点数量小于512并且单个节点元素大小小于64字节时会优先使用<code>ziplist</code>。</strong></p>
+<p><code>ziplist</code>是为了节省内存而开发的，是一块连续的地址空间。一个<code>ziplist</code>可以包含多个节点(<code>Entry</code>)，每个结点的长度不同，通过记录当前<code>entry</code>和上一个<code>entry</code>的长度来推算下一个元素的位置。</p>
+<p><code>linkedlist</code>是标准的双向链表，<code>Node</code>节点包含<code>prev</code>和<code>next</code>指针，<code>Redis</code>记录了链表的<code>head</code>和<code>tail</code>指针，所以在表头和表尾进行插入删除的时间复杂度都为<code>O(1)</code>。</p>
+<p><strong><code>linkedlist</code>在链表的两端操作很快，但它的内存开销较大，因为每个节点还要额外保存两个指针，并且地址不连续容易产生内存碎片；<code>ziplist</code>存储在一块连续内存上，存储效率很高但不利于修改操作，插入和删除需要频繁地申请和释放内存。</strong></p>
+<p>所以<code>Redis</code>在3.2后引入了<code>quicklist</code>作为<code>list</code>的底层实现。<code>quicklist</code>可以看成是<code>ziplist</code>和<code>linkedlist</code>的结合，是一个<code>ziplist</code>组成的双向链表，每个节点使用<code>ziplist</code>来保存数据。</p>
+<p><img src="https://f1bu920.github.io/images/redis-quicklist.jpg" alt=""></p>
+<p>常用命令：<code>lpush</code>、<code>lpop</code>、<code>rpush</code>、<code>rpop</code>、<code>lrange</code>、<code>lindex</code></p>
+<p>使用场景：队列、栈、关注列表、好友列表</p>
+<h5 id="3-哈希hash"><a href="#3-哈希hash" class="headerlink" title="3. 哈希hash"></a>3. 哈希hash</h5><p><code>Redis</code>中的哈希表采用字典作为底层实现，相当于java中的<code>HashTable</code>，都是通过数组+链表解决哈希冲突。</p>
+<p><code>dict</code>结构包含两个<code>hashtable</code>，通常情况下只有一个是有值的，另一个是在渐进式rehash时使用。</p>
+<p>当往字典中添加键值对时，会根据键计算出哈希值和索引值，再根据索引值将哈希表节点添加到桶数组上。当发生哈希冲突时利用拉链法解决冲突。</p>
+<h6 id="渐进式rehash"><a href="#渐进式rehash" class="headerlink" title="渐进式rehash"></a>渐进式rehash</h6><p>当hash表中的元素的个数等于第一维数组的长度时，就会开始扩容，扩容的新数组长度是原来的两倍；当元素个数小于数组长度的10%时，会开始缩容。</p>
+<p><strong><code>Redis</code>下hash结构的扩容和缩容的rehash不是一次性、集中完成的，而是分多次、渐进式进行的，这样在大数据的情况下才不会对服务器正常服务造成影响。</strong></p>
+<ol>
+<li>字典结构<code>dict</code>中定义了一个成员<code>rehashidx</code>，等于-1时表示不进行rehash，开始进行rehash时初始化为0。</li>
+<li>在rehash期间，每次对字典进行增删改查都会将<code>rehashidx</code>指向的元素进行从<code>ht[0]</code>表<code>rehash</code>到<code>ht[1]</code>表，并且将<code>rehashidx</code>+1。</li>
+<li><code>rehash</code>完成后，将<code>rehashidx</code>置为-1。</li>
+</ol>
+<p>常用命令：<code>HSET</code>、<code>HGET</code></p>
+<p>使用场景：存储对象</p>
+<h5 id="4-集合set"><a href="#4-集合set" class="headerlink" title="4. 集合set"></a>4. 集合set</h5><p><code>Redis</code>下的集合<code>set</code>使用整数集合<code>intset</code>或者<code>hashtable</code>作为底层实现。</p>
+<p>当<code>set</code>对象保存的元素都是整数值且元素数量不超过512时，采用<code>intset</code>作为底层实现。</p>
+<p><code>intset</code>是一个整数组成的有序集合，可以通过二分查找快速判断一个元素是否属于集合。<code>intset</code>是一块连续的空间，并且对大整数和小整数采用了不同的编码。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">intset</span> &#123;</span></span><br><span class="line">    <span class="keyword">uint32_t</span> encoding;</span><br><span class="line">    <span class="keyword">uint32_t</span> length;</span><br><span class="line">    <span class="keyword">int8_t</span> contents[];</span><br><span class="line">&#125; intset;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INTSET_ENC_INT16 (sizeof(int16_t))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INTSET_ENC_INT32 (sizeof(int32_t))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INTSET_ENC_INT64 (sizeof(int64_t))</span></span><br></pre></td></tr></table></figure>
+
+<p><code>encoding</code>：数据编码，表示<code>intset</code>中每个数据元素用几个字节存储。<code>INTSET_ENC_INT16</code>表示用2个字节存储，<code>INTSET_ENC_INT32</code>表示用4个字节进行存储，<code>INTSET_ENC_INT64</code>表示用8个字节进行存储。</p>
+<p><code>intset</code>根据添加的每个元素的大小对编码进行升级，并且升级不可逆。</p>
+<p><code>Redis</code>下集合采用<code>hashtable</code>作为底层实现时，与Java下的<code>HashSet</code>类似，都是用的哈希表，<code>key</code>为<code>set</code>的值，<code>value</code>为<code>null</code>。</p>
+<p>常用命令：<code>SADD</code>、<code>SMEMBERS</code>、<code>SISMEMBER</code>、<code>SPOP</code>、交集<code>sinter</code>、并集<code>sunion</code>、差集<code>sdiff</code></p>
+<p>使用场景：集合的交、并、差、去重等。</p>
+<h5 id="5-有序集合zset"><a href="#5-有序集合zset" class="headerlink" title="5. 有序集合zset"></a>5. 有序集合zset</h5><p><code>Redis</code>下的<code>zset</code>一方面保证了value的唯一性，又为每个<code>value</code>赋予一个<code>score</code>权重用于排序，<strong>底层使用<code>ziplist</code>或者<code>skiplist</code>实现，当元素数量小于128并且元素大小小于64字节时使用<code>ziplist</code></strong>。</p>
+<p>当<code>ziplist</code>作为底层结构时，每个集合元素使用两个紧挨在一起的压缩节点来保存，第一个节点保存成员，第二个节点保存权重。</p>
+<p>当使用<code>skiplist</code>作为底层结构时，使用了一个<code>zskiplist</code>对象和一个<code>dict</code>对象。使用<code>zskiplist</code>按序保存元素及分值，用<code>dict</code>保存元素<code>key</code>与分值<code>score</code>的映射关系。</p>
+<p><code>zskiplist</code>包括指向头尾的指针和最大层数<code>level</code>。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 跳跃表</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">zskiplist</span> &#123;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 表头节点和表尾节点</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistNode</span> *<span class="title">header</span>, *<span class="title">tail</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 表中节点的数量</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> length;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 表中层数最大的节点的层数</span></span><br><span class="line">    <span class="keyword">int</span> level;</span><br><span class="line"></span><br><span class="line">&#125; zskiplist;</span><br></pre></td></tr></table></figure>
+
+<p>每个节点都有保存数据的<code>robj</code>指针、分值<code>score</code>、后退指针<code>backward</code>用于回溯：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 跳跃表节点</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistNode</span> &#123;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 成员对象</span></span><br><span class="line">    robj *obj;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 分值</span></span><br><span class="line">    <span class="keyword">double</span> score;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 后退指针</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistNode</span> *<span class="title">backward</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 层</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistLevel</span> &#123;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 前进指针</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistNode</span> *<span class="title">forward</span>;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 跨度</span></span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">int</span> span;</span><br><span class="line"></span><br><span class="line">    &#125; level[];</span><br><span class="line"></span><br><span class="line">&#125; zskiplistNode;</span><br></pre></td></tr></table></figure>
+
+<p>跳跃表的查找过程就是按层次不断向下细化查找范围直到找到数据，与平衡树类似，但实现比平衡树简单，增删查的平均复杂度都为<code>O(log(n))</code>，所以<code>Redis</code>采用了<code>skiplist</code>作为底层实现。</p>
+<p>常用命令：<code>ZADD</code>、<code>ZRANGE</code>、<code>ZREVRANGE</code>、<code>ZCARD</code>、<code>ZRANGEBYSCORE</code>、<code>ZREM</code>等</p>
+<p>使用场景：各类排行榜等。</p>
+]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>面试总结</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
 </search>

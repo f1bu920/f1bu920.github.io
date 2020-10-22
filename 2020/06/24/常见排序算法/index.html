@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="flbu blog">
 <meta property="og:description" content="常见排序算法一. 选择排序在循环中，每次找到剩下数组中最小的元素，并将这个最小的元素与当前元素交换位置。最后，整个数组就是有序的了。 12345678910111213141516171819202122private static void selectSort(int[] arr) &amp;#123;    for (int i &#x3D; 0; i &lt; arr.length; i++) &amp;#123;">
 <meta property="article:published_time" content="2020-06-24T02:08:47.000Z">
-<meta property="article:modified_time" content="2020-06-29T06:35:13.846Z">
+<meta property="article:modified_time" content="2020-10-03T03:02:53.183Z">
 <meta property="article:author" content="flbu">
 <meta property="article:tag" content="sort">
 <meta name="twitter:card" content="summary">
@@ -433,7 +433,7 @@
 <p>堆中最大值总是位于根节点。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">heapSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span> len = arr.length - <span class="number">1</span>;</span><br><span class="line">       <span class="comment">//将数组堆化， beginIndex为第一个非叶子节点索引，叶子节点可以看成满足堆结构的节点</span></span><br><span class="line">       <span class="keyword">int</span> beginIndex = (arr.length &gt;&gt; <span class="number">1</span>) - <span class="number">1</span>;</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = beginIndex; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">           maxHeapify(i, len, arr);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//对堆化数据排序</span></span><br><span class="line">       <span class="comment">//每次都移出最顶层的根节点与最尾部节点进行交换，同时遍历长度减一</span></span><br><span class="line">       <span class="comment">//然后重新整理被交换到根节点的元素进行下沉操作使其满足堆的结构</span></span><br><span class="line">       <span class="comment">//直到未排序堆的长度为0</span></span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = len; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">           <span class="keyword">int</span> temp = arr[<span class="number">0</span>];</span><br><span class="line">           arr[<span class="number">0</span>] = arr[i];</span><br><span class="line">           arr[i] = temp;</span><br><span class="line">           maxHeapify(<span class="number">0</span>, i - <span class="number">1</span>, arr);</span><br><span class="line">       &#125;</span><br><span class="line">       System.out.println(<span class="string">"HeapSort:"</span>);</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> value : arr) &#123;</span><br><span class="line">           System.out.print(value + <span class="string">" "</span>);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"><span class="comment">//调整索引为index处的元素，使其满足堆结构，len为未排序堆的长度</span></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">maxHeapify</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">int</span> len, <span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//左子节点索引</span></span><br><span class="line">       <span class="keyword">int</span> li = (index &lt;&lt; <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">       <span class="comment">//右子节点索引</span></span><br><span class="line">       <span class="keyword">int</span> ri = li + <span class="number">1</span>;</span><br><span class="line">       <span class="comment">//左子节点超出计算范围</span></span><br><span class="line">       <span class="keyword">if</span> (li &gt; len) &#123;</span><br><span class="line">           <span class="keyword">return</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//子节点最大值索引，初始默认为左节点</span></span><br><span class="line">       <span class="keyword">int</span> maxIndex = li;</span><br><span class="line">       <span class="keyword">if</span> (ri &lt;= len &amp;&amp; arr[li] &lt; arr[ri]) &#123;</span><br><span class="line">           maxIndex = ri;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//如果子节点最大值大于父节点，交换，并继续递归调用直到满足堆结构</span></span><br><span class="line">       <span class="keyword">if</span> (arr[maxIndex] &gt; arr[index]) &#123;</span><br><span class="line">           <span class="keyword">int</span> temp = arr[index];</span><br><span class="line">           arr[index] = arr[maxIndex];</span><br><span class="line">           arr[maxIndex] = temp;</span><br><span class="line">           maxHeapify(maxIndex, len - <span class="number">1</span>, arr);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
-<p>堆排序的时间复杂度为<code>O(nlogn)</code>。</p>
+<p>堆排序的时间复杂度为<code>O(nlogn)</code>。 </p>
 
       
     </div>
@@ -564,7 +564,7 @@
               
                 <a href="/archives/%7C%7Carchive">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -575,7 +575,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -586,7 +586,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
