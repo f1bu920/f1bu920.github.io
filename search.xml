@@ -3047,13 +3047,131 @@
 </ul>
 <h4 id="6-Redis为什么引入多线程？"><a href="#6-Redis为什么引入多线程？" class="headerlink" title="6. Redis为什么引入多线程？"></a>6. Redis为什么引入多线程？</h4><p><code>Redis</code>6.0后引入了多线程模型，这是因为读写网络的<code>Read/Write</code>系统调用在<code>Redis</code>执行期间占用了大部分CPU时间，所以将网络读写部分引入多线程可以提高性能。</p>
 <p><strong>Redis的多线程部分只是用来处理网络数据的读写和协议解析，执行命令仍然是单线程。</strong></p>
-<h4 id="7-Redis设置过期时间-amp-amp-删除过期键的策略"><a href="#7-Redis设置过期时间-amp-amp-删除过期键的策略" class="headerlink" title="7. Redis设置过期时间&amp;&amp;删除过期键的策略"></a>7. Redis设置过期时间&amp;&amp;删除过期键的策略</h4>]]></content>
+<h4 id="7-Redis设置过期时间-amp-amp-删除过期键的策略"><a href="#7-Redis设置过期时间-amp-amp-删除过期键的策略" class="headerlink" title="7. Redis设置过期时间&amp;&amp;删除过期键的策略"></a>7. Redis设置过期时间&amp;&amp;删除过期键的策略</h4><p><code>Redis</code>在<code>set key</code>的时候，可以设置<code>expire time</code>过期时间，<code>Redis</code>通过<strong>定期删除+惰性删除</strong>清除过期的键。</p>
+<ul>
+<li><p>定期删除</p>
+<p><code>Redis</code>默认每隔100ms随机抽取一些设置了过期时间的<code>key</code>，检查其是否过期，如果过期就删除；这里是随机抽取的，主要是防止<code>Redis</code>存了很多<code>key</code>的情况下，每隔100ms遍历一次会给CPU很大负载</p>
+</li>
+<li><p>惰性删除</p>
+<p>定期删除可能会导致过期的<code>key</code>没有被删除，惰性删除就是指过期的<code>key</code>停留在内存中，只有去查一下才会删除。</p>
+</li>
+</ul>
+<h4 id="8-内存淘汰机制"><a href="#8-内存淘汰机制" class="headerlink" title="8. 内存淘汰机制"></a>8. 内存淘汰机制</h4><p>如果定期删除漏过了很多<code>key</code>，也没通过惰性删除，就会造成大量过期<code>key</code>滞留在内存中，导致内存耗尽，这是就需要内存淘汰策略。</p>
+<p>Redis提供了6中内存淘汰策略：</p>
+<ul>
+<li><strong>volatile-lru：</strong>从已设置过期时间的数据集中挑选最近最少使用的数据淘汰</li>
+<li><strong>volatile-ttl：</strong>从已设置过期时间的数据集中挑选将要过期的数据淘汰</li>
+<li><strong>volatile-random：</strong>从已设置过期时间的数据集中任意选择数据淘汰</li>
+<li><strong>allkeys-lru：</strong>在键空间中，选择最近最少使用的数据淘汰</li>
+<li><strong>allkeys-random：</strong>在键空间中，任意选择数据淘汰</li>
+<li>no-eviction：内存不足时，拒绝写入新数据</li>
+</ul>
+<h4 id="9-Redis持久化"><a href="#9-Redis持久化" class="headerlink" title="9. Redis持久化"></a>9. Redis持久化</h4><p><code>Redis</code>支持将数据持久化到硬盘上，异常重启后可以快速恢复，或者将数据备份到远程位置。</p>
+<p><strong><code>Redis</code>支持两种持久化机制，数据快照<code>RDB</code>和只追加文件<code>AOF</code>。</strong></p>
+<ul>
+<li><p>快照持久化<code>RDB</code></p>
+<p><code>RDB</code>是指在指定的时间间隔内将数据集快照写入磁盘，恢复时直接将快照文件读到内存中。</p>
+<p><code>Redis</code>会单独<code>fork</code>一个子进程来进行持久化，会先将数据文件写入到一个临时文件中，待持久化结束后，再将临时文件替换上次持久化好的文件。整个过程中，主进程不进行IO操作，确保了极高的性能。</p>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">save <span class="number">900</span> <span class="number">1</span>           #在<span class="number">900</span>秒(<span class="number">15</span>分钟)之后，如果至少有<span class="number">1</span>个<span class="type">key</span>发生变化，Redis就会自动触发BGSAVE命令创建快照。</span><br><span class="line"></span><br><span class="line">save <span class="number">300</span> <span class="number">10</span>          #在<span class="number">300</span>秒(<span class="number">5</span>分钟)之后，如果至少有<span class="number">10</span>个<span class="type">key</span>发生变化，Redis就会自动触发BGSAVE命令创建快照。</span><br><span class="line"></span><br><span class="line">save <span class="number">60</span> <span class="number">10000</span>        #在<span class="number">60</span>秒(<span class="number">1</span>分钟)之后，如果至少有<span class="number">10000</span>个<span class="type">key</span>发生变化，Redis就会自动触发BGSAVE命令创建快照。</span><br></pre></td></tr></table></figure>
+
+<p><strong>RDB在大规模数据恢复情景下效率较高，但数据完整性较差，<code>Redis</code>会丢失最后一次快照后的所有数据。</strong></p>
+<p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/RedisRDB.png" alt="RedisRDB"></p>
+</li>
+<li><p>只追加文件<code>AOF</code></p>
+</li>
+</ul>
+<p><code>AOF</code>是以日志的形式记录每次写操作，将所有写指令追加到aof文件的尾部，恢复时根据文件的内容从头到尾执行一遍就可以完成数据恢复。</p>
+<p>  <code>Redis</code>配置文件中有三种不同的持久化方式：</p>
+  <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">appendfsync</span> always    <span class="comment">#每次有数据修改发生时都会写入AOF文件,这样会严重降低Redis的速度</span></span><br><span class="line">appendfsync everysec  <span class="comment">#每秒钟同步一次，显示地将多个写命令同步到硬盘</span></span><br><span class="line">appendfsync <span class="literal">no</span>        <span class="comment">#让操作系统决定何时进行同步</span></span><br></pre></td></tr></table></figure>
+
+<p>  一般都会选择每秒同步一次，可以兼顾数据完整性与效率。</p>
+<p>  <strong>相同大小的数据集<code>aof</code>文件要远大于<code>rdb</code>文件，恢复速度也慢于快照持久化<code>RDB</code>，但<code>AOF</code>的数据实时性更好，文件的内容也更容易被读懂。</strong></p>
+<p>  <img src="https://raw.githubusercontent.com/f1bu920/picBed/master/RedisAOF.png" alt="RedisAOF"></p>
+<h5 id="AOF重写"><a href="#AOF重写" class="headerlink" title="AOF重写"></a>AOF重写</h5><p><code>Redis</code>采用只追加文件的方式，会导致<code>aof</code>文件越来越大，当文件大小超过设定的阈值时，就会启动AOF文件压缩，只保留恢复数据的最小指令集。</p>
+<p>AOF文件过大时，会<code>fork</code>一个子进程来将文件重写（也是先写临时文件再rename），数据集中每条记录对应一条<code>set</code>语句，与快照类似，读取数据库中内容用命令的方式重写<code>aof</code>文件。</p>
+<p>AOF重写过程中会维护一个<code>AOF</code>重写缓冲区，记录重写时所有的写命令，当子进程完成新<code>aof</code>文件的创建后，会将缓存区中内容追加到新<code>aof</code>文件的末尾，保证数据一致性。</p>
+<h4 id="10-缓存雪崩-amp-amp-缓存穿透-amp-amp-缓存击穿"><a href="#10-缓存雪崩-amp-amp-缓存穿透-amp-amp-缓存击穿" class="headerlink" title="10. 缓存雪崩&amp;&amp;缓存穿透&amp;&amp;缓存击穿"></a>10. 缓存雪崩&amp;&amp;缓存穿透&amp;&amp;缓存击穿</h4><h5 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h5><p>缓存雪崩指的是缓存同一时间大面积的失效，导致所有请求都落到数据库上，导致数据库宕机。</p>
+<ul>
+<li>事前：保证<code>Redis</code>高可用，主从+哨兵，避免全部崩溃</li>
+<li>事中：本地缓存+hystrix限流&amp;降级，避免MySQL被打死</li>
+<li>事后：Redis持久化，快速恢复数据</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/Redis%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9.png" alt="Redis缓存雪崩"></p>
+<p>系统发送请求后，先查本地缓存，没查到再查<code>Redis</code>。如果都没查到，再查数据库，将结果写入本地缓存和<code>Redis</code>。同时通过限流组件设置每秒最多能到达数据库的请求数，未通过的请求走降级，返回系统繁忙。</p>
+<p>一个重要的原则就是<code>MySQL</code>绝对不能死。</p>
+<h5 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h5><p>缓存穿透主要是防止故意伪造不存在的数据去请求，所以缓存中一定没有，绕过缓存直接查询数据库。</p>
+<p>防止缓存穿透，最基本的就是做好参数校验，不合法的参数直接返回。除此还有两种方式<strong>缓存无效<code>key</code></strong>和<strong>布隆过滤器</strong>：</p>
+<ul>
+<li><p>缓存无效<code>key</code></p>
+<p><strong>如果缓存和数据库都查不到某个<code>key</code>时，就将<code>key</code>写到<code>Redis</code>中去并设置过期时间。</strong></p>
+<p>这种方式只能解决请求的<code>key</code>变化不频繁的情况，如果恶意伪造不同的<code>key</code>，会导致<code>Redis</code>中缓存大量无效<code>key</code>。不能从根本上解决。</p>
+</li>
+</ul>
+<ul>
+<li><p>布隆过滤器</p>
+<p><a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/dataStructures-algorithms/data-structure/bloom-filter.md" target="_blank" rel="noopener">参考链接</a></p>
+<p>通过布隆过滤器可以非常方便地判断一个数据是否存在于海量数据中，因为布隆过滤器有个很重要的性质：</p>
+<p><strong>布隆过滤器说某个元素存在，小概率会误判；但布隆过滤器说某个元素不存在，则一定不存在。</strong></p>
+<p>布隆过滤器可以看成是由位数组和哈希函数组成的数据结构，其占用空间少且效率高。缺点是有一定的错误识别率和删除难度。</p>
+<p><strong>向布隆过滤器中添加元素时，会先对元素进行哈希计算得到哈希值，再根据哈希值将位数组中对应的下标值置1；</strong></p>
+<p><strong>判断一个元素是否存在于布隆过滤器中时，会对给定元素进行相同的哈希运算，得到值后会去判断位数组中对应的下标值是否都为1.</strong></p>
+<p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8-%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F-redis.png" alt="布隆过滤器-缓存穿透-redis"></p>
+<p>把所有存在的值都放在布隆过滤器中，当请求过来时，会先判断是否存在于布隆过滤器中，如果不在，直接返回，存在的话才会走下面的流程。</p>
+</li>
+</ul>
+<h5 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿"></a>缓存击穿</h5><p>缓存击穿指的是某个热点<code>key</code>在访问频繁地情况下失效，大量的请求击穿了缓存，直接请求数据库。</p>
+<ul>
+<li>如果缓存的数据基本不会更新，就把热点<code>key</code>设置为永不过期</li>
+<li>如果热点数据更新不频繁，就采用分布式锁或者本地互斥锁保证仅少量请求能到达数据库并重新构建缓存，其他请求能访问到新缓存</li>
+<li>如果更新频繁，则在过期前主动重新构建缓存或延后过期时间。</li>
+</ul>
+<h4 id="11-Redis主从同步"><a href="#11-Redis主从同步" class="headerlink" title="11. Redis主从同步"></a>11. Redis主从同步</h4><p><strong><code>Redis</code>主从架构是一主多从，主负责写，并且将数据复制到其他的<code>slave</code>节点，从节点负责读，所有的读请求全部走从节点。</strong></p>
+<p><a href="https://doocs.gitee.io/advanced-java/#/./docs/high-concurrency/redis-master-slave" target="_blank" rel="noopener">参考链接</a></p>
+<p>当启动一个<code>slave node</code>时，会发送一个<code>PSYNC</code>命令给<code>master node</code>。</p>
+<p>如果这是<code>slave node</code>初次连接到<code>master node</code>会触发一次全量复制<code>full resynchronization</code>，此时<code>master</code>节点会启动一个后台进程生成一份<code>RDB</code>快照文件，同时还会将所有收到的写命令缓存在内存中。<code>RDB</code>文件生成后，<code>master</code>会发送给<code>slave</code>，<code>slave</code>会先写入磁盘，再从磁盘加载到内存中，接着<code>master</code>将缓存的写命令发送给<code>slave</code>，<code>slave</code>会进行同步。如果发生了网络故障，会自动重连并支持断点续传。</p>
+<p><code>master</code>节点的<code>key</code>过期或者通过淘汰策略淘汰了一个<code>key</code>后，会模拟一条<code>del</code>命令发送给从节点。</p>
+<p>主从节点会互相发送<code>heartbeat</code>信息，<code>master</code> 默认每隔 10 秒发送一次 <code>heartbeat</code>，<code>slave node</code> 每隔 1 秒发送一个 <code>heartbeat</code>。</p>
+<h4 id="12-如何保证缓存与数据库双写一致性"><a href="#12-如何保证缓存与数据库双写一致性" class="headerlink" title="12. 如何保证缓存与数据库双写一致性"></a>12. 如何保证缓存与数据库双写一致性</h4><p><a href="https://doocs.gitee.io/advanced-java/#/./docs/high-concurrency/redis-consistence" target="_blank" rel="noopener">参考链接</a></p>
+<p>读的时候先读缓存，再读数据库，并将结果写入缓存；</p>
+<p>更新的时候，先删除缓存再更新数据库。这样主要是防止先更新数据库时缓存删除失败，导致数据库中是新数据，缓存中是旧数据，造成数据不一致。</p>
+]]></content>
       <categories>
         <category>面试</category>
       </categories>
       <tags>
         <tag>面试总结</tag>
         <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>面试总结-后端相关</title>
+    <url>/2020/10/23/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-%E5%90%8E%E7%AB%AF%E7%9B%B8%E5%85%B3/</url>
+    <content><![CDATA[<h4 id="1-跨域"><a href="#1-跨域" class="headerlink" title="1. 跨域"></a>1. 跨域</h4><p>跨域问题是由浏览器同源策略引起的。同源策略是浏览器的一种安全机制，主要是为了防止XSS和CSRF攻击。</p>
+<p>同源策略指的是<strong>协议、域名、端口不同时，对<code>Cookie</code>、<code>DOM</code>节点和<code>AJAX</code>请求会被浏览器拦截。</strong></p>
+<p><strong>跨域请求能够发送出去，服务端也能收到请求并返回结果，只是结果被浏览器拦截了。</strong></p>
+<p>可以通过<code>cors</code>解决跨域问题，服务端设置<code>Access-Control-Allow-Origin</code>字段就可以开启<code>cors</code>。该属性表示那些域名可以访问资源，设置成通配符表示所有网站都可以访问资源。</p>
+<p><code>cors</code>将请求分为<strong>简单请求</strong>和<strong>复杂请求</strong>。</p>
+<a id="more"></a>
+
+<ul>
+<li><p>简单请求</p>
+<p>满足请求方法属于<code>GET、HEAD、POST</code>并且<code>Content-Type</code>的值仅限于<code>text/plain</code>、<code>multipart/form-data</code>、<code>application/x-www-form-urlencoded</code>的请求就属于简单请求。</p>
+</li>
+<li><p>复杂请求</p>
+<p>不满足以上条件就是复杂请求。复杂请求的<code>cors</code>请求，会在正式通信前，增加一次<code>option</code>方法的HTTP查询请求，来获取服务端是否允许跨域请求。服务器端需要以下配置：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">res.addHeader(<span class="string">"Access-Control-Allow-Credentials"</span>, <span class="string">"true"</span>);</span><br><span class="line">res.addHeader(<span class="string">"Access-Control-Allow-Origin"</span>, <span class="string">"*"</span>);</span><br><span class="line">res.addHeader(<span class="string">"Access-Control-Allow-Methods"</span>, <span class="string">"GET, POST, DELETE, PUT"</span>);</span><br><span class="line">res.addHeader(<span class="string">"Access-Control-Allow-Headers"</span>, <span class="string">"Content-Type,X-CAF-Authorization-Token,sessionToken,X-TOKEN"</span>);</span><br><span class="line">res.setCharacterEncoding(<span class="string">"utf-8"</span>);</span><br><span class="line"><span class="keyword">if</span> (((HttpServletRequest) servletRequest).getMethod().equals(<span class="string">"OPTIONS"</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>面试总结</tag>
+        <tag>后端</tag>
       </tags>
   </entry>
 </search>
