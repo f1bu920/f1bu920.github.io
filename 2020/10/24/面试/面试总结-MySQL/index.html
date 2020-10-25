@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="剑指offer,二分查找," />
+  <meta name="keywords" content="面试总结,MySQL," />
 
 
 
@@ -81,18 +81,20 @@
 
 
 
-<meta name="description" content="剑指offer.二维数组中的查找题目描述在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。 思路因为二维数组从左到右递增，从上到下递增，所以每次选取右上方或者左下方的元素与target进行比较就可以每次排除一行或者一列：  如果选取元素等于target，直接">
+<meta name="description" content="1. 数据库引擎MyISAM和InnoDB区别MyISAM在5.5以前是MySQL的默认数据库引擎，支持全文索引、压缩和空间函数等，但MyISAM不支持事务和行级锁，并且崩溃后无法安全恢复。5.5之后，MySQL默认使用InnoDB作为默认数据库引擎。 对比：  是否支持行级锁：MyISAM只支持表级锁，而InnoDB支持表级锁和行级锁，默认为行级锁； 是否支持事务和崩溃后安全恢复：MyISAM追">
 <meta property="og:type" content="article">
-<meta property="og:title" content="剑指offer.二维数组中的查找">
-<meta property="og:url" content="http://yoursite.com/2020/10/22/%E5%89%91%E6%8C%87offer-%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE/index.html">
+<meta property="og:title" content="面试总结-MySQL">
+<meta property="og:url" content="http://yoursite.com/2020/10/24/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-MySQL/index.html">
 <meta property="og:site_name" content="flbu blog">
-<meta property="og:description" content="剑指offer.二维数组中的查找题目描述在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。 思路因为二维数组从左到右递增，从上到下递增，所以每次选取右上方或者左下方的元素与target进行比较就可以每次排除一行或者一列：  如果选取元素等于target，直接">
-<meta property="article:published_time" content="2020-10-22T11:40:38.000Z">
-<meta property="article:modified_time" content="2020-10-22T11:44:42.659Z">
+<meta property="og:description" content="1. 数据库引擎MyISAM和InnoDB区别MyISAM在5.5以前是MySQL的默认数据库引擎，支持全文索引、压缩和空间函数等，但MyISAM不支持事务和行级锁，并且崩溃后无法安全恢复。5.5之后，MySQL默认使用InnoDB作为默认数据库引擎。 对比：  是否支持行级锁：MyISAM只支持表级锁，而InnoDB支持表级锁和行级锁，默认为行级锁； 是否支持事务和崩溃后安全恢复：MyISAM追">
+<meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/MySQL%E4%BA%8B%E5%8A%A1%E7%89%B9%E6%80%A7.png">
+<meta property="article:published_time" content="2020-10-24T02:41:43.000Z">
+<meta property="article:modified_time" content="2020-10-24T10:00:00.428Z">
 <meta property="article:author" content="flbu">
-<meta property="article:tag" content="剑指offer">
-<meta property="article:tag" content="二分查找">
+<meta property="article:tag" content="面试总结">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/MySQL%E4%BA%8B%E5%8A%A1%E7%89%B9%E6%80%A7.png">
 
 
 
@@ -122,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/10/22/剑指offer-二维数组中的查找/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/10/24/面试/面试总结-MySQL/"/>
 
 
 
 
 
-  <title>剑指offer.二维数组中的查找 | flbu blog</title>
+  <title>面试总结-MySQL | flbu blog</title>
   
 
 
@@ -299,7 +301,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/22/%E5%89%91%E6%8C%87offer-%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/24/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-MySQL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="flbu">
@@ -316,7 +318,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">剑指offer.二维数组中的查找</h1>
+          <h1 class="post-title" itemprop="name headline">面试总结-MySQL</h1>
         
 
         <div class="post-meta">
@@ -328,8 +330,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-22T19:40:38+08:00">
-                2020-10-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-24T10:41:43+08:00">
+                2020-10-24
               </time>
             
 
@@ -351,8 +353,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/nowcoder/" itemprop="url" rel="index">
-                    <span itemprop="name">nowcoder</span>
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
                   </a>
                 </span>
 
@@ -388,16 +390,123 @@
       
 
       
-        <h2 id="剑指offer-二维数组中的查找"><a href="#剑指offer-二维数组中的查找" class="headerlink" title="剑指offer.二维数组中的查找"></a>剑指offer.二维数组中的查找</h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>因为二维数组从左到右递增，从上到下递增，所以每次选取右上方或者左下方的元素与<code>target</code>进行比较就可以每次排除一行或者一列：</p>
+        <h3 id="1-数据库引擎MyISAM和InnoDB区别"><a href="#1-数据库引擎MyISAM和InnoDB区别" class="headerlink" title="1. 数据库引擎MyISAM和InnoDB区别"></a>1. 数据库引擎MyISAM和InnoDB区别</h3><p><code>MyISAM</code>在5.5以前是<code>MySQL</code>的默认数据库引擎，支持全文索引、压缩和空间函数等，但<strong><code>MyISAM</code>不支持事务和行级锁，并且崩溃后无法安全恢复。</strong>5.5之后，<code>MySQL</code>默认使用<code>InnoDB</code>作为默认数据库引擎。</p>
+<p>对比：</p>
+<ul>
+<li><strong>是否支持行级锁</strong>：<code>MyISAM</code>只支持表级锁，而<code>InnoDB</code>支持表级锁和行级锁，默认为行级锁；</li>
+<li><strong>是否支持事务和崩溃后安全恢复</strong>：<code>MyISAM</code>追求查询效率，不支持事务；而<code>InnoDB</code>提供事务支持，具有事务回滚和崩溃后修复能力。</li>
+<li><strong>是否支持外键</strong>：<code>MyISAM</code>不支持，<code>InnoDB</code>支持</li>
+<li><strong>是否支持<code>MVCC</code></strong>：只有<code>InnoDB</code>支持</li>
+<li><code>MyISAM</code>支持全文索引，<code>InnoDB</code>不支持</li>
+<li><code>MyISAM</code>相对简单，适合读密集场景；而<code>InnoDB</code>适合大型读写高并发场景。</li>
+</ul>
+<h3 id="2-MySQL中一条语句的执行过程-amp-amp-MySQL架构"><a href="#2-MySQL中一条语句的执行过程-amp-amp-MySQL架构" class="headerlink" title="2. MySQL中一条语句的执行过程&amp;&amp;MySQL架构"></a>2. MySQL中一条语句的执行过程&amp;&amp;MySQL架构</h3><p><code>MySQL</code>主要分为<code>Server</code>层和存储引擎层。</p>
+<ul>
+<li>Server层：主要包括连接器、查询缓存、分析器、优化器和执行器，还有一个通用的日志模块<code>binlog</code>；</li>
+<li>存储引擎：主要负责数据的读取和存储，采用可替换的插件式架构，支持<code>InnoDB</code>、<code>MyISAM</code>、<code>Memory</code>等存储引擎，5.5版本后默认使用<code>InnoDB</code>，其自带了一个日志模块<code>redolog</code>。</li>
+</ul>
+<h4 id="MySQL-Server层基本组件"><a href="#MySQL-Server层基本组件" class="headerlink" title="MySQL Server层基本组件"></a>MySQL Server层基本组件</h4><ul>
+<li><p>连接器</p>
+<p>连接器主要负责身份认证和权限相关</p>
+</li>
+<li><p>查询缓存（MySQL8.0后移除）</p>
+<p>查询缓存主要用来缓存执行的<code>SELECT</code>语句及其结果集。</p>
+<p>连接建立后，执行查询语句时会先查询缓存，以<code>key-value</code>形式缓存在内存中，<code>key</code>是查询语句，<code>value</code>是结果集。如果缓存命中，直接返回结果，如果没有命中，再执行后续操作，完成后会将结果缓存起来。</p>
+<p>查询缓存在<code>MySQL</code>8.0后被移除</p>
+</li>
+<li><p>分析器</p>
+<p>分析器主要是用来分析<code>SQL</code>语句是用来干嘛的，分为两步：</p>
 <ol>
-<li>如果选取元素等于<code>target</code>，直接返回<code>true</code>；</li>
-<li>如果大于<code>target</code>，排除这一列；</li>
-<li>如果小于<code>target</code>，排除这一行。</li>
+<li>词法分析：提取关键字，如<code>select</code>、表名、查询条件等；</li>
+<li>语法分析：判断<code>SQL</code>语句是否有错误</li>
 </ol>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">Find</span><span class="params">(<span class="keyword">int</span> target, <span class="keyword">int</span> [][] array)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> rows = array.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> col = array[<span class="number">0</span>].length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> row = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(row &lt;= rows &amp;&amp; col &gt;= <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(array[row][col]==target)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(array[row][col] &gt; target)&#123;</span><br><span class="line">                col--;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                row++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
+</li>
+<li><p>优化器</p>
+<p>优化器的作用就是按照<code>MySQL</code>认为最优的方案去执行（可能不是最优）</p>
+</li>
+<li><p>执行器</p>
+<p>执行器在执行前会判断用户是否有权限，如果没有返回错误信息，如果有权限，就会调用存储引擎的接口，并返回执行结果。</p>
+</li>
+</ul>
+<h4 id="执行过程"><a href="#执行过程" class="headerlink" title="执行过程"></a>执行过程</h4><ul>
+<li><p>查询语句</p>
+<p>连接器权限校验-&gt;查询缓存-&gt;分析器-&gt;优化器-&gt;权限校验-&gt;执行器-&gt;存储引擎查询</p>
+</li>
+<li><p>更新语句</p>
+<p><strong>连接器权限校验-&gt;分析器-&gt;权限校验-&gt;执行器-&gt;存储引擎–<code>redo log prepare</code>-&gt;<code>bin log</code> -&gt; <code>redo log commit</code></strong></p>
+<p><strong>先<code>redo log</code>预提交，再写<code>bin log</code>，最后<code>redo log</code>提交是为了保证数据一致性。</strong></p>
+</li>
+</ul>
+<h3 id="3-事务特性及其实现"><a href="#3-事务特性及其实现" class="headerlink" title="3. 事务特性及其实现"></a>3. 事务特性及其实现</h3><p>事务是逻辑上的一组操作，要么全部执行，要么全部回滚。</p>
+<p><code>MySQL</code>事务有四大特性(ACID)：原子性、一致性、隔离性、持久性</p>
+<p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/MySQL%E4%BA%8B%E5%8A%A1%E7%89%B9%E6%80%A7.png" alt=""></p>
+<h4 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h4><p>事务是一系列原子操作，要么全部完成，要么全部回滚</p>
+<p><strong><code>MySQL</code>实现事务原子性的基础是<code>undo log</code>。</strong></p>
+<p>事务回滚指的是能够撤销所有已经成功执行的<code>SQL</code>语句。<strong>当事务对数据库进行修改时，会把所有的写操作写入<code>undo log</code>，当进行回滚时，利用<code>undo log</code>中的日志信息做相反的逻辑，将数据回滚到修改之前的版本。</strong></p>
+<p>原子性只能保证单个事务的一致性，并不能保证多线程下的事务一致性。</p>
+<h4 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h4><p>事务前后数据库总是从一个状态到达另一个状态，<strong>一致性是最基本的属性</strong>，其他三个性质都是为了保证一致性。</p>
+<p>原子性只能保证单线程下的一致性，所以引入了隔离性来保证并发下的一致性。</p>
+<h4 id="隔离性"><a href="#隔离性" class="headerlink" title="隔离性"></a>隔离性</h4><p>并发访问时，各个事务间是相互独立的。<code>MySQL</code>中定义了四种隔离级别：</p>
+<p><strong>数据库中主要是通过多版本并发控制(MVCC)和锁来实现隔离性的。</strong></p>
+<h4 id="持久性"><a href="#持久性" class="headerlink" title="持久性"></a>持久性</h4><p>事务被提交后，对数据库的改变是持久的，即使发生了故障也不会产生影响。</p>
+<p><strong><code>MySQL</code>通过<code>redo log</code>来实现持久性。当做数据修改时，不仅在内存中操作，还会在<code>redo log</code>中记录这次操作。当事务提交的时候，会将<code>redo log</code>进行刷盘。当宕机重启时，会将<code>redo log</code>中的内容恢复到数据库中，再根据<code>undo log</code>和<code>bin log</code>内容决定回滚数据还是提交数据。</strong></p>
+<h3 id="4-并发事务的问题"><a href="#4-并发事务的问题" class="headerlink" title="4. 并发事务的问题"></a>4. 并发事务的问题</h3><p>并发事务可能会造成：<strong>脏读、丢失修改、不可重复读和幻读。</strong></p>
+<ul>
+<li><strong>脏读</strong>：一个事务可以读取到其他事务未提交的脏数据</li>
+<li><strong>丢失修改</strong>：两个事务并发修改同一个数据，导致第一个事务的修改结果丢失</li>
+<li><strong>不可重复读</strong>：一个事务多次读取同一数据，期间另一事务修改了该数据，造成事务两次读取的数据不一样。<strong>一个事务内两次读到的数据不一致就是不可重复读。</strong></li>
+<li><strong>幻读</strong>：第一个事务读取了几行数据，接着另一个事务插入了几行数据，随后第一个事务读取发现多出了一些原本不存在的记录，像是产生了幻觉，称为幻读。</li>
+</ul>
+<p><strong>不可重复读与幻读的区别：</strong></p>
+<p>不可重复读的重点是多次读取一条记录发现值被修改，而幻读的重点是数据列的新增或者删除。</p>
+<h3 id="5-事务隔离级别"><a href="#5-事务隔离级别" class="headerlink" title="5. 事务隔离级别"></a>5. 事务隔离级别</h3><p><code>MySQL</code>中有四个隔离级别，不同的隔离级别是在数据可靠性和并发性之间进行取舍，隔离级别越高，并发性能越差，数据越安全可靠。</p>
+<h4 id="READ-UNCOMMITTED（读取未提交）"><a href="#READ-UNCOMMITTED（读取未提交）" class="headerlink" title="READ-UNCOMMITTED（读取未提交）"></a><code>READ-UNCOMMITTED</code>（读取未提交）</h4><p>最低的隔离级别，允许读取尚未提交的数据，可能会导致脏读、不可重复读、幻读。</p>
+<p><strong><code>READ-UNCOMMITED</code>隔离级别下，读不会加任何锁，写会加排它锁，并在事务结束后释放。</strong></p>
+<blockquote>
+<p>排它锁会阻塞其他事务对其锁定的数据加读锁或写锁的操作，但读取未提交隔离级别下都不会加锁，所以对不加锁的读不起作用。</p>
+</blockquote>
+<h4 id="READ-COMMITED（读取已提交）："><a href="#READ-COMMITED（读取已提交）：" class="headerlink" title="READ-COMMITED（读取已提交）："></a><code>READ-COMMITED</code>（读取已提交）：</h4><p>只能读取并发事务已提交的数据，即一个事务所做的修改在提交之前是不可见的。可通过<code>MVCC</code>实现。可能会导致不可重复读和幻读。</p>
+<p><strong><code>InnoDB</code>在<code>READ-COMMITTED</code>隔离级别下，写数据时加排它锁，读数据时不加锁而是采取<code>MVCC</code>多版本并发机制。</strong></p>
+<p><code>READ-COMMITTED</code>隔离级别下，<strong>每次进行<code>select</code>都会生成<code>MVCC</code>版本</strong>，所以在<code>select</code>之间有其他事务更新了数据，就会产生不可重复读。</p>
+<h4 id="REPEATABLE-READ（可重复读）："><a href="#REPEATABLE-READ（可重复读）：" class="headerlink" title="REPEATABLE-READ（可重复读）："></a><code>REPEATABLE-READ</code>（可重复读）：</h4><p>保证同一个事务中多次读取相同数据结果相同。通过<code>MVCC</code>实现。可能产生幻读。<code>MySQL</code>默认的隔离级别就是可重复读。</p>
+<p><strong><code>InnoDB</code>在<code>REPEATABLE-READ</code>隔离级别下，写数据时加排它锁，读数据时也是采用的MVCC多版本并发机制，不过可重复读仅仅是在事务开始时创建一次快照。</strong></p>
+<h4 id="SERIALIZABLE（可串行化）："><a href="#SERIALIZABLE（可串行化）：" class="headerlink" title="SERIALIZABLE（可串行化）："></a><code>SERIALIZABLE</code>（可串行化）：</h4><p>强制事务串行支持。需要加锁实现。</p>
+<p><strong><code>SERIALIZABLE</code>可串行化隔离级别下，读数据时加共享锁，写数据时加排它锁。</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">隔离级别</th>
+<th align="center">脏读</th>
+<th align="center">不可重复读</th>
+<th align="center">幻影读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">未提交读</td>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">提交读</td>
+<td align="center">×</td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">可重复读</td>
+<td align="center">×</td>
+<td align="center">×</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">可串行化</td>
+<td align="center">×</td>
+<td align="center">×</td>
+<td align="center">×</td>
+</tr>
+</tbody></table>
+<h3 id="6-多版本并发控制MVCC"><a href="#6-多版本并发控制MVCC" class="headerlink" title="6. 多版本并发控制MVCC"></a>6. 多版本并发控制MVCC</h3>
       
     </div>
     
@@ -425,9 +534,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/%E5%89%91%E6%8C%87offer/" rel="tag"><i class="fa fa-tag"></i>剑指offer</a>
+            <a href="/tags/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/" rel="tag"><i class="fa fa-tag"></i>面试总结</a>
           
-            <a href="/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" rel="tag"><i class="fa fa-tag"></i>二分查找</a>
+            <a href="/tags/MySQL/" rel="tag"><i class="fa fa-tag"></i>MySQL</a>
           
         </div>
       
@@ -440,8 +549,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/10/12/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-Redis/" rel="next" title="面试总结-Redis">
-                <i class="fa fa-chevron-left"></i> 面试总结-Redis
+              <a href="/2020/10/23/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-%E5%90%8E%E7%AB%AF%E7%9B%B8%E5%85%B3/" rel="next" title="面试总结-后端相关">
+                <i class="fa fa-chevron-left"></i> 面试总结-后端相关
               </a>
             
           </div>
@@ -449,10 +558,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/10/23/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-%E5%90%8E%E7%AB%AF%E7%9B%B8%E5%85%B3/" rel="prev" title="面试总结-后端相关">
-                面试总结-后端相关 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -540,7 +645,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -551,7 +656,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -607,7 +712,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#剑指offer-二维数组中的查找"><span class="nav-text">剑指offer.二维数组中的查找</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目描述"><span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思路"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-text">代码实现</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-数据库引擎MyISAM和InnoDB区别"><span class="nav-text">1. 数据库引擎MyISAM和InnoDB区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-MySQL中一条语句的执行过程-amp-amp-MySQL架构"><span class="nav-text">2. MySQL中一条语句的执行过程&amp;&amp;MySQL架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MySQL-Server层基本组件"><span class="nav-text">MySQL Server层基本组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行过程"><span class="nav-text">执行过程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-事务特性及其实现"><span class="nav-text">3. 事务特性及其实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原子性"><span class="nav-text">原子性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一致性"><span class="nav-text">一致性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#隔离性"><span class="nav-text">隔离性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#持久性"><span class="nav-text">持久性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-并发事务的问题"><span class="nav-text">4. 并发事务的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-事务隔离级别"><span class="nav-text">5. 事务隔离级别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#READ-UNCOMMITTED（读取未提交）"><span class="nav-text">READ-UNCOMMITTED（读取未提交）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#READ-COMMITED（读取已提交）："><span class="nav-text">READ-COMMITED（读取已提交）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#REPEATABLE-READ（可重复读）："><span class="nav-text">REPEATABLE-READ（可重复读）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SERIALIZABLE（可串行化）："><span class="nav-text">SERIALIZABLE（可串行化）：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-多版本并发控制MVCC"><span class="nav-text">6. 多版本并发控制MVCC</span></a></li></ol></div>
             
 
           </div>
