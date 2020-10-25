@@ -89,7 +89,7 @@
 <meta property="og:description" content="1. 数据库引擎MyISAM和InnoDB区别MyISAM在5.5以前是MySQL的默认数据库引擎，支持全文索引、压缩和空间函数等，但MyISAM不支持事务和行级锁，并且崩溃后无法安全恢复。5.5之后，MySQL默认使用InnoDB作为默认数据库引擎。 对比：  是否支持行级锁：MyISAM只支持表级锁，而InnoDB支持表级锁和行级锁，默认为行级锁； 是否支持事务和崩溃后安全恢复：MyISAM追">
 <meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/MySQL%E4%BA%8B%E5%8A%A1%E7%89%B9%E6%80%A7.png">
 <meta property="article:published_time" content="2020-10-24T02:41:43.000Z">
-<meta property="article:modified_time" content="2020-10-24T10:00:00.428Z">
+<meta property="article:modified_time" content="2020-10-25T07:39:42.398Z">
 <meta property="article:author" content="flbu">
 <meta property="article:tag" content="面试总结">
 <meta property="article:tag" content="MySQL">
@@ -506,7 +506,171 @@
 <td align="center">×</td>
 </tr>
 </tbody></table>
-<h3 id="6-多版本并发控制MVCC"><a href="#6-多版本并发控制MVCC" class="headerlink" title="6. 多版本并发控制MVCC"></a>6. 多版本并发控制MVCC</h3>
+<h3 id="6-多版本并发控制MVCC"><a href="#6-多版本并发控制MVCC" class="headerlink" title="6. 多版本并发控制MVCC"></a>6. 多版本并发控制MVCC</h3><p>多版本并发控制MVCC是<code>InnoDB</code>实现隔离级别的一种具体方式，<strong>主要用于实现提交读和可重复读隔离级别</strong>。</p>
+<p>事务的隔离性可以通过加锁来实现，但频繁地加锁会极大的降低数据库的并发性能。</p>
+<p><strong>MVCC本质上就是保存数据的快照，从而实现读取数据时不需要加锁就可以实现隔离性，是一种乐观锁的思想</strong>。</p>
+<p><strong>在<code>InnoDB</code>中，会在每行记录后保存两个隐藏的列，用来存储两个版本号</strong>：</p>
+<ul>
+<li><strong>创建版本号：指示创建一个数据行的快照时的系统版本号</strong></li>
+<li><strong>删除版本号：如果该快照的删除版本号大于当前事务的系统版本号表示有效，否则表示该数据已经被删除了</strong></li>
+</ul>
+<p>其中，系统版本号是一个递增的数字，每开始一个新的事务，系统的版本号就自动递增；事务版本号是指事务开始时的系统版本号。</p>
+<p><strong>MVCC使用的快照存储在<code>undo log</code>中，其通过回滚指针把一个数据行的所有快照连接起来。</strong></p>
+<blockquote>
+<p>undo log主要有两个作用：</p>
+<ol>
+<li>保证事务的原子性，事务回滚时利用uodo log进行恢复</li>
+<li>用于存储MVCC快照读的数据，通过读取undo log的历史版本数据可以实现不同事务版本号都有自己独立的快照数据版本</li>
+</ol>
+</blockquote>
+<p>在可重复读<code>REREATABLE-READ</code>隔离级别下，<strong>开始一个事务时，该事务的版本号肯定大于当前所有数据行快照的创建版本号。</strong></p>
+<ul>
+<li><p>select</p>
+<p>读取创建版本号&lt;=当前事务版本号，删除版本号为空或者大于当前事务版本号。</p>
+</li>
+<li><p>insert</p>
+<p>将当前事务的版本号作为数据行快照的创建版本号</p>
+</li>
+<li><p>delete</p>
+<p>将当前事务的版本号作为数据行快照的删除版本号</p>
+</li>
+<li><p>update</p>
+<p>将当前事务的版本号作为更新前数据行的删除版本号，并将当前系统版本号作为更新后数据行快照的创建版本号。可以理解为先执行delete再执行insert</p>
+</li>
+</ul>
+<p><strong>通过MVCC读取到的数据是历史数据，属于快照读，可以减少加锁的开销；而读取数据库当前版本的数据叫做当前读，都需要加锁。</strong></p>
+<ul>
+<li><p>快照读：读取的是历史数据，不需要加锁</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from table ….;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>当前读：读取的是当前的数据，特殊的读操作、增、删、改操作，属于当前读，需要加锁</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;加共享锁</span><br><span class="line">select * from table where ? lock in share mode;</span><br><span class="line">&#x2F;&#x2F;加排它锁</span><br><span class="line">select * from table where ? for update;</span><br><span class="line">insert</span><br><span class="line">delete</span><br><span class="line">update</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<p><strong>提交读和可重复读都可以使用MVCC来实现，不同的是提交读隔离级别下每次<code>select</code>都会重新创建快照，而可重复读隔离级别下只会在事务开始时创建一次快照。</strong></p>
+<p><strong>使用MVCC可以解决不可重复读问题，但无法解决幻读。为了解决当前读中的幻读问题，<code>MySQL</code>使用了<code>Next-Key Lock</code>锁。</strong></p>
+<h3 id="7-锁分类与InnoDB锁算法"><a href="#7-锁分类与InnoDB锁算法" class="headerlink" title="7. 锁分类与InnoDB锁算法"></a>7. 锁分类与InnoDB锁算法</h3><h4 id="锁分类"><a href="#锁分类" class="headerlink" title="锁分类"></a>锁分类</h4><ol>
+<li><p>按照锁的粒度分</p>
+<p>按照锁的粒度，<code>MySQL</code>锁可以分为表锁和行锁。</p>
+<ul>
+<li><p>表级锁</p>
+<p>对当前操作的整张表加锁，锁定力度最大，实现简单，加锁快，不会出现死锁，但触发锁冲突的概率最大，并发度最低。<code>MyISAM</code>支持只表级锁，<code>InnoDB</code>也支持表级锁。</p>
+</li>
+<li><p>行级锁</p>
+<p>只对当前操作的行加锁，锁定粒度最小，行级锁能大大减少数据库的冲突，并发度高，但加锁开销大，加锁慢，会出现死锁。<code>InnoDB</code>支持行级锁。</p>
+<p>InnoDB支持的行级锁包括：<code>Record Lock</code>、<code>Gap Lock</code>和<code>Next-key Lock</code>。</p>
+</li>
+<li><p>页级锁</p>
+<p>页级锁的锁定力度介于表级锁和行级锁之间，一次锁定相邻的一组记录。<code>BDB</code>引擎支持页级锁。</p>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="2">
+<li><p>按照锁的思想分类</p>
+<p>按照锁的思想，可以分为乐观锁和悲观锁</p>
+<p>乐观锁会假定大概率不会发生冲突，访问、处理数据过程中不加锁，只在更新数据时根据数据版本号或时间戳判断是否有冲突，有则处理，没有则提交事务。</p>
+<p>悲观锁会假定大概率会发生并发更新冲突，访问、处理数据前就会加排它锁，事务提交或回滚后才会释放锁。</p>
+</li>
+</ol>
+<ol start="3">
+<li><p>按照锁的角色分类</p>
+<p>按照锁的角色，可以分为共享锁与排它锁</p>
+<ul>
+<li><p>共享锁</p>
+<p>共享锁，又被称为读锁，一个事务对数据加了共享锁，可以对数据进行读取但不能更新，其他事务能对这个数据加共享锁，但不能加排它锁。</p>
+</li>
+<li><p>排它锁</p>
+<p>排它锁，又被称为写锁，一个事务对数据加了排它锁，可以对数据进行读取和更新，其他事务不能加任何锁。</p>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="4">
+<li><p>意向锁</p>
+<p><strong>使用意向锁可以更好的实现多粒度封锁，意向锁是一个不与行级锁冲突的表级锁。</strong></p>
+<p>事务想对表加锁时，需要先检测是否有其他事务对表加过了与自己冲突的锁，需要对表的每一行都检测一次，非常耗时。所以<code>MySQL</code>在原来X/S的基础上引入了意向共享锁(IS)和意向排它锁(IX)，在加锁前只需检查表上的意向锁。</p>
+<ul>
+<li><p>意向共享锁(IS)</p>
+<p>事务要获取某些行的S锁，必须先获得表的IS锁。</p>
+<p><code>SELECT column FROM table ... LOCK IN SHARE MODE;</code></p>
+</li>
+<li><p>意向排它锁(IX)</p>
+<p>事务要获取某些行的X锁，必须先获得表的IX锁。</p>
+<p><code>SELECT column FROM table ... FOR UPDATE;</code></p>
+</li>
+</ul>
+<p>各种锁之间的兼容关系如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">-</th>
+<th align="center">X</th>
+<th align="center">IX</th>
+<th align="center">S</th>
+<th align="center">IS</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">X</td>
+<td align="center">×</td>
+<td align="center">×</td>
+<td align="center">×</td>
+<td align="center">×</td>
+</tr>
+<tr>
+<td align="center">IX</td>
+<td align="center">×</td>
+<td align="center">√</td>
+<td align="center">×</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">S</td>
+<td align="center">×</td>
+<td align="center">×</td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">IS</td>
+<td align="center">×</td>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+</tbody></table>
+<p>解释：</p>
+<ul>
+<li>任意IS/IX之间都是兼容的，因为他们都是意向锁，而不是真正加锁</li>
+<li>S锁只与S锁和IS锁兼容</li>
+</ul>
+</li>
+</ol>
+<h4 id="锁算法"><a href="#锁算法" class="headerlink" title="锁算法"></a>锁算法</h4><p><strong><code>InnoDB</code>所有的行锁算法都是基于索引实现的，锁定的都是索引或者索引区间。使用主键索引时，会锁定主键索引；使用非主键索引时，会先锁住非主键索引，再锁住主键索引。</strong></p>
+<ul>
+<li><p>Record Lock</p>
+<p>记录锁，锁定一个行记录的索引。</p>
+</li>
+<li><p>Gap Lock</p>
+<p>间隙锁，锁定一个索引范围，不包括记录本身</p>
+</li>
+<li><p>Next-key Lock</p>
+<p>相当于<code>Record Lock</code>加上<code>Gap Lock</code>，锁定一个范围，包括记录本身。</p>
+<p><strong>使用<code>Next-key Lock</code>，<code>InnoDB</code>可以在可重复读隔离级别下解决幻读问题。</strong></p>
+</li>
+</ul>
+<p>总结：</p>
+<ol>
+<li><code>InnoDB</code>对于行的查询使用<code>Next-key Lock</code>；</li>
+<li><code>Next-key Lock</code>可以解决幻读问题</li>
+<li><strong>当查询的索引具有唯一性时，会将<code>next-key Lock</code>降级为<code>Gap Lock</code></strong></li>
+<li><strong>Gap锁设计的目的是防止多个事务将记录插入到同一范围，导致幻读</strong></li>
+</ol>
+
       
     </div>
     
@@ -712,7 +876,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-数据库引擎MyISAM和InnoDB区别"><span class="nav-text">1. 数据库引擎MyISAM和InnoDB区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-MySQL中一条语句的执行过程-amp-amp-MySQL架构"><span class="nav-text">2. MySQL中一条语句的执行过程&amp;&amp;MySQL架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MySQL-Server层基本组件"><span class="nav-text">MySQL Server层基本组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行过程"><span class="nav-text">执行过程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-事务特性及其实现"><span class="nav-text">3. 事务特性及其实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原子性"><span class="nav-text">原子性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一致性"><span class="nav-text">一致性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#隔离性"><span class="nav-text">隔离性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#持久性"><span class="nav-text">持久性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-并发事务的问题"><span class="nav-text">4. 并发事务的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-事务隔离级别"><span class="nav-text">5. 事务隔离级别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#READ-UNCOMMITTED（读取未提交）"><span class="nav-text">READ-UNCOMMITTED（读取未提交）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#READ-COMMITED（读取已提交）："><span class="nav-text">READ-COMMITED（读取已提交）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#REPEATABLE-READ（可重复读）："><span class="nav-text">REPEATABLE-READ（可重复读）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SERIALIZABLE（可串行化）："><span class="nav-text">SERIALIZABLE（可串行化）：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-多版本并发控制MVCC"><span class="nav-text">6. 多版本并发控制MVCC</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-数据库引擎MyISAM和InnoDB区别"><span class="nav-text">1. 数据库引擎MyISAM和InnoDB区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-MySQL中一条语句的执行过程-amp-amp-MySQL架构"><span class="nav-text">2. MySQL中一条语句的执行过程&amp;&amp;MySQL架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MySQL-Server层基本组件"><span class="nav-text">MySQL Server层基本组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行过程"><span class="nav-text">执行过程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-事务特性及其实现"><span class="nav-text">3. 事务特性及其实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原子性"><span class="nav-text">原子性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一致性"><span class="nav-text">一致性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#隔离性"><span class="nav-text">隔离性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#持久性"><span class="nav-text">持久性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-并发事务的问题"><span class="nav-text">4. 并发事务的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-事务隔离级别"><span class="nav-text">5. 事务隔离级别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#READ-UNCOMMITTED（读取未提交）"><span class="nav-text">READ-UNCOMMITTED（读取未提交）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#READ-COMMITED（读取已提交）："><span class="nav-text">READ-COMMITED（读取已提交）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#REPEATABLE-READ（可重复读）："><span class="nav-text">REPEATABLE-READ（可重复读）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SERIALIZABLE（可串行化）："><span class="nav-text">SERIALIZABLE（可串行化）：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-多版本并发控制MVCC"><span class="nav-text">6. 多版本并发控制MVCC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-锁分类与InnoDB锁算法"><span class="nav-text">7. 锁分类与InnoDB锁算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#锁分类"><span class="nav-text">锁分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#锁算法"><span class="nav-text">锁算法</span></a></li></ol></li></ol></div>
             
 
           </div>
