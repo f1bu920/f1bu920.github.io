@@ -88,8 +88,14 @@
 <meta property="og:site_name" content="flbu blog">
 <meta property="og:description" content="1. 数据库引擎MyISAM和InnoDB区别MyISAM在5.5以前是MySQL的默认数据库引擎，支持全文索引、压缩和空间函数等，但MyISAM不支持事务和行级锁，并且崩溃后无法安全恢复。5.5之后，MySQL默认使用InnoDB作为默认数据库引擎。 对比：  是否支持行级锁：MyISAM只支持表级锁，而InnoDB支持表级锁和行级锁，默认为行级锁； 是否支持事务和崩溃后安全恢复：MyISAM追">
 <meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/MySQL%E4%BA%8B%E5%8A%A1%E7%89%B9%E6%80%A7.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/InnoDB%E9%A1%B5%E7%BB%93%E6%9E%84%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/InnoDB%E9%A1%B5%E7%BB%93%E6%9E%84%E7%A4%BA%E6%84%8F%E5%9B%BE2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/MySQL-b%E6%A0%91.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/MySQL-B%2B%E6%A0%91.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6.jpg">
 <meta property="article:published_time" content="2020-10-24T02:41:43.000Z">
-<meta property="article:modified_time" content="2020-10-25T07:39:42.398Z">
+<meta property="article:modified_time" content="2020-10-26T12:19:07.280Z">
 <meta property="article:author" content="flbu">
 <meta property="article:tag" content="面试总结">
 <meta property="article:tag" content="MySQL">
@@ -400,6 +406,8 @@
 <li><code>MyISAM</code>支持全文索引，<code>InnoDB</code>不支持</li>
 <li><code>MyISAM</code>相对简单，适合读密集场景；而<code>InnoDB</code>适合大型读写高并发场景。</li>
 </ul>
+<a id="more"></a>
+
 <h3 id="2-MySQL中一条语句的执行过程-amp-amp-MySQL架构"><a href="#2-MySQL中一条语句的执行过程-amp-amp-MySQL架构" class="headerlink" title="2. MySQL中一条语句的执行过程&amp;&amp;MySQL架构"></a>2. MySQL中一条语句的执行过程&amp;&amp;MySQL架构</h3><p><code>MySQL</code>主要分为<code>Server</code>层和存储引擎层。</p>
 <ul>
 <li>Server层：主要包括连接器、查询缓存、分析器、优化器和执行器，还有一个通用的日志模块<code>binlog</code>；</li>
@@ -670,6 +678,250 @@
 <li><strong>当查询的索引具有唯一性时，会将<code>next-key Lock</code>降级为<code>Gap Lock</code></strong></li>
 <li><strong>Gap锁设计的目的是防止多个事务将记录插入到同一范围，导致幻读</strong></li>
 </ol>
+<h3 id="8-索引"><a href="#8-索引" class="headerlink" title="8. 索引"></a>8. 索引</h3><h4 id="8-1-为什么要用索引"><a href="#8-1-为什么要用索引" class="headerlink" title="8.1. 为什么要用索引"></a>8.1. 为什么要用索引</h4><ul>
+<li><strong>通过创建唯一性索引，保证数据表中每一行数据的唯一性</strong></li>
+<li><strong>大大加快数据的检索速度</strong></li>
+<li><strong>避免排序和临时表</strong></li>
+<li><strong>将随机IO变为顺序IO</strong></li>
+<li>加速表与表之间的连接</li>
+</ul>
+<h4 id="8-2-索引如何提高检索速度"><a href="#8-2-索引如何提高检索速度" class="headerlink" title="8.2. 索引如何提高检索速度"></a>8.2. 索引如何提高检索速度</h4><p><strong>通过将无序的数据变为相对有序的数据提高检索速度，索引起到了类似目录的作用。</strong></p>
+<p><code>MySQL</code>的基本存储结构是页：</p>
+<p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/InnoDB%E9%A1%B5%E7%BB%93%E6%9E%84%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt="InnoDB页结构示意图"></p>
+<p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/InnoDB%E9%A1%B5%E7%BB%93%E6%9E%84%E7%A4%BA%E6%84%8F%E5%9B%BE2.png" alt="InnoDB页结构示意图2"></p>
+<p>各个数据页之间组成一个双向链表，每个数据页内部的记录组成一个单链表。当不使用索引时，只能先遍历双向链表找到对应的页，再遍历所在页的单链表，在数据量很大时查找会很慢。</p>
+<p>而<strong>索引可以将无序的数据变成相对有序，查找时可以根据索引快速定位到所在的页。</strong></p>
+<h4 id="8-3-索引越多越好？"><a href="#8-3-索引越多越好？" class="headerlink" title="8.3 索引越多越好？"></a>8.3 索引越多越好？</h4><ul>
+<li>索引需要空间来存储，索引越多，占用的物理空间就越多</li>
+<li>索引越多，新增、更新和删除时的维护成本越大</li>
+</ul>
+<h4 id="8-4-索引的数据结构"><a href="#8-4-索引的数据结构" class="headerlink" title="8.4 索引的数据结构"></a>8.4 索引的数据结构</h4><p><code>MySQL</code>中索引主要有两种数据结构，<strong>哈希索引和B+Tree索引</strong>。下面列出各种数据结构的对比：</p>
+<ul>
+<li><p>二叉搜索树</p>
+<p>左子树节点值小于根节点，右子树节点值大于根节点。在极端情况下会退化为链表，近乎全表扫描。</p>
+</li>
+<li><p>红黑树</p>
+<p>红黑树本质上属于二叉平衡树，二叉平衡树的查找效率虽然很高，但维护代价很大，需要进行多次旋转来保证插入或更新后的平衡性。</p>
+</li>
+<li><p>哈希索引</p>
+<p>哈希索引可以通过散列快速获取磁盘文件指针，等值查询非常快，但不支持范围查询</p>
+</li>
+<li><p>B-Tree</p>
+<p>目前大部分数据库都是采用B-Tree或者B+Tree作为索引结构。相比于其他各种树结构，<strong>B树和B+树能大幅降低树的高度，即能减少IO的次数。</strong></p>
+<p>B树本质上属于多叉平衡树，叶子节点具有相同的深度，节点中数据索引从左到右递增：</p>
+<p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/MySQL-b%E6%A0%91.png" alt="MySQL-b树"></p>
+</li>
+</ul>
+<p>B树有两个明显的特点：</p>
+<p><strong>树内索引节点也存储数据；叶子节点间没有指针连接。</strong></p>
+<ul>
+<li><p>B+Tree</p>
+<p>B+树是B树的变种，相比于B-Tree，主要有两个特点：</p>
+<p><strong>数据只存储在叶子节点；所有叶子节点间通过指针连接。</strong></p>
+<p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/MySQL-B%2B%E6%A0%91.png" alt="MySQL-B+树"></p>
+</li>
+</ul>
+<h4 id="8-5-B-Tree与B-Tree的对比"><a href="#8-5-B-Tree与B-Tree的对比" class="headerlink" title="8.5 B-Tree与B+Tree的对比"></a>8.5 B-Tree与B+Tree的对比</h4><ol>
+<li><strong>B+Tree非叶子节点不存储数据，只存储索引，一页可以放更多的索引，降低了树高，根据局部性原理，按页加载到内存中，减少了IO次数</strong></li>
+<li><strong>B-Tree在单条数据查询时，查询效率不固定，最好情况是<code>O(1)</code>，可以认为单一数据查询B-Tree的平均性能更好</strong></li>
+<li><strong>B+Tree叶子节点间使用指针连接，提高了区间访问性能，非常适合范围查找。</strong></li>
+</ol>
+<p>因此，<code>B+Tree</code>非常适合做数据遍历操作，因此<code>MySQL</code>采用<code>B+Tree</code>作为默认索引结构；<code>B-Tree</code>适合单一查询较多范围查询较少的场景，因此<code>MongDB</code>采用<code>B-Tree</code>作为索引结构。</p>
+<h4 id="8-6-聚簇索引与非聚簇索引"><a href="#8-6-聚簇索引与非聚簇索引" class="headerlink" title="8.6 聚簇索引与非聚簇索引"></a>8.6 聚簇索引与非聚簇索引</h4><ul>
+<li><p>非聚簇索引</p>
+<p>非聚簇索引指的是B+Tree叶子节点<code>data</code>域存储的是数据记录的地址，按照索引找到对应的叶子节点后，再以<code>data</code>域的值为地址读取对应的数据记录。</p>
+<p><code>MyISAM</code>引擎使用的就是非聚簇索引。</p>
+</li>
+<li><p>聚簇索引</p>
+<p>聚簇索引的叶子节点保存的是完整的数据记录，并且数据文件本身就是主键索引按照<code>B+Tree</code>结构组织的。</p>
+<p><code>InnoDB</code>引擎使用的就是聚簇索引。</p>
+<ul>
+<li>如果表中设置了主键，则主键就是聚簇索引；</li>
+<li>如果没有主键，就会默认第一个非空且唯一的列作为聚簇索引；</li>
+<li>以上都没有就会默认创建一个隐藏的<code>row_id</code>作为聚簇索引。</li>
+</ul>
+</li>
+</ul>
+<h4 id="8-7-主键索引与辅助索引"><a href="#8-7-主键索引与辅助索引" class="headerlink" title="8.7 主键索引与辅助索引"></a>8.7 主键索引与辅助索引</h4><ul>
+<li><p><code>MyISAM</code>引擎</p>
+<p>在<code>MyISAM</code>引擎中，主键索引与辅助索引没有区别，叶子节点保存的都是数据记录的地址。</p>
+</li>
+<li><p><code>InnoDB</code>引擎</p>
+<p>在<code>InnoDB</code>中，数据文件是主键索引按照<code>B+Tree</code>结构组织的，主键索引叶子节点保存的是完整的数据记录，而辅助索引叶子节点保存的是主键值。</p>
+</li>
+</ul>
+<h4 id="8-8-回表与覆盖索引"><a href="#8-8-回表与覆盖索引" class="headerlink" title="8.8 回表与覆盖索引"></a>8.8 回表与覆盖索引</h4><p>在<code>InnoDB</code>中，辅助索引叶子节点保存的是主键的值，这代表着<strong>通过辅助索引查询时不能获取所需的所有列数据，就会按照得到的主键值再走一遍主键索引，这就是回表</strong>。</p>
+<p>只需要在一颗索引树上就能获取所需的所有列数据，就无需回表。一般通过<strong>将被查询的字段添加到联合索引中去来实现覆盖索引</strong>。</p>
+<h4 id="8-9-联合索引与最左匹配原则"><a href="#8-9-联合索引与最左匹配原则" class="headerlink" title="8.9 联合索引与最左匹配原则"></a>8.9 联合索引与最左匹配原则</h4><p>联合索引是指有多个索引列的索引，如<code>(col1, col2, col3)</code>，联合索引也是一颗<code>B+Tree</code>，只不过它的<code>data</code>域存储的是联合索引所在行的主键值，索引列会全部出现在索引树上。对于联合索引，存储引擎会对第一个索引列<code>col1</code>排序，如果第一列相等，则会根据第二列排序，以此类推。</p>
+<p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95.png" alt=""></p>
+<p><strong>使用联合索引需要遵循最左匹配原则。</strong></p>
+<p><strong>创建的<code>(col1, col2, col3)</code>联合索引，相当于创建了<code>(col1)</code>、<code>(col1, col2)</code>、<code>(col1, col2, col3)</code>三个索引，因为非叶子节点是按照从左到右的顺序进行排序，所以当遇到第一个非等值查询时联合索引就会失效。</strong></p>
+<p>其中，等值查询时顺序可调整，<code>MySQL</code>优化器会自动优化为<code>col1、col2、col3</code>的顺序。</p>
+<h3 id="9-索引失效原因"><a href="#9-索引失效原因" class="headerlink" title="9. 索引失效原因"></a>9. 索引失效原因</h3><p>可以通过<code>explain</code>判断SQL语句的执行情况。</p>
+<ol>
+<li>查询条件使用不等式；</li>
+<li>查询条件类型不一致，如查询类型是字符串，传入的值为数字类型；</li>
+<li>查询条件使用函数和数学运算；</li>
+<li>使用前缀%模糊查询</li>
+<li>不遵循最左匹配原则</li>
+<li>在where子句中对字段进行<code>null</code>值判断</li>
+<li><code>MySQL</code>优化器认为不走索引效率更高，可通过<code>force index</code>强制走索引</li>
+</ol>
+<h3 id="10-主键为什么要整形、自增-amp-amp-主键为什么不用UUID"><a href="#10-主键为什么要整形、自增-amp-amp-主键为什么不用UUID" class="headerlink" title="10. 主键为什么要整形、自增&amp;&amp;主键为什么不用UUID"></a>10. 主键为什么要整形、自增&amp;&amp;主键为什么不用UUID</h3><ol>
+<li>UUID是字符串，比整形消耗更多的空间</li>
+<li>在B+树中进行查找时需要比较大小，整形比较运算比字符串更快</li>
+<li>自增的主键索引在磁盘中会连续存储，提升了页的填充率，并且进行范围查询时效率很高</li>
+<li>新增数据时会在叶子结点的末尾添加，避免了重新定位和寻址</li>
+<li>减少页分裂和碎片的产生。因为UUID是随机的，写入乱序，<code>InnoDB</code>不得不做频繁地页分裂来为新行分配空间，导致移动大量的数据；并且由于频繁地页分裂，页会变得稀疏且不规则，产生大量碎片。</li>
+<li>因为写入随机，可能写入的页已经不在内存中，需要从磁盘中读取目标页到内存，导致大量随机IO。</li>
+</ol>
+<p><strong>自增主键的缺点：</strong></p>
+<ol>
+<li>通过主键自增的特性，可以获取业务的增长信息</li>
+<li>高并发下，因为所有的插入位置都在一起，按主键插入会导致明显的锁竞争。</li>
+</ol>
+<h3 id="11-建立索引的原则"><a href="#11-建立索引的原则" class="headerlink" title="11. 建立索引的原则"></a>11. 建立索引的原则</h3><ol>
+<li>选择唯一性索引。</li>
+<li><strong>为经常需要排序、分组和联合操作的字段添加索引</strong></li>
+<li><strong>为常用作查询条件的字段添加索引</strong></li>
+<li>限制索引数量</li>
+<li>尽量使用前缀来索引</li>
+<li>删除不再使用或很少使用的索引</li>
+<li><strong>最左前缀匹配原则</strong></li>
+<li><strong>选择区分度高的列作为索引</strong></li>
+<li><strong>尽量利用联合索引扩展索引，而不是新建索引</strong></li>
+</ol>
+<h3 id="12-为什么非主键索引叶子节点存储主键值"><a href="#12-为什么非主键索引叶子节点存储主键值" class="headerlink" title="12. 为什么非主键索引叶子节点存储主键值"></a>12. 为什么非主键索引叶子节点存储主键值</h3><ul>
+<li><p><strong>节省内存空间</strong></p>
+<p>主键索引与辅助索引各自维护各自的B+Tree结构，数据只存储一份，辅助索引通过获取主键值再去主键索引的B+树上找到对应的数据，节省了空间。</p>
+</li>
+<li><p>保证数据一致性</p>
+<p>如果非主键索引叶子节点也保存一份数据，那么插入、更新、删除数据时会带来数据一致性问题。</p>
+</li>
+</ul>
+<h3 id="13-常见优化手段"><a href="#13-常见优化手段" class="headerlink" title="13. 常见优化手段"></a>13. 常见优化手段</h3><ol>
+<li><p><strong>查询时尽量不要使用<code>SELECT *</code>，而是只返回需要的字段</strong>；</p>
+<p>节省资源、网络开销；<code>SELECT *</code>很可能用不到覆盖索引，造成回表</p>
+</li>
+<li><p><strong>只需要一条记录时，使用<code>limit 1</code></strong>；</p>
+<p>加上<code>limit 1</code>后，找到对应的一条记录后就不会继续向下扫描，大大提高了效率；</p>
+</li>
+<li><p><strong>尽量避免在<code>where</code>子句中使用<code>or</code>连接条件</strong></p>
+<p>使用<code>or</code>可能会造成全表扫描：如果<code>or</code>后面字段没有索引，前面字段有索引，需要三步：全表扫描+索引扫描+合并，不如直接全表扫描。</p>
+</li>
+<li><p><strong>优化<code>limit</code>分页</strong></p>
+<p>偏移量越大，效率越低。因为<code>MySQL</code>是先获得偏移量+要取的条数的数据，再把前面偏移量数据去除后才返回；</p>
+<p>建议使用<code>order by</code>+索引或者通过<code>where</code>跳过偏移量；</p>
+</li>
+<li><p><strong>避免使用前缀%进行模糊查询</strong></p>
+<p>前缀%模糊查询会使索引失效</p>
+</li>
+<li><p><strong>使用<code>where</code>语句限制要查询数据，避免返回多余的行</strong></p>
+<p>需要什么数据就返回什么数据</p>
+</li>
+<li><p><strong>避免在索引列上进行数学和函数运算</strong></p>
+<p>会使索引失效</p>
+</li>
+<li><p><strong><code>Inner Join</code>、<code>Left join</code>、<code>right join</code>中尽量使用<code>Inner join</code>，如果是<code>left join</code>，左边表结果尽量小</strong></p>
+<blockquote>
+<ul>
+<li>Inner join内连接：两张表进行连接查询时，保留完全匹配的结果集</li>
+<li>left join左连接：两张表进行连接查询时，返回左表中所有的行和完全匹配的结果集</li>
+<li>right join：两张表进行连接查询时，返回右表中所有的行和完全匹配的结果集</li>
+</ul>
+</blockquote>
+</li>
+<li><p><strong>避免在<code>where</code>子句中使用不等于和大于小于操作符</strong></p>
+<p>会使索引失效</p>
+</li>
+<li><p><strong>遵循最左匹配原则</strong></p>
+<p>不遵循最左匹配原则，索引会失效</p>
+</li>
+<li><p><strong>考虑在常用<code>where</code>查询或<code>order by</code>的列上建立索引</strong></p>
+</li>
+<li><p><strong>插入数据过多，考虑批量操作</strong></p>
+</li>
+<li><p><strong>使用覆盖索引避免回表</strong></p>
+</li>
+<li><p><strong>慎用<code>DISTINCT</code></strong></p>
+<p><code>distinct</code>会过滤重复记录，在字段很多的时候会大大降低查询效率</p>
+</li>
+<li><p><strong>删除冗余和重复索引</strong></p>
+<p>冗余和重复索引会加大维护成本</p>
+</li>
+<li><p><strong>避免大规模删除修改数据</strong></p>
+<p>大规模删除、修改数据会造成CPU占用较高，影响别人对数据库的访问</p>
+</li>
+<li><p><strong><code>where</code>中考虑使用默认值代替<code>null</code></strong></p>
+<p><code>null</code>判断很可能会使索引失效</p>
+</li>
+<li><p><strong>避免大量表连接</strong></p>
+</li>
+<li><p><strong><code>in</code>与<code>exists</code>合理使用</strong></p>
+<p><code>in</code>相当于先执行子查询，在进行外围查询的验证，适合子查询数据较少的情景；</p>
+<p><code>exists</code>相当于先执行主查询，获得数据后在放到子查询中条件验证，根据结果<code>true</code>或<code>false</code>判断结果是否保留，适合外围查询数据较少的情景。</p>
+</li>
+<li><p><strong>尽量用<code>union all</code>替换<code>union</code></strong></p>
+</li>
+<li><p><strong>避免建立过多索引</strong></p>
+</li>
+<li><p><strong>尽量使用数字类型</strong></p>
+</li>
+<li><p><strong>建立索引要选择区分度高的字段</strong></p>
+</li>
+<li><p><strong>避免向客户端返回过多数据</strong></p>
+</li>
+<li><p><strong>尽可能使用<code>varchar</code>替代<code>char</code></strong></p>
+</li>
+<li><p><strong>在执行<code>group by</code>前过滤多余数据</strong></p>
+</li>
+<li><p><strong>如果字段是字符串，在<code>where</code>中一定要用引号，否则索引失效</strong></p>
+</li>
+<li><p><strong>善用<code>explain</code>分析<code>SQL</code>语句</strong></p>
+</li>
+</ol>
+<h3 id="14-一条SQL执行很慢的原因"><a href="#14-一条SQL执行很慢的原因" class="headerlink" title="14. 一条SQL执行很慢的原因"></a>14. 一条SQL执行很慢的原因</h3><p>一条<code>SQL</code>执行很慢需要分为两种情况，偶尔执行很慢、一直执行很慢。</p>
+<ul>
+<li><p>偶尔执行很慢</p>
+<p>偶尔执行很慢说明不是<code>SQL</code>语句本身的问题。</p>
+<ol>
+<li><p>数据库在刷新脏页</p>
+<p>往数据库中添加、更新一条数据后，会先在内存中更新，并不会立即持久化到硬盘中，而是写到<code>redo log</code>中，等到空闲时再刷新到硬盘中去。</p>
+</li>
+<li><p>发生了锁竞争</p>
+<p>别的事务加锁了，只能等待锁的释放。</p>
+<p>可以通过<code>show processlist</code>查看当前状态。</p>
+</li>
+</ol>
+</li>
+<li><p>一直执行很慢</p>
+<ol>
+<li><p>索引失效</p>
+<p>可能是字段上没有索引或是索引失效</p>
+</li>
+<li><p><strong>数据库优化器选错了索引</strong></p>
+<p>执行<code>SQL</code>前数据库优化器会判断是否走索引以及走哪个索引效率更高，优化器通过索引的区分度进行判断。又因为优化器不会通过遍历来判断区分度，而是<strong>通过采样的方式来预测索引的区分度</strong>，所以可能出现错判。</p>
+<p>可以通过<code>show index from table_name</code>来判断索引的基数与实际是否符合，如果不符合，通过<code>analyze table table_name</code>来重新统计索引基数。</p>
+</li>
+</ol>
+<p>可以通过<code>force index(index_name)</code>来强制使用索引。</p>
+</li>
+</ul>
+<h3 id="15-主从复制"><a href="#15-主从复制" class="headerlink" title="15. 主从复制"></a>15. 主从复制</h3><p><code>MySQL</code>主从复制主要涉及三个线程：<code>binlog</code>线程、<code>IO</code>线程和<code>SQL</code>线程。</p>
+<ul>
+<li><code>bin log</code>线程：负责将主服务器上的数据更改写入<code>bin log</code>中。</li>
+<li><code>IO</code>线程：负责从主服务器上读取<code>bin log</code>，并写入从服务器的中继日志<code>relay log</code>。</li>
+<li><code>SQL</code>线程：负责读取中继日志，解析出主服务器上已经执行的数据更改并在从服务器上重放(relay)。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6.jpg" alt="MySQL主从复制"></p>
+<p><code>MySQL</code>主从复制主要用于读写分离，主服务器用于处理写操作和实时性要求高的读操作，从服务器处理读操作。</p>
+<p><code>MySQL</code>主从架构可以大大提高系统并发性能：</p>
+<ul>
+<li>主从服务器分别负责写和读，极大缓解了锁的竞争</li>
+<li>从服务器可以使用<code>MyISAM</code>，提高查询性能，节约系统开销</li>
+<li>增加冗余，提高灵活性。</li>
+</ul>
+<p>读写分离一般通过代理模式实现，代理服务器根据应用层的读写请求决定转发到哪台服务器。</p>
 
       
     </div>
@@ -876,7 +1128,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-数据库引擎MyISAM和InnoDB区别"><span class="nav-text">1. 数据库引擎MyISAM和InnoDB区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-MySQL中一条语句的执行过程-amp-amp-MySQL架构"><span class="nav-text">2. MySQL中一条语句的执行过程&amp;&amp;MySQL架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MySQL-Server层基本组件"><span class="nav-text">MySQL Server层基本组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行过程"><span class="nav-text">执行过程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-事务特性及其实现"><span class="nav-text">3. 事务特性及其实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原子性"><span class="nav-text">原子性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一致性"><span class="nav-text">一致性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#隔离性"><span class="nav-text">隔离性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#持久性"><span class="nav-text">持久性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-并发事务的问题"><span class="nav-text">4. 并发事务的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-事务隔离级别"><span class="nav-text">5. 事务隔离级别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#READ-UNCOMMITTED（读取未提交）"><span class="nav-text">READ-UNCOMMITTED（读取未提交）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#READ-COMMITED（读取已提交）："><span class="nav-text">READ-COMMITED（读取已提交）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#REPEATABLE-READ（可重复读）："><span class="nav-text">REPEATABLE-READ（可重复读）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SERIALIZABLE（可串行化）："><span class="nav-text">SERIALIZABLE（可串行化）：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-多版本并发控制MVCC"><span class="nav-text">6. 多版本并发控制MVCC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-锁分类与InnoDB锁算法"><span class="nav-text">7. 锁分类与InnoDB锁算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#锁分类"><span class="nav-text">锁分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#锁算法"><span class="nav-text">锁算法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-数据库引擎MyISAM和InnoDB区别"><span class="nav-text">1. 数据库引擎MyISAM和InnoDB区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-MySQL中一条语句的执行过程-amp-amp-MySQL架构"><span class="nav-text">2. MySQL中一条语句的执行过程&amp;&amp;MySQL架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MySQL-Server层基本组件"><span class="nav-text">MySQL Server层基本组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行过程"><span class="nav-text">执行过程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-事务特性及其实现"><span class="nav-text">3. 事务特性及其实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原子性"><span class="nav-text">原子性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一致性"><span class="nav-text">一致性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#隔离性"><span class="nav-text">隔离性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#持久性"><span class="nav-text">持久性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-并发事务的问题"><span class="nav-text">4. 并发事务的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-事务隔离级别"><span class="nav-text">5. 事务隔离级别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#READ-UNCOMMITTED（读取未提交）"><span class="nav-text">READ-UNCOMMITTED（读取未提交）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#READ-COMMITED（读取已提交）："><span class="nav-text">READ-COMMITED（读取已提交）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#REPEATABLE-READ（可重复读）："><span class="nav-text">REPEATABLE-READ（可重复读）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SERIALIZABLE（可串行化）："><span class="nav-text">SERIALIZABLE（可串行化）：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-多版本并发控制MVCC"><span class="nav-text">6. 多版本并发控制MVCC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-锁分类与InnoDB锁算法"><span class="nav-text">7. 锁分类与InnoDB锁算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#锁分类"><span class="nav-text">锁分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#锁算法"><span class="nav-text">锁算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-索引"><span class="nav-text">8. 索引</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#8-1-为什么要用索引"><span class="nav-text">8.1. 为什么要用索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-2-索引如何提高检索速度"><span class="nav-text">8.2. 索引如何提高检索速度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-3-索引越多越好？"><span class="nav-text">8.3 索引越多越好？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-4-索引的数据结构"><span class="nav-text">8.4 索引的数据结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-5-B-Tree与B-Tree的对比"><span class="nav-text">8.5 B-Tree与B+Tree的对比</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-6-聚簇索引与非聚簇索引"><span class="nav-text">8.6 聚簇索引与非聚簇索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-7-主键索引与辅助索引"><span class="nav-text">8.7 主键索引与辅助索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-8-回表与覆盖索引"><span class="nav-text">8.8 回表与覆盖索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-9-联合索引与最左匹配原则"><span class="nav-text">8.9 联合索引与最左匹配原则</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-索引失效原因"><span class="nav-text">9. 索引失效原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-主键为什么要整形、自增-amp-amp-主键为什么不用UUID"><span class="nav-text">10. 主键为什么要整形、自增&amp;&amp;主键为什么不用UUID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-建立索引的原则"><span class="nav-text">11. 建立索引的原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-为什么非主键索引叶子节点存储主键值"><span class="nav-text">12. 为什么非主键索引叶子节点存储主键值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-常见优化手段"><span class="nav-text">13. 常见优化手段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-一条SQL执行很慢的原因"><span class="nav-text">14. 一条SQL执行很慢的原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-主从复制"><span class="nav-text">15. 主从复制</span></a></li></ol></div>
             
 
           </div>
