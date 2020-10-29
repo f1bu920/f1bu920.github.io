@@ -95,7 +95,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6.jpg">
 <meta property="article:published_time" content="2020-10-24T02:41:43.000Z">
-<meta property="article:modified_time" content="2020-10-26T12:19:07.280Z">
+<meta property="article:modified_time" content="2020-10-28T07:49:00.264Z">
 <meta property="article:author" content="flbu">
 <meta property="article:tag" content="面试总结">
 <meta property="article:tag" content="MySQL">
@@ -922,6 +922,41 @@
 <li>增加冗余，提高灵活性。</li>
 </ul>
 <p>读写分离一般通过代理模式实现，代理服务器根据应用层的读写请求决定转发到哪台服务器。</p>
+<h3 id="16-explain关键字"><a href="#16-explain关键字" class="headerlink" title="16. explain关键字"></a>16. explain关键字</h3><p><code>explain</code>可以展示一条<code>SQL</code>的执行计划，主要关键字有<code>type</code>、<code>key</code>、<code>rows</code>。</p>
+<ul>
+<li><p>type</p>
+<p>连接类型，表示数据库引擎查询表的一种方式。常见的有6种方式：<code>all</code>、<code>key</code>、<code>range</code>、<code>ref</code>、<code>eq_ref</code>、<code>const</code>，从左到右，效率增强。</p>
+<ul>
+<li>all：全表扫描</li>
+<li>index：按照索引顺序全表扫描</li>
+<li>ref：查找条件使用了索引但不为主键和unique，虽然使用了索引但索引列的值不唯一。</li>
+<li>eq_ref：使用了主键或者唯一性索引</li>
+<li>const：使用主键作为查询条件时，优化器能把这次查询优化为一个常量。</li>
+</ul>
+</li>
+<li><p>key</p>
+<p>查询用到的索引</p>
+</li>
+<li><p>rows</p>
+<p>执行计划在预估的扫描行数，非精确值，值越小，效率越高。</p>
+</li>
+</ul>
+<h3 id="17-慢查询排查"><a href="#17-慢查询排查" class="headerlink" title="17. 慢查询排查"></a>17. 慢查询排查</h3><ol>
+<li>开启慢查询日志，设置<code>slow_query_log</code>参数为<code>ON</code>，查看慢查询<code>show status like &#39;slow_query_log&#39;</code>;</li>
+<li><code>show processlist</code>查询当前查询状态；</li>
+<li><code>explain</code>查看慢查询<code>SQL</code>语句。</li>
+</ol>
+<h3 id="18-数据库范式"><a href="#18-数据库范式" class="headerlink" title="18. 数据库范式"></a>18. 数据库范式</h3><ul>
+<li><p>第一范式</p>
+<p>列具有原子性，属性不可分</p>
+</li>
+<li><p>第二范式</p>
+<p>每个非主属性完全依赖于键码</p>
+</li>
+<li><p>第三范式</p>
+<p>非主属性不传递函数依赖于键码，即不存在传递依赖。</p>
+</li>
+</ul>
 
       
     </div>
@@ -974,6 +1009,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/10/27/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="prev" title="面试总结-多线程">
+                面试总结-多线程 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -1050,7 +1089,7 @@
               
                 <a href="/archives/%7C%7Carchive">
               
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1128,7 +1167,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-数据库引擎MyISAM和InnoDB区别"><span class="nav-text">1. 数据库引擎MyISAM和InnoDB区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-MySQL中一条语句的执行过程-amp-amp-MySQL架构"><span class="nav-text">2. MySQL中一条语句的执行过程&amp;&amp;MySQL架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MySQL-Server层基本组件"><span class="nav-text">MySQL Server层基本组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行过程"><span class="nav-text">执行过程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-事务特性及其实现"><span class="nav-text">3. 事务特性及其实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原子性"><span class="nav-text">原子性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一致性"><span class="nav-text">一致性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#隔离性"><span class="nav-text">隔离性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#持久性"><span class="nav-text">持久性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-并发事务的问题"><span class="nav-text">4. 并发事务的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-事务隔离级别"><span class="nav-text">5. 事务隔离级别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#READ-UNCOMMITTED（读取未提交）"><span class="nav-text">READ-UNCOMMITTED（读取未提交）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#READ-COMMITED（读取已提交）："><span class="nav-text">READ-COMMITED（读取已提交）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#REPEATABLE-READ（可重复读）："><span class="nav-text">REPEATABLE-READ（可重复读）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SERIALIZABLE（可串行化）："><span class="nav-text">SERIALIZABLE（可串行化）：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-多版本并发控制MVCC"><span class="nav-text">6. 多版本并发控制MVCC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-锁分类与InnoDB锁算法"><span class="nav-text">7. 锁分类与InnoDB锁算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#锁分类"><span class="nav-text">锁分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#锁算法"><span class="nav-text">锁算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-索引"><span class="nav-text">8. 索引</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#8-1-为什么要用索引"><span class="nav-text">8.1. 为什么要用索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-2-索引如何提高检索速度"><span class="nav-text">8.2. 索引如何提高检索速度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-3-索引越多越好？"><span class="nav-text">8.3 索引越多越好？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-4-索引的数据结构"><span class="nav-text">8.4 索引的数据结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-5-B-Tree与B-Tree的对比"><span class="nav-text">8.5 B-Tree与B+Tree的对比</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-6-聚簇索引与非聚簇索引"><span class="nav-text">8.6 聚簇索引与非聚簇索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-7-主键索引与辅助索引"><span class="nav-text">8.7 主键索引与辅助索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-8-回表与覆盖索引"><span class="nav-text">8.8 回表与覆盖索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-9-联合索引与最左匹配原则"><span class="nav-text">8.9 联合索引与最左匹配原则</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-索引失效原因"><span class="nav-text">9. 索引失效原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-主键为什么要整形、自增-amp-amp-主键为什么不用UUID"><span class="nav-text">10. 主键为什么要整形、自增&amp;&amp;主键为什么不用UUID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-建立索引的原则"><span class="nav-text">11. 建立索引的原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-为什么非主键索引叶子节点存储主键值"><span class="nav-text">12. 为什么非主键索引叶子节点存储主键值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-常见优化手段"><span class="nav-text">13. 常见优化手段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-一条SQL执行很慢的原因"><span class="nav-text">14. 一条SQL执行很慢的原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-主从复制"><span class="nav-text">15. 主从复制</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-数据库引擎MyISAM和InnoDB区别"><span class="nav-text">1. 数据库引擎MyISAM和InnoDB区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-MySQL中一条语句的执行过程-amp-amp-MySQL架构"><span class="nav-text">2. MySQL中一条语句的执行过程&amp;&amp;MySQL架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MySQL-Server层基本组件"><span class="nav-text">MySQL Server层基本组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行过程"><span class="nav-text">执行过程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-事务特性及其实现"><span class="nav-text">3. 事务特性及其实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原子性"><span class="nav-text">原子性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一致性"><span class="nav-text">一致性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#隔离性"><span class="nav-text">隔离性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#持久性"><span class="nav-text">持久性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-并发事务的问题"><span class="nav-text">4. 并发事务的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-事务隔离级别"><span class="nav-text">5. 事务隔离级别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#READ-UNCOMMITTED（读取未提交）"><span class="nav-text">READ-UNCOMMITTED（读取未提交）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#READ-COMMITED（读取已提交）："><span class="nav-text">READ-COMMITED（读取已提交）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#REPEATABLE-READ（可重复读）："><span class="nav-text">REPEATABLE-READ（可重复读）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SERIALIZABLE（可串行化）："><span class="nav-text">SERIALIZABLE（可串行化）：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-多版本并发控制MVCC"><span class="nav-text">6. 多版本并发控制MVCC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-锁分类与InnoDB锁算法"><span class="nav-text">7. 锁分类与InnoDB锁算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#锁分类"><span class="nav-text">锁分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#锁算法"><span class="nav-text">锁算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-索引"><span class="nav-text">8. 索引</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#8-1-为什么要用索引"><span class="nav-text">8.1. 为什么要用索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-2-索引如何提高检索速度"><span class="nav-text">8.2. 索引如何提高检索速度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-3-索引越多越好？"><span class="nav-text">8.3 索引越多越好？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-4-索引的数据结构"><span class="nav-text">8.4 索引的数据结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-5-B-Tree与B-Tree的对比"><span class="nav-text">8.5 B-Tree与B+Tree的对比</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-6-聚簇索引与非聚簇索引"><span class="nav-text">8.6 聚簇索引与非聚簇索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-7-主键索引与辅助索引"><span class="nav-text">8.7 主键索引与辅助索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-8-回表与覆盖索引"><span class="nav-text">8.8 回表与覆盖索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-9-联合索引与最左匹配原则"><span class="nav-text">8.9 联合索引与最左匹配原则</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-索引失效原因"><span class="nav-text">9. 索引失效原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-主键为什么要整形、自增-amp-amp-主键为什么不用UUID"><span class="nav-text">10. 主键为什么要整形、自增&amp;&amp;主键为什么不用UUID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-建立索引的原则"><span class="nav-text">11. 建立索引的原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-为什么非主键索引叶子节点存储主键值"><span class="nav-text">12. 为什么非主键索引叶子节点存储主键值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-常见优化手段"><span class="nav-text">13. 常见优化手段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-一条SQL执行很慢的原因"><span class="nav-text">14. 一条SQL执行很慢的原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-主从复制"><span class="nav-text">15. 主从复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-explain关键字"><span class="nav-text">16. explain关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-慢查询排查"><span class="nav-text">17. 慢查询排查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-数据库范式"><span class="nav-text">18. 数据库范式</span></a></li></ol></div>
             
 
           </div>
