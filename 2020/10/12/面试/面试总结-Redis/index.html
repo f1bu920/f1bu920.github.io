@@ -95,7 +95,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/Redis%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8-%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F-redis.png">
 <meta property="article:published_time" content="2020-10-12T12:09:37.000Z">
-<meta property="article:modified_time" content="2020-10-23T09:44:51.257Z">
+<meta property="article:modified_time" content="2020-10-30T06:07:43.405Z">
 <meta property="article:author" content="flbu">
 <meta property="article:tag" content="面试总结">
 <meta property="article:tag" content="Redis">
@@ -581,6 +581,8 @@
 <p>如果这是<code>slave node</code>初次连接到<code>master node</code>会触发一次全量复制<code>full resynchronization</code>，此时<code>master</code>节点会启动一个后台进程生成一份<code>RDB</code>快照文件，同时还会将所有收到的写命令缓存在内存中。<code>RDB</code>文件生成后，<code>master</code>会发送给<code>slave</code>，<code>slave</code>会先写入磁盘，再从磁盘加载到内存中，接着<code>master</code>将缓存的写命令发送给<code>slave</code>，<code>slave</code>会进行同步。如果发生了网络故障，会自动重连并支持断点续传。</p>
 <p><code>master</code>节点的<code>key</code>过期或者通过淘汰策略淘汰了一个<code>key</code>后，会模拟一条<code>del</code>命令发送给从节点。</p>
 <p>主从节点会互相发送<code>heartbeat</code>信息，<code>master</code> 默认每隔 10 秒发送一次 <code>heartbeat</code>，<code>slave node</code> 每隔 1 秒发送一个 <code>heartbeat</code>。</p>
+<p>主从复制的数据一致性：</p>
+<p><strong><code>master</code>和<code>slave</code>都会维护一个偏移量<code>replica offest</code>，如果中间网络断开，slave会让master从上次<code>replica offset</code>偏移量处开始继续复制，如果没找到对应的偏移量，则执行一次全量复制。</strong></p>
 <h4 id="12-如何保证缓存与数据库双写一致性"><a href="#12-如何保证缓存与数据库双写一致性" class="headerlink" title="12. 如何保证缓存与数据库双写一致性"></a>12. 如何保证缓存与数据库双写一致性</h4><p><a href="https://doocs.gitee.io/advanced-java/#/./docs/high-concurrency/redis-consistence" target="_blank" rel="noopener">参考链接</a></p>
 <p>读的时候先读缓存，再读数据库，并将结果写入缓存；</p>
 <p>更新的时候，先删除缓存再更新数据库。这样主要是防止先更新数据库时缓存删除失败，导致数据库中是新数据，缓存中是旧数据，造成数据不一致。</p>
@@ -716,7 +718,7 @@
               
                 <a href="/archives/%7C%7Carchive">
               
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -738,7 +740,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

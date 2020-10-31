@@ -3475,6 +3475,23 @@
 </ul>
 <p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6.jpg" alt="MySQL主从复制"></p>
 <p><code>MySQL</code>主从复制主要用于读写分离，主服务器用于处理写操作和实时性要求高的读操作，从服务器处理读操作。</p>
+<p><strong>主从复制可以分为异步复制和半同步复制：</strong></p>
+<ul>
+<li><p>异步复制</p>
+<p>主库写binlog成功之后就返回客户端结果，不会确认从库是否收到。</p>
+<p>主库写<code>bin log</code>并返回客户端结果后崩溃了，从库没有收到<code>bin log</code>日志事件。会造成数据丢失。</p>
+</li>
+<li><p>半同步复制</p>
+<p><code>MySQL</code>在5.7后为了解决数据丢失问题，新增了<code>AFTER_SYNC</code>的半同步复制方式，执行流程如下：</p>
+<ol>
+<li>主库将事务写入<code>binlog</code>；</li>
+<li>通知从库写<code>relaylog</code>；</li>
+<li>主库等待至少N个从库返回已写入<code>relaylog</code>的回复，主库提交事务；</li>
+<li>主库将操作结果返回给客户端。</li>
+</ol>
+<p>半同步复制可以保证在返回客户端前，其他事务看不到当前事务做出的更改，并且会确保<code>bin log</code>会写入<code>slave</code>的<code>relay log</code>。</p>
+</li>
+</ul>
 <p><code>MySQL</code>主从架构可以大大提高系统并发性能：</p>
 <ul>
 <li>主从服务器分别负责写和读，极大缓解了锁的竞争</li>
@@ -3517,6 +3534,37 @@
 <p>非主属性不传递函数依赖于键码，即不存在传递依赖。</p>
 </li>
 </ul>
+<h3 id="19-MySQL数据一致性"><a href="#19-MySQL数据一致性" class="headerlink" title="19. MySQL数据一致性"></a>19. MySQL数据一致性</h3><p><code>MySQL</code>数据一致性包括单机数据一致性和集群数据一致性。</p>
+<h4 id="单机数据一致性"><a href="#单机数据一致性" class="headerlink" title="单机数据一致性"></a>单机数据一致性</h4><p><code>MySQL</code>保证<strong>单机数据一致性主要是通过<code>MySQL</code>的<code>bin log</code>和<code>InnoDB</code>的<code>redo log</code>。</strong></p>
+<ul>
+<li><p><code>bin log</code></p>
+<p><code>bin log</code>是<code>MySQL Server</code>层维护的二进制日志，记录了所有对数据库的更改操作。<code>bin log</code>主要有两个作用：<strong>数据恢复和数据复制。</strong></p>
+<p><strong><code>MySQL</code>崩溃后，通过<code>bin log</code>恢复写入<code>bin log</code>但没有写入磁盘文件的数据。</strong></p>
+<p>数据复制则是指主从复制时从节点读取主节点的<code>bin log</code>到自己的本地<code>relay log</code>中进行重演。</p>
+</li>
+<li><p><code>redo log</code></p>
+<p><code>redo log</code>是<code>InnoDB</code>用来实现事务持久性的机制。包括两个部分<code>redo log file</code>和<code>redo log buffer</code>。</p>
+<p><code>redo log file</code>保证数据落盘，是持久的；<code>redo log buffer</code>在内存中，是非持久的，会批量刷新到磁盘，提高吞吐量。</p>
+</li>
+</ul>
+<p><strong>为了保证数据一致性，写操作先<code>redo log</code>预提交，再写<code>bin log</code>，最后<code>redo log</code>提交。</strong></p>
+<p>数据以<code>bin log</code>为准，<code>Crash Recovery</code>时有以下情景：</p>
+<ol>
+<li><code>binlog</code>有记录，<code>redolog</code>状态<code>commit</code>：正常完成的事务，不需要恢复；</li>
+<li><code>binlog</code>有记录，<code>redolog</code>状态<code>prepare</code>：在<code>binlog</code>写完提交事务之前的<code>crash</code>，恢复操作：提交事务；</li>
+<li><code>binlog</code>无记录，<code>redolog</code>状态<code>prepare</code>：在<code>binlog</code>写完之前的<code>crash</code>，恢复操作：回滚事务；</li>
+<li><code>binlog</code>无记录，<code>redolog</code>无记录：在<code>redolog</code>写之前<code>crash</code>，恢复操作：回滚事务；</li>
+</ol>
+<h4 id="集群下的数据一致性"><a href="#集群下的数据一致性" class="headerlink" title="集群下的数据一致性"></a>集群下的数据一致性</h4><p>集群下的数据一致性就是要保证主从复制的数据一致性。</p>
+<p>主从复制可以分为<strong>异步复制和半同步复制。</strong></p>
+<p>异步复制会造成数据丢失，半同步复制的<strong>AFTER_SYNC</strong>可以保证数据一致性。</p>
+<ol>
+<li>主库将事务写入<code>binlog</code>；</li>
+<li>通知从库写<code>relaylog</code>；</li>
+<li>主库等待至少N个从库返回已写入<code>relaylog</code>的回复，主库提交事务；</li>
+<li>主库将操作结果返回给客户端。</li>
+</ol>
+<p>半同步复制可以保证在返回客户端前，其他事务看不到当前事务做出的更改，并且会确保<code>bin log</code>会写入<code>slave</code>的<code>relay log</code>。</p>
 ]]></content>
       <categories>
         <category>面试</category>
@@ -3714,6 +3762,8 @@
 <p>如果这是<code>slave node</code>初次连接到<code>master node</code>会触发一次全量复制<code>full resynchronization</code>，此时<code>master</code>节点会启动一个后台进程生成一份<code>RDB</code>快照文件，同时还会将所有收到的写命令缓存在内存中。<code>RDB</code>文件生成后，<code>master</code>会发送给<code>slave</code>，<code>slave</code>会先写入磁盘，再从磁盘加载到内存中，接着<code>master</code>将缓存的写命令发送给<code>slave</code>，<code>slave</code>会进行同步。如果发生了网络故障，会自动重连并支持断点续传。</p>
 <p><code>master</code>节点的<code>key</code>过期或者通过淘汰策略淘汰了一个<code>key</code>后，会模拟一条<code>del</code>命令发送给从节点。</p>
 <p>主从节点会互相发送<code>heartbeat</code>信息，<code>master</code> 默认每隔 10 秒发送一次 <code>heartbeat</code>，<code>slave node</code> 每隔 1 秒发送一个 <code>heartbeat</code>。</p>
+<p>主从复制的数据一致性：</p>
+<p><strong><code>master</code>和<code>slave</code>都会维护一个偏移量<code>replica offest</code>，如果中间网络断开，slave会让master从上次<code>replica offset</code>偏移量处开始继续复制，如果没找到对应的偏移量，则执行一次全量复制。</strong></p>
 <h4 id="12-如何保证缓存与数据库双写一致性"><a href="#12-如何保证缓存与数据库双写一致性" class="headerlink" title="12. 如何保证缓存与数据库双写一致性"></a>12. 如何保证缓存与数据库双写一致性</h4><p><a href="https://doocs.gitee.io/advanced-java/#/./docs/high-concurrency/redis-consistence" target="_blank" rel="noopener">参考链接</a></p>
 <p>读的时候先读缓存，再读数据库，并将结果写入缓存；</p>
 <p>更新的时候，先删除缓存再更新数据库。这样主要是防止先更新数据库时缓存删除失败，导致数据库中是新数据，缓存中是旧数据，造成数据不一致。</p>
@@ -3724,80 +3774,6 @@
       <tags>
         <tag>面试总结</tag>
         <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>面试-Java基础</title>
-    <url>/2020/10/29/%E9%9D%A2%E8%AF%95-Java%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>面试-Java基础</title>
-    <url>/2020/10/29/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95-Java%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<h3 id="1-Object类方法"><a href="#1-Object类方法" class="headerlink" title="1. Object类方法"></a>1. Object类方法</h3><p>Java中<code>Object</code>类是所有类的顶层父类，所以Java中的任何类都会继承<code>Object</code>类中的13个方法：</p>
-<ul>
-<li><p><code>Object()</code></p>
-<p>默认构造方法</p>
-</li>
-<li><p><code>clone()</code></p>
-<p>默认创建一份对象的拷贝，Object类的<code>clone</code>方法是一个<code>protected</code>的<code>native</code>方法，所以需要继承<code>Cloneable</code>接口。</p>
-</li>
-<li><p><strong><code>equals()</code></strong></p>
-<p>比较两个对象是否相等。</p>
-<p>默认情况下，对于基本数据类型，比较的是值是否相等；对于引用数据类型，判断的是内存地址是否相同。</p>
-<p>可以按照特定的逻辑重写此方法来判断两个对象是否相等。</p>
-</li>
-<li><p><code>finalize()</code></p>
-<p>是一个<code>protected</code>方法，在实例被垃圾回收前被调用。默认是一个空方法。</p>
-</li>
-<li><p><code>getClass()</code></p>
-<p>是一个本地的final方法，不允许子类重写，返回当前运行时对象的<code>CLass</code>对象。</p>
-</li>
-<li><p><strong><code>hashCode()</code></strong></p>
-<p>返回对象的哈希码，一般在哈希表中用到。必须同时重写一个类的<code>hashCode()</code>和<code>equals()</code>方法。</p>
-<ul>
-<li>如果两个对象相等，则哈希码一定相等；</li>
-<li>如果两个对象哈希码相等，这两个对象不一定相等。</li>
-</ul>
-<p>所以，重写<code>equals</code>必须重写<code>hashCode</code>.</p>
-</li>
-</ul>
-<a id="more"></a>
-
-<ul>
-<li><p><strong><code>notify()</code></strong></p>
-<p><code>notify</code>方法是一个<code>native</code>方法，并且也是<code>final</code>的，不允许子类重写。</p>
-<p><strong>用于唤醒在此对象监视器上等待的线程，只会任意性的选择一个线程。直到当前线程释放锁后，被唤醒的线程才可以与主动同步的线程进行锁竞争。</strong></p>
-<p><strong><code>notify()</code>只能被持有锁的线程进行调用，否则会抛出异常。</strong></p>
-</li>
-<li><p><code>notifyAll()</code></p>
-<p>与<code>notify()</code>不同的是会唤醒所有等待的线程。</p>
-</li>
-<li><p><code>toString()</code></p>
-<p>返回对象的字符串表示。默认返回类的名字加上实例哈希码的16进制。</p>
-</li>
-<li><p><strong><code>wait()</code></strong></p>
-<p><code>wait()</code>方法是一个<code>native</code>方法，并且也是<code>final</code>的，不允许子类重写。</p>
-<p><strong><code>wait()</code>方法会让当前线程释放锁，等待其他线程唤醒或者等待超时</strong>。</p>
-<p>等待期间被中断会抛出异常。</p>
-</li>
-<li><p><code>wait(long timeout)</code></p>
-<p>在wait()方法上引入超时机制</p>
-</li>
-<li><p><code>wait(long timeout, int nanos)</code></p>
-<p>可以指定超时时间的单位</p>
-</li>
-<li><p><code>registerNatives()</code></p>
-<p>注册本地函数，用来重新绑定一个本地方法到令一个C函数。</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>面试</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>面试总结</tag>
       </tags>
   </entry>
   <entry>
@@ -4253,6 +4229,278 @@
       <tags>
         <tag>多线程</tag>
         <tag>面试总结</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>面试-MyBatis常见面试题</title>
+    <url>/2020/10/30/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-MyBatis%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
+    <content><![CDATA[<h3 id="1-和-区别"><a href="#1-和-区别" class="headerlink" title="1. #{}和${}区别"></a>1. #{}和${}区别</h3><p> #{}和${}都是<code>MyBatis</code>中实现动态SQL的机制。</p>
+<ul>
+<li>${}是<code>Properities</code>文件中的占位符，用于标签属性值和SQL内部，属于静态文本替换。</li>
+<li>#{}是参数占位符，#{}会解析为JDBC预编译<code>PreparedStatement</code>语句的参数标记符，一个 #{ } 被解析为一个参数占位符 <code>?</code>。</li>
+<li><strong>${} 在预编译之前已经被变量替换了，存在 sql 注入问题，而#{}会被预编译为？，在执行sql前按序设置参数值。</strong></li>
+</ul>
+<h3 id="2-SQL预编译"><a href="#2-SQL预编译" class="headerlink" title="2. SQL预编译"></a>2. SQL预编译</h3><p>sql 预编译指的是数据库驱动在发送 sql 语句和参数给 DBMS 之前对 sql 语句进行编译，这样 DBMS 执行 sql 时，就不需要重新编译。</p>
+<p>JDBC 中使用对象 PreparedStatement 来抽象预编译语句</p>
+<ul>
+<li>预编译可以优化SQL执行，数据库不需要再次编译SQL语句</li>
+<li>预编译语句对象可以重复利用，SQL语句预编译后的<code>PreparedStatement</code>对象可以被缓存，不需要重复编译。</li>
+</ul>
+<h3 id="3-MyBatis中的一二级缓存"><a href="#3-MyBatis中的一二级缓存" class="headerlink" title="3. MyBatis中的一二级缓存"></a>3. MyBatis中的一二级缓存</h3><p>MyBatis的一二级缓存指的是<strong>执行查询的时候先从二级缓存中进行查询，若没有进入一级缓存中查询，若还是没有才执行JDBC查询。</strong></p>
+<p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/MyBatis%E4%B8%80%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98.png" alt=""></p>
+<ul>
+<li><p>一级缓存(本地缓存)</p>
+<p><code>SqlSession</code>级别的缓存。一级缓存是一直开启的，<strong>同一次会话期间从<code>MySQL</code>中查询到的数据会缓存在<code>SqlSession</code>的一个<code>Map</code>中，如果以后需要获取相同的数据，直接可以从缓存中取，不需要再查询数据库</strong>。</p>
+<p>一级缓存失效情况：</p>
+<ul>
+<li><code>sqlSession</code>不同</li>
+<li><code>sqlSession</code>相同，但是查询条件不同(当前一级缓存中没有这个数据)</li>
+<li><code>sqlSession</code>相同，两次查询之间执行了增删改操作（这次增删改可能对当前数据有影响）</li>
+<li><code>sqlSession</code>相同，手动清除了一级缓存（缓存清空）</li>
+</ul>
+</li>
+<li><p>二级缓存(全局缓存)</p>
+<p>基于<code>namespace</code>的缓存，一个<code>namespace</code>对应一个二级缓存。<code>MyBatis</code>默认没有开启二级缓存。</p>
+<p>一个会话中查询的数据会被缓存在一级缓存中，如果会话关闭，一级缓存中的数据会被保存到二级缓存中，</p>
+<p>不同<code>namespace</code>查出的数据会保存在自己的缓存中。</p>
+</li>
+</ul>
+<p><strong>默认的<code>MyBatis Cache</code>都是基于本地的，分布式环境下会出现缓存数据不一致，建议使用第三方集中式缓存或者使用<code>Redis</code>等进行缓存。</strong></p>
+<h3 id="4-MyBatis如何防止SQL注入"><a href="#4-MyBatis如何防止SQL注入" class="headerlink" title="4. MyBatis如何防止SQL注入"></a>4. MyBatis如何防止SQL注入</h3><p><code>SQL</code>注入是一种代码注入技术，通过把SQL命令插入到Web表单提交或页面请求url的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。</p>
+<p><strong><code>MyBatis</code>通过预编译加上#{}参数占位符来防止SQL注入</strong>。#{}在预编译中会被替换为？，执行SQL前会按序进行参数替换。</p>
+]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+        <tag>MyBatis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>面试总结-Spring常见面试题</title>
+    <url>/2020/10/31/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-Spring%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
+    <content><![CDATA[<h3 id="1-SpringMVC流程"><a href="#1-SpringMVC流程" class="headerlink" title="1. SpringMVC流程"></a>1. SpringMVC流程</h3>]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+        <tag>面试总结</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>面试-Java基础</title>
+    <url>/2020/10/29/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-Java%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h3 id="1-Object类方法"><a href="#1-Object类方法" class="headerlink" title="1. Object类方法"></a>1. Object类方法</h3><p>Java中<code>Object</code>类是所有类的顶层父类，所以Java中的任何类都会继承<code>Object</code>类中的13个方法：</p>
+<ul>
+<li><p><code>Object()</code></p>
+<p>默认构造方法</p>
+</li>
+<li><p><code>clone()</code></p>
+<p>默认创建一份对象的拷贝，Object类的<code>clone</code>方法是一个<code>protected</code>的<code>native</code>方法，所以需要继承<code>Cloneable</code>接口。</p>
+</li>
+<li><p><strong><code>equals()</code></strong></p>
+<p>比较两个对象是否相等。</p>
+<p>默认情况下，对于基本数据类型，比较的是值是否相等；对于引用数据类型，判断的是内存地址是否相同。</p>
+<p>可以按照特定的逻辑重写此方法来判断两个对象是否相等。</p>
+</li>
+<li><p><code>finalize()</code></p>
+<p>是一个<code>protected</code>方法，在实例被垃圾回收前被调用。默认是一个空方法。</p>
+</li>
+<li><p><code>getClass()</code></p>
+<p>是一个本地的final方法，不允许子类重写，返回当前运行时对象的<code>CLass</code>对象。</p>
+</li>
+<li><p><strong><code>hashCode()</code></strong></p>
+<p>返回对象的哈希码，一般在哈希表中用到。必须同时重写一个类的<code>hashCode()</code>和<code>equals()</code>方法。</p>
+<ul>
+<li>如果两个对象相等，则哈希码一定相等；</li>
+<li>如果两个对象哈希码相等，这两个对象不一定相等。</li>
+</ul>
+<p>所以，重写<code>equals</code>必须重写<code>hashCode</code>.</p>
+</li>
+</ul>
+<a id="more"></a>
+
+<ul>
+<li><p><strong><code>notify()</code></strong></p>
+<p><code>notify</code>方法是一个<code>native</code>方法，并且也是<code>final</code>的，不允许子类重写。</p>
+<p><strong>用于唤醒在此对象监视器上等待的线程，只会任意性的选择一个线程。直到当前线程释放锁后，被唤醒的线程才可以与主动同步的线程进行锁竞争。</strong></p>
+<p><strong><code>notify()</code>只能被持有锁的线程进行调用，否则会抛出异常。</strong></p>
+</li>
+<li><p><code>notifyAll()</code></p>
+<p>与<code>notify()</code>不同的是会唤醒所有等待的线程。</p>
+</li>
+<li><p><code>toString()</code></p>
+<p>返回对象的字符串表示。默认返回类的名字加上实例哈希码的16进制。</p>
+</li>
+<li><p><strong><code>wait()</code></strong></p>
+<p><code>wait()</code>方法是一个<code>native</code>方法，并且也是<code>final</code>的，不允许子类重写。</p>
+<p><strong><code>wait()</code>方法会让当前线程释放锁，等待其他线程唤醒或者等待超时</strong>。</p>
+<p>等待期间被中断会抛出异常。</p>
+</li>
+<li><p><code>wait(long timeout)</code></p>
+<p>在wait()方法上引入超时机制</p>
+</li>
+<li><p><code>wait(long timeout, int nanos)</code></p>
+<p>可以指定超时时间的单位</p>
+</li>
+<li><p><code>registerNatives()</code></p>
+<p>注册本地函数，用来重新绑定一个本地方法到令一个C函数。</p>
+</li>
+</ul>
+<h3 id="2-创建对象的5种方法"><a href="#2-创建对象的5种方法" class="headerlink" title="2. 创建对象的5种方法"></a>2. 创建对象的5种方法</h3><ul>
+<li><p><code>new</code>关键字</p>
+<p>创建对象最常见的方法，通过调用构造函数构建。</p>
+</li>
+<li><p><code>Class</code>类的<code>newInstance()</code>方法</p>
+<p><code>Class</code>类的<code>newInstance()</code>方法调用无参的构造函数来创建对象。</p>
+<p><strong>属于反射机制。</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//法1</span></span><br><span class="line">User user = (User)Class.forName(<span class="string">"根路径.User"</span>).newInstance();</span><br><span class="line"><span class="comment">//法2</span></span><br><span class="line">User user = User<span class="class">.<span class="keyword">class</span>.<span class="title">newInstance</span>()</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>Constructor</code>类的<code>newInstance()</code>方法</p>
+<p><code>java.lang.reflect.Constructor</code>类里也有一个<code>newInstance</code>方法可以创建对象。我们可以通过这个<code>newInstance</code>方法调用有参数的和私有的构造函数。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Constructor&lt;User&gt; constructor = User<span class="class">.<span class="keyword">class</span>.<span class="title">getConstructor</span>()</span>;</span><br><span class="line">User user = constructor.newInstance();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>clone()</code>方法</p>
+<p>调用<code>clone()</code>方法，JVM会拷贝一个对象，<code>clone()</code>方法不会调用构造方法。</p>
+<p>要使用<code>clone()</code>方法，需要实现<code>cloneable</code>接口。</p>
+</li>
+<li><p>反序列化</p>
+<p>序列化和反序列化一个对象时，jvm会创建一个单独的对象。在反序列化时，jvm创建对象并不会调用任何构造函数。</p>
+<p>反序列化对象需要实现<code>Serializable</code>接口。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>面试总结</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>面试总结-计算机网络</title>
+    <url>/2020/10/30/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</url>
+    <content><![CDATA[<h3 id="1-OSI七层模型-amp-五层模型"><a href="#1-OSI七层模型-amp-五层模型" class="headerlink" title="1. OSI七层模型&amp;五层模型"></a>1. OSI七层模型&amp;五层模型</h3><p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B.JPG" alt=""></p>
+<a id="more"></a>
+
+<ul>
+<li><p>应用层</p>
+<p><strong>为特定应用程序提供数据传输服务</strong>，如<code>HTTP</code>、<code>DNS</code>、<code>SMTP</code>等，数据单位为报文</p>
+</li>
+<li><p>传输层</p>
+<p><strong>为进程提供通用数据传输服务</strong>。传输层包括两种协议：传输控制协议TCP，提供面向连接、可靠的数据传输服务，数据单位为报文段；用户数据报协议UDP，提供无连接、不可靠的数据传输服务，数据单位为用户数据报。TCP提供完整性服务，UDP提供及时性服务。</p>
+</li>
+<li><p>网络层</p>
+<p><strong>网络层负责为分组交换网上的不同主机提供通信服务</strong>。在发送数据时候，网络层把运输层产生的报文段或用户数据报封装成分组或IP数据包进行传送。<strong>并选择合适的路由，使传输层传下来的分组能够找到找到目标主机。</strong></p>
+</li>
+<li><p>数据链路层</p>
+<p>为同一链路中的主机提供数据点对点传输服务，在两个相邻结点之间传送数据时，数据链路层将网络层交下来的IP数据报<strong>组装成帧（framing）</strong>，<strong>在两个相邻结点间的链路上“透明”地传送帧（frame）中的数据</strong>。</p>
+</li>
+<li><p>物理层</p>
+<p>在传输介质上透明的传输比特流，屏蔽传输媒体和通信手段的差异。</p>
+</li>
+<li><p>会话层</p>
+<p>建立及管理会话</p>
+</li>
+<li><p>表示层</p>
+<p>数据压缩、加密及数据描述，使得应用程序不必关系数据格式不同的问题。</p>
+</li>
+</ul>
+<h3 id="2-三次握手过程"><a href="#2-三次握手过程" class="headerlink" title="2. 三次握手过程"></a>2. 三次握手过程</h3><p>TCP三次握手是可靠传输的基础，主要是为了<strong>确认双方的接收和发送能力正常、同步双方的序列号和确认号并交换TCP窗口大小信息。</strong></p>
+<p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.JPG" alt=""></p>
+<ul>
+<li><p>第一次握手(SYN = 1, seq = x)</p>
+<p><strong>客户端发送一个带有<code>SYN = 1</code>标记的数据包，并指明初始化序列号<code>seq = x</code>，客户端进入<code>SYN_SENT</code>阶段。</strong></p>
+<p>需要消耗序号且不能携带数据。</p>
+</li>
+<li><p>第二次握手(SYN = 1, ACK = 1, seq = y, ack = x + 1)</p>
+<p><strong>服务端收到客户端的<code>SYN</code>报文后，可以知道客户端的发送正常、自己的接收正常，会回复一个带有<code>SYN = 1、ACK = 1</code>标记的数据包，并带上自己的序列号<code>seq = y</code>和确认号<code>ack = x + 1</code>，服务端进入<code>SYN-RCVD</code>阶段。</strong></p>
+<p>需要消耗序号且不能携带数据。</p>
+</li>
+<li><p>第三次握手(ACK = 1, seq = x + 1, ack = y + 1)</p>
+<p><strong>客户端收到<code>SYN</code>报文后，可以知道自己和对方的发送、接收都正常，会回复一个带有<code>ACK = 1</code>的确认数据包，并带上自己的序列号<code>seq = x + 1</code>和回复确认号<code>ack = y + 1</code>，客户端进入<code>ESTABLISHED</code>阶段。</strong></p>
+<p><strong>服务端收到<code>ACK</code>确认报文后，会得知自己和对方的发送、接受正常，也会进入<code>ESTABLISHED</code>阶段，TCP握手结束。</strong></p>
+<p>需要消耗序号，允许携带数据。</p>
+</li>
+</ul>
+<h3 id="3-为什么需要三次握手，两次不行吗？"><a href="#3-为什么需要三次握手，两次不行吗？" class="headerlink" title="3. 为什么需要三次握手，两次不行吗？"></a>3. 为什么需要三次握手，两次不行吗？</h3><ol>
+<li><p>三次握手实现了双方确认自己和对方的接收和发送正常。</p>
+<p>第一次握手，客户端发送，服务端接收，服务端可以知道：客户端的发送正常、服务端的接收正常；</p>
+<p>第二次握手，服务端发送，客户端接收，客户端可以知道：服务端的发送、接收正常，客户端的发送、接收正常，但<strong>此时服务端并不能确定自己的发送和客户端的接收是否正常。</strong></p>
+<p>第三次握手，客户端发送，服务端接收，服务端可以知道：客户端的发送、接收正常，服务端的发送、接收正常。</p>
+<p>所以，<strong>三次握手才可以确认双方的发送、接收正常</strong>。</p>
+</li>
+<li><p><strong>防止失效连接请求到达服务端，打开错误连接</strong></p>
+<p>如果客户端发送的第一次握手请求在网络中滞留，客户端等待一段时间后会超时重传。这样客户端发送了两个连接请求，第一个滞留，第二个到达服务端成功建立连接。但是第一个滞留请求最后到达了服务器，如果没有第三次握手就会建立两个连接，而如果有第三次握手，客户端会忽略滞留请求发送的连接确认，不会再次打开连接。</p>
+</li>
+</ol>
+<h3 id="4-半连接队列"><a href="#4-半连接队列" class="headerlink" title="4. 半连接队列"></a>4. 半连接队列</h3><p>服务器收到第一次握手的SYN数据包后，处于SYN_RVCD状态，此时还没建立连接，服务器会把这种状态下的请求连接放在半连接队列中。</p>
+<p>如果服务端发送第二次握手后未收到客户端确认包，就会进行超时重传，重传次数超过最大重传次数，就将此连接从半连接队列中删除。</p>
+<h3 id="5-SYN攻击"><a href="#5-SYN攻击" class="headerlink" title="5. SYN攻击"></a>5. SYN攻击</h3><p>SYN攻击就是Client在短时间内伪造大量不存在的IP地址，并向Server不断地发送SYN包，Server则回复确认包，并等待Client确认，由于源地址不存在，因此Server需要不断重发直至超时，这些伪造的SYN包将长时间占用未连接队列，导致正常的SYN请求因为队列满而被丢弃，从而引起网络拥塞甚至系统瘫痪。SYN 攻击是一种典型的 DoS/DDoS 攻击。</p>
+<p>在 Linux上可以使用系统自带的 netstat 命令来检测 SYN 攻击。</p>
+<p>有以下几种防范手段：</p>
+<ul>
+<li><p>缩短超时时间</p>
+</li>
+<li><p>增加半连接队列容量</p>
+</li>
+<li><p>过滤网关防护</p>
+</li>
+<li><p><strong>SYN cookies</strong></p>
+<p><strong>SYN cookies 技术可以使服务器在半连接队列已满的情况下仍能处理新的 SYN 请求</strong>。在半连接队列满时，不丢弃SYN请求，而是将SYN请求进行hash运算，并加密后得到服务端的初始序列号，称为cookie。<strong>服务器端在发送SYN + ACK包后，释放分配的连接请求块，</strong>如果收到客户端的ACK包，将客户端的ack序列号减一得到的值与hash运算得到的值进行比较，如果相等，直接完成三次握手。</p>
+<p><strong>SYN cookies 机制的核心就是避免攻击造成的大量构造无用的连接请求块，导致内存耗尽，而无法处理正常的连接请求</strong>。</p>
+</li>
+</ul>
+<h3 id="6-TCP-KeepAlive"><a href="#6-TCP-KeepAlive" class="headerlink" title="6. TCP KeepAlive"></a>6. TCP KeepAlive</h3><p>建立连接后，交互双方突然发生故障，导致没有正常释放TCP连接，会通过TCP KeepAlive机制释放无效资源。</p>
+<p><strong>TCP KeepAlive 的基本原理是，隔一段时间给连接对端发送一个探测包，如果收到对方回应的 ACK，则认为连接还是存活的，在超过一定重试次数之后还是没有收到对方的回应，则丢弃该 TCP 连接。</strong></p>
+<p>TCP KeepAlive发送的探测包会给网络带来额外的流量，并且只能在内核层级监测连接的存活与否，不能代表服务的可用性。需要保活的话需要在应用层实现自己的心跳机制。</p>
+<h3 id="7-四次挥手过程"><a href="#7-四次挥手过程" class="headerlink" title="7. 四次挥手过程"></a>7. 四次挥手过程</h3><p>因为TCP的半关闭特性，TCP连接的关闭需要发送四个数据包，客户端与服务端均可主动发起挥手。</p>
+<p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.JPG" alt=""></p>
+<ul>
+<li><p>第一次挥手(FIN = 1, seq = u)</p>
+<p><strong>客户端发送连接释放报文，发送一个带有<code>FIN = 1</code>标记的数据包，并带上自己的序列号<code>seq = u</code>，发送后客户端进入<code>FIN_WAIT1</code>阶段。</strong></p>
+</li>
+<li><p>第二次挥手(ACK = 1, seq = v, ack = u + 1)</p>
+<p><strong>服务端收到客户端的FIN包，回复一个<code>ACK = 1</code>确认包，并带上自己的序列号<code>seq = v</code>、确认号<code>ack = u + 1</code>，表明收到客户端的关闭连接请求。发送后服务端进入<code>CLOSE_WAIT</code>状态，客户端收到后进入<code>FIN_WAIT2</code>状态。</strong></p>
+<p><strong>此时TCP连接处于半关闭状态，服务端通知应用程序客户端到服务端的连接释放，但服务端仍能向客户端发送数据。</strong></p>
+</li>
+<li><p>第三次挥手(FIN = 1, ACK = 1, seq = w, ack = u + 1)</p>
+<p><strong>等到服务端的数据传输完毕，向客户端发送带有<code>FIN = 1</code>的连接释放请求，并带上自己的序列号<code>seq = w</code>，确认号<code>ack = u + 1</code>，服务端进入<code>LAST_ACK</code>状态，等待来自客户端的确认信号。</strong></p>
+</li>
+<li><p>第四次挥手(ACK = 1, seq = u + 1, ack = w + 1)</p>
+<p><strong>客户端收到<code>FIN</code>后，会回复一个<code>ACK = 1</code>确认报文，并带上序列号<code>seq = u + 1</code>，确认号<code>ack = w + 1</code>，并进入<code>TIME_WAIT</code>状态，等待2MSL后进入<code>CLOSED</code>状态；服务端接收到确认包后，关闭连接，进入<code>CLOSED</code>状态。</strong></p>
+</li>
+</ul>
+<h3 id="8-为什么建立连接需要三次握手，关闭连接需要四次挥手？"><a href="#8-为什么建立连接需要三次握手，关闭连接需要四次挥手？" class="headerlink" title="8. 为什么建立连接需要三次握手，关闭连接需要四次挥手？"></a>8. 为什么建立连接需要三次握手，关闭连接需要四次挥手？</h3><p>建立连接时可以把SYN和ACK放在一个报文里发送，ACK用来应答，SYN用于同步。</p>
+<p>但关闭连接时，服务端收到客户端的FIN报文，表示客户端以及没有数据要传送了，客户端到服务端的连接可以关闭，需要先回复一个ACK确认报文；但服务端可能还有数据要发送，需要等到服务端数据发送完成再发送FIN报文。FIN和ACK需要分开发送，所以需要四次挥手。</p>
+<h3 id="9-为什么-TIME-WAIT-状态还需要等-2MSL-后才能进入CLOSED-状态？"><a href="#9-为什么-TIME-WAIT-状态还需要等-2MSL-后才能进入CLOSED-状态？" class="headerlink" title="9. 为什么 TIME_WAIT 状态还需要等 2MSL 后才能进入CLOSED 状态？"></a>9. 为什么 TIME_WAIT 状态还需要等 2MSL 后才能进入CLOSED 状态？</h3><p>MSL指的是任何报文段在网络中存活的最长时间，超过这个时间的报文会被丢弃。</p>
+<p><code>TIME_WAIT</code>状态等待2MSL，是为了：</p>
+<ol>
+<li><p><strong>保证客户端发送的最后一个ACK确认报文能够到达服务端</strong></p>
+<p>客户端发送的<code>ACK</code>确认报文可能丢失，处于<code>LAST_ACK</code>状态的服务端没有收到确认报文，会进行超时重发，客户端能在2MSL内收到重发的FIN报文，重新启动2MSL计时器。</p>
+</li>
+<li><p><strong>防止“已失效的连接请求报文段”出现在下一次新连接中</strong></p>
+<p>客户端在发送完最后一个ACK报文段后，再经过2MSL，就可以使本连接持续的时间内所产生的所有报文段都从网络中消失，使下一个新的连接中不会出现这种旧的连接请求报文段。</p>
+</li>
+</ol>
+<h3 id="10-TCP与UDP的区别"><a href="#10-TCP与UDP的区别" class="headerlink" title="10. TCP与UDP的区别"></a>10. TCP与UDP的区别</h3><ol>
+<li>TCP面向连接，UDP是无连接的，即发送数据前不需要建立连接</li>
+<li>TCP提供了确认、超时重传、滑动窗口、拥塞控制等机制来实现可靠传输，而UDP不提供可靠交付</li>
+<li>TCP面向字节流，UDP面向报文</li>
+<li>TCP连接只支持点对点，而UDP支持广播</li>
+<li>TCP的首部20字节，UDP首部大小8字节，TCP的开销大于UDP</li>
+<li>TCP适用于文件传输、发送接收邮件、远程登陆等场景，UDP适用于即时通信等场景。</li>
+</ol>
+<h3 id="11-TCP如何保证可靠传输"><a href="#11-TCP如何保证可靠传输" class="headerlink" title="11. TCP如何保证可靠传输"></a>11. TCP如何保证可靠传输</h3>]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>面试总结</tag>
+        <tag>计算机网络</tag>
       </tags>
   </entry>
 </search>
