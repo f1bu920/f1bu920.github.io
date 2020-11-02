@@ -89,7 +89,7 @@
 <meta property="og:description" content="1. #{}和${}区别 #{}和${}都是MyBatis中实现动态SQL的机制。  ${}是Properities文件中的占位符，用于标签属性值和SQL内部，属于静态文本替换。 #{}是参数占位符，#{}会解析为JDBC预编译PreparedStatement语句的参数标记符，一个 #{ } 被解析为一个参数占位符 ?。 ${} 在预编译之前已经被变量替换了，存在 sql 注入问题，而#{}会被">
 <meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/MyBatis%E4%B8%80%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98.png">
 <meta property="article:published_time" content="2020-10-30T07:24:35.000Z">
-<meta property="article:modified_time" content="2020-10-30T09:12:36.619Z">
+<meta property="article:modified_time" content="2020-11-02T08:49:59.212Z">
 <meta property="article:author" content="flbu">
 <meta property="article:tag" content="面试">
 <meta property="article:tag" content="MyBatis">
@@ -396,6 +396,8 @@
 <li>#{}是参数占位符，#{}会解析为JDBC预编译<code>PreparedStatement</code>语句的参数标记符，一个 #{ } 被解析为一个参数占位符 <code>?</code>。</li>
 <li><strong>${} 在预编译之前已经被变量替换了，存在 sql 注入问题，而#{}会被预编译为？，在执行sql前按序设置参数值。</strong></li>
 </ul>
+<a id="more"></a>
+
 <h3 id="2-SQL预编译"><a href="#2-SQL预编译" class="headerlink" title="2. SQL预编译"></a>2. SQL预编译</h3><p>sql 预编译指的是数据库驱动在发送 sql 语句和参数给 DBMS 之前对 sql 语句进行编译，这样 DBMS 执行 sql 时，就不需要重新编译。</p>
 <p>JDBC 中使用对象 PreparedStatement 来抽象预编译语句</p>
 <ul>

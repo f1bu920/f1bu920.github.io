@@ -90,8 +90,15 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B.JPG">
 <meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.JPG">
 <meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.JPG">
+<meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6.JPG">
+<meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/%E5%BF%AB%E9%87%8D%E4%BC%A0.JPG">
+<meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/UDP%E9%A6%96%E9%83%A8%E6%A0%BC%E5%BC%8F.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/TCP%E9%A6%96%E9%83%A8.JPG">
+<meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/f1bu920/picBed/master/HTTP%E5%93%8D%E5%BA%94%E7%A0%81.JPG">
 <meta property="article:published_time" content="2020-10-30T07:25:57.000Z">
-<meta property="article:modified_time" content="2020-10-31T08:10:26.007Z">
+<meta property="article:modified_time" content="2020-11-02T08:49:14.191Z">
 <meta property="article:author" content="flbu">
 <meta property="article:tag" content="面试总结">
 <meta property="article:tag" content="计算机网络">
@@ -484,7 +491,7 @@
 </li>
 </ul>
 <h3 id="8-为什么建立连接需要三次握手，关闭连接需要四次挥手？"><a href="#8-为什么建立连接需要三次握手，关闭连接需要四次挥手？" class="headerlink" title="8. 为什么建立连接需要三次握手，关闭连接需要四次挥手？"></a>8. 为什么建立连接需要三次握手，关闭连接需要四次挥手？</h3><p>建立连接时可以把SYN和ACK放在一个报文里发送，ACK用来应答，SYN用于同步。</p>
-<p>但关闭连接时，服务端收到客户端的FIN报文，表示客户端以及没有数据要传送了，客户端到服务端的连接可以关闭，需要先回复一个ACK确认报文；但服务端可能还有数据要发送，需要等到服务端数据发送完成再发送FIN报文。FIN和ACK需要分开发送，所以需要四次挥手。</p>
+<p>但关闭连接时，服务端收到客户端的FIN报文，表示客户端已经没有数据要传送了，客户端到服务端的连接可以关闭，需要先回复一个ACK确认报文；但服务端可能还有数据要发送，需要等到服务端数据发送完成再发送FIN报文。FIN和ACK需要分开发送，所以需要四次挥手。</p>
 <h3 id="9-为什么-TIME-WAIT-状态还需要等-2MSL-后才能进入CLOSED-状态？"><a href="#9-为什么-TIME-WAIT-状态还需要等-2MSL-后才能进入CLOSED-状态？" class="headerlink" title="9. 为什么 TIME_WAIT 状态还需要等 2MSL 后才能进入CLOSED 状态？"></a>9. 为什么 TIME_WAIT 状态还需要等 2MSL 后才能进入CLOSED 状态？</h3><p>MSL指的是任何报文段在网络中存活的最长时间，超过这个时间的报文会被丢弃。</p>
 <p><code>TIME_WAIT</code>状态等待2MSL，是为了：</p>
 <ol>
@@ -499,11 +506,214 @@
 <li>TCP面向连接，UDP是无连接的，即发送数据前不需要建立连接</li>
 <li>TCP提供了确认、超时重传、滑动窗口、拥塞控制等机制来实现可靠传输，而UDP不提供可靠交付</li>
 <li>TCP面向字节流，UDP面向报文</li>
-<li>TCP连接只支持点对点，而UDP支持广播</li>
+<li>TCP连接只支持点对点，而UDP支持一对一、一对多和多对多的通信</li>
 <li>TCP的首部20字节，UDP首部大小8字节，TCP的开销大于UDP</li>
 <li>TCP适用于文件传输、发送接收邮件、远程登陆等场景，UDP适用于即时通信等场景。</li>
 </ol>
-<h3 id="11-TCP如何保证可靠传输"><a href="#11-TCP如何保证可靠传输" class="headerlink" title="11. TCP如何保证可靠传输"></a>11. TCP如何保证可靠传输</h3>
+<h3 id="11-TCP如何保证可靠传输"><a href="#11-TCP如何保证可靠传输" class="headerlink" title="11. TCP如何保证可靠传输"></a>11. TCP如何保证可靠传输</h3><ul>
+<li><strong>三次握手</strong>，保证两端建立连接</li>
+<li>应用数据被分割成TCP认为最适合发送的数据块，将数据截断为合理长度</li>
+<li><strong>校验和</strong>。TCP将保持首部和数据的校验和，目的是检测数据在传输过程中的任何变化。如果收到的段的检验和有差错，TCP将丢弃这个报文段和不确认收到此报文段。（不给出响应，超时重传）</li>
+<li><strong>丢弃重复</strong>。TCP接收端会抛弃重复的数据</li>
+<li><strong>乱序重排</strong>。TCP给发送的每一个包进行编号，接收方对数据包进行排序，把有序数据传送给应用层</li>
+<li><strong>超时重传</strong>。TCP发送一个数据段后，启动一个定时器，等待目的端确认收到这个报文段。如果不能及时收到一个确认，将重发这个报文段。</li>
+<li><strong>流量控制</strong>。TCP连接双方都维护一个滑动窗口来代表发送和接收的缓冲空间，接收端只允许发送端发送接收端缓冲区能容纳的数据，通过接收端滑动窗口的大小来控制发送端发送的速率，防止包丢失。</li>
+<li><strong>拥塞控制</strong>。当网络拥塞时，减少数据包的发送。拥塞控制包括<strong>慢开始、拥塞避免、快重传和快恢复。</strong></li>
+</ul>
+<h3 id="12-流量控制"><a href="#12-流量控制" class="headerlink" title="12. 流量控制"></a>12. 流量控制</h3><p><strong>TCP利用滑动窗口（连续ARQ协议）实现流量控制。流量控制是为了控制发送方发送速率，保证接收方能及时接收。</strong></p>
+<p>接收方回复的ACK确认报文中的窗口字段可以用来控制发送方窗口大小，从而影响发送方的发送速率。</p>
+<p>流量控制引发的死锁：发送者收到了一个滑动窗口为0的应答，发送者停止发送，等待接受者的下一个应答。如果窗口不为0的应答丢失，则双方互相等待，造成死锁。</p>
+<p>为了避免死锁，TCP使用了连续计时器。每当发送方收到一个零窗口应答就启动计时器，时间一到就主动发送报文询问窗口的大小。如果仍是零窗口，则重置计时器继续等待；如果不为零，则更新发送窗口，继续发送。</p>
+<h3 id="13-拥塞控制"><a href="#13-拥塞控制" class="headerlink" title="13. 拥塞控制"></a>13. 拥塞控制</h3><p>拥塞控制是为了防止将过多的数据发送到网络中，造成网络的拥塞和过载。</p>
+<p>流量控制是为了让接收方来得及接收，防止分组丢失；拥塞控制是为了降低网络的拥塞程度。</p>
+<p><strong>发送方维持一个拥塞窗口<code>cwnd</code>的状态变量，拥塞窗口的大小取决于网络的拥塞程度，并动态变化。</strong>发送方让自己的发送窗口取为拥塞窗口和接收方的接收窗口中较小值。TCP拥塞控制分为<strong>慢开始、拥塞避免、快重传和快恢复</strong>四个算法。</p>
+<p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6.JPG" alt=""></p>
+<ul>
+<li><p>慢开始</p>
+<p><strong>慢开始指的是从小到大逐渐增加拥塞窗口的大小。开始时将cwnd设置为1，每经过一个传输轮次就将拥塞窗口<code>cwnd</code>加倍，直到到达慢开始门限<code>ssthresh</code>。当<code>cwnd &gt; ssthresh</code>时，进入拥塞避免阶段。</strong></p>
+<blockquote>
+<p>一个传输轮次所经历的时间就是往返时间RTT</p>
+</blockquote>
+</li>
+<li><p>拥塞避免</p>
+<p><strong>拥塞避免阶段让拥塞窗口缓慢增长，每经过一个往返时间RTT就把拥塞窗口<code>cwnd</code>加一，使拥塞窗口线性缓慢增长。</strong></p>
+<p><strong>在慢开始和拥塞避免阶段，如果出现超时（没有按时收到确认），就把慢开始门限<code>ssthresh</code>设为当前拥塞窗口的一半，即<code>ssthresh = cwnd / 2</code>，再重新执行慢开始。</strong></p>
+</li>
+<li><p>快重传</p>
+<p><strong>快重传指的是接收方每次收到报文段时都会对最后一个已收到的有序报文段进行确认，如果发送方收到三个重复确认就会立即重发对方尚未收到的下一个报文段。</strong></p>
+<p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/%E5%BF%AB%E9%87%8D%E4%BC%A0.JPG" alt=""></p>
+</li>
+</ul>
+<ul>
+<li><p>快恢复</p>
+<p><strong>快恢复指的是丢失个别报文段而不是网络阻塞时，并不重新执行慢开始，而是将拥塞窗口<code>cwnd</code>设置为当前<code>ssthresh</code>减半后的值，即<code>cwnd = ssthresh / 2</code>，然后执行拥塞避免使<code>cwnd</code>缓慢增大。</strong></p>
+</li>
+</ul>
+<h3 id="14-TCP与UDP报文首部"><a href="#14-TCP与UDP报文首部" class="headerlink" title="14. TCP与UDP报文首部"></a>14. TCP与UDP报文首部</h3><ul>
+<li><p>UDP首部格式</p>
+<p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/UDP%E9%A6%96%E9%83%A8%E6%A0%BC%E5%BC%8F.png" alt=""></p>
+</li>
+</ul>
+<p>UDP报文首部包括源端口、目的端口、长度和校验和。</p>
+<ul>
+<li><p>TCP首部格式</p>
+<p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/TCP%E9%A6%96%E9%83%A8.JPG" alt=""></p>
+<ul>
+<li><strong>序号</strong>：用于对字节流进行编号</li>
+<li><strong>确认号</strong>：期望收到的下一个报文段的序号</li>
+<li><strong>源端口和目的端口</strong>：指示终端中的不同进程</li>
+<li><strong>数据偏移（首部长度）</strong>：数据部分距离报文段起始处的偏移量。</li>
+<li><strong>标志位</strong>：<ul>
+<li>URG = 1，指示报文中有紧急数据，应尽快传送</li>
+<li>SYN = 1，处于TCP连接建立过程</li>
+<li>ACK = 1，确认序号（AN）有效</li>
+<li>FIN = 1，请求释放连接</li>
+</ul>
+</li>
+<li><strong>窗口</strong>：滑动窗口，用于流量控制</li>
+<li><strong>校验和</strong>：校验报文首部、数据</li>
+<li><strong>紧急指针</strong>：指示紧急数据的大小</li>
+</ul>
+</li>
+</ul>
+<h3 id="15-DNS过程"><a href="#15-DNS过程" class="headerlink" title="15. DNS过程"></a>15. DNS过程</h3><p>DNS是应用层协议，用于从域名解析出IP地址。</p>
+<p>域名具有层次结构，从上到下分为：根域名、顶级域名、二级域名。</p>
+<p>DNS流程：</p>
+<ol>
+<li>在浏览器中输入域名，操作系统会<strong>先检查自己本地的hosts文件</strong>是否有这个网址映射关系，如果有，就先调用这个IP地址映射，完成域名解析</li>
+<li>如果hosts里没有这个域名的映射，则<strong>查找本地DNS解析器缓存</strong>，是否有这个网址映射关系，如果有，直接返回，完成域名解析</li>
+<li>如果本地DNS缓存中也没有，则去<strong>查询本地DNS服务器</strong>，如果要查询的域名，包含在本地配置区域资源中，则返回解析结果给客户机，完成域名解析，此解析具有权威性；如果不由本地DNS服务器区域解析，但该服务器已缓存了此网址映射关系，则调用这个IP地址映射，完成域名解析，此解析不具有权威性。</li>
+<li>如果本地DNS服务器本地区域文件与缓存解析都失效，则按照是否设置转发进行查询：<ul>
+<li><strong>设置转发模式，将请求转发给上一级DNS服务器</strong></li>
+<li><strong>非转发模式，把请求发送给13台根DNS服务器，按照根DNS-&gt;顶级域名DNS-&gt;二级域名DNS服务器进行迭代查询</strong>。</li>
+</ul>
+</li>
+</ol>
+<p><strong>从客户端到本地DNS服务器是属于递归查询，而DNS服务器之间就是的交互查询就是迭代查询。</strong></p>
+<h3 id="16-浏览器输入url发生了什么？"><a href="#16-浏览器输入url发生了什么？" class="headerlink" title="16. 浏览器输入url发生了什么？"></a>16. 浏览器输入url发生了什么？</h3><ol>
+<li><strong>DNS域名解析</strong></li>
+<li><strong>三次握手建立TCP连接</strong></li>
+<li><strong>发送HTTP请求</strong></li>
+<li><strong>服务器处理请求</strong></li>
+<li><strong>返回响应结果</strong></li>
+<li><strong>浏览器解析渲染</strong></li>
+<li><strong>关闭TCP连接</strong></li>
+</ol>
+<h3 id="17-ARQ协议"><a href="#17-ARQ协议" class="headerlink" title="17. ARQ协议"></a>17. ARQ协议</h3><p>ARQ协议指的是自动重传请求，是数据链路层和传输层的错误纠正协议之一。<strong>通过使用确认和超时两个机制，在不可靠服务的基础上实现可靠信息传输。如果发送方一段时间内没有收到确认，会重新发送</strong>。</p>
+<p><strong>ARQ分为停止等待ARQ协议和连续ARQ协议。</strong></p>
+<h4 id="停止等待ARQ"><a href="#停止等待ARQ" class="headerlink" title="停止等待ARQ"></a>停止等待ARQ</h4><p>停止等待ARQ的基本原理是<strong>每发完一个分组就停止发送等待确认ACK。如果一段时间后还没有收到ACK确认，就重新发送，直到收到确认再发送下一个分组。</strong></p>
+<p>优点是简单，缺点是<strong>信道利用率低，等待时间长。</strong></p>
+<h4 id="连续ARQ"><a href="#连续ARQ" class="headerlink" title="连续ARQ"></a>连续ARQ</h4><p><strong>发送方维持一个发送窗口，位于发送窗口内的分组可以连续发送出去，不需要等待接收方确认。</strong></p>
+<p><strong>接收方采用累计确认，对按序到达的最后一个分组发送确认，表明到这个分组为止的所有分组都收到了。</strong></p>
+<p>优点是信道利用率高，缺点是<strong>无法获取接收方正确收到的分组信息。</strong></p>
+<p>连续ARQ错误纠正采用<strong>回退N重传</strong>的方式：</p>
+<ul>
+<li>接受方只对按序到达的最后一个分组发送确认</li>
+<li>发送方会对最后一个收到确认的分组的下一个分组开始重新发送</li>
+</ul>
+<h3 id="18-ARP协议"><a href="#18-ARP协议" class="headerlink" title="18. ARP协议"></a>18. ARP协议</h3><p><strong>ARP协议是局域网下的地址解析协议，通过解析IP地址得到MAC地址</strong>，主要应用在ipv4中。</p>
+<p>同一局域网中的一台主机要和另一台主机进行直接通信，必须要知道目标主机的MAC地址。而网络层和传输层只关心目标主机的IP地址，所以需要通过ARP协议将目标IP地址转化为目标MAC地址。</p>
+<p><strong>当两台主机不在同一局域网内时，即使知道MAC地址也不能直接通信，必须经过路由转发</strong>。此时发送主机通过ARP获取的就是通往局域网外路由器的MAC地址。</p>
+<p><strong>每个主机都有ARP高速缓存，同一局域网下发送数据时，会先查看缓存中是否有目标IP到MAC地址的映射。如果没有，会通过广播的方式发送ARP请求分组，目标主机收到后会回复ARP响应，发送主机收到后会在缓存中记录此映射关系。</strong></p>
+<h3 id="19-ICMP协议"><a href="#19-ICMP协议" class="headerlink" title="19. ICMP协议"></a>19. ICMP协议</h3><p><strong>网络控制消息协议，主要用于传递查询报文和差错报文，属于网络层协议。</strong></p>
+<p>ICMP的功能主要有：<strong>确认IP包是否到达目标地址和通知在发送过程中IP包被丢弃原因。</strong></p>
+<p><strong>ICMP主要有两个应用：Ping和TraceRoute。</strong></p>
+<h4 id="Ping"><a href="#Ping" class="headerlink" title="Ping"></a>Ping</h4><p>ping是ICMP的一个重要应用，主要用于测试两台主机间的连通性。</p>
+<p>源主机通过向目标主机间发送ICMP请求报文，目标主机收到后回复应答报文。Ping通过时间和成功响应的次数估算往返时间和丢包率。</p>
+<h4 id="TraceRoute"><a href="#TraceRoute" class="headerlink" title="TraceRoute"></a>TraceRoute</h4><p><strong>TraceRoute用于跟踪一个分组从源点到终点的路径，原理是利用ICMP差错控制报文中的TTL超时会回向源点发送一个时间超时报文。</strong></p>
+<p>初始时将发送分组的TTL置为1，并每次递增1。分组每到达一个路由器，TTL都会减一，当TTL为0就会向源主机发送时间超时报文。当到达目标主机时，就获得了从源点到终点的路径。</p>
+<h3 id="20-HTTP-首部-amp-amp-状态码"><a href="#20-HTTP-首部-amp-amp-状态码" class="headerlink" title="20. HTTP 首部 &amp;&amp; 状态码"></a>20. HTTP 首部 &amp;&amp; 状态码</h3><h4 id="HTTP首部"><a href="#HTTP首部" class="headerlink" title="HTTP首部"></a>HTTP首部</h4><p>HTTP报文由<strong>请求行/状态行、通用首部字段、请求首部字段/响应首部字段和实体首部字段等构成</strong></p>
+<p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87.png" alt=""></p>
+<p><strong>请求行包括HTTP方法、请求uri和HTTP版本。</strong></p>
+<p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87.png" alt=""></p>
+<p><strong>状态行包括HTTP版本和响应状态码。</strong></p>
+<h4 id="HTTP响应码"><a href="#HTTP响应码" class="headerlink" title="HTTP响应码"></a>HTTP响应码</h4><p>HTTP响应首部的状态行中给出了响应码表明了请求的结果。</p>
+<p><img src="https://raw.githubusercontent.com/f1bu920/picBed/master/HTTP%E5%93%8D%E5%BA%94%E7%A0%81.JPG" alt=""></p>
+<ul>
+<li><p><strong>1XX 信息</strong></p>
+<ul>
+<li><strong>100 Continue：表明到现在为止都很正常，客户端应该继续请求，如果已经完成，则忽略它。</strong></li>
+<li>102 Processing：表示服务器已收到并正在处理该请求，但没有响应可用。</li>
+</ul>
+</li>
+<li><p><strong>2XX 成功</strong></p>
+<ul>
+<li><strong>200 OK：请求成功。</strong></li>
+<li>201 Created：请求成功，创建了一个新的资源。常用于POST请求。</li>
+<li><strong>202 Accepted：请求已收到但还未响应，没有结果。意味着不会有一个异步的响应去表明当前请求的结果。</strong></li>
+<li>204 No Content：请求成功处理，但返回的响应报文不包含实体内容。</li>
+<li>206 Partial Content：表示客户端进行了范围请求，响应报文包含指定范围的实体内容。</li>
+</ul>
+</li>
+<li><p><strong>3XX 重定向</strong></p>
+</li>
+<li><p><strong>301 Moved Permanently：永久重定向</strong></p>
+<ul>
+<li><strong>302 Found：临时重定向</strong></li>
+<li>303 See Other：与302相同，但303表示客户端应该采用GET获取资源</li>
+<li><strong>304 Not Modified：如果请求首部包含一些条件，条件不满足时返回304状态码</strong></li>
+<li>307 Temporary Redirect：临时重定向，但不会要求浏览器把重定向请求的POST改为GET</li>
+</ul>
+</li>
+<li><p><strong>4XX 客户端错误</strong></p>
+<ul>
+<li><strong>400 Bad Request：请求报文中存在语法错误</strong></li>
+<li><strong>401 Unauthorized：当前请求需要用户认证</strong></li>
+<li><strong>403 Forbidden：请求被拒绝</strong></li>
+<li><strong>404 Not Found：请求资源未被发现</strong></li>
+</ul>
+</li>
+<li><p><strong>5XX 服务端错误</strong></p>
+<ul>
+<li><strong>500 Internal Server Error：服务器执行请求时发生错误</strong></li>
+<li><strong>502 Bad Gateway：网关得到了错误响应</strong></li>
+<li><strong>503 Service Unavailable：服务器过载或在停机维护，无法处理请求</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="21-HTTP-与-HTTPS的区别"><a href="#21-HTTP-与-HTTPS的区别" class="headerlink" title="21. HTTP 与 HTTPS的区别"></a>21. HTTP 与 HTTPS的区别</h3><ol>
+<li><p>端口</p>
+<p><strong>HTTP默认运行在80端口，HTTPS默认使用443端口。</strong></p>
+</li>
+<li><p>安全性和资源消耗</p>
+<p><strong>HTTP协议运行在TCP上，使用明文传输。而HTTPS是运行在SSL/TLS上的HTTP协议，传输内容经过对称密钥加密，而对称加密的密钥使用非对称密钥加密传输。因为非对称加密计算量较大，整个通信过程中只会在传输对称加密密钥时采用非对称加密，内容的加密都是采用对称加密。</strong></p>
+</li>
+</ol>
+<p>HTTPS通信前会向进行一次SSL握手，流程如下：</p>
+<ol>
+<li><strong>客户端向服务端的443端口发起请求，并携带客户端支持的加密算法和哈希算法；</strong></li>
+<li><strong>服务端收到请求，选择客户端支持的加密算法和哈希算法，并将数字证书返回给客户端；</strong></li>
+<li><strong>浏览器进行证书认证，利用机构的证书公钥解密得到证书内容和证书签名，内容包括网站的公钥、证书有效期等。接着浏览器会进行证书签名的认证，浏览器利用网站公钥解密证书签名得到一串哈希值，然后对证书内容进行同样的不可逆哈希算法处理也会得到一串哈希值，对比两次哈希值，如果相等则证书签名认证通过。</strong></li>
+<li><strong>浏览器产生一个随机数R，并使用网站公钥对R进行加密，然后发送给服务器</strong></li>
+<li><strong>服务器用自己的私钥解密得到R</strong></li>
+<li><strong>之后进行通信时以R为密钥对内容进行对称加密。</strong></li>
+</ol>
+<h3 id="22-GET-与-POST的区别"><a href="#22-GET-与-POST的区别" class="headerlink" title="22. GET 与 POST的区别"></a>22. GET 与 POST的区别</h3><ol>
+<li><strong>作用：GET和POST都是HTTP方法，GET用于获取资源，POST用于提交资源。</strong></li>
+<li><strong>参数：GET和POST请求都可以携带参数，GET的参数一般出现在URL中，POST的参数存储在实体主体中。因为URL有长度限制且支持ASCII码，所以GET方法参数也有长度限制且中文会被替换为ASCII码；POST方法支持标准字符集。</strong></li>
+<li><strong>安全：GET和POST都不是安全的，都可以通过抓包来获取参数</strong></li>
+<li><strong>幂等性：GET方法是幂等的，而POST不是幂等的。</strong></li>
+<li><strong>可缓存：GET方法可缓存，而POST不可以。</strong></li>
+</ol>
+<h3 id="23-HTTP-1-0、1-1、2-0"><a href="#23-HTTP-1-0、1-1、2-0" class="headerlink" title="23. HTTP 1.0、1.1、2.0"></a>23. HTTP 1.0、1.1、2.0</h3><ol>
+<li><strong>长连接。HTTP 1.0中默认使用的是短连接，每次请求都要重新进行三次握手和四次挥手，开销较大；从HTTP 1.1开始，默认使用长连接，默认开启<code>Connection： keep-alive</code></strong></li>
+<li><strong>流水线。HTTP1.0 中每次要收到上一次请求的响应才能发送下一个请求，HTTP 1.1中引入了流水线方式，在收到响应报文前可以接着发送新的请求报文。</strong></li>
+<li><strong>错误响应码</strong>。HTTP1.1中新增了24个错误响应码。</li>
+<li><strong>缓存处理</strong>。在HTTP1.0中主要使用header里的If-Modified-Since,Expires来做为缓存判断的标准，HTTP1.1则引入了更多的缓存控制策略例如Entity tag，If-Unmodified-Since, If-Match, If-None-Match等更多可供选择的缓存头来控制缓存策略。</li>
+<li><strong>带宽优化</strong>。HTTP1.0中，会把整个对象发送过来，在HTTP1.1中，在请求头引入了range头域，允许只请求资源的某个部分，此时返回码为206。</li>
+</ol>
+<p>HTTP2.0 新增了二进制分帧、服务端推送、header压缩和多路复用机制。</p>
+<ul>
+<li><p><strong>二进制分帧。HTTP1.x的解析基于文本，而HTTP2.0中 headers和data中都是二进制数据</strong></p>
+</li>
+<li><p><strong>服务端推送。客户端请求资源时，服务端会把相关资源一起发送给客户端。</strong></p>
+</li>
+<li><p><strong>header压缩。HTTP1.x的header中带有大量信息，每次都要重新发送。HTTP2.0中客户端和服务端各自维护一份首部字段表，避免重复传输，同时使用压缩算法压缩首部字段。</strong></p>
+</li>
+<li><p><strong>多路复用。连接共享，一个连接上可以有多个request，接收方根据request的id将request归属到各自不同的服务端请求中。</strong></p>
+</li>
+</ul>
+
       
     </div>
     
@@ -713,7 +923,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-OSI七层模型-amp-五层模型"><span class="nav-text">1. OSI七层模型&amp;五层模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-三次握手过程"><span class="nav-text">2. 三次握手过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-为什么需要三次握手，两次不行吗？"><span class="nav-text">3. 为什么需要三次握手，两次不行吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-半连接队列"><span class="nav-text">4. 半连接队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-SYN攻击"><span class="nav-text">5. SYN攻击</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-TCP-KeepAlive"><span class="nav-text">6. TCP KeepAlive</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-四次挥手过程"><span class="nav-text">7. 四次挥手过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-为什么建立连接需要三次握手，关闭连接需要四次挥手？"><span class="nav-text">8. 为什么建立连接需要三次握手，关闭连接需要四次挥手？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-为什么-TIME-WAIT-状态还需要等-2MSL-后才能进入CLOSED-状态？"><span class="nav-text">9. 为什么 TIME_WAIT 状态还需要等 2MSL 后才能进入CLOSED 状态？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-TCP与UDP的区别"><span class="nav-text">10. TCP与UDP的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-TCP如何保证可靠传输"><span class="nav-text">11. TCP如何保证可靠传输</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-OSI七层模型-amp-五层模型"><span class="nav-text">1. OSI七层模型&amp;五层模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-三次握手过程"><span class="nav-text">2. 三次握手过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-为什么需要三次握手，两次不行吗？"><span class="nav-text">3. 为什么需要三次握手，两次不行吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-半连接队列"><span class="nav-text">4. 半连接队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-SYN攻击"><span class="nav-text">5. SYN攻击</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-TCP-KeepAlive"><span class="nav-text">6. TCP KeepAlive</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-四次挥手过程"><span class="nav-text">7. 四次挥手过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-为什么建立连接需要三次握手，关闭连接需要四次挥手？"><span class="nav-text">8. 为什么建立连接需要三次握手，关闭连接需要四次挥手？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-为什么-TIME-WAIT-状态还需要等-2MSL-后才能进入CLOSED-状态？"><span class="nav-text">9. 为什么 TIME_WAIT 状态还需要等 2MSL 后才能进入CLOSED 状态？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-TCP与UDP的区别"><span class="nav-text">10. TCP与UDP的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-TCP如何保证可靠传输"><span class="nav-text">11. TCP如何保证可靠传输</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-流量控制"><span class="nav-text">12. 流量控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-拥塞控制"><span class="nav-text">13. 拥塞控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-TCP与UDP报文首部"><span class="nav-text">14. TCP与UDP报文首部</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-DNS过程"><span class="nav-text">15. DNS过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-浏览器输入url发生了什么？"><span class="nav-text">16. 浏览器输入url发生了什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-ARQ协议"><span class="nav-text">17. ARQ协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#停止等待ARQ"><span class="nav-text">停止等待ARQ</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#连续ARQ"><span class="nav-text">连续ARQ</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-ARP协议"><span class="nav-text">18. ARP协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#19-ICMP协议"><span class="nav-text">19. ICMP协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Ping"><span class="nav-text">Ping</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TraceRoute"><span class="nav-text">TraceRoute</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#20-HTTP-首部-amp-amp-状态码"><span class="nav-text">20. HTTP 首部 &amp;&amp; 状态码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP首部"><span class="nav-text">HTTP首部</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP响应码"><span class="nav-text">HTTP响应码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#21-HTTP-与-HTTPS的区别"><span class="nav-text">21. HTTP 与 HTTPS的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#22-GET-与-POST的区别"><span class="nav-text">22. GET 与 POST的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23-HTTP-1-0、1-1、2-0"><span class="nav-text">23. HTTP 1.0、1.1、2.0</span></a></li></ol></div>
             
 
           </div>
