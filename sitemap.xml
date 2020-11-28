@@ -2,58 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/2020/10/30/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-MyBatis%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/</loc>
+    <loc>http://yoursite.com/2020/09/08/JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/</loc>
     
-    <lastmod>2020-11-02T08:49:59.212Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/10/30/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc>
-    
-    <lastmod>2020-11-02T08:49:14.191Z</lastmod>
+    <lastmod>2020-11-04T14:57:21.633Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/10/31/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-Spring%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/</loc>
+    <loc>http://yoursite.com/2020/07/21/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/</loc>
     
-    <lastmod>2020-11-01T03:50:02.162Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/10/24/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-MySQL/</loc>
-    
-    <lastmod>2020-10-30T07:13:09.530Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/10/12/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-Redis/</loc>
-    
-    <lastmod>2020-10-30T06:07:43.405Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/10/29/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-Java%E5%9F%BA%E7%A1%80/</loc>
-    
-    <lastmod>2020-10-30T02:54:16.881Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/10/27/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc>
-    
-    <lastmod>2020-10-29T06:13:24.352Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/10/23/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-%E5%90%8E%E7%AB%AF%E7%9B%B8%E5%85%B3/</loc>
-    
-    <lastmod>2020-10-23T09:45:24.572Z</lastmod>
+    <lastmod>2020-11-04T14:16:56.208Z</lastmod>
     
   </url>
   
@@ -82,20 +40,6 @@
     <loc>http://yoursite.com/2020/09/04/JVM-%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E4%B8%8E%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5/</loc>
     
     <lastmod>2020-09-12T01:42:46.730Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/09/08/JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/</loc>
-    
-    <lastmod>2020-09-08T07:45:09.329Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/07/21/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/</loc>
-    
-    <lastmod>2020-08-04T09:22:53.839Z</lastmod>
     
   </url>
   

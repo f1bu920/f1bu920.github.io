@@ -90,7 +90,7 @@
 <meta property="og:image" content="https://f1bu920.github.io/images/Java%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA%E5%9F%9F1.6.JPG">
 <meta property="og:image" content="https://f1bu920.github.io/images/Java%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA%E5%9F%9F1.8.JPG">
 <meta property="article:published_time" content="2020-07-21T02:51:31.000Z">
-<meta property="article:modified_time" content="2020-08-04T09:22:53.839Z">
+<meta property="article:modified_time" content="2020-11-04T14:16:56.208Z">
 <meta property="article:author" content="flbu">
 <meta property="article:tag" content="Java虚拟机">
 <meta property="article:tag" content="Java运行时数据区">
@@ -443,7 +443,7 @@
 <p>最后进行构造函数的初始化，即执行Class文件中的<code>&lt;init&gt;()</code>方法，一个对象就构造完成。</p>
 </li>
 </ol>
-<h4 id="对象的内存布局"><a href="#对象的内存布局" class="headerlink" title="对象的内存布局"></a>对象的内存布局</h4><p>对象在堆中的内存布局可分为三个部分：对象头、示例数据和对齐填充。</p>
+<h4 id="对象的内存布局"><a href="#对象的内存布局" class="headerlink" title="对象的内存布局"></a>对象的内存布局</h4><p>对象在堆中的内存布局可分为三个部分：对象头、实例数据和对齐填充。</p>
 <ul>
 <li>对象头分为两部分信息。第一类是用于存储对象自身的运行时数据，如哈希码、GC分代年龄、锁状态标记、线程持有的锁、偏向线程ID、偏向时间戳等，被称为“<code>Mark Word</code>”。第二类是类型指针，通过这个指针来确定该对象是哪个类的实例。如果是数组，还必须有一块用于记录数组长度的空间。</li>
 <li>示例数据是对象真正存储的有效信息。</li>
@@ -588,7 +588,7 @@
               
                 <a href="/archives/%7C%7Carchive">
               
-                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -599,7 +599,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -610,7 +610,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
