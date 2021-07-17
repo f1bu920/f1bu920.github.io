@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="锁," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="flbu blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Java中的锁本篇文章主要介绍juc包下与锁相关的API和组件，包括Lock接口、AQS抽象队列同步器、重入锁、读写锁和Condition接口。 Lock接口锁是用来控制多个线程访问资源的方式，除了synchronized之外，juc包下还提供了Lock接口来实现锁功能。其提供了与synchronized类似的同步功能，但需要显示的获取、释放锁，并且提供了更加强大的功能，如可中断的获取锁和超时获取">
+<meta name="keywords" content="锁">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java多线程-锁">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;09&#x2F;10&#x2F;Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E9%94%81&#x2F;index.html">
+<meta property="og:site_name" content="flbu blog">
+<meta property="og:description" content="Java中的锁本篇文章主要介绍juc包下与锁相关的API和组件，包括Lock接口、AQS抽象队列同步器、重入锁、读写锁和Condition接口。 Lock接口锁是用来控制多个线程访问资源的方式，除了synchronized之外，juc包下还提供了Lock接口来实现锁功能。其提供了与synchronized类似的同步功能，但需要显示的获取、释放锁，并且提供了更加强大的功能，如可中断的获取锁和超时获取">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https:&#x2F;&#x2F;f1bu920.github.io&#x2F;images&#x2F;AQS%E5%90%8C%E6%AD%A5%E9%98%9F%E5%88%97.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;f1bu920.github.io&#x2F;images&#x2F;AQS%E5%90%8C%E6%AD%A5%E9%98%9F%E5%88%97%E8%AE%BE%E7%BD%AE%E5%B0%BE%E8%8A%82%E7%82%B9.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;f1bu920.github.io&#x2F;images&#x2F;AQS%E7%8B%AC%E5%8D%A0%E5%BC%8F%E8%8A%82%E7%82%B9%E8%87%AA%E6%97%8B%E8%8E%B7%E5%8F%96%E5%90%8C%E6%AD%A5%E7%8A%B6%E6%80%81.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;f1bu920.github.io&#x2F;images&#x2F;AQS%E7%8B%AC%E5%8D%A0%E5%BC%8F%E8%8E%B7%E5%8F%96%E5%90%8C%E6%AD%A5%E7%8A%B6%E6%80%81%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;f1bu920.github.io&#x2F;images&#x2F;Condition%E7%AD%89%E5%BE%85.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;f1bu920.github.io&#x2F;images&#x2F;Condition%E9%80%9A%E7%9F%A5.png">
+<meta property="og:updated_time" content="2020-09-12T05:50:12.753Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;f1bu920.github.io&#x2F;images&#x2F;AQS%E5%90%8C%E6%AD%A5%E9%98%9F%E5%88%97.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/09/10/Java多线程-锁/"/>
+
+
+
+
+
+  <title>Java多线程-锁 | flbu blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+<a href="https://github.com/f1bu920" target="_blank" rel="noopener" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">flbu blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">记录学习历程</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tag"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" target="_blank" rel="noopener" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/10/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E9%94%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="flbu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flbu blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java多线程-锁</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-10T16:57:52+08:00">
+                2020-09-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">Java多线程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Java中的锁"><a href="#Java中的锁" class="headerlink" title="Java中的锁"></a>Java中的锁</h1><p>本篇文章主要介绍juc包下与锁相关的API和组件，包括<strong><code>Lock</code>接口、<code>AQS</code>抽象队列同步器、重入锁、读写锁和<code>Condition</code>接口。</strong></p>
+<h2 id="Lock接口"><a href="#Lock接口" class="headerlink" title="Lock接口"></a>Lock接口</h2><p>锁是用来控制多个线程访问资源的方式，除了<code>synchronized</code>之外，juc包下还提供了<code>Lock</code>接口来实现锁功能。其提供了与<code>synchronized</code>类似的同步功能，但<strong>需要显示的获取、释放锁</strong>，并且提供了更加强大的功能，如<strong>可中断的获取锁和超时获取锁等</strong>。</p>
+<p><code>Lock</code>接口提供了<code>synchronized</code>关键字不具备的特性：</p>
+<table>
+<thead>
+<tr>
+<th align="center">特性</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">尝试非阻塞的获取锁</td>
+<td align="center">当前线程尝试获取锁，如果锁这一时刻没有被其他线程获取到，则成功获取并持有锁</td>
+</tr>
+<tr>
+<td align="center">可中断的获取锁</td>
+<td align="center">获取到锁的线程能响应中断，拥有锁的线程被中断时，会抛出中断异常并释放锁</td>
+</tr>
+<tr>
+<td align="center">超时获取锁</td>
+<td align="center">在指定时间内获取锁，如果超时仍未获取锁，则返回</td>
+</tr>
+</tbody></table>
+<p><code>Lock</code>接口的默认实现类为<code>ReentrantLock</code>，<code>部分API如下：</code></p>
+<table>
+<thead>
+<tr>
+<th align="center">void lock()</th>
+<th align="center">获取锁，调用该方法的线程尝试获取锁，获取成功后返回</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">void lockInterruptibly() throws InterruptedException</td>
+<td align="center">可中断的获取锁</td>
+</tr>
+<tr>
+<td align="center">boolean tryLock()</td>
+<td align="center">尝试非阻塞的获取锁，调用此方法后立即返回</td>
+</tr>
+<tr>
+<td align="center">boolean tryLock(long var1, TimeUnit var3) throws InterruptedException</td>
+<td align="center">超时获取锁，有三种可能会返回：超时、成功获取锁、被中断</td>
+</tr>
+<tr>
+<td align="center">void unlock()</td>
+<td align="center">释放锁</td>
+</tr>
+<tr>
+<td align="center">Condition newCondition()</td>
+<td align="center">获取等待通知组件，该组件和当前的锁绑定，只有获取了锁才能调用此方法，并且调用后释放锁</td>
+</tr>
+</tbody></table>
+<a id="more"></a>
+
+<h2 id="抽象队列同步器AQS"><a href="#抽象队列同步器AQS" class="headerlink" title="抽象队列同步器AQS"></a>抽象队列同步器AQS</h2><p><strong>抽象队列同步器是用来构造锁和其他同步组件的基础框架，其使用了一个<code>private volatile int</code>类型的成员变量<code>state</code>表示同步状态，通过内置的FIFO队列来完成资源获取线程的排队。</strong></p>
+<p><strong>同步器是基于模板方法设计的，子类通过继承<code>AbstractQueuedSynchronizer</code>并实现它的同步方法来管理同步状态。同步器提供了三个安全的方法来对同步状态进行更改：<code>getState</code>、<code>setState</code>、<code>compareAndSetState(int expect,int update)</code>。</strong>子类推荐被定义为同步组件的一个静态内部类，其定义了一些获取和释放同步状态的方法。<strong>同步器既可以支持独占式获取同步状态，也可以支持共享式获取同步状态，这样可以实现不同的同步组件，如<code>ReentrantLock</code>、<code>ReentrantReadWriteLock</code>、<code>CountDownLatch</code>等</strong>。</p>
+<p><strong>同步器是实现锁的关键，利用同步器来实现锁的语义。锁是面向使用者的，定义了锁与使用者交互的接口，隐藏了实现细节；同步器是面向锁的实现者的，简化了锁的实现方式，屏蔽了同步状态管理、线程排队、等待与唤醒等底层操作。</strong></p>
+<h3 id="队列同步器的接口"><a href="#队列同步器的接口" class="headerlink" title="队列同步器的接口"></a>队列同步器的接口</h3><p>同步器是基于模板方法设计的，所以<strong>通过继承同步器并重写指定的方法，将同步器子类组合在自定义同步组件中，并调用同步器所提供的模板方法，就会调用我们重写的方法，从而实现自定义同步组件的逻辑</strong>。</p>
+<p>重写指定的方法时，需要使用下面三个方法对同步状态进行访问和修改：</p>
+<ul>
+<li>getState()</li>
+<li>setState()</li>
+<li>compareAndSetState(int expect,int update)</li>
+</ul>
+<p>同步器可供重写的方法如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">方法名称</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">protected boolean tryAcquire(int arg)</td>
+<td align="center">独占式的获取同步状态。实现该方法需要查询当前状态并判断当前状态是否符合预期，在进行CAS设置同步状态</td>
+</tr>
+<tr>
+<td align="center">protected boolean tryRelease(int arg)</td>
+<td align="center">独占式的释放同步状态</td>
+</tr>
+<tr>
+<td align="center">protected int tryAcquireShared(int arg)</td>
+<td align="center">共享式的获取同步状态，返回大于等于0的值，获取成功，否则获取失败</td>
+</tr>
+<tr>
+<td align="center">protected boolean tryReleaseShared(int arg)</td>
+<td align="center">共享式释放同步状态</td>
+</tr>
+<tr>
+<td align="center">protected boolean isHeldExclusively()</td>
+<td align="center">当前同步器是否在独占式状态下被线程占用</td>
+</tr>
+</tbody></table>
+<p>实现自定义同步组件时，会调用同步器的模板方法：</p>
+<table>
+<thead>
+<tr>
+<th align="center">方法名称</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">public final void acquire(int arg)</td>
+<td align="center">独占式获取锁。如果获取成功，则返回；否则进入同步队列等待。会调用重写的tryAcquire()方法</td>
+</tr>
+<tr>
+<td align="center">public final void acquireInterruptibly(int arg)</td>
+<td align="center">与acquire()方法相同，但响应中断。</td>
+</tr>
+<tr>
+<td align="center">public final boolean tryAcquireNanos(int arg, long nanosTimeout)</td>
+<td align="center">在acquireInterruptibly(int arg)基础上增加了超时限制</td>
+</tr>
+<tr>
+<td align="center">public final boolean release(int arg)</td>
+<td align="center">独占式释放同步状态，在释放后会唤醒同步队列中下一个节点</td>
+</tr>
+<tr>
+<td align="center">public final void acquireShared(int arg)</td>
+<td align="center">共享式获取同步状态，如果未获取到，则进入同步队列等待</td>
+</tr>
+<tr>
+<td align="center">public final void acquireSharedInterruptibly(int arg)</td>
+<td align="center">在acquireShared(int arg)基础上可响应中断</td>
+</tr>
+<tr>
+<td align="center">public final boolean tryAcquireSharedNanos(int arg, long nanosTimeout)</td>
+<td align="center">在acquireSharedInterruptibly(int arg)基础上增加了超时限制</td>
+</tr>
+<tr>
+<td align="center">public final boolean releaseShared(int arg)</td>
+<td align="center">共享式释放同步状态</td>
+</tr>
+<tr>
+<td align="center">public final Thread getFirstQueuedThread()</td>
+<td align="center">获取同步队列上下一个等待线程</td>
+</tr>
+</tbody></table>
+<p>同步器提供的模板方法可以分为三类：独占式获取和释放同步状态、共享式获取和释放同步状态、查询同步队列中等待线程情况。通过这些模板方法，自定义同步组件可以实现自己的语义。</p>
+<h3 id="队列同步器的实现"><a href="#队列同步器的实现" class="headerlink" title="队列同步器的实现"></a>队列同步器的实现</h3><p>队列同步器的实现主要分为<strong>同步队列、独占式同步状态的获取与释放、共享式同步状态的获取与释放以及超时获取同步状态</strong></p>
+<h4 id="同步队列"><a href="#同步队列" class="headerlink" title="同步队列"></a>同步队列</h4><p><strong>同步器依赖内部的一个FIFO的双向队列来完成线程的排队。当前线程获取同步状态失败时，同步器将当前线程和等待状态等信息构造成一个<code>Node</code>节点加入到同步队列中，并阻塞当前线程。当释放同步状态时，会唤醒同步队列首节点线程，使其再次尝试获取同步状态。</strong></p>
+<p><img src="https://f1bu920.github.io/images/AQS%E5%90%8C%E6%AD%A5%E9%98%9F%E5%88%97.jpg" alt=""></p>
+<p>节点时构成同步队列的基础，同步器记录首节点(head)和尾节点(tail)，没有成功获取同步状态的线程会被构造出节点添加到同步队列的尾部。<strong>同步器提供了一个基于CAS的安全设置尾节点的方法：<code>compareAndSetTail(Node expect,Node update)</code>，设置成功后，当前节点才会与之前的尾节点建立关联。</strong></p>
+<p><img src="https://f1bu920.github.io/images/AQS%E5%90%8C%E6%AD%A5%E9%98%9F%E5%88%97%E8%AE%BE%E7%BD%AE%E5%B0%BE%E8%8A%82%E7%82%B9.jpg" alt=""></p>
+<p>同步队列遵循FIFO规则，释放同步状态时，会唤醒后继节点，而<strong>后继节点在获取同步状态后会把自己设置为首节点，注意因为只有一个线程能成功获取同步状态，所以不需要通过CAS来保证安全性</strong>。</p>
+<h4 id="独占式获取和释放同步状态"><a href="#独占式获取和释放同步状态" class="headerlink" title="独占式获取和释放同步状态"></a>独占式获取和释放同步状态</h4><p>通过调用同步器的<code>acquire()</code>方法来独占式的获取同步状态。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">acquire</span><span class="params">(<span class="keyword">int</span> arg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.tryAcquire(arg) &amp;&amp; <span class="keyword">this</span>.acquireQueued(<span class="keyword">this</span>.addWaiter(AbstractQueuedSynchronizer.Node.EXCLUSIVE), arg)) &#123;</span><br><span class="line">        selfInterrupt();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该方法首先调用自定义的<code>tryAcquire()</code>方法尝试获取同步状态，如果同步状态获取失败，则构造成<code>Node</code>节点并通过<code>addWaiter()</code>方法添加到同步队列尾部，最后通过<code>acquireQueued</code>方法使得该<strong>节点以“死循环”的方式尝试获取同步状态，如果获取不到则阻塞当前线程。而被阻塞线程的唤醒主要靠前驱节点出队和阻塞线程被中断来实现。</strong></p>
+<p><img src="https://f1bu920.github.io/images/AQS%E7%8B%AC%E5%8D%A0%E5%BC%8F%E8%8A%82%E7%82%B9%E8%87%AA%E6%97%8B%E8%8E%B7%E5%8F%96%E5%90%8C%E6%AD%A5%E7%8A%B6%E6%80%81.png" alt=""></p>
+<p><strong>节点进入同步队列后，就进入一个自旋的过程，不断检查前驱节点是否是头节点，如果是，则尝试获取前驱节点，否则处于等待状态。</strong></p>
+<p><img src="https://f1bu920.github.io/images/AQS%E7%8B%AC%E5%8D%A0%E5%BC%8F%E8%8E%B7%E5%8F%96%E5%90%8C%E6%AD%A5%E7%8A%B6%E6%80%81%E6%B5%81%E7%A8%8B.png" alt=""></p>
+<p>总结：</p>
+<p><strong>在获取同步状态时，同步器维护一个同步状态，获取同步状态失败的线程都会被加入到队列中并在队列中进行自旋；移出队列的条件是前驱节点是头节点并且成功获取了同步状态。在释放同步状态时，调用<code>tryRelease()</code>方法释放同步状态，然后唤醒头节点的后继节点。</strong></p>
+<h4 id="共享式获取和释放同步状态"><a href="#共享式获取和释放同步状态" class="headerlink" title="共享式获取和释放同步状态"></a>共享式获取和释放同步状态</h4><p>共享式获取和独占式获取的区别在于同一时刻能否有多个线程同时获取到同步状态。</p>
+<p><strong>共享式访问资源时，其他共享式访问均被允许，而独占式访问被阻塞；独占式访问资源时，同一时刻其他访问均被阻塞。通过调用同步器的<code>acquireShared()</code>方法可以共享式的获取同步状态。</strong></p>
+<p>在<code>acquireShared()</code>方法中，同步器调用<code>tryAcquiredShared()</code>方法尝试获取同步状态，当返回值大于等于0时，成功获取同步状态；否则失败进入自旋。在自旋过程中，如果当前节点的前驱节点为头节点，尝试获取同步状态，获取成功则退出自旋。</p>
+<p>共享式通过调用<code>releaseShared()</code>方法释放同步状态，释放同步状态后，会唤醒后续在等待的节点，<strong>共享式释放必须保证同步状态安全释放，因为释放同步状态的操作可能同时来自多个线程，一般通过循环和CAS来保证。</strong></p>
+<h4 id="独占式超时获取同步状态"><a href="#独占式超时获取同步状态" class="headerlink" title="独占式超时获取同步状态"></a>独占式超时获取同步状态</h4><p>同步器通过调用<code>doAcquireNanos(int arg, long nanosTimeout) throws InterruptedException</code>方法可以超时获取同步状态。此方法在可响应中断的基础上，增加了超时获取特性。</p>
+<p>该方法在自选过程中，当前节点的前驱节点为头节点时，尝试获取同步状态，获取成功则从方法返回。<strong>如果获取失败，则判断是否超时，如果没有超时，重新计算超时间隔<code>nanosTimeout</code>，然后使当前线程等待<code>nanosTimeout</code>纳秒。如果<code>nanosTimeout</code>小于等于1000纳秒，将不会使线程进入超市等待，而是进行自旋。因为超时非常短的情况下，进入超时等待会变得不精确。</strong></p>
+<h2 id="重入锁"><a href="#重入锁" class="headerlink" title="重入锁"></a>重入锁</h2><p>重入锁<code>ReentrantLock</code>，表示该锁能够支持对一个资源重复加锁，此外，<code>ReentrantLock</code>还支持公平锁和非公平锁。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ReentrantLock</span><span class="params">(<span class="keyword">boolean</span> fair)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.sync = (ReentrantLock.Sync)(fair ? <span class="keyword">new</span> ReentrantLock.FairSync() : <span class="keyword">new</span> ReentrantLock.NonfairSync());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="重进入"><a href="#重进入" class="headerlink" title="重进入"></a>重进入</h3><p>与<code>synchronized</code>隐式支持重进入不同，<strong><code>ReentrantLock</code>再次获取同步状态时，会判断当前线程是否是获取锁的线程，如果是获取锁的线程再次请求，则将同步状态值进行增加并返回true，表示获取成功。</strong></p>
+<p><strong><code>ReentrantLock</code>在释放同步状态时，会减少同步状态值。如果该锁被获取了n次，那么前n-1次释放都会返回false，只有同步状态值为0时，才会返回true，表示释放成功。</strong></p>
+<h3 id="公平性与非公平性"><a href="#公平性与非公平性" class="headerlink" title="公平性与非公平性"></a>公平性与非公平性</h3><p>公平性指的是锁的获取顺序与请求的时间顺序，也就是FIFO。</p>
+<p><strong>对于非公平锁，只要CAS设置同步状态成功，即表示成功获取了锁；而对于非公平锁，在同步队列中时，会判断是否有前驱节点，如果有前驱节点，则需要先等待前驱节点获取锁之后才能尝试获取锁。</strong></p>
+<p><strong>一般情况下，非公平锁性能会比公平锁更好。公平锁保证了锁的获取按照FIFO原则，而代价是大量的线程切换；非公平锁虽然可能会造成线程饥饿，但极少的线程切换保证了更大的吞吐量。</strong></p>
+<h2 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h2><p><strong>读写锁<code>ReentrantReadWriteLock</code>在同一时刻允许多个读线程访问，但在写线程访问时，所有的读线程和其他写线程均被阻塞。读写锁维护了一对锁，一个读锁和一个写锁，通过分离读锁和写锁，使得并发性能相比排它锁有很大的提升。</strong></p>
+<p><code>ReentrantReadWriteLock</code>特性：</p>
+<table>
+<thead>
+<tr>
+<th align="center">特性</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">公平性选择</td>
+<td align="center">支持非公平（默认）和公平的锁获取模式，吞吐量还是非公平优于公平</td>
+</tr>
+<tr>
+<td align="center">重入性</td>
+<td align="center">该锁支持重入锁，以读写线程为例：读线程在获取读锁之后，能够再次读取读锁，而写线程在获取写锁之后可以同时再次获取读锁和写锁</td>
+</tr>
+<tr>
+<td align="center">锁降级</td>
+<td align="center">遵循获取写锁，获取读锁再释放写锁的次序，写锁能够降级为读锁</td>
+</tr>
+</tbody></table>
+<h3 id="读写锁接口"><a href="#读写锁接口" class="headerlink" title="读写锁接口"></a>读写锁接口</h3><p><code>ReadWriteLock</code>接口定义了获取读锁和获取写锁的方法，即<code>readLock()</code>方法和<code>writeLock</code>方法。而<code>ReentrantReadWriteLock</code>还定义了一些监控内部工作状态的方法。</p>
+<table>
+<thead>
+<tr>
+<th align="center">方法名</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">int getReadLockCount()</td>
+<td align="center">返回当前读锁被获取的次数，不等于获取读锁的线程数</td>
+</tr>
+<tr>
+<td align="center">int getReadHoldCount()</td>
+<td align="center">返回当前线程获取读锁的次数，使用ThreadLocal保存</td>
+</tr>
+<tr>
+<td align="center">boolean isWriteLocked()</td>
+<td align="center">判断写锁是否被获取</td>
+</tr>
+<tr>
+<td align="center">int getWriteHoldCount()</td>
+<td align="center">返回当前写锁被获取的次数</td>
+</tr>
+</tbody></table>
+<h3 id="读写锁的实现"><a href="#读写锁的实现" class="headerlink" title="读写锁的实现"></a>读写锁的实现</h3><p><code>ReentrantReadWriteLock</code>的 实现主要包括<strong>读写状态的设计、写锁的获取与释放、读锁的获取与释放、锁降级。</strong></p>
+<h4 id="读写状态的设计"><a href="#读写状态的设计" class="headerlink" title="读写状态的设计"></a>读写状态的设计</h4><p>读写锁的的读写状态就是同步器的同步状态，需要在一个变量<code>private int volatile state</code>上维护多个读线程和一个写线程的状态，所以需要按位切割使用这个变量。</p>
+<p><strong>读写锁将一个32位变量分为两个部分，高16位表示读，低16位表示写。读写锁通过位运算迅速确定读和写各自的状态，当同步状态不为0，写状态(高16位)为0时，代表读锁被获取。</strong></p>
+<h4 id="写锁的获取与释放"><a href="#写锁的获取与释放" class="headerlink" title="写锁的获取与释放"></a>写锁的获取与释放</h4><p><strong>写锁是一个支持重进入的排它锁。如果当前线程获取写锁，则增加写状态。如果当前线程在获取写锁时，读锁已被获取或者该线程不是已经获取写锁的线程，则当前线程进入等待</strong>。</p>
+<p>写锁的释放与<code>ReentrantLock</code>一致，每次释放时减少写状态，当写状态为0时代表写锁已被释放，从而等待的读写线程能够继续访问读写锁。</p>
+<h4 id="读锁的获取与释放"><a href="#读锁的获取与释放" class="headerlink" title="读锁的获取与释放"></a>读锁的获取与释放</h4><p><strong>读锁是一个支持重进入的共享锁，能够被多个读线程获取，并线程安全的增加读状态。如果当前线程已获取读锁，则增加读状态；如果当前线程在获取读锁时，写锁已被其他线程获取，则进入等待；如果当前线程获取了写锁或写锁未获取，则当前线程(CAS)增加读状态，成功获取读锁。</strong></p>
+<p>读锁的释放每次均线程安全的减少读状态。</p>
+<h4 id="锁降级"><a href="#锁降级" class="headerlink" title="锁降级"></a>锁降级</h4><p>锁降级指的是写锁降级为读锁，具体就是把持当前拥有的写锁，再获取到读锁，随后释放写锁的过程。</p>
+<p>锁降级中读锁的获取是必须的，是为了保证数据的可见性。如果不获取读锁而直接释放写锁，那么其他写线程可能会获取写锁修改数据。如果获取了读锁，那么其他写线程就会被阻塞。 </p>
+<h2 id="Condition接口"><a href="#Condition接口" class="headerlink" title="Condition接口"></a>Condition接口</h2><p>任意一个Java对象都有一套方法<code>wait()、notify()、notifyAll()</code>等，可以与<code>synchronized</code>配合实现等待/通知模式。Condition接口也提供了类似的方法来配合Lock接口实现等待/通知模式。</p>
+<h3 id="Condition接口方法"><a href="#Condition接口方法" class="headerlink" title="Condition接口方法"></a>Condition接口方法</h3><p>Condition对象是通过<code>Lock</code>接口的<code>newCondition()</code>方法构造出来的，所以Condition对象依赖<code>Lock</code>对象。</p>
+<p>当前线程调用<code>await()</code>方法后，会释放锁并等待；其他线程调用<code>signal()</code>方法通知当前线程后，当前线程才会从<code>await()</code>方法返回，并且在返回前已经获得了锁。</p>
+<table>
+<thead>
+<tr>
+<th align="center">方法名</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">void await() throws InterruptedException</td>
+<td align="center">当前线程进入等待状态直到被通知或者被中断，返回时代表已经获得了Condition对象对应的锁</td>
+</tr>
+<tr>
+<td align="center">void awaitUninterruptibly()</td>
+<td align="center">当前线程进入等待直到被通知，不响应中断</td>
+</tr>
+<tr>
+<td align="center">long awaitNanos(long var1) throws InterruptedException</td>
+<td align="center">当前线程进入等待状态直到被通知、中断、超时</td>
+</tr>
+<tr>
+<td align="center">boolean awaitUntil(Date var1) throws InterruptedException</td>
+<td align="center">当前线程进入等待状态直到被通知、中断或者到达某个时间</td>
+</tr>
+<tr>
+<td align="center">void signal()</td>
+<td align="center">唤醒一个等待在Condition上的线程，返回前必须获得与Condition关联的锁</td>
+</tr>
+<tr>
+<td align="center">void signalAll()</td>
+<td align="center">唤醒所有等待在Condition上的线程</td>
+</tr>
+</tbody></table>
+<h3 id="Condition实现"><a href="#Condition实现" class="headerlink" title="Condition实现"></a>Condition实现</h3><p><code>ConditionObject</code>是AQS的内部类，每个Condition对象都有一个队列，该队列是实现等待/通知的关键。Condition的实现主要包括：<strong>等待队列、等待和通知。</strong></p>
+<h4 id="等待队列"><a href="#等待队列" class="headerlink" title="等待队列"></a>等待队列</h4><p>等待队列和同步队列中的节点类型都是同步器的静态内部类<code>AbstractQueuedSynchronizer.Node</code>。<strong>等待队列是一个FIFO的队列，在队列中的每个节点都包含了一个线程引用，这个线程就是等待在Condition上的线程，如果一个线程调用了<code>await()</code>方法，那么该线程就会释放锁、构造成节点并加入等待队列。</strong></p>
+<p><strong>一个Condition包含一个等待队列，其记录了等待队列的首尾节点。</strong></p>
+<h4 id="等待"><a href="#等待" class="headerlink" title="等待"></a>等待</h4><p>调用<code>await()</code>方法，会使当前线程进入等待队列并释放锁，<strong>相当于同步队列的首节点移动到等待队列的尾节点处。</strong></p>
+<p><img src="https://f1bu920.github.io/images/Condition%E7%AD%89%E5%BE%85.png" alt=""></p>
+<p>调用<code>await()</code>方法的线程会被构造成节点并添加到等待队列的尾部，然后释放同步状态，唤醒后续节点。</p>
+<h4 id="通知"><a href="#通知" class="headerlink" title="通知"></a>通知</h4><p>调用<code>signal()</code>方法，将会唤醒等待队列的首节点，并将节点移到同步队列中去。</p>
+<p><img src="https://f1bu920.github.io/images/Condition%E9%80%9A%E7%9F%A5.png" alt=""></p>
+<p>节点加入到同步队列中去后，进而调用同步器的方法开始竞争同步状态，成功获取同步状态后，被唤醒的线程将从之前的<code>await()</code>处返回，此时已经成功获取了锁。</p>
+
+      
+    </div>
+    
+    
+    
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+  
+</div>
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E9%94%81/" rel="tag"><i class="fa fa-tag"></i>锁</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/09/08/JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/" rel="next" title="JVM类加载机制">
+                <i class="fa fa-chevron-left"></i> JVM类加载机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/09/13/ConcurrentHashMap%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/" rel="prev" title="ConcurrentHashMap源码学习">
+                ConcurrentHashMap源码学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">flbu</p>
+              <p class="site-description motion-element" itemprop="description">flbu的技术博客</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7Carchive">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/f1bu920" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:bufeilong823920@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java中的锁"><span class="nav-text">Java中的锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Lock接口"><span class="nav-text">Lock接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象队列同步器AQS"><span class="nav-text">抽象队列同步器AQS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#队列同步器的接口"><span class="nav-text">队列同步器的接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#队列同步器的实现"><span class="nav-text">队列同步器的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#同步队列"><span class="nav-text">同步队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#独占式获取和释放同步状态"><span class="nav-text">独占式获取和释放同步状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#共享式获取和释放同步状态"><span class="nav-text">共享式获取和释放同步状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#独占式超时获取同步状态"><span class="nav-text">独占式超时获取同步状态</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重入锁"><span class="nav-text">重入锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#重进入"><span class="nav-text">重进入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#公平性与非公平性"><span class="nav-text">公平性与非公平性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读写锁"><span class="nav-text">读写锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#读写锁接口"><span class="nav-text">读写锁接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读写锁的实现"><span class="nav-text">读写锁的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读写状态的设计"><span class="nav-text">读写状态的设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#写锁的获取与释放"><span class="nav-text">写锁的获取与释放</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#读锁的获取与释放"><span class="nav-text">读锁的获取与释放</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#锁降级"><span class="nav-text">锁降级</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Condition接口"><span class="nav-text">Condition接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Condition接口方法"><span class="nav-text">Condition接口方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Condition实现"><span class="nav-text">Condition实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#等待队列"><span class="nav-text">等待队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#等待"><span class="nav-text">等待</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通知"><span class="nav-text">通知</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">flbu</span>
+
+  
+</div>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站总访问量<span id="busuanzi_value_site_uv"></span>次
+</span>
+</div>
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+-->
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
