@@ -1,7 +1,7 @@
 ---
 title: Java多线程-volatile
 date: 2020-04-22 15:16:25
-categories: Leetcode
+categories: Java多线程
 tags:
   - Java
   - 多线程
