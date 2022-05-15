@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Git," />
+  <meta name="keywords" content="系统设计," />
 
 
 
@@ -81,15 +81,15 @@
 
 
 
-<meta name="description" content="下载与安装GitGit下载，在git Bash下执行git --version，返回Git版本。">
-<meta name="keywords" content="Git">
+<meta name="description" content="秒杀系统设计秒杀系统是一种应用广泛的高并发读写场景，秒杀就是在同一个时刻有大量的请求争抢购买同一个商品并完成交易的过程，对高性能、一致性、高可用要求较高，本文主要记录个人学习秒杀系统设计的收获与思考。 秒杀系统主要就是解决两个问题，一个高并发读，一个高并发写。并发读的优化思路就是尽量减少用户到服务端来读数据，或者读更少的数据；并发写的优化思路也是一样，同时还需要针对系统设计一些保护措施和兜底方案。">
+<meta name="keywords" content="系统设计">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Git笔记">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;23&#x2F;Git%E7%AC%94%E8%AE%B0&#x2F;index.html">
+<meta property="og:title" content="秒杀系统设计">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2021&#x2F;11&#x2F;04&#x2F;%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1&#x2F;index.html">
 <meta property="og:site_name" content="flbu blog">
-<meta property="og:description" content="下载与安装GitGit下载，在git Bash下执行git --version，返回Git版本。">
+<meta property="og:description" content="秒杀系统设计秒杀系统是一种应用广泛的高并发读写场景，秒杀就是在同一个时刻有大量的请求争抢购买同一个商品并完成交易的过程，对高性能、一致性、高可用要求较高，本文主要记录个人学习秒杀系统设计的收获与思考。 秒杀系统主要就是解决两个问题，一个高并发读，一个高并发写。并发读的优化思路就是尽量减少用户到服务端来读数据，或者读更少的数据；并发写的优化思路也是一样，同时还需要针对系统设计一些保护措施和兜底方案。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-14T07:59:20.000Z">
+<meta property="og:updated_time" content="2021-11-20T08:59:49.611Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/11/23/Git笔记/"/>
+  <link rel="canonical" href="http://yoursite.com/2021/11/04/秒杀系统设计/"/>
 
 
 
 
 
-  <title>Git笔记 | flbu blog</title>
+  <title>秒杀系统设计 | flbu blog</title>
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/23/Git%E7%AC%94%E8%AE%B0/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/11/04/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="flbu">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Git笔记</h1>
+          <h1 class="post-title" itemprop="name headline">秒杀系统设计</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-23T17:47:42+08:00">
-                2019-11-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-11-04T14:23:07+08:00">
+                2021-11-04
               </time>
             
 
@@ -349,8 +349,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Git/" itemprop="url" rel="index">
-                    <span itemprop="name">Git</span>
+                  <a href="/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" itemprop="url" rel="index">
+                    <span itemprop="name">系统设计</span>
                   </a>
                 </span>
 
@@ -386,59 +386,102 @@
       
 
       
-        <h3 id="下载与安装Git"><a href="#下载与安装Git" class="headerlink" title="下载与安装Git"></a>下载与安装Git</h3><p><a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git" target="_blank" rel="noopener">Git下载</a>，在git Bash下执行<code>git --version</code>，返回Git版本。</p>
-<a id="more"></a> 
-
-<h3 id="最小配置"><a href="#最小配置" class="headerlink" title="最小配置"></a>最小配置</h3><h4 id="配置user信息"><a href="#配置user信息" class="headerlink" title="配置user信息"></a>配置user信息</h4><ul>
-<li><p>配置user.name和user.email：</p>
-<blockquote>
-<p>git conﬁg –global  user.name ‘your_name’</p>
-<p>git conﬁg –global  user.email ‘<a href="mailto:your_email@domain.com" target="_blank" rel="noopener">your_email@domain.com</a>‘</p>
-</blockquote>
-</li>
-</ul>
-<h4 id="config的三个作用域"><a href="#config的三个作用域" class="headerlink" title="config的三个作用域"></a>config的三个作用域</h4><ul>
-<li>缺省默认为local</li>
-</ul>
-<blockquote>
-<p>git config –local：只对本地仓库生效</p>
-<p>git config –global：对登录用户所有仓库生效</p>
-<p>git config –system：对系统所有用户生效</p>
-</blockquote>
+        <h1 id="秒杀系统设计"><a href="#秒杀系统设计" class="headerlink" title="秒杀系统设计"></a>秒杀系统设计</h1><p>秒杀系统是一种应用广泛的高并发读写场景，秒杀就是在同一个时刻有大量的请求争抢购买同一个商品并完成交易的过程，对高性能、一致性、高可用要求较高，本文主要记录个人学习秒杀系统设计的收获与思考。</p>
+<p>秒杀系统主要就是解决两个问题，<strong>一个高并发读，一个高并发写</strong>。并发读的优化思路就是尽量减少用户到服务端来读数据，或者读更少的数据；并发写的优化思路也是一样，同时还需要针对系统设计一些保护措施和兜底方案。从架构上就是要保证用户请求的数据尽量少、请求数尽量少、路径尽量短、依赖尽量少、避免单点。</p>
 <ul>
-<li><p>显示config的配置，加上<code>--list</code></p>
-<blockquote>
-<p> git conﬁg –list –local  </p>
-<p> git conﬁg –list –global </p>
-<p> git conﬁg –list –system</p>
-</blockquote>
+<li><strong>高性能</strong>。秒杀设计大量的读写操作，对性能要求极高。可以从数据的动静分离方案、热点的发现与隔离、请求的削峰与分层过滤、服务的优化等角度考虑。</li>
+<li><strong>一致性</strong>。一致性主要体现在秒杀场景中的库存控制方面，既不能多卖也不能少卖。</li>
+<li><strong>高可用</strong>。高可用主要是保证系统在异常情况时的可用性和正确性，需要设计异常处理和兜底方案。</li>
+</ul>
+<a id="more"></a>
+
+<h3 id="秒杀设计原则"><a href="#秒杀设计原则" class="headerlink" title="秒杀设计原则"></a>秒杀设计原则</h3><ul>
+<li>请求数据尽量少。数据在网络中传输需要时间，服务端在处理数据时需要做压缩和字符编码，并且系统间调用RPC会涉及序列化与反序列化，增大对CPU的压力。</li>
+<li>请求数尽量少。建立连接需要做三次握手，前端渲染需要串行加载，请求的域名不同的话还需要进行DNS解析，耗时更久。</li>
+<li>路径尽量短。路径指的是请求经过的节点数，每经过一个节点都需要建立一次Socket连接，并且节点越多，不确定性越大。缩短路径不仅可以增加可用性，还可以提升性能（减少序列化和反序列化、减少网络传输延时）。可以把强依赖的服务合并将RPC请求变成本地方法调用。</li>
+<li>依赖尽量少。对系统进行分级，秒杀页面对商品信息、用户信息是强依赖，但对优惠券、成交列表等是弱依赖，对低依赖的系统必要时可以降级。</li>
+<li>避免单点。尽量将服务无状态化，避免将服务与机器进行绑定。对于存储服务这种与机器绑定的情况，可以通过冗余备份的方式来解决单点问题。</li>
+</ul>
+<p>可以将秒杀系统独立成一个服务,  方便做针对性优化, 且秒杀系统可以独立部署, 不会影响正常商品的集群负载.   热点数据可以放到缓存中,  提高读取性能.  </p>
+<p>对页面动静分离, 用户刷新时不重新加载整个页面;  对秒杀商品进本地缓存, 不需要再去Redis集群中读取,  这种情况不适用秒杀商品特别多的场景;  增加系统限流.</p>
+<h3 id="数据的动静分离"><a href="#数据的动静分离" class="headerlink" title="数据的动静分离"></a>数据的动静分离</h3><h5 id="动静数据的划分"><a href="#动静数据的划分" class="headerlink" title="动静数据的划分"></a>动静数据的划分</h5><p>动静分离就是指把用户请求的数据划分为动态数据和静态数据，主要区别就是看页面中的数据是否与访问者的个性化数据相关。例如媒体网站首页无论谁访问看到的内容都是一样的，这就是典型的静态数据，而淘宝的首页每个人看到的内容都是不同的这就是动态数据。<strong>分离了动静数据，就可以对分离出来的静态数据做缓存，提高静态数据的访问效率。</strong></p>
+<h5 id="静态数据的存储"><a href="#静态数据的存储" class="headerlink" title="静态数据的存储"></a>静态数据的存储</h5><p>缓存静态数据，可以<strong>把静态数据缓存在离用户最近的地方，如用户浏览器、CDN或者服务的Cache中；静态化改造直接缓存HTTP连接而不是仅仅缓存数据，利用Web代理服务器根据请求的url直接取出HTTP响应头和响应体后直接返回；不同语言写的Cache层缓存效率不同，如Java不擅长处理大量连接的请求，因为每个连接一个线程消耗内存较高，可以把缓存放在Web服务器上（如Nginx、Apache）。</strong></p>
+<h5 id="动静分离的架构方案"><a href="#动静分离的架构方案" class="headerlink" title="动静分离的架构方案"></a>动静分离的架构方案</h5><ul>
+<li><p><strong>实体机单机部署</strong></p>
+<p>将虚拟机改为实体机，增大Cache容量，并且用一致性Hash增大命中率。设置多个Cache组，达到命中率和访问热点的平衡。</p>
+<p>实体机单机部署<strong>没有网络瓶颈且能够使用大内存，但会造成CPU的浪费</strong>，因为单个Java进程很难用完整个实体机的CPU。另一个缺点就是<strong>运维复杂度高，一个实体机上既部署了Java应用又部署了缓存</strong>。</p>
 </li>
-<li><p>清除，加上 <code>--unset</code></p>
-<blockquote>
-<p>​git conﬁg –unset –local user.name  </p>
-<p>git conﬁg –unset –global user.name </p>
-<p>git conﬁg –unset –system user.name</p>
-</blockquote>
+<li><p><strong>统一Cache层</strong></p>
+<p>统一Cache指的是将单机的Cache统一分离成单独的Cache集群。    Cache层统一管理降低了运维复杂度，可以降低多个应用接入的成本，最大化利用内存。但因为缓存更加集中，网络可能会成为瓶颈。</p>
 </li>
-<li><p>优先级：local&gt;global&gt;system</p>
+<li><p><strong>上CDN</strong></p>
+<p>CDN距离用户最近效果最好，但需要考虑缓存的失效问题，当数据发生变更或者系统发布更新后，需要有一个高效的CDN失效系统，并且有问题时快速回滚和方便排除问题。</p>
+<p>CDN化部署方案可以把静态数据都缓存在用户端或CDN上，真正秒杀时，实际有效的请求只是抢购按钮，系统只向服务端请求很少的有效数据，而不需要请求大量重复静态数据。</p>
 </li>
 </ul>
-<h3 id="创建Git仓库"><a href="#创建Git仓库" class="headerlink" title="创建Git仓库"></a>创建Git仓库</h3><p>两种方式创建</p>
+<h3 id="热点数据"><a href="#热点数据" class="headerlink" title="热点数据"></a>热点数据</h3><p>秒杀场景中存在很多的热点数据，它们在短时间内被大量用户执行访问、添加购物车、下单等操作，这些热点请求会大量占用服务器处理资源，所以我们要对热点做针对性优化。</p>
+<h5 id="发现热点数据"><a href="#发现热点数据" class="headerlink" title="发现热点数据"></a>发现热点数据</h5><ul>
+<li><p>发现静态热点数据</p>
+<p>静态热点数据可以通过商业手段筛选，如让商家报名参加秒杀等，利用运营系统把参加秒杀的商品打标，再进行预热。或者利用大数据计算出每天用户访问的Top N商品，这些可以认为是热点数据。</p>
+</li>
+<li><p>发现动态热点数据</p>
+<p>可以构建一个异步系统，收集交易链路上各个环节中的中间件的热点key（Nginx、Cache、RPC框架等），（如Nginx自带热点统计模块），把上游的热点透传给下游系统，然后做热点保护。</p>
+</li>
+</ul>
+<h5 id="处理热点数据"><a href="#处理热点数据" class="headerlink" title="处理热点数据"></a>处理热点数据</h5><p><strong>处理热点数据通常有几种思路：一是优化，二是限制，三是隔离</strong>。</p>
+<p><strong>优化</strong>。缓存热点数据，管是静态数据还是动态数据，都用一个队列短暂地缓存数秒钟，由于队列长度有限，可以采用 LRU 淘汰算法替换。</p>
+<p><strong>限制</strong>。限制更多的是一种保护机制，限制的办法也有很多，例如对被访问商品的 ID 做一致性 Hash，然后根据 Hash 做分桶，每个分桶设置一个处理队列，这样可以把热点商品限制在一个请求队列里，防止因某些热点商品占用太多的服务器资源，而使其他请求始终得不到服务器的处理资源。</p>
+<p><strong>隔离</strong>。将热点数据隔离，防止影响其他商品售卖。可以在三个层次上进行隔离。</p>
+<ul>
+<li>业务隔离。卖家参与秒杀需要报名，提前做好预热。</li>
+<li>系统隔离。做单独的秒杀系统，让请求落到不同的集群中</li>
+<li>数据隔离。启用单独的集群来存放热点数据。</li>
+</ul>
+<h3 id="流量削峰"><a href="#流量削峰" class="headerlink" title="流量削峰"></a>流量削峰</h3><p>削峰的存在，一是可以让服务端处理变得更加平稳，二是可以节省服务器的资源成本。流量削峰的一些操作思路：排队、答题、分层过滤.</p>
+<ul>
+<li><p>排队。用消息队列来缓冲瞬时流量，把同步的直接调用转换成异步的间接推送，中间通过一个队列在一端承接瞬时的流量洪峰，在另一端平滑地将消息推送出去。</p>
+</li>
+<li><p>答题。目的是防止部分买家使用秒杀器在参加秒杀时作弊和延缓请求，基于时间分片起到对请求流量进行削峰的作用</p>
+</li>
+<li><p>分层过滤。对请求进行分层过滤，从而过滤掉一些无效的请求。按照“漏斗”式设计来处理请求。</p>
+<ul>
+<li>将动态请求的读数据缓存（Cache）在 Web 端，过滤掉无效的数据读</li>
+<li>对读数据不做强一致性校验，减少因为一致性校验产生瓶颈的问题</li>
+<li>对写数据进行基于时间的合理分片，过滤掉过期的失效请求</li>
+<li>对写请求做限流保护，将超出系统承载能力的请求过滤掉；</li>
+<li>对写数据进行强一致性校验，只保留最后有效的数据。</li>
+</ul>
+<p>在读系统中，尽量减少由于一致性校验带来的系统瓶颈，但是尽量将不影响性能的检查条件提前，如用户是否具有秒杀资格、商品状态是否正常、用户答题是否正确、秒杀是否已经结束、是否非法请求、营销等价物是否充足等；在写数据系统中，主要对写的数据（如“库存”）做一致性检查，最后在数据库层保证数据的最终准确性（如“库存”不能减为负数）。</p>
+</li>
+</ul>
+<h3 id="减库存"><a href="#减库存" class="headerlink" title="减库存"></a>减库存</h3><p>减库存场景的要求是既不超卖也不少卖，用户的购买分为两个部分：下单和付款，但并不是下了单后就一定付款。所以减库存操作可以在三个环节进行。</p>
+<ul>
+<li><strong>下单减库存。</strong>用户下单后直接利用数据库的事务机制在商品总库存中扣减，这是控制最精确的一种，一定不会出现超卖的现象。但存在下单后不付款的情况。</li>
+<li><strong>付款减库存。</strong>用户下单后不扣减库存，而是等到用户付款后才真正扣减库存，否则保留给其他买家。所以存在并发较高时，买家下单后付不了款的情况，用户体验不好。</li>
+<li><strong>预扣库存。</strong>用户下单后，库存为其保留一段时间（如15分钟），超出这个时间，库存自动释放，其他买家继续购买。买家付款前，系统会校验该订单的库存是否还有保留：如果没有保留，则再次尝试预扣；如果库存不足（也就是预扣失败）则不允许继续付款；如果预扣成功，则完成付款并实际地减去库存。</li>
+</ul>
+<p>上面三种方式都有局限性，<strong>下单减库存可能导致恶意下单，影响商品销售；付款减库存容易造成大面积下单成功但无法付款；预扣库存只能在一定程度上缓解这些问题，还是要靠安全和反作弊进行次数限制。如给经常下单但不付款的用户打标，限制最大购买件数、对重复下单不付款的次数进行限制等。</strong></p>
+<p>在电商场景中，最常见的就是预扣库存方案，一定时间后未付款直接释放库存。但对于秒杀商品，成功下单后不付款的情况较少，所以采用下单扣库存方案更加合理。</p>
+<p>交易场景中，库存是个热点数据，所以可以把库存数据放到缓存（Redis）中，大大提高读性能。如果扣减库存的逻辑单一，完全可以用缓存，但如果涉及复杂的减库存逻辑，还是要用数据库事务来完成。</p>
+<p>如果用MySQL的方案，同一个商品数据对应MySQL中的一行，因此会有大量的线程来竞争行锁，造成TPS下降，RT上升，从而影响整个数据库的吞吐量。对于并发锁的问题，可以做<strong>应用层或者数据库层的排队</strong>。应用层按照商品维度设置队列顺序执行，这样能减少同一台机器对数据库同一行记录进行操作的并发度，同时也能控制单个商品占用数据库连接的数量，防止热点商品占用太多的数据库连接。应用层只能做到单机排队，数据库层可以做到全局排队。</p>
+<h3 id="兜底方案"><a href="#兜底方案" class="headerlink" title="兜底方案"></a>兜底方案</h3><p>系统的高可用建设涉及架构阶段、编码阶段、测试阶段、发布阶段、运行阶段，以及故障发生时。</p>
 <ol>
-<li><p>Git之前已有代码</p>
-<blockquote>
-<p>cd 文件夹</p>
-<p>git init</p>
-</blockquote>
-</li>
-<li><p>Git之前没有项目代码</p>
-<blockquote>
-<p>cd 文件夹</p>
-<p>git init your_project_name</p>
-<p>cd your_project_name</p>
-</blockquote>
-</li>
+<li><strong>架构阶段</strong>：架构阶段主要考虑系统的可扩展性和容错性，要避免系统出现单点问题。例如多机房单元化部署，即使某个城市的某个机房出现整体故障，仍然不会影响整体网站的运转。</li>
+<li><strong>编码阶段</strong>：编码最重要的是保证代码的健壮性，例如涉及远程调用问题时，要设置合理的超时退出机制，防止被其他系统拖垮，也要对调用的返回结果集有预期，防止返回的结果超出程序处理范围，最常见的做法就是对错误异常进行捕获，对无法预料的错误要有默认处理结果。</li>
+<li><strong>测试阶段</strong>：测试主要是保证测试用例的覆盖度，保证最坏情况发生时，我们也有相应的处理流程。</li>
+<li><strong>发布阶段</strong>：发布时也有一些地方需要注意，因为发布时最容易出现错误，因此要有紧急的回滚机制。</li>
+<li><strong>运行阶段</strong>：运行时是系统的常态，系统大部分时间都会处于运行态，运行态最重要的是对系统的监控要准确及时，发现问题能够准确报警并且报警数据要准确详细，以便于排查问题。</li>
+<li><strong>故障发生</strong>：故障发生时首先最重要的就是及时止损，例如由于程序问题导致商品价格错误，那就要及时下架商品或者关闭购买链接，防止造成重大资产损失。然后就是要能够及时恢复服务，并定位原因解决问题。</li>
 </ol>
+<h5 id="降级"><a href="#降级" class="headerlink" title="降级"></a>降级</h5><p><strong>降级”，就是当系统的容量达到一定程度时，限制或者关闭系统的某些非核心功能，从而把有限的资源保留给更核心的业务</strong>。执行降级无疑是在系统性能和用户体验之间选择了前者，降级后肯定会影响一部分用户的体验。</p>
+<h5 id="限流"><a href="#限流" class="headerlink" title="限流"></a>限流</h5><p>如果说降级是牺牲了一部分次要的功能和用户的体验效果，那么限流就是更极端的一种保护措施了。<strong>限流就是当系统容量达到瓶颈时，我们需要通过限制一部分流量来保护系统，并做到既可以人工执行开关，也支持自动化保护的措施。</strong></p>
+<p>限流既可以在客户端限流，也可以在服务端限流。限流的实现方式既要支持 URL 以及方法级别的限流，也要支持<strong>基于 QPS 和线程的限流</strong>。</p>
+<ul>
+<li><strong>客户端限流</strong>，好处可以限制请求的发出，通过减少发出无用请求从而减少对系统的消耗。缺点就是当客户端比较分散时，没法设置合理的限流阈值：如果阈值设的太小，会导致服务端没有达到瓶颈时客户端已经被限制；而如果设的太大，则起不到限制的作用。</li>
+<li><strong>服务端限流</strong>，好处是可以根据服务端的性能设置合理的阈值，而缺点就是被限制的请求都是无效的请求，处理这些无效的请求本身也会消耗服务器资源。</li>
+</ul>
+<h5 id="拒绝服务"><a href="#拒绝服务" class="headerlink" title="拒绝服务"></a>拒绝服务</h5><p>如果限流还不能解决问题，最后一招就是直接拒绝服务了。当系统负载达到一定阈值时，例如 CPU 使用率达到 90% 或者系统 load 值达到 2*CPU 核数时，系统直接拒绝所有请求，这种方式是最暴力但也最有效的系统保护方式。拒绝服务可以说是一种不得已的兜底方案，用以防止最坏情况发生，防止因把服务器压跨而长时间彻底无法提供服务。</p>
+<p><strong>高可用建设是基础，可以说要深入到各个环节，更要长期规划并进行体系化建设，要在预防（建立常态的压力体系，例如上线前的单机压测到上线后的全链路压测）、管控（做好线上运行时的降级、限流和兜底保护）、监控（建立性能基线来记录性能的变化趋势以及线上机器的负载报警体系，发现问题及时预警）和恢复体系（遇到故障要及时止损，并提供快速的数据订正工具等）等这些地方加强建设。</strong></p>
 
       
     </div>
@@ -467,7 +510,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Git/" rel="tag"><i class="fa fa-tag"></i>Git</a>
+            <a href="/tags/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" rel="tag"><i class="fa fa-tag"></i>系统设计</a>
           
         </div>
       
@@ -480,8 +523,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/11/22/Django%E6%A8%A1%E5%9E%8B%E5%B1%82_%E6%9F%A5%E8%AF%A2/" rel="next" title="My New Post">
-                <i class="fa fa-chevron-left"></i> My New Post
+              <a href="/2020/09/13/ConcurrentHashMap%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/" rel="next" title="ConcurrentHashMap源码学习">
+                <i class="fa fa-chevron-left"></i> ConcurrentHashMap源码学习
               </a>
             
           </div>
@@ -489,10 +532,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/11/24/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="prev" title="lambda表达式">
-                lambda表达式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -569,7 +608,7 @@
               
                 <a href="/archives/%7C%7Carchive">
               
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -580,7 +619,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -591,7 +630,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -647,7 +686,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载与安装Git"><span class="nav-text">下载与安装Git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最小配置"><span class="nav-text">最小配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置user信息"><span class="nav-text">配置user信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#config的三个作用域"><span class="nav-text">config的三个作用域</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建Git仓库"><span class="nav-text">创建Git仓库</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#秒杀系统设计"><span class="nav-text">秒杀系统设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#秒杀设计原则"><span class="nav-text">秒杀设计原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据的动静分离"><span class="nav-text">数据的动静分离</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#动静数据的划分"><span class="nav-text">动静数据的划分</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#静态数据的存储"><span class="nav-text">静态数据的存储</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#动静分离的架构方案"><span class="nav-text">动静分离的架构方案</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#热点数据"><span class="nav-text">热点数据</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#发现热点数据"><span class="nav-text">发现热点数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#处理热点数据"><span class="nav-text">处理热点数据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流量削峰"><span class="nav-text">流量削峰</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#减库存"><span class="nav-text">减库存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#兜底方案"><span class="nav-text">兜底方案</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#降级"><span class="nav-text">降级</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#限流"><span class="nav-text">限流</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#拒绝服务"><span class="nav-text">拒绝服务</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -676,7 +715,7 @@
       <div class="footer-inner">
         <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-<div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
