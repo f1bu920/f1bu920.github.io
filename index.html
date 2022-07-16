@@ -296,6 +296,465 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/06/29/Golang-Slice%E5%88%87%E7%89%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="flbu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flbu blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/06/29/Golang-Slice%E5%88%87%E7%89%87/" itemprop="url">Golang-Slice切片</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-06-29T18:40:07+08:00">
+                2022-06-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Golang/" itemprop="url" rel="index">
+                    <span itemprop="name">Golang</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Slice是Go语言提供的一种常用的动态数据结构，相比数组，其长度并不固定，当我们向切片中添加元素时，如果容量不足就会自动扩容。</p>
+<p>可以通过三种方式声明一个切片：</p>
+<ol>
+<li>利用下标获取数组或切片的一部分</li>
+<li>使用字面量初始化新的切片</li>
+<li>使用关键字make创建切片</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1</span></span><br><span class="line">mySlice := slice[<span class="number">1</span>:<span class="number">3</span>]</span><br><span class="line"><span class="comment">//2</span></span><br><span class="line">mySlice := []<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;</span><br><span class="line"><span class="comment">//3</span></span><br><span class="line">mySlice := <span class="built_in">make</span>([]<span class="keyword">int</span>,<span class="number">0</span>,<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<p>切片在编译期间生成的类型只会包含元素类型，如<code>int</code>、<code>interface{}</code>等。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2022/06/29/Golang-Slice%E5%88%87%E7%89%87/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+<div>
+  
+</div>
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/05/18/Golang-sync-Mutex%E4%BA%92%E6%96%A5%E9%94%81%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="flbu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flbu blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/05/18/Golang-sync-Mutex%E4%BA%92%E6%96%A5%E9%94%81%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/" itemprop="url">Golang sync.Mutex互斥锁原理解析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-18T20:43:41+08:00">
+                2022-05-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Golang/" itemprop="url" rel="index">
+                    <span itemprop="name">Golang</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Go-sync-Mutex互斥锁原理解析"><a href="#Go-sync-Mutex互斥锁原理解析" class="headerlink" title="Go sync.Mutex互斥锁原理解析"></a>Go sync.Mutex互斥锁原理解析</h2>
+          
+        
+      
+    </div>
+    
+    
+    
+<div>
+  
+</div>
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/05/17/RocketMQ%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="flbu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="flbu blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/05/17/RocketMQ%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0/" itemprop="url">RocketMQ原理学习</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-17T22:48:46+08:00">
+                2022-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" itemprop="url" rel="index">
+                    <span itemprop="name">消息队列</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="消息队列学习笔记–RocketMQ"><a href="#消息队列学习笔记–RocketMQ" class="headerlink" title="消息队列学习笔记–RocketMQ"></a>消息队列学习笔记–RocketMQ</h1><h2 id="消息队列的优缺点"><a href="#消息队列的优缺点" class="headerlink" title="消息队列的优缺点"></a>消息队列的优缺点</h2><h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><h4 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h4><p>对于实时性不是很高的业务，如积分增减、发送短信等非核心流程，可以放到消息队列中去，提升整个链路的响应时间。</p>
+<h4 id="削峰填谷"><a href="#削峰填谷" class="headerlink" title="削峰填谷"></a>削峰填谷</h4><p>对于秒杀等短时间大流量场景，可以将请求短暂的在消息队列中堆积，平滑的消费请求。</p>
+<h4 id="解耦"><a href="#解耦" class="headerlink" title="解耦"></a>解耦</h4><p>MQ可以实现服务的高内聚、低耦合，通过发布订阅模型实现系统/模块间的解耦。</p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><h4 id="系统可用性降低"><a href="#系统可用性降低" class="headerlink" title="系统可用性降低"></a>系统可用性降低</h4><p>MQ相当于一个依赖组件，一旦出问题会导致系统不可用。</p>
+<h4 id="系统复杂度提高"><a href="#系统复杂度提高" class="headerlink" title="系统复杂度提高"></a>系统复杂度提高</h4><p>引入MQ如何保证消息不重复消费？如何处理消息丢失？如何保证消息的顺序消费？</p>
+<h4 id="数据一致性问题"><a href="#数据一致性问题" class="headerlink" title="数据一致性问题"></a>数据一致性问题</h4><p>生产者消费者事务执行结果不一致造成的数据不一致问题。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2022/05/17/RocketMQ%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+<div>
+  
+</div>
+
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/11/04/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1401,507 +1860,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/08/Java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="flbu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="flbu blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/07/08/Java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/" itemprop="url">Java反射机制</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-08T10:03:18+08:00">
-                2020-07-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Java反射"><a href="#Java反射" class="headerlink" title="Java反射"></a>Java反射</h2><blockquote>
-<p>Java 反射机制在程序<strong>运行时</strong>，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性。这种 <strong>动态的获取信息</strong> 以及 <strong>动态调用对象的方法</strong> 的功能称为 <strong>Java 的反射机制</strong>。</p>
-</blockquote>
-<blockquote>
-<p>反射机制很重要的一点就是“运行时”，其使得我们可以在程序运行时加载、探索以及使用编译期间完全未知的 <code>.class</code> 文件。换句话说，Java 程序可以加载一个运行时才得知名称的 <code>.class</code> 文件，然后获悉其完整构造，并生成其对象实体、或对其 fields（变量）设值、或调用其 methods（方法）。</p>
-</blockquote>
-<p>反射可以实现在运行时知道一个类的属性和方法。</p>
-<p><img src="https://f1bu920.github.io/images/Javareflect.png" alt=""></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/07/08/Java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-<div>
-  
-</div>
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/05/Java%E5%BC%82%E5%B8%B8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="flbu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="flbu blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/07/05/Java%E5%BC%82%E5%B8%B8/" itemprop="url">Java异常</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-05T11:02:00+08:00">
-                2020-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Java异常"><a href="#Java异常" class="headerlink" title="Java异常"></a>Java异常</h2><p>下图是Java异常层次结构图：</p>
-<p><img src="https://f1bu920.github.io/images/Java%E5%BC%82%E5%B8%B8%E7%BB%93%E6%9E%84.png" alt=""></p>
-<p>在Java中，<strong>所有的异常都有一个公共父类<code>Throwable</code>，其有两个重要的子类<code>Error</code>错误和<code>Exception</code>异常。其中，<code>Error</code>大多是虚拟机层面发生的错误，是程序无法处理的错误；而<code>Exception</code>则是用户程序可以捕获或可以处理的异常。<code>Exception</code>可以分为运行时异常<code>RuntimeException</code>和非运行时异常；又可以分为不受检查异常<code>Unchecked Exception</code>和检查异常<code>Checked Exception</code>。</strong></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/07/05/Java%E5%BC%82%E5%B8%B8/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-<div>
-  
-</div>
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/24/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="flbu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="flbu blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/06/24/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" itemprop="url">常见排序算法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-24T10:08:47+08:00">
-                2020-06-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Algorithms/" itemprop="url" rel="index">
-                    <span itemprop="name">Algorithms</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="常见排序算法"><a href="#常见排序算法" class="headerlink" title="常见排序算法"></a>常见排序算法</h2><h3 id="一-选择排序"><a href="#一-选择排序" class="headerlink" title="一. 选择排序"></a>一. 选择排序</h3><p>在循环中，每次找到剩下数组中最小的元素，并将这个最小的元素与当前元素交换位置。最后，整个数组就是有序的了。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">selectSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">        <span class="comment">//k记录最小元素的下标</span></span><br><span class="line">        <span class="keyword">int</span> k = i;</span><br><span class="line">        <span class="comment">//在剩下元素中找最小元素的下标</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; arr.length; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[j] &lt; arr[k]) &#123;</span><br><span class="line">                k = j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//如果最小元素不是自己，则交换位置</span></span><br><span class="line">        <span class="keyword">if</span> (k != i) &#123;</span><br><span class="line">            <span class="keyword">int</span> temp = arr[i];</span><br><span class="line">            arr[i] = arr[k];</span><br><span class="line">            arr[k] = temp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(<span class="string">"selectSort:"</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> value : arr) &#123;</span><br><span class="line">        System.out.println(value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>选择排序是最稳定的排序算法，哪怕是已经有序的数组进行选择排序的<strong>时间复杂度仍为<code>O(n^2)</code></strong>，其不会利用数组的初始状态。<strong>空间复杂度为<code>O(1)</code></strong>。</p>
-<h3 id="二-插入排序"><a href="#二-插入排序" class="headerlink" title="二. 插入排序"></a>二. 插入排序</h3><p>与选择排序一样，插入排序当前索引左侧的所有元素都是有序的，但他们的最终位置不确定。</p>
-<p>对于当前元素<code>current</code>，取出上一个元素<code>arr[preIndex]</code>，如果上一个元素大于当前元素则将其移动到其下一个位置，重复此过程。这就相当于将<code>current</code>左侧比<code>current</code>大的元素全部右移一位，给<code>current</code>腾出位置。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">insertSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = arr.length;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> preIndex = i - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">//当前元素</span></span><br><span class="line">        <span class="keyword">int</span> current = arr[i];</span><br><span class="line">        <span class="comment">//如果上一个元素大于当前元素则将其右移一位，重复此过程</span></span><br><span class="line">        <span class="keyword">while</span> (preIndex &gt;= <span class="number">0</span> &amp;&amp; arr[preIndex] &gt; current) &#123;</span><br><span class="line">            arr[preIndex + <span class="number">1</span>] = arr[preIndex];</span><br><span class="line">            preIndex--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//将current插入到该腾出的位置</span></span><br><span class="line">        arr[preIndex + <span class="number">1</span>] = current;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(<span class="string">"insertSort:"</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> value : arr) &#123;</span><br><span class="line">        System.out.print(value + <span class="string">" "</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>插入排序利用了初始数组部分有序的特点，因此适合于局部有序的情况。</p>
-<p><strong>平均时间复杂度为<code>O(n^2)</code>，对于已经有序的数组，时间复杂度为<code>O(n)</code>。空间复杂度为<code>O(1)</code>。</strong></p>
-<h3 id="三-希尔排序"><a href="#三-希尔排序" class="headerlink" title="三. 希尔排序"></a>三. 希尔排序</h3><p>希尔排序是基于插入排序的改进排序算法。对于大规模乱序数组，插入排序很慢，因为它只会移动相邻的元素。希尔排序为了加快速度改进了插入排序，交换不相邻的元素以对数组进行局部排序，并最终用插入排序对局部有序的数组进行排序。</p>
-<p>设置<code>h</code>作为间隔，对于每个<code>h</code>，用插入排序将<code>h</code>个子数组进行独立的排序，只需将插入排序中移动元素的距离由1改为<code>h</code>即可。</p>
-<p>希尔排序比插入排序高效的原因是其权衡了子数组的规模和有序性。排序之初，子数组都很小，排序后子数组是局部有序的，这都有利于插入排序。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">shellSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = arr.length;</span><br><span class="line">    <span class="keyword">int</span> h = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//h= 1, 4, 13, 40, 121, 364, 1093</span></span><br><span class="line">    <span class="keyword">while</span> (h &lt; n / <span class="number">3</span>) &#123;</span><br><span class="line">        h = <span class="number">3</span> * h + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (h &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="comment">//将数组变为h有序</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = h; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> preIndex = i - h;</span><br><span class="line">            <span class="keyword">int</span> current = arr[i];</span><br><span class="line">            <span class="comment">//将当前元素插入到arr[i-h]、arr[i-2*h]....中去</span></span><br><span class="line">            <span class="keyword">while</span> (preIndex &gt;= <span class="number">0</span> &amp;&amp; arr[preIndex] &gt; current) &#123;</span><br><span class="line">                arr[preIndex + h] = arr[preIndex];</span><br><span class="line">                preIndex -= h;</span><br><span class="line">            &#125;</span><br><span class="line">            arr[preIndex + h] = current;</span><br><span class="line">        &#125;</span><br><span class="line">        h /= <span class="number">3</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> value : arr) &#123;</span><br><span class="line">        System.out.print(value + <span class="string">" "</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在我个人本地随机数组测试中，当数据规模大于等于10000时，希尔排序比插入排序近似快了一倍，且随着数据规模的扩大，速度差距也跟着扩大。</p>
-<p>希尔排序的平均复杂度为<code>O(n^1.3)</code>，最坏时间复杂度为<code>O(n^2)</code>，最好时间复杂度为<code>O(n)</code>，空间复杂度为<code>O(1)</code>。</p>
-<h3 id="四-归并排序"><a href="#四-归并排序" class="headerlink" title="四. 归并排序"></a>四. 归并排序</h3><p>归并排序是建立在归并基础上的排序算法。归并时将元素复制到辅助数组<code>aux</code>中，再把归并结果放回到原数组中。</p>
-<h4 id="自顶向下的归并排序"><a href="#自顶向下的归并排序" class="headerlink" title="自顶向下的归并排序"></a>自顶向下的归并排序</h4><p>自顶向下的归并排序是分治思想的典型示例。要对子数组<code>arr[left, right]</code>进行排序，先将其分为<code>arr[left...mid]</code>和<code>arr[mid+1...right]</code>两部分，分别通过递归调用将他们单独排序，最后将排序好的子数组归并成最终的排序结果。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">//用到的辅助数组</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span>[] aux;   </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span> n = arr.length;</span><br><span class="line">       aux = <span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line">       mergeSort(arr, <span class="number">0</span>, n - <span class="number">1</span>);</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> value:arr)&#123;</span><br><span class="line">           System.out.print(value+<span class="string">" "</span>);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">//进行排序</span></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//递归终止条件</span></span><br><span class="line">       <span class="keyword">if</span> (left &gt;= right) &#123;</span><br><span class="line">           <span class="keyword">return</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">int</span> mid = left + (right - left) / <span class="number">2</span>;</span><br><span class="line">       <span class="comment">//将左半部分排序</span></span><br><span class="line">       mergeSort(arr, left, mid);</span><br><span class="line">       <span class="comment">//将右半部分排序</span></span><br><span class="line">       mergeSort(arr, mid + <span class="number">1</span>, right);</span><br><span class="line">       <span class="comment">//归并</span></span><br><span class="line">       <span class="comment">//当arr[mid] &lt;= arr[mid + 1]时已经有序，可以跳过归并</span></span><br><span class="line">       <span class="keyword">if</span> (arr[mid] &gt; arr[mid + <span class="number">1</span>]) &#123;</span><br><span class="line">           merge(arr, left, mid, right);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> left, <span class="keyword">int</span> mid, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//i,j为两个指针，起始时分别指向两个已经排序序列的起始位置</span></span><br><span class="line">       <span class="keyword">int</span> i = left, j = mid + <span class="number">1</span>;</span><br><span class="line">       <span class="comment">//将需要归并部分复制到辅助数组</span></span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> k = left; k &lt;= right; k++) &#123;</span><br><span class="line">           aux[k] = arr[k];</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> k = left; k &lt;= right; k++) &#123;</span><br><span class="line">           <span class="comment">//左半部分用尽，取右半部分元素</span></span><br><span class="line">           <span class="keyword">if</span> (i &gt; mid) &#123;</span><br><span class="line">               arr[k] = aux[j++];</span><br><span class="line">               <span class="comment">//右半部分用尽，取左半部分元素</span></span><br><span class="line">           &#125; <span class="keyword">else</span> <span class="keyword">if</span> (j &gt; right) &#123;</span><br><span class="line">               arr[k] = aux[i++];</span><br><span class="line">               <span class="comment">//左半部分的当前元素小于右半部分的当前元素</span></span><br><span class="line">           &#125; <span class="keyword">else</span> <span class="keyword">if</span> (aux[i] &lt; aux[j]) &#123;</span><br><span class="line">               arr[k] = aux[i++];</span><br><span class="line">               <span class="comment">//左半部分的当前元素大于等于右半部分的当前元素</span></span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               arr[k] = aux[j++];</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="自底向上的归并排序"><a href="#自底向上的归并排序" class="headerlink" title="自底向上的归并排序"></a>自底向上的归并排序</h4><p>自底向上的归并排序使用的是迭代的形式，先归并小数组，再成对归并得到的子数组。</p>
-<p>初始时设置步长<code>sz</code>为1，因为是成对归并，所以每次步长长度增长一倍即<code>sz = sz + sz</code>。</p>
-<p>枚举数组左边界<code>lo</code>，<code>lo</code>从0开始，每次增长一对<code>sz</code>的大小，将这一对<code>sz</code>大小的区间进行归并。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">mergeSortIterator</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = arr.length;</span><br><span class="line">    aux = <span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line">    <span class="comment">//步长增长一倍</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> sz = <span class="number">1</span>; sz &lt; n; sz = sz + sz) &#123;</span><br><span class="line">        <span class="comment">//子数组一对一对的归并</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> lo = <span class="number">0</span>; lo &lt; n - sz; lo = lo + sz + sz) &#123;</span><br><span class="line">            <span class="comment">//注意右边界要小于等于n-1</span></span><br><span class="line">            merge(arr, lo, lo + sz - <span class="number">1</span>, Math.min(lo + sz + sz - <span class="number">1</span>, n - <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> value : arr) &#123;</span><br><span class="line">        System.out.print(value + <span class="string">" "</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> left, <span class="keyword">int</span> mid, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = left, j = mid + <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//将需要归并部分复制到辅助数组</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> k = left; k &lt;= right; k++) &#123;</span><br><span class="line">        aux[k] = arr[k];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> k = left; k &lt;= right; k++) &#123;</span><br><span class="line">        <span class="comment">//左半部分用尽，取右半部分元素</span></span><br><span class="line">        <span class="keyword">if</span> (i &gt; mid) &#123;</span><br><span class="line">            arr[k] = aux[j++];</span><br><span class="line">            <span class="comment">//右半部分用尽，取左半部分元素</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (j &gt; right) &#123;</span><br><span class="line">            arr[k] = aux[i++];</span><br><span class="line">            <span class="comment">//左半部分的当前元素小于右半部分的当前元素</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (aux[i] &lt; aux[j]) &#123;</span><br><span class="line">            arr[k] = aux[i++];</span><br><span class="line">            <span class="comment">//左半部分的当前元素大于等于右半部分的当前元素</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            arr[k] = aux[j++];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>归并排序的时间复杂度为<code>O(nlogn)</code>, 空间复杂度为<code>O(n)</code>。</strong></p>
-<p>在归并排序中使用了全局辅助数组<code>aux</code>，更好的做法是把<code>aux</code>作为<code>mergeSort</code>方法的局部变量，并把它作为参数每次传递给<code>merge</code>方法。</p>
-<p><a href="[https://zh.wikipedia.org/wiki/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F#Java](https://zh.wikipedia.org/wiki/归并排序#Java)">Wiki-归并排序</a></p>
-<h3 id="五-快速排序"><a href="#五-快速排序" class="headerlink" title="五. 快速排序"></a>五. 快速排序</h3><p>快速排序也是一种分治的排序算法，它将一个数组分成两个子数组，将两部分独立的排序。快速排序与归并排序是互补的：归并排序将数组分成两部分分别排序，并将有序的子数组归并来将整个数组排序；而快速排序则是当两个子数组都有序时整个数组就有序了。归并排序的递归调用发生在处理整个数组之前；快速排序的递归调用发生在处理整个数组之后。</p>
-<p>快速排序通过递归调用切分来排序。先排定一个基准元素，一般是<code>arr[left]</code>，然后从数组左端开始扫描直到找到一个比他大的元素，再从数组右端进行扫描直到找到一个比他小的元素。交换他们的位置，直到左右指针相遇，再将基准元素与相遇位置的元素交换位置。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">quickSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">        quickSort(arr, <span class="number">0</span>, arr.length - <span class="number">1</span>);</span><br><span class="line">        System.out.println(<span class="string">"quickSort:"</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> value : arr) &#123;</span><br><span class="line">            System.out.print(value + <span class="string">" "</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">quickSort</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (left &gt;= right) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//切分</span></span><br><span class="line">        <span class="keyword">int</span> j = partition(arr, left, right);</span><br><span class="line">        quickSort(arr, left, j - <span class="number">1</span>);</span><br><span class="line">        quickSort(arr, j + <span class="number">1</span>, right);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">partition</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//i，j为左右扫描指针</span></span><br><span class="line">        <span class="keyword">int</span> i = left;</span><br><span class="line">        <span class="keyword">int</span> j = right + <span class="number">1</span>;</span><br><span class="line">        <span class="comment">//key为基准元素</span></span><br><span class="line">        <span class="keyword">int</span> key = arr[left];</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="comment">//向右扫描直到遇到一个大于等于基准的元素</span></span><br><span class="line">            <span class="keyword">while</span> (arr[++i] &lt; key) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i == right) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//向左扫描直到遇到一个小于等于基准的元素</span></span><br><span class="line">            <span class="keyword">while</span> (arr[--j] &gt; key) &#123;</span><br><span class="line">                <span class="keyword">if</span> (j == left) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//指针相遇时结束</span></span><br><span class="line">            <span class="keyword">if</span> (i &gt;= j) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//交换i，j位置</span></span><br><span class="line">            <span class="keyword">int</span> temp = arr[i];</span><br><span class="line">            arr[i] = arr[j];</span><br><span class="line">            arr[j] = temp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//交换基准元素与相遇时元素位置</span></span><br><span class="line">        <span class="keyword">int</span> temp = arr[left];</span><br><span class="line">        arr[left] = arr[j];</span><br><span class="line">        arr[j] = temp;</span><br><span class="line">        <span class="keyword">return</span> j;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>快速排序的平均时间复杂度为<code>O(nlogn)</code>，最坏时间复杂度为<code>O(n^2)</code>，空间复杂度为<code>O(nlogn)</code>。</strong></p>
-<h3 id="六-堆排序"><a href="#六-堆排序" class="headerlink" title="六. 堆排序"></a>六. 堆排序</h3><p>堆是一种近似二叉树的结构，一般用一维数组表示，且子节点的键值或索引总小于(或者大于)他的父节点。若按升序排列，则把数组换成最大堆。重复从最大堆取出数值最大的结点(把根结点和最后一个结点交换，把交换后的最后一个结点移出堆)，并让残余的堆维持最大堆性质。</p>
-<p>对于起始索引为0的数组来说，节点索引为<code>i</code>的节点：</p>
-<ul>
-<li>左子节点为<code>2*i+1</code>；</li>
-<li>右子节点为<code>2*i+2</code>;</li>
-<li>父节点为<code>floor((i-1)/2)</code>。</li>
-</ul>
-<p>堆中最大值总是位于根节点。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">heapSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span> len = arr.length - <span class="number">1</span>;</span><br><span class="line">       <span class="comment">//将数组堆化， beginIndex为第一个非叶子节点索引，叶子节点可以看成满足堆结构的节点</span></span><br><span class="line">       <span class="keyword">int</span> beginIndex = (arr.length &gt;&gt; <span class="number">1</span>) - <span class="number">1</span>;</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = beginIndex; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">           maxHeapify(i, len, arr);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//对堆化数据排序</span></span><br><span class="line">       <span class="comment">//每次都移出最顶层的根节点与最尾部节点进行交换，同时遍历长度减一</span></span><br><span class="line">       <span class="comment">//然后重新整理被交换到根节点的元素进行下沉操作使其满足堆的结构</span></span><br><span class="line">       <span class="comment">//直到未排序堆的长度为0</span></span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = len; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">           <span class="keyword">int</span> temp = arr[<span class="number">0</span>];</span><br><span class="line">           arr[<span class="number">0</span>] = arr[i];</span><br><span class="line">           arr[i] = temp;</span><br><span class="line">           maxHeapify(<span class="number">0</span>, i - <span class="number">1</span>, arr);</span><br><span class="line">       &#125;</span><br><span class="line">       System.out.println(<span class="string">"HeapSort:"</span>);</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> value : arr) &#123;</span><br><span class="line">           System.out.print(value + <span class="string">" "</span>);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"><span class="comment">//调整索引为index处的元素，使其满足堆结构，len为未排序堆的长度</span></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">maxHeapify</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">int</span> len, <span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//左子节点索引</span></span><br><span class="line">       <span class="keyword">int</span> li = (index &lt;&lt; <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">       <span class="comment">//右子节点索引</span></span><br><span class="line">       <span class="keyword">int</span> ri = li + <span class="number">1</span>;</span><br><span class="line">       <span class="comment">//左子节点超出计算范围</span></span><br><span class="line">       <span class="keyword">if</span> (li &gt; len) &#123;</span><br><span class="line">           <span class="keyword">return</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//子节点最大值索引，初始默认为左节点</span></span><br><span class="line">       <span class="keyword">int</span> maxIndex = li;</span><br><span class="line">       <span class="keyword">if</span> (ri &lt;= len &amp;&amp; arr[li] &lt; arr[ri]) &#123;</span><br><span class="line">           maxIndex = ri;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//如果子节点最大值大于父节点，交换，并继续递归调用直到满足堆结构</span></span><br><span class="line">       <span class="keyword">if</span> (arr[maxIndex] &gt; arr[index]) &#123;</span><br><span class="line">           <span class="keyword">int</span> temp = arr[index];</span><br><span class="line">           arr[index] = arr[maxIndex];</span><br><span class="line">           arr[maxIndex] = temp;</span><br><span class="line">           maxHeapify(maxIndex, len - <span class="number">1</span>, arr);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<p>堆排序的时间复杂度为<code>O(nlogn)</code>。 </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-<div>
-  
-</div>
-
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1952,7 +1910,7 @@
               
                 <a href="/archives/%7C%7Carchive">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1963,7 +1921,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1974,7 +1932,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
